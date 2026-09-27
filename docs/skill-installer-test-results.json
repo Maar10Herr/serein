@@ -1,0 +1,17 @@
+{
+  "installer": "Codex built-in GitHub skill installer",
+  "repository": "Maar10Herr/serein",
+  "source_commit": "5f69e558c6a48cedde6e7e2ff7787291154dddfa",
+  "skill_path": "skills/serein-context",
+  "method": "download",
+  "checks": [
+    "complete skill installed from public GitHub commit",
+    "bundled runtime checksums verified",
+    "relocated installed payload with spaces in path",
+    "setup works after executable bits are removed",
+    "native helper registered outside skill directory",
+    "model installed and vault created outside skill directory"
+  ],
+  "assistant_triggered_recall": "not tested inside each supported assistant",
+  "result": "PASS"
+}

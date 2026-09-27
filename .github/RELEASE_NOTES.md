@@ -17,3 +17,5 @@ Serein lets local AI assistants recall browsing context you choose to save. This
 There is no separate runtime download or database path to enter. The browser launches the helper for a batch of observations; the skill launches the reader only when the assistant needs context. Neither stays running between calls.
 
 The extension packages and bundled macOS helper are unsigned. Firefox removes temporary add-ons after a restart; permanent installation requires a signed package. Local assistant execution requires the assistant to run on the same Mac. See the [install guide](https://github.com/Maar10Herr/serein/blob/v0.1.0/docs/INSTALL.md), [privacy details](https://github.com/Maar10Herr/serein/blob/v0.1.0/docs/PRIVACY.md), and [test report](https://github.com/Maar10Herr/serein/blob/v0.1.0/docs/TEST_REPORT.md) for supported behavior and limits.
+
+Verified with Google Chrome for Testing 154 and Firefox 156 on macOS Apple silicon, including native messaging and skill-bundled setup. Chrome checks also cover background batch delivery, relinking, and all six UI languages. Installation from GitHub passed with the built-in Codex skill installer.
