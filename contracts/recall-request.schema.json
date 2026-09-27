@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:serein:contracts:recall-request.schema.json",
+  "type": "object",
+  "properties": {
+    "protocol": {
+      "type": "integer",
+      "const": 1
+    },
+    "request_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "UUID identifier; callers emit canonical hyphenated UUIDs."
+    },
+    "client": {
+      "type": "string",
+      "maxLength": 64
+    },
+    "vault": {
+      "anyOf": [
+        {
+          "const": "default"
+        },
+        {
+          "type": "string",
+          "format": "uuid",
+          "description": "UUID identifier; callers emit canonical hyphenated UUIDs."
+        }
+      ]
+    },
+    "query": {
+      "type": "string",
+      "maxLength": 512
+    },
+    "facets": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 128
+      },
+      "maxItems": 3,
+      "default": []
+    },
+    "scope": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "projects",
+          "research",
+          "confirmed_preferences"
+        ]
+      }
+    },
+    "max_bytes": {
+      "type": "integer",
+      "minimum": 512,
+      "maximum": 16384
+    },
+    "budget_ms": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 18446744073709551615
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "protocol",
+    "request_id",
+    "client",
+    "vault",
+    "query",
+    "scope",
+    "max_bytes",
+    "budget_ms"
+  ],
+  "description": "Recall request accepted by the CLI. Rust defaults omitted facets to an empty array. This describes the request only; response JSON is assembled dynamically in storage.rs."
+}

@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "source": "Published Serein skill and native Skills CLI adapter mapping",
+  "adapters": [
+    {
+      "id": "claude-code",
+      "display_name": "Claude Code",
+      "default_skill_path": "~/.claude/skills/serein-context",
+      "verified_install_record": "claude-code/verified-install.json",
+      "installation_state": "not_inspected",
+      "assistant_execution_tested": false,
+      "executable_discovery": {
+        "method": "command -v claude",
+        "found": null,
+        "resolved_path": null
+      }
+    },
+    {
+      "id": "codex",
+      "display_name": "Codex",
+      "default_skill_path": "~/.codex/skills/serein-context",
+      "verified_install_record": "codex/verified-install.json",
+      "installation_state": "not_inspected",
+      "assistant_execution_tested": false,
+      "executable_discovery": {
+        "method": "command -v codex",
+        "found": null,
+        "resolved_path": null
+      }
+    },
+    {
+      "id": "opencode",
+      "display_name": "OpenCode",
+      "default_skill_path": "$HOME/.config/opencode/skills/serein-context",
+      "verified_install_record": "opencode/verified-install.json",
+      "installation_state": "not_inspected",
+      "assistant_execution_tested": false,
+      "executable_discovery": {
+        "method": "command -v opencode",
+        "found": null,
+        "resolved_path": null
+      }
+    },
+    {
+      "id": "hermes",
+      "display_name": "Hermes",
+      "default_skill_path": "${HERMES_HOME:-$HOME/.hermes}/skills/serein-context (POSIX); %LOCALAPPDATA%/hermes/skills/serein-context (Windows fallback)",
+      "verified_install_record": "hermes/verified-install.json",
+      "installation_state": "not_inspected",
+      "assistant_execution_tested": false,
+      "executable_discovery": {
+        "method": "command -v hermes",
+        "found": null,
+        "resolved_path": null
+      }
+    },
+    {
+      "id": "openclaw",
+      "display_name": "OpenClaw",
+      "default_skill_path": "${OPENCLAW_STATE_DIR:-$HOME/.openclaw}/skills/serein-context",
+      "verified_install_record": "openclaw/verified-install.json",
+      "installation_state": "not_inspected",
+      "assistant_execution_tested": false,
+      "executable_discovery": {
+        "method": "command -v openclaw",
+        "found": null,
+        "resolved_path": null
+      }
+    },
+    {
+      "id": "generic",
+      "display_name": "Generic local executor",
+      "default_skill_path": null,
+      "verified_install_record": "generic/verified-install.json",
+      "installation_state": "not_inspected",
+      "assistant_execution_tested": false,
+      "executable_discovery": {
+        "method": null,
+        "found": null,
+        "resolved_path": null,
+        "note": "Generic is a local process-execution contract, not a named assistant CLI."
+      }
+    }
+  ]
+}

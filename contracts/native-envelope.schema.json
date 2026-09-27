@@ -1,0 +1,500 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:serein:contracts:native-envelope.schema.json",
+  "type": "object",
+  "properties": {
+    "protocol": {
+      "type": "integer",
+      "const": 1
+    },
+    "request_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "UUID identifier; callers emit canonical hyphenated UUIDs."
+    },
+    "source_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "UUID identifier; callers emit canonical hyphenated UUIDs."
+    },
+    "op": {
+      "type": "string",
+      "enum": [
+        "hello",
+        "ingest",
+        "status",
+        "dashboard",
+        "policy.update",
+        "forget",
+        "feedback",
+        "receipts"
+      ]
+    },
+    "capture_epoch": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 18446744073709551615
+    },
+    "payload": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "protocol",
+    "request_id",
+    "source_id",
+    "op",
+    "capture_epoch",
+    "payload"
+  ],
+  "description": "Protocol v1 native envelope; operation payloads are closed.",
+  "$defs": {
+    "Id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "UUID identifier; callers emit canonical hyphenated UUIDs."
+    },
+    "Site": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 253,
+      "pattern": "^(?![0-9]+(?:\\.[0-9]+){3}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$",
+      "not": {
+        "anyOf": [
+          {
+            "pattern": "(^|\\.)localhost$"
+          },
+          {
+            "pattern": "(^|\\.)local$"
+          },
+          {
+            "pattern": "(^|\\.)internal$"
+          },
+          {
+            "pattern": "(^|\\.)test$"
+          },
+          {
+            "pattern": "(^|\\.)invalid$"
+          },
+          {
+            "pattern": "(^|\\.)onion$"
+          }
+        ]
+      },
+      "description": "Lowercase ASCII hostname with valid DNS-style labels; excludes IP literals and policy::valid_site reserved suffixes."
+    },
+    "Event": {
+      "type": "object",
+      "properties": {
+        "event_id": {
+          "type": "string",
+          "format": "uuid",
+          "description": "UUID identifier; callers emit canonical hyphenated UUIDs."
+        },
+        "visit_id": {
+          "type": "string",
+          "format": "uuid",
+          "description": "UUID identifier; callers emit canonical hyphenated UUIDs."
+        },
+        "site_key": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 253,
+          "pattern": "^(?![0-9]+(?:\\.[0-9]+){3}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$",
+          "not": {
+            "anyOf": [
+              {
+                "pattern": "(^|\\.)localhost$"
+              },
+              {
+                "pattern": "(^|\\.)local$"
+              },
+              {
+                "pattern": "(^|\\.)internal$"
+              },
+              {
+                "pattern": "(^|\\.)test$"
+              },
+              {
+                "pattern": "(^|\\.)invalid$"
+              },
+              {
+                "pattern": "(^|\\.)onion$"
+              }
+            ]
+          },
+          "description": "Lowercase ASCII hostname with valid DNS-style labels; excludes IP literals and policy::valid_site reserved suffixes."
+        },
+        "site_epoch": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "observed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "visit",
+            "search"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 256
+        },
+        "search_query": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 512
+        },
+        "foreground_seconds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3600
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "event_id",
+        "visit_id",
+        "site_key",
+        "site_epoch",
+        "observed_at",
+        "kind",
+        "title",
+        "search_query",
+        "foreground_seconds"
+      ],
+      "description": "Event as sent by the TypeScript extension. Rust accepts an omitted search_query as None; the extension type requires it, so the wire schema requires explicit string or null.",
+      "allOf": [
+        {
+          "properties": {
+            "title": {
+              "type": "string",
+              "maxLength": 256
+            },
+            "search_query": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "maxLength": 512
+            }
+          },
+          "description": "Rust also rejects title plus query above 2048 UTF-8 bytes; JSON Schema maxLength counts characters and cannot express that byte sum."
+        }
+      ]
+    },
+    "Policy": {
+      "type": "object",
+      "properties": {
+        "consent": {
+          "type": "boolean"
+        },
+        "paused": {
+          "type": "boolean"
+        },
+        "recall_enabled": {
+          "type": "boolean"
+        },
+        "selected_only": {
+          "type": "boolean"
+        },
+        "selected_sites": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 253,
+            "pattern": "^(?![0-9]+(?:\\.[0-9]+){3}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$",
+            "not": {
+              "anyOf": [
+                {
+                  "pattern": "(^|\\.)localhost$"
+                },
+                {
+                  "pattern": "(^|\\.)local$"
+                },
+                {
+                  "pattern": "(^|\\.)internal$"
+                },
+                {
+                  "pattern": "(^|\\.)test$"
+                },
+                {
+                  "pattern": "(^|\\.)invalid$"
+                },
+                {
+                  "pattern": "(^|\\.)onion$"
+                }
+              ]
+            },
+            "description": "Lowercase ASCII hostname with valid DNS-style labels; excludes IP literals and policy::valid_site reserved suffixes."
+          },
+          "maxItems": 500
+        },
+        "excluded_sites": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 253,
+            "pattern": "^(?![0-9]+(?:\\.[0-9]+){3}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$",
+            "not": {
+              "anyOf": [
+                {
+                  "pattern": "(^|\\.)localhost$"
+                },
+                {
+                  "pattern": "(^|\\.)local$"
+                },
+                {
+                  "pattern": "(^|\\.)internal$"
+                },
+                {
+                  "pattern": "(^|\\.)test$"
+                },
+                {
+                  "pattern": "(^|\\.)invalid$"
+                },
+                {
+                  "pattern": "(^|\\.)onion$"
+                }
+              ]
+            },
+            "description": "Lowercase ASCII hostname with valid DNS-style labels; excludes IP literals and policy::valid_site reserved suffixes."
+          },
+          "maxItems": 500
+        },
+        "capture_epoch": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "consent",
+        "paused",
+        "recall_enabled",
+        "selected_only",
+        "selected_sites",
+        "excluded_sites",
+        "capture_epoch"
+      ],
+      "description": "Policy wire record. Runtime additionally limits selected_sites plus excluded_sites to 500 combined and requires capture_epoch to increase."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "op": {
+            "const": "hello"
+          }
+        },
+        "required": [
+          "op"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "nonce": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "nonce"
+            ],
+            "description": "Pairing nonce only."
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "op": {
+            "const": "ingest"
+          }
+        },
+        "required": [
+          "op"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "events": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/Event"
+                },
+                "maxItems": 32
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "events"
+            ],
+            "description": "Ingest payload; Rust also enforces a 65536-byte serialized batch limit."
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "op": {
+            "const": "policy.update"
+          }
+        },
+        "required": [
+          "op"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/Policy"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "op": {
+            "const": "forget"
+          }
+        },
+        "required": [
+          "op"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "site": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/Site"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "atom_id": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/Id"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "site_epoch": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "site_epoch"
+            ],
+            "description": "A missing or null site and atom_id means forget all evidence for the source in current Rust behavior."
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "op": {
+            "const": "feedback"
+          }
+        },
+        "required": [
+          "op"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "atom_id": {
+                "$ref": "#/$defs/Id"
+              },
+              "action": {
+                "type": "string",
+                "enum": [
+                  "not_about_me",
+                  "wrong_topic",
+                  "temporary_research",
+                  "confirm_constraint",
+                  "do_not_use"
+                ]
+              },
+              "text": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "atom_id",
+              "action"
+            ],
+            "description": "Feedback payload. Runtime adds action-specific text validation and rejects sensitive confirmed constraints."
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "op": {
+            "enum": [
+              "status",
+              "dashboard",
+              "receipts"
+            ]
+          }
+        },
+        "required": [
+          "op"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false
+          }
+        }
+      }
+    }
+  ]
+}

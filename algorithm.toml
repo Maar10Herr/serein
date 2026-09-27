@@ -1,0 +1,15 @@
+version = 1
+# Initial calibration parameters; ranking signals, not probabilities.
+dimensions = 256
+query_channel_weight = 0.7
+title_channel_weight = 0.3
+topic_admission = 0.62
+topic_margin = 0.08
+runner_up_admission = 0.55
+semantic_recall_admission = 0.55
+max_topics = 128
+max_context_records = 6
+max_records_per_site = 2
+activity_half_lives_days = [1, 7, 30]
+activity_prior_strength = 2
+rrf_offset = 60

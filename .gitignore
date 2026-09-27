@@ -1,0 +1,49 @@
+# Isolated developer toolchains and project dependencies.
+.toolchain/
+node_modules/
+
+# Generated builds, browser profiles, and test output.
+target/
+.wxt/
+.output/
+dist/
+coverage/
+test-results/
+playwright-report/
+.test-data/
+
+# Local data, logs, caches, and editor/OS metadata.
+*.sqlite*
+*.db
+*.log
+*.tmp
+*.temp
+*.py[cod]
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/
+.DS_Store
+.AppleDouble
+Thumbs.db
+
+# Internal build instructions and working gate notes are not public product docs.
+/AGENTS.md
+/SEREIN_BUILD_SPEC.md
+/docs/STATE.md
+/docs/decisions/
+/docs/design/ux-concept.png
+
+# Local credentials. Keep example templates publishable.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Release bundles are attached to a tagged release, not committed to source.
+/release/*.zip
+/release/*.tar.gz
+/release/SHA256SUMS
+/release/release-status.json

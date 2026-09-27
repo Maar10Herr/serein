@@ -1,0 +1,19 @@
+{
+  "browser": "148.0.7778.96",
+  "extension_id": "leakblpkjoielijhdnbkcafdgmfbpbib",
+  "checks": [
+    "actual extension loaded",
+    "consent off by default",
+    "pause survives reload",
+    "exclusion persisted before helper connection",
+    "deletion pending exposed",
+    "popup renders",
+    "keyboard focus",
+    "light and dark screenshots",
+    "six UI languages persist across reload",
+    "no console errors",
+    "manifest exact permissions",
+    "icon paths exist"
+  ],
+  "nativeMessaging": "PASS: actual sendNativeMessage hello, policy flush, ingest ACK, duplicate ACK, CLI recall, exclude-and-forget"
+}

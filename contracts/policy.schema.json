@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:serein:contracts:policy.schema.json",
+  "type": "object",
+  "properties": {
+    "consent": {
+      "type": "boolean"
+    },
+    "paused": {
+      "type": "boolean"
+    },
+    "recall_enabled": {
+      "type": "boolean"
+    },
+    "selected_only": {
+      "type": "boolean"
+    },
+    "selected_sites": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 253,
+        "pattern": "^(?![0-9]+(?:\\.[0-9]+){3}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$",
+        "not": {
+          "anyOf": [
+            {
+              "pattern": "(^|\\.)localhost$"
+            },
+            {
+              "pattern": "(^|\\.)local$"
+            },
+            {
+              "pattern": "(^|\\.)internal$"
+            },
+            {
+              "pattern": "(^|\\.)test$"
+            },
+            {
+              "pattern": "(^|\\.)invalid$"
+            },
+            {
+              "pattern": "(^|\\.)onion$"
+            }
+          ]
+        },
+        "description": "Lowercase ASCII hostname with valid DNS-style labels; excludes IP literals and policy::valid_site reserved suffixes."
+      },
+      "maxItems": 500
+    },
+    "excluded_sites": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 253,
+        "pattern": "^(?![0-9]+(?:\\.[0-9]+){3}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$",
+        "not": {
+          "anyOf": [
+            {
+              "pattern": "(^|\\.)localhost$"
+            },
+            {
+              "pattern": "(^|\\.)local$"
+            },
+            {
+              "pattern": "(^|\\.)internal$"
+            },
+            {
+              "pattern": "(^|\\.)test$"
+            },
+            {
+              "pattern": "(^|\\.)invalid$"
+            },
+            {
+              "pattern": "(^|\\.)onion$"
+            }
+          ]
+        },
+        "description": "Lowercase ASCII hostname with valid DNS-style labels; excludes IP literals and policy::valid_site reserved suffixes."
+      },
+      "maxItems": 500
+    },
+    "capture_epoch": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 18446744073709551615
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "consent",
+    "paused",
+    "recall_enabled",
+    "selected_only",
+    "selected_sites",
+    "excluded_sites",
+    "capture_epoch"
+  ],
+  "description": "Policy wire record. Runtime additionally limits selected_sites plus excluded_sites to 500 combined and requires capture_epoch to increase."
+}

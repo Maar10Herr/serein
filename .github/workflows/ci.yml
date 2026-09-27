@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: '11.25.0'
+      - uses: dtolnay/rust-toolchain@stable
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --dir apps/extension check
+      - run: pnpm --dir apps/extension test
+      - run: pnpm --dir apps/extension build
+        env:
+          SEREIN_SKILL_REPOSITORY: https://github.com/Maar10Herr/serein
+      - run: pnpm --dir apps/extension build:firefox
+        env:
+          SEREIN_SKILL_REPOSITORY: https://github.com/Maar10Herr/serein
+      - run: cargo test --workspace --release
+      - run: python3 tools/check_contracts.py

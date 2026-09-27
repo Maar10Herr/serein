@@ -1,0 +1,221 @@
+{
+  "status": "passed",
+  "model": "sentence-transformers/static-similarity-mrl-multilingual-v1",
+  "upstream_commit": "bae9c8b1d48e8962a2ce7cb207662ed2a8441ccc",
+  "upstream_license": "Apache-2.0",
+  "source_embedding_sha256": "8245ab78ee71dded845a82d2270fcb9e785b29dad0e1619f69d5390c47d9ba00",
+  "source_tokenizer_sha256": "11aaf894a4ccf3d95e8830e27c0f8152791fbbff2b988e29a265580b86edd216",
+  "runtime_manifest": {
+    "format": 1,
+    "dimensions": 256,
+    "rows": 105879,
+    "model_hash": "sentence-transformers/static-similarity-mrl-multilingual-v1@bae9c8b1d48e8962a2ce7cb207662ed2a8441ccc:dim256:int8sym-v1",
+    "weights_sha256": "ea6daccc4c4fdf27eecfcd2716f5408142947622b5e3dcc356231ea8ddade15e",
+    "scales_sha256": "2b42e8dedf1b2b5e45a5cac326ea17d3d9b1e07e12d571f6a09181d73d72c1ee",
+    "tokenizer_sha256": "11aaf894a4ccf3d95e8830e27c0f8152791fbbff2b988e29a265580b86edd216",
+    "special_ids": []
+  },
+  "validation": {
+    "synthetic_multilingual_texts": 240,
+    "token_id_texts_compared": 264,
+    "token_id_exact_match": true,
+    "maximum_token_count": 20,
+    "pooling_reference": "sentence-transformers v3.3.0 StaticEmbedding: mean over encode_batch(add_special_tokens=False) IDs",
+    "quantized_normalized_cosine": {
+      "cases": 264,
+      "minimum": 0.9999646836710948,
+      "median": 0.999977168127298,
+      "thresholds": {
+        "minimum": 0.98,
+        "median": 0.995
+      },
+      "passed": true
+    },
+    "held_out_neighbor_ranking": {
+      "cases": 6,
+      "top1_order_matches": 6,
+      "pairwise_order_preserved": 18,
+      "pairwise_order_comparisons": 18,
+      "pairwise_order_agreement": 1.0,
+      "examples": [
+        {
+          "query": "Looking for a quiet desk lamp for evening reading.",
+          "reference_scores": [
+            0.57503808,
+            0.00332605,
+            0.59958576
+          ],
+          "quantized_scores": [
+            0.57554914,
+            0.00386523,
+            0.59984379
+          ],
+          "reference_order": [
+            2,
+            0,
+            1
+          ],
+          "quantized_order": [
+            2,
+            0,
+            1
+          ]
+        },
+        {
+          "query": "I do not want a keyboard with loud switches.",
+          "reference_scores": [
+            0.83786609,
+            0.87579432,
+            0.13805783
+          ],
+          "quantized_scores": [
+            0.83765789,
+            0.87582855,
+            0.13776338
+          ],
+          "reference_order": [
+            1,
+            0,
+            2
+          ],
+          "quantized_order": [
+            1,
+            0,
+            2
+          ]
+        },
+        {
+          "query": "Part number ZX-41B fits device ACME-RX7.",
+          "reference_scores": [
+            1.0,
+            0.97747909,
+            0.10790321
+          ],
+          "quantized_scores": [
+            1.0,
+            0.97753445,
+            0.10829139
+          ],
+          "reference_order": [
+            0,
+            1,
+            2
+          ],
+          "quantized_order": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "query": "I prefer coffee without sugar.",
+          "reference_scores": [
+            0.94086543,
+            0.91897174,
+            0.09846338
+          ],
+          "quantized_scores": [
+            0.94095283,
+            0.91906658,
+            0.09837047
+          ],
+          "reference_order": [
+            0,
+            1,
+            2
+          ],
+          "quantized_order": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "query": "The Dutch title is ‘Stille werkplek’.",
+          "reference_scores": [
+            0.35564518,
+            0.66160215,
+            -0.02653341
+          ],
+          "quantized_scores": [
+            0.35623145,
+            0.6619369,
+            -0.02690268
+          ],
+          "reference_order": [
+            1,
+            0,
+            2
+          ],
+          "quantized_order": [
+            1,
+            0,
+            2
+          ]
+        },
+        {
+          "query": "C++20 and RFC-9110 are exact identifiers.",
+          "reference_scores": [
+            0.99907855,
+            0.82907509,
+            -0.02195064
+          ],
+          "quantized_scores": [
+            0.99907743,
+            0.82897778,
+            -0.02182494
+          ],
+          "reference_order": [
+            0,
+            1,
+            2
+          ],
+          "quantized_order": [
+            0,
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    "notes": [
+      "Ranking compares quantized results to this pinned model's own cosine order; it is not a retrieval-quality claim.",
+      "The six held-out cases include cross-lingual similarity, negation, and exact identifiers."
+    ]
+  },
+  "artifact_sizes_bytes": {
+    "weights.i8": 27105024,
+    "scales.f32": 423516,
+    "tokenizer.json": 2563370
+  },
+  "runtime_parity_fixture": {
+    "path": "models/pack/parity.json",
+    "sha256": "b665ed1ea3735442a43e2ea604dbe9d01bbc40549dff234919c6294dfe2e7928",
+    "examples": 12,
+    "languages": [
+      "en",
+      "de",
+      "nl",
+      "fr",
+      "ja",
+      "zh"
+    ]
+  },
+  "reference_environment": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "tokenizers": "0.22.2",
+    "sentence_transformers_model_config": "3.3.0.dev0"
+  },
+  "method": {
+    "tokenization": "Both source reference and prepared pack use the pinned tokenizer.json with add_special_tokens=false; IDs were compared per text.",
+    "pooling": "Mean of original first-256 source rows for upstream reference; dequantized row sum/mean for the pack, followed by L2 normalization.",
+    "ranking": "Held-out cosine ordering compared to the pinned source table, without interpreting it as retrieval-quality evidence."
+  },
+  "provenance": {
+    "model_card": "https://huggingface.co/sentence-transformers/static-similarity-mrl-multilingual-v1/tree/bae9c8b1d48e8962a2ce7cb207662ed2a8441ccc",
+    "reference_pooling_source": "https://github.com/UKPLab/sentence-transformers/blob/v3.3.0/sentence_transformers/models/StaticEmbedding.py",
+    "license_text": "models/LICENSE-2.0.txt",
+    "upstream_license_declaration": "https://huggingface.co/sentence-transformers/static-similarity-mrl-multilingual-v1/resolve/bae9c8b1d48e8962a2ce7cb207662ed2a8441ccc/README.md"
+  }
+}

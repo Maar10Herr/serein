@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:serein:contracts:model-manifest.schema.json",
+  "type": "object",
+  "properties": {
+    "format": {
+      "type": "integer",
+      "const": 1
+    },
+    "dimensions": {
+      "type": "integer",
+      "const": 256
+    },
+    "rows": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 200000
+    },
+    "model_hash": {
+      "type": "string",
+      "minLength": 1
+    },
+    "weights_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "scales_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "tokenizer_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "special_ids": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 4294967295
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "dimensions",
+    "rows",
+    "model_hash",
+    "weights_sha256",
+    "scales_sha256",
+    "tokenizer_sha256",
+    "special_ids"
+  ],
+  "description": "Model manifest. File sizes, hashes, tokenizer validity, and special_ids relative to rows are verified by model::Encoder::open."
+}

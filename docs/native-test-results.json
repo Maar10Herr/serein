@@ -1,0 +1,19 @@
+{
+  "passed": [
+    "setup isolated user registration",
+    "hello caller pairing",
+    "wrong caller denied",
+    "save ACK",
+    "retry idempotent",
+    "bounded lexical recall",
+    "forget + replay tombstone",
+    "native malformed frames",
+    "host exits within 2s"
+  ],
+  "status_latency_ms": {
+    "median": 5.096146021969616,
+    "p95": 5.318917101249099
+  },
+  "browser_invocation": "not tested: native process harness only",
+  "semantic_model": "absent; explicit lexical fallback"
+}

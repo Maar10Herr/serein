@@ -1,0 +1,12 @@
+{
+  "checks": [
+    "selected adapters remain distinct from detected installation state",
+    "setup does not copy a skill without explicit native installer request",
+    "existing GitHub-installed SKILL.md is preserved",
+    "local executable pointer is created and user edits are preserved",
+    "native manifest removed",
+    "vault retained by explicit choice"
+  ],
+  "real_assistant_discovery_and_execution": false,
+  "native_skills_cli_execution": false
+}

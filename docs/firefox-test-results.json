@@ -1,0 +1,15 @@
+{
+  "browser": "156.0.1",
+  "nativeMessaging": "PASS",
+  "checks": [
+    "temporary unsigned installation",
+    "consent off by default",
+    "actual hello pairing",
+    "ingest ACK",
+    "duplicate ACK",
+    "exclude and forget",
+    "persistent pause",
+    "screenshot"
+  ],
+  "permanent_installation": "requires Mozilla signing"
+}

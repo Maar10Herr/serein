@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:serein:contracts:event.schema.json",
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "UUID identifier; callers emit canonical hyphenated UUIDs."
+    },
+    "visit_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "UUID identifier; callers emit canonical hyphenated UUIDs."
+    },
+    "site_key": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 253,
+      "pattern": "^(?![0-9]+(?:\\.[0-9]+){3}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$",
+      "not": {
+        "anyOf": [
+          {
+            "pattern": "(^|\\.)localhost$"
+          },
+          {
+            "pattern": "(^|\\.)local$"
+          },
+          {
+            "pattern": "(^|\\.)internal$"
+          },
+          {
+            "pattern": "(^|\\.)test$"
+          },
+          {
+            "pattern": "(^|\\.)invalid$"
+          },
+          {
+            "pattern": "(^|\\.)onion$"
+          }
+        ]
+      },
+      "description": "Lowercase ASCII hostname with valid DNS-style labels; excludes IP literals and policy::valid_site reserved suffixes."
+    },
+    "site_epoch": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 18446744073709551615
+    },
+    "observed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "visit",
+        "search"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "maxLength": 256
+    },
+    "search_query": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 512
+    },
+    "foreground_seconds": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 3600
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "visit_id",
+    "site_key",
+    "site_epoch",
+    "observed_at",
+    "kind",
+    "title",
+    "search_query",
+    "foreground_seconds"
+  ],
+  "description": "Event as sent by the TypeScript extension. Rust accepts an omitted search_query as None; the extension type requires it, so the wire schema requires explicit string or null.",
+  "allOf": [
+    {
+      "properties": {
+        "title": {
+          "type": "string",
+          "maxLength": 256
+        },
+        "search_query": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 512
+        }
+      },
+      "description": "Rust also rejects title plus query above 2048 UTF-8 bytes; JSON Schema maxLength counts characters and cannot express that byte sum."
+    }
+  ]
+}

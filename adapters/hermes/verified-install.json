@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "adapter": "hermes",
+  "display_name": "Hermes",
+  "verification_status": "not_verified",
+  "profile_installation_state": "not_inspected",
+  "assistant_execution_tested": false,
+  "assistant_commands_run": [],
+  "assistant_version": null,
+  "tested_flags": [],
+  "transcript": null,
+  "executable_discovery": {
+    "method": "command -v hermes",
+    "found": null,
+    "resolved_path": null
+  },
+  "notes": [
+    "No invocation inside this assistant was performed.",
+    "A discovered executable does not establish skill installation or loading."
+  ]
+}

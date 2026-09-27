@@ -1,0 +1,33 @@
+{
+  "model": "sentence-transformers/static-similarity-mrl-multilingual-v1",
+  "upstream_commit": "bae9c8b1d48e8962a2ce7cb207662ed2a8441ccc",
+  "license": "Apache-2.0",
+  "source": {
+    "embedding_file": "0_StaticEmbedding/model.safetensors",
+    "embedding_sha256": "8245ab78ee71dded845a82d2270fcb9e785b29dad0e1619f69d5390c47d9ba00",
+    "tokenizer_file": "0_StaticEmbedding/tokenizer.json",
+    "tokenizer_sha256": "11aaf894a4ccf3d95e8830e27c0f8152791fbbff2b988e29a265580b86edd216",
+    "sentence_transformers_version": "3.3.0.dev0"
+  },
+  "representation": {
+    "rows": 105879,
+    "source_dimensions": 1024,
+    "dimensions": 256,
+    "quantization": "symmetric row-wise int8; scale=max(abs(row))/127; round-to-nearest; zero rows use scale 1",
+    "pooling": "mean over tokenizer IDs with add_special_tokens=false; no token weights",
+    "special_ids": [],
+    "model_hash": "sentence-transformers/static-similarity-mrl-multilingual-v1@bae9c8b1d48e8962a2ce7cb207662ed2a8441ccc:dim256:int8sym-v1"
+  },
+  "pack": {
+    "format": 1,
+    "weights_sha256": "ea6daccc4c4fdf27eecfcd2716f5408142947622b5e3dcc356231ea8ddade15e",
+    "scales_sha256": "2b42e8dedf1b2b5e45a5cac326ea17d3d9b1e07e12d571f6a09181d73d72c1ee",
+    "tokenizer_sha256": "11aaf894a4ccf3d95e8830e27c0f8152791fbbff2b988e29a265580b86edd216",
+    "files_bytes": {
+      "weights.i8": 27105024,
+      "scales.f32": 423516,
+      "tokenizer.json": 2563370
+    },
+    "parity_fixture_sha256": "b665ed1ea3735442a43e2ea604dbe9d01bbc40549dff234919c6294dfe2e7928"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:serein:contracts:setup-ticket.schema.json",
+  "title": "Serein local setup ticket",
+  "type": "object",
+  "properties": {
+    "protocol": { "type": "integer", "const": 1 },
+    "source_id": { "type": "string", "format": "uuid" },
+    "extension_id": { "type": "string" },
+    "browser": { "type": "string", "enum": ["chrome", "chromium", "firefox"] },
+    "nonce": { "type": "string", "minLength": 32, "maxLength": 256 },
+    "expires_at": { "type": "integer", "minimum": 0 },
+    "adapters": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["claude-code", "codex", "opencode", "hermes", "openclaw", "generic"]
+      },
+      "uniqueItems": true
+    },
+    "label": { "type": "string", "maxLength": 80 },
+    "consent": { "type": "boolean", "const": true },
+    "install_skills": {
+      "type": "boolean",
+      "default": false,
+      "description": "Explicit user choice to run the configured public GitHub source through the Skills CLI for the selected named agents."
+    },
+    "skill_repository": {
+      "type": ["string", "null"],
+      "format": "uri",
+      "description": "Must exactly match the public GitHub owner/repo URL configured when the native helper was built."
+    }
+  },
+  "additionalProperties": false,
+  "required": ["protocol", "source_id", "extension_id", "browser", "nonce", "expires_at", "adapters", "label", "consent"],
+  "allOf": [
+    {
+      "if": { "properties": { "install_skills": { "const": true } }, "required": ["install_skills"] },
+      "then": {
+        "properties": { "skill_repository": { "type": "string", "format": "uri" } },
+        "required": ["skill_repository"]
+      }
+    },
+    {
+      "if": { "properties": { "browser": { "const": "firefox" } }, "required": ["browser"] },
+      "then": { "properties": { "extension_id": { "const": "serein-context@local.serein" } } }
+    }
+  ],
+  "description": "The CLI additionally checks that the pairing expiry is within 15 minutes, validates the browser-specific extension ID, and requires at least one named agent when install_skills is true."
+}

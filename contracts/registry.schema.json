@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:serein:contracts:registry.schema.json",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "integer",
+      "const": 1
+    },
+    "default_vault": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "uuid",
+          "description": "UUID identifier; callers emit canonical hyphenated UUIDs."
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "connections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "source_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "UUID identifier; callers emit canonical hyphenated UUIDs."
+          },
+          "vault_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "UUID identifier; callers emit canonical hyphenated UUIDs."
+          },
+          "extension_id": {
+            "type": "string"
+          },
+          "browser": {
+            "type": "string",
+            "enum": [
+              "chrome",
+              "chromium",
+              "firefox"
+            ]
+          },
+          "nonce_hash": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "expires_at": {
+            "type": "integer",
+            "minimum": -9223372036854775808,
+            "maximum": 9223372036854775807
+          },
+          "paired": {
+            "type": "boolean"
+          },
+          "adapters": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "claude-code",
+                "codex",
+                "opencode",
+                "hermes",
+                "openclaw",
+                "generic"
+              ]
+            }
+          },
+          "skill_install_requested": {
+            "type": "boolean",
+            "default": false,
+            "description": "Explicit user choice to install the repository skill through a native skills installer during setup."
+          },
+          "skill_repository": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri",
+            "description": "Build-configured public GitHub owner/repo source for the Serein skill; absent for older registry records."
+          },
+          "label": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "source_id",
+          "vault_id",
+          "extension_id",
+          "browser",
+          "nonce_hash",
+          "expires_at",
+          "paired",
+          "adapters",
+          "label"
+        ],
+        "description": "Persisted connection. Setup enforces exact browser-specific extension ID formats and an 80-byte label cap; Registry loading does not revalidate those conditions. Skill installation fields are optional for backward compatibility.",
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "browser": {
+                  "const": "firefox"
+                }
+              },
+              "required": [
+                "browser"
+              ]
+            },
+            "then": {
+              "properties": {
+                "extension_id": {
+                  "const": "serein-context@local.serein"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "browser": {
+                  "enum": [
+                    "chrome",
+                    "chromium"
+                  ]
+                }
+              },
+              "required": [
+                "browser"
+              ]
+            },
+            "then": {
+              "properties": {
+                "extension_id": {
+                  "type": "string",
+                  "pattern": "^[a-p]{32}$"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "connections"
+  ],
+  "description": "connections.json registry. Rust permits default_vault to be omitted or null; read_registry requires version 1."
+}

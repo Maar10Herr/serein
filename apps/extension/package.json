@@ -1,0 +1,25 @@
+{
+  "name": "@serein/extension",
+  "version": "0.1.0-beta.2",
+  "license": "GPL-3.0-only",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wxt",
+    "build": "wxt build",
+    "build:firefox": "wxt build -b firefox",
+    "check": "wxt prepare && tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "preact": "^10.27.0",
+    "idb": "^8.0.3"
+  },
+  "devDependencies": {
+    "wxt": "^0.20.0",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4",
+    "@types/node": "^22.0.0",
+    "@preact/preset-vite": "^2.10.2"
+  }
+}

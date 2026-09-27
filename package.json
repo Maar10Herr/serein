@@ -1,0 +1,19 @@
+{
+  "name": "serein",
+  "version": "0.1.0-beta.2",
+  "license": "GPL-3.0-only",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/extension"
+  ],
+  "scripts": {
+    "build": "pnpm --dir apps/extension build",
+    "build:firefox": "pnpm --dir apps/extension build:firefox",
+    "check": "pnpm --dir apps/extension check",
+    "test": "pnpm --dir apps/extension test"
+  },
+  "devDependencies": {
+    "prettier": "^3.9.9"
+  }
+}

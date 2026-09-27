@@ -1,0 +1,3515 @@
+{
+  "build_profile": "release",
+  "capture_preparation": {
+    "ingested_observation_count": 90,
+    "privacy_private_session_cases": 6,
+    "privacy_private_session_gate": "Policy.paused native control path; not a browser incognito E2E test.",
+    "privacy_private_session_rejected_event_count": 6,
+    "privacy_sensitive_classifier_status": "unsupported fixture: titles and queries are redacted, so classifier accuracy cannot be measured from these rows.",
+    "privacy_sensitive_placeholder_cases": 6,
+    "unsupported_sensitive_placeholder_observation_count": 6
+  },
+  "fixture_case_count": 90,
+  "fixture_provenance": "Synthetic fixtures for EN, DE, NL, FR, JA, and ZH. Expected labels are curated illustrative examples, not measured results or a validated human benchmark.",
+  "hard_invariant_failures": [],
+  "languages": [
+    "de",
+    "en",
+    "fr",
+    "ja",
+    "nl",
+    "zh"
+  ],
+  "model_pack": {
+    "files_present": true,
+    "path": "models/pack",
+    "semantic_quality_status": "evaluated"
+  },
+  "modes": {
+    "lexical": {
+      "case_count": 90,
+      "cases": [
+        {
+          "case_id": "en-coffee",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.579917,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 654,
+          "privacy_trigger": null,
+          "quality_class": "unexpected_result",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "en-coffee-o1"
+          ]
+        },
+        {
+          "case_id": "en-lamp",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.32129199999999997,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 643,
+          "privacy_trigger": null,
+          "quality_class": "unexpected_result",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "en-lamp-o1"
+          ]
+        },
+        {
+          "case_id": "en-garden",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.330792,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 663,
+          "privacy_trigger": null,
+          "quality_class": "unexpected_result",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "en-garden-o1"
+          ]
+        },
+        {
+          "case_id": "en-bike",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.34650000000000003,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 661,
+          "privacy_trigger": null,
+          "quality_class": "unexpected_result",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "en-bike-o1"
+          ]
+        },
+        {
+          "case_id": "en-bread",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.365958,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 644,
+          "privacy_trigger": null,
+          "quality_class": "unexpected_result",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "en-bread-o1"
+          ]
+        },
+        {
+          "case_id": "en-unit",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.342291,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "en-unit-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "exact_unit",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 652,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "en-unit-o1"
+          ]
+        },
+        {
+          "case_id": "en-gift",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.312417,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "en-gift-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "gift_research",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 668,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "en-gift-o1"
+          ]
+        },
+        {
+          "case_id": "en-criticism",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.302125,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "en-criticism-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "criticism",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 672,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "en-criticism-o1"
+          ]
+        },
+        {
+          "case_id": "en-negation",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.29341700000000004,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "en-negation-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "negation",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 659,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "en-negation-o1"
+          ]
+        },
+        {
+          "case_id": "en-nomatch1",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.22924999999999998,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "no_match",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "en-repeat",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.340333,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "en-repeat-o1",
+            "en-repeat-o2",
+            "en-repeat-o3"
+          ],
+          "index_mode": "lexical",
+          "kind": "repeated_source",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 995,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "partial",
+          "returned_atom_count": 2,
+          "returned_observation_ids": [
+            "en-repeat-o1",
+            "en-repeat-o2",
+            "en-repeat-o3"
+          ]
+        },
+        {
+          "case_id": "en-work",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.28650000000000003,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "en-work-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "work_context",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 669,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "en-work-o1"
+          ]
+        },
+        {
+          "case_id": "en-privateinfo",
+          "evaluation_status": "unsupported_privacy_placeholder",
+          "expected_observation_ids": [],
+          "kind": "privacy_sensitive",
+          "language": "en",
+          "note": "Sanitized placeholder contains no classifier trigger; excluded from privacy accuracy scoring.",
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "en-privatesession",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.229542,
+          "evaluation_status": "native_paused_session_control",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "privacy_private_session",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": "private_session",
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "en-nomatch2",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.261625,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "no_match",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "de-coffee",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.320041,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "de",
+          "max_bytes": 4096,
+          "packet_bytes": 663,
+          "privacy_trigger": null,
+          "quality_class": "unexpected_result",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "de-coffee-o1"
+          ]
+        },
+        {
+          "case_id": "de-lamp",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.28983299999999995,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "de",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "de-garden",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.290458,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "de",
+          "max_bytes": 4096,
+          "packet_bytes": 671,
+          "privacy_trigger": null,
+          "quality_class": "unexpected_result",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "de-garden-o1"
+          ]
+        },
+        {
+          "case_id": "de-bike",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.325125,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "de",
+          "max_bytes": 4096,
+          "packet_bytes": 672,
+          "privacy_trigger": null,
+          "quality_class": "unexpected_result",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "de-bike-o1"
+          ]
+        },
+        {
+          "case_id": "de-bread",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.265792,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "de",
+          "max_bytes": 4096,
+          "packet_bytes": 655,
+          "privacy_trigger": null,
+          "quality_class": "unexpected_result",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "de-bread-o1"
+          ]
+        },
+        {
+          "case_id": "de-unit",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.301916,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "de-unit-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "exact_unit",
+          "language": "de",
+          "max_bytes": 4096,
+          "packet_bytes": 651,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "de-unit-o1"
+          ]
+        },
+        {
+          "case_id": "de-gift",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.303458,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "de-gift-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "gift_research",
+          "language": "de",
+          "max_bytes": 4096,
+          "packet_bytes": 671,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "de-gift-o1"
+          ]
+        },
+        {
+          "case_id": "de-criticism",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.321333,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "de-criticism-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "criticism",
+          "language": "de",
+          "max_bytes": 4096,
+          "packet_bytes": 675,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "de-criticism-o1"
+          ]
+        },
+        {
+          "case_id": "de-negation",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.31925,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "de-negation-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "negation",
+          "language": "de",
+          "max_bytes": 4096,
+          "packet_bytes": 677,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "de-negation-o1"
+          ]
+        },
+        {
+          "case_id": "de-nomatch1",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.23204200000000003,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "no_match",
+          "language": "de",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "de-repeat",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.305084,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "de-repeat-o1",
+            "de-repeat-o2",
+            "de-repeat-o3"
+          ],
+          "index_mode": "lexical",
+          "kind": "repeated_source",
+          "language": "de",
+          "max_bytes": 4096,
+          "packet_bytes": 1005,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "partial",
+          "returned_atom_count": 2,
+          "returned_observation_ids": [
+            "de-repeat-o1",
+            "de-repeat-o2",
+            "de-repeat-o3"
+          ]
+        },
+        {
+          "case_id": "de-work",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.274292,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "de-work-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "work_context",
+          "language": "de",
+          "max_bytes": 4096,
+          "packet_bytes": 672,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "de-work-o1"
+          ]
+        },
+        {
+          "case_id": "de-privateinfo",
+          "evaluation_status": "unsupported_privacy_placeholder",
+          "expected_observation_ids": [],
+          "kind": "privacy_sensitive",
+          "language": "de",
+          "note": "Sanitized placeholder contains no classifier trigger; excluded from privacy accuracy scoring.",
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "de-privatesession",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.275417,
+          "evaluation_status": "native_paused_session_control",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "privacy_private_session",
+          "language": "de",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": "private_session",
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "de-nomatch2",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.271458,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "no_match",
+          "language": "de",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "nl-coffee",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.294625,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "nl",
+          "max_bytes": 4096,
+          "packet_bytes": 668,
+          "privacy_trigger": null,
+          "quality_class": "unexpected_result",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "nl-coffee-o1"
+          ]
+        },
+        {
+          "case_id": "nl-lamp",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.27125,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "nl",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "nl-garden",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.287917,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "nl",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "nl-bike",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.306792,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "nl",
+          "max_bytes": 4096,
+          "packet_bytes": 660,
+          "privacy_trigger": null,
+          "quality_class": "unexpected_result",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "nl-bike-o1"
+          ]
+        },
+        {
+          "case_id": "nl-bread",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.272458,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "nl",
+          "max_bytes": 4096,
+          "packet_bytes": 645,
+          "privacy_trigger": null,
+          "quality_class": "unexpected_result",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "nl-bread-o1"
+          ]
+        },
+        {
+          "case_id": "nl-unit",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.308792,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "nl-unit-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "exact_unit",
+          "language": "nl",
+          "max_bytes": 4096,
+          "packet_bytes": 650,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "nl-unit-o1"
+          ]
+        },
+        {
+          "case_id": "nl-gift",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.28350000000000003,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "nl-gift-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "gift_research",
+          "language": "nl",
+          "max_bytes": 4096,
+          "packet_bytes": 674,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "nl-gift-o1"
+          ]
+        },
+        {
+          "case_id": "nl-criticism",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.279667,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "nl-criticism-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "criticism",
+          "language": "nl",
+          "max_bytes": 4096,
+          "packet_bytes": 662,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "nl-criticism-o1"
+          ]
+        },
+        {
+          "case_id": "nl-negation",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.317167,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "nl-negation-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "negation",
+          "language": "nl",
+          "max_bytes": 4096,
+          "packet_bytes": 678,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "nl-negation-o1"
+          ]
+        },
+        {
+          "case_id": "nl-nomatch1",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.23,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "no_match",
+          "language": "nl",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "nl-repeat",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.42012499999999997,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "nl-repeat-o1",
+            "nl-repeat-o2",
+            "nl-repeat-o3"
+          ],
+          "index_mode": "lexical",
+          "kind": "repeated_source",
+          "language": "nl",
+          "max_bytes": 4096,
+          "packet_bytes": 1005,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "partial",
+          "returned_atom_count": 2,
+          "returned_observation_ids": [
+            "nl-repeat-o1",
+            "nl-repeat-o2",
+            "nl-repeat-o3"
+          ]
+        },
+        {
+          "case_id": "nl-work",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.321792,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "nl-work-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "work_context",
+          "language": "nl",
+          "max_bytes": 4096,
+          "packet_bytes": 671,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "nl-work-o1"
+          ]
+        },
+        {
+          "case_id": "nl-privateinfo",
+          "evaluation_status": "unsupported_privacy_placeholder",
+          "expected_observation_ids": [],
+          "kind": "privacy_sensitive",
+          "language": "nl",
+          "note": "Sanitized placeholder contains no classifier trigger; excluded from privacy accuracy scoring.",
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "nl-privatesession",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.308417,
+          "evaluation_status": "native_paused_session_control",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "privacy_private_session",
+          "language": "nl",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": "private_session",
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "nl-nomatch2",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.275167,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "no_match",
+          "language": "nl",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "fr-coffee",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.369458,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 663,
+          "privacy_trigger": null,
+          "quality_class": "unexpected_result",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "fr-coffee-o1"
+          ]
+        },
+        {
+          "case_id": "fr-lamp",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.278792,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "fr-garden",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.314583,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 661,
+          "privacy_trigger": null,
+          "quality_class": "unexpected_result",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "fr-garden-o1"
+          ]
+        },
+        {
+          "case_id": "fr-bike",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.338458,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 664,
+          "privacy_trigger": null,
+          "quality_class": "unexpected_result",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "fr-bike-o1"
+          ]
+        },
+        {
+          "case_id": "fr-bread",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.285166,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 642,
+          "privacy_trigger": null,
+          "quality_class": "unexpected_result",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "fr-bread-o1"
+          ]
+        },
+        {
+          "case_id": "fr-unit",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.33337500000000003,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "fr-unit-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "exact_unit",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 657,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "fr-unit-o1"
+          ]
+        },
+        {
+          "case_id": "fr-gift",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.35575,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "fr-gift-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "gift_research",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 674,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "fr-gift-o1"
+          ]
+        },
+        {
+          "case_id": "fr-criticism",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.285042,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "fr-criticism-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "criticism",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 663,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "fr-criticism-o1"
+          ]
+        },
+        {
+          "case_id": "fr-negation",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.281,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "fr-negation-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "negation",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 671,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "fr-negation-o1"
+          ]
+        },
+        {
+          "case_id": "fr-nomatch1",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.228375,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "no_match",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "fr-repeat",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.308666,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "fr-repeat-o1",
+            "fr-repeat-o2",
+            "fr-repeat-o3"
+          ],
+          "index_mode": "lexical",
+          "kind": "repeated_source",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 1037,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "partial",
+          "returned_atom_count": 2,
+          "returned_observation_ids": [
+            "fr-repeat-o1",
+            "fr-repeat-o2",
+            "fr-repeat-o3"
+          ]
+        },
+        {
+          "case_id": "fr-work",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.288042,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "fr-work-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "work_context",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 675,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "fr-work-o1"
+          ]
+        },
+        {
+          "case_id": "fr-privateinfo",
+          "evaluation_status": "unsupported_privacy_placeholder",
+          "expected_observation_ids": [],
+          "kind": "privacy_sensitive",
+          "language": "fr",
+          "note": "Sanitized placeholder contains no classifier trigger; excluded from privacy accuracy scoring.",
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "fr-privatesession",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.268959,
+          "evaluation_status": "native_paused_session_control",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "privacy_private_session",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": "private_session",
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "fr-nomatch2",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.256583,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "no_match",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "ja-coffee",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.250083,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "ja",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "ja-lamp",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.239584,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "ja",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "ja-garden",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.262208,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "ja",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "ja-bike",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.266833,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "ja",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "ja-bread",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.227625,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "ja",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "ja-unit",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.261917,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "ja-unit-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "exact_unit",
+          "language": "ja",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "miss",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "ja-gift",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.24633400000000003,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "ja-gift-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "gift_research",
+          "language": "ja",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "miss",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "ja-criticism",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.28016599999999997,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "ja-criticism-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "criticism",
+          "language": "ja",
+          "max_bytes": 4096,
+          "packet_bytes": 672,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "ja-criticism-o1"
+          ]
+        },
+        {
+          "case_id": "ja-negation",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.24504099999999998,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "ja-negation-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "negation",
+          "language": "ja",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "miss",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "ja-nomatch1",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.45016700000000004,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "no_match",
+          "language": "ja",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "ja-repeat",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.34808300000000003,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "ja-repeat-o1",
+            "ja-repeat-o2",
+            "ja-repeat-o3"
+          ],
+          "index_mode": "lexical",
+          "kind": "repeated_source",
+          "language": "ja",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "miss",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "ja-work",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.25179100000000004,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "ja-work-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "work_context",
+          "language": "ja",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "miss",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "ja-privateinfo",
+          "evaluation_status": "unsupported_privacy_placeholder",
+          "expected_observation_ids": [],
+          "kind": "privacy_sensitive",
+          "language": "ja",
+          "note": "Sanitized placeholder contains no classifier trigger; excluded from privacy accuracy scoring.",
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "ja-privatesession",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.23458299999999999,
+          "evaluation_status": "native_paused_session_control",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "privacy_private_session",
+          "language": "ja",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": "private_session",
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "ja-nomatch2",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.23374999999999999,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "no_match",
+          "language": "ja",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "zh-coffee",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.239709,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "zh",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "zh-lamp",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.258,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "zh",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "zh-garden",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.264708,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "zh",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "zh-bike",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.25033299999999997,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "zh",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "zh-bread",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.22975,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "semantic_paraphrase",
+          "language": "zh",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "zh-unit",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.262334,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "zh-unit-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "exact_unit",
+          "language": "zh",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "miss",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "zh-gift",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.225166,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "zh-gift-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "gift_research",
+          "language": "zh",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "miss",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "zh-criticism",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.293917,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "zh-criticism-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "criticism",
+          "language": "zh",
+          "max_bytes": 4096,
+          "packet_bytes": 670,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "partial",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "zh-criticism-o1"
+          ]
+        },
+        {
+          "case_id": "zh-negation",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.27620900000000004,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "zh-negation-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "negation",
+          "language": "zh",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "miss",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "zh-nomatch1",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.235375,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "no_match",
+          "language": "zh",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "zh-repeat",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.26483300000000004,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "zh-repeat-o1",
+            "zh-repeat-o2",
+            "zh-repeat-o3"
+          ],
+          "index_mode": "lexical",
+          "kind": "repeated_source",
+          "language": "zh",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "miss",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "zh-work",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.214458,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "zh-work-o1"
+          ],
+          "index_mode": "lexical",
+          "kind": "work_context",
+          "language": "zh",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "miss",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "zh-privateinfo",
+          "evaluation_status": "unsupported_privacy_placeholder",
+          "expected_observation_ids": [],
+          "kind": "privacy_sensitive",
+          "language": "zh",
+          "note": "Sanitized placeholder contains no classifier trigger; excluded from privacy accuracy scoring.",
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "zh-privatesession",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.207042,
+          "evaluation_status": "native_paused_session_control",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "privacy_private_session",
+          "language": "zh",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": "private_session",
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "zh-nomatch2",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 0.206708,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "lexical",
+          "kind": "no_match",
+          "language": "zh",
+          "max_bytes": 4096,
+          "packet_bytes": 299,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        }
+      ],
+      "evaluated_case_count": 84,
+      "hard_invariants": {
+        "browser_evidence_state_and_subject": "observed/unknown",
+        "byte_bound_failure_count": 0,
+        "duplicate_return_id_count": 0,
+        "privacy_drop_return_count": 0,
+        "unexpected_attribution_count": 0
+      },
+      "hybrid_index_mode_case_count": 0,
+      "latency_ms": {
+        "median": 0.280583,
+        "p95": 0.365958
+      },
+      "mode": "lexical_missing_pack",
+      "model_path": "models/pack",
+      "privacy_case_count": 12,
+      "quality_summary": {
+        "classification_counts": {
+          "correct_empty": 32,
+          "exact_match": 26,
+          "miss": 10,
+          "unexpected_result": 16
+        },
+        "expected_observation_count": 48,
+        "no_match_cases_with_results": 0,
+        "note": "Curated illustrative fixtures are not a validated human benchmark; counts are descriptive, not a field-quality claim.",
+        "relevant_return_count": 34,
+        "returned_observation_count": 50,
+        "semantic_paraphrase_cases_with_relevant_return": 0
+      },
+      "unsupported_privacy_placeholder_count": 6
+    },
+    "semantic": {
+      "case_count": 90,
+      "cases": [
+        {
+          "case_id": "en-coffee",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 289.749792,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "en-coffee-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 595,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "en-coffee-o1"
+          ]
+        },
+        {
+          "case_id": "en-lamp",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 230.76829099999998,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "en-lamp-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 584,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "en-lamp-o1"
+          ]
+        },
+        {
+          "case_id": "en-garden",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 229.362834,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "en-garden-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 604,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "en-garden-o1"
+          ]
+        },
+        {
+          "case_id": "en-bike",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 300.238458,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "en-bike-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 602,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "en-bike-o1"
+          ]
+        },
+        {
+          "case_id": "en-bread",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 230.551542,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "en-bread-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 585,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "en-bread-o1"
+          ]
+        },
+        {
+          "case_id": "en-unit",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 232.022375,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "en-unit-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "exact_unit",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 593,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "en-unit-o1"
+          ]
+        },
+        {
+          "case_id": "en-gift",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 229.223708,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "en-gift-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "gift_research",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 609,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "en-gift-o1"
+          ]
+        },
+        {
+          "case_id": "en-criticism",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 231.3545,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "en-criticism-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "criticism",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 613,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "en-criticism-o1"
+          ]
+        },
+        {
+          "case_id": "en-negation",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 232.808833,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "en-negation-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "negation",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 600,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "en-negation-o1"
+          ]
+        },
+        {
+          "case_id": "en-nomatch1",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 231.56337499999998,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "hybrid",
+          "kind": "no_match",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 245,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "en-repeat",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 231.410542,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "en-repeat-o1",
+            "en-repeat-o2",
+            "en-repeat-o3"
+          ],
+          "index_mode": "hybrid",
+          "kind": "repeated_source",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 936,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 2,
+          "returned_observation_ids": [
+            "en-repeat-o1",
+            "en-repeat-o2",
+            "en-repeat-o3"
+          ]
+        },
+        {
+          "case_id": "en-work",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 230.7165,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "en-work-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "work_context",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 610,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "en-work-o1"
+          ]
+        },
+        {
+          "case_id": "en-privateinfo",
+          "evaluation_status": "unsupported_privacy_placeholder",
+          "expected_observation_ids": [],
+          "kind": "privacy_sensitive",
+          "language": "en",
+          "note": "Sanitized placeholder contains no classifier trigger; excluded from privacy accuracy scoring.",
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "en-privatesession",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 230.46587499999998,
+          "evaluation_status": "native_paused_session_control",
+          "expected_observation_ids": [],
+          "index_mode": "hybrid",
+          "kind": "privacy_private_session",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 245,
+          "privacy_trigger": "private_session",
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "en-nomatch2",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 227.758042,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "hybrid",
+          "kind": "no_match",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 245,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "de-coffee",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 230.399,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "de-coffee-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "de",
+          "max_bytes": 4096,
+          "packet_bytes": 604,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "de-coffee-o1"
+          ]
+        },
+        {
+          "case_id": "de-lamp",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 227.619875,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "de-lamp-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "de",
+          "max_bytes": 4096,
+          "packet_bytes": 245,
+          "privacy_trigger": null,
+          "quality_class": "miss",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "de-garden",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 227.825333,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "de-garden-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "de",
+          "max_bytes": 4096,
+          "packet_bytes": 612,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "de-garden-o1"
+          ]
+        },
+        {
+          "case_id": "de-bike",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 229.531959,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "de-bike-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "de",
+          "max_bytes": 4096,
+          "packet_bytes": 613,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "de-bike-o1"
+          ]
+        },
+        {
+          "case_id": "de-bread",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 232.085667,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "de-bread-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "de",
+          "max_bytes": 4096,
+          "packet_bytes": 596,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "de-bread-o1"
+          ]
+        },
+        {
+          "case_id": "de-unit",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 228.21883400000002,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "de-unit-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "exact_unit",
+          "language": "de",
+          "max_bytes": 4096,
+          "packet_bytes": 592,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "de-unit-o1"
+          ]
+        },
+        {
+          "case_id": "de-gift",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 228.86999999999998,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "de-gift-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "gift_research",
+          "language": "de",
+          "max_bytes": 4096,
+          "packet_bytes": 612,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "de-gift-o1"
+          ]
+        },
+        {
+          "case_id": "de-criticism",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 230.377666,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "de-criticism-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "criticism",
+          "language": "de",
+          "max_bytes": 4096,
+          "packet_bytes": 616,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "de-criticism-o1"
+          ]
+        },
+        {
+          "case_id": "de-negation",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 230.03037500000002,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "de-negation-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "negation",
+          "language": "de",
+          "max_bytes": 4096,
+          "packet_bytes": 618,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "de-negation-o1"
+          ]
+        },
+        {
+          "case_id": "de-nomatch1",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 229.469292,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "hybrid",
+          "kind": "no_match",
+          "language": "de",
+          "max_bytes": 4096,
+          "packet_bytes": 245,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "de-repeat",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 229.57575,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "de-repeat-o1",
+            "de-repeat-o2",
+            "de-repeat-o3"
+          ],
+          "index_mode": "hybrid",
+          "kind": "repeated_source",
+          "language": "de",
+          "max_bytes": 4096,
+          "packet_bytes": 946,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 2,
+          "returned_observation_ids": [
+            "de-repeat-o1",
+            "de-repeat-o2",
+            "de-repeat-o3"
+          ]
+        },
+        {
+          "case_id": "de-work",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 229.160041,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "de-work-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "work_context",
+          "language": "de",
+          "max_bytes": 4096,
+          "packet_bytes": 613,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "de-work-o1"
+          ]
+        },
+        {
+          "case_id": "de-privateinfo",
+          "evaluation_status": "unsupported_privacy_placeholder",
+          "expected_observation_ids": [],
+          "kind": "privacy_sensitive",
+          "language": "de",
+          "note": "Sanitized placeholder contains no classifier trigger; excluded from privacy accuracy scoring.",
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "de-privatesession",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 228.298167,
+          "evaluation_status": "native_paused_session_control",
+          "expected_observation_ids": [],
+          "index_mode": "hybrid",
+          "kind": "privacy_private_session",
+          "language": "de",
+          "max_bytes": 4096,
+          "packet_bytes": 245,
+          "privacy_trigger": "private_session",
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "de-nomatch2",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 232.913667,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "hybrid",
+          "kind": "no_match",
+          "language": "de",
+          "max_bytes": 4096,
+          "packet_bytes": 245,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "nl-coffee",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 232.36325,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "nl-coffee-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "nl",
+          "max_bytes": 4096,
+          "packet_bytes": 609,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "nl-coffee-o1"
+          ]
+        },
+        {
+          "case_id": "nl-lamp",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 229.827167,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "nl-lamp-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "nl",
+          "max_bytes": 4096,
+          "packet_bytes": 245,
+          "privacy_trigger": null,
+          "quality_class": "miss",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "nl-garden",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 228.720208,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "nl-garden-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "nl",
+          "max_bytes": 4096,
+          "packet_bytes": 245,
+          "privacy_trigger": null,
+          "quality_class": "miss",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "nl-bike",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 232.24941700000002,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "nl-bike-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "nl",
+          "max_bytes": 4096,
+          "packet_bytes": 601,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "nl-bike-o1"
+          ]
+        },
+        {
+          "case_id": "nl-bread",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 227.94845899999999,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "nl-bread-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "nl",
+          "max_bytes": 4096,
+          "packet_bytes": 586,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "nl-bread-o1"
+          ]
+        },
+        {
+          "case_id": "nl-unit",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 227.50675,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "nl-unit-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "exact_unit",
+          "language": "nl",
+          "max_bytes": 4096,
+          "packet_bytes": 591,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "nl-unit-o1"
+          ]
+        },
+        {
+          "case_id": "nl-gift",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 230.176333,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "nl-gift-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "gift_research",
+          "language": "nl",
+          "max_bytes": 4096,
+          "packet_bytes": 615,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "nl-gift-o1"
+          ]
+        },
+        {
+          "case_id": "nl-criticism",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 229.935458,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "nl-criticism-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "criticism",
+          "language": "nl",
+          "max_bytes": 4096,
+          "packet_bytes": 603,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "nl-criticism-o1"
+          ]
+        },
+        {
+          "case_id": "nl-negation",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 234.634333,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "nl-negation-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "negation",
+          "language": "nl",
+          "max_bytes": 4096,
+          "packet_bytes": 619,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "nl-negation-o1"
+          ]
+        },
+        {
+          "case_id": "nl-nomatch1",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 227.678791,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "hybrid",
+          "kind": "no_match",
+          "language": "nl",
+          "max_bytes": 4096,
+          "packet_bytes": 245,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "nl-repeat",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 228.58100000000002,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "nl-repeat-o1",
+            "nl-repeat-o2",
+            "nl-repeat-o3"
+          ],
+          "index_mode": "hybrid",
+          "kind": "repeated_source",
+          "language": "nl",
+          "max_bytes": 4096,
+          "packet_bytes": 946,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 2,
+          "returned_observation_ids": [
+            "nl-repeat-o1",
+            "nl-repeat-o2",
+            "nl-repeat-o3"
+          ]
+        },
+        {
+          "case_id": "nl-work",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 229.34574999999998,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "nl-work-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "work_context",
+          "language": "nl",
+          "max_bytes": 4096,
+          "packet_bytes": 612,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "nl-work-o1"
+          ]
+        },
+        {
+          "case_id": "nl-privateinfo",
+          "evaluation_status": "unsupported_privacy_placeholder",
+          "expected_observation_ids": [],
+          "kind": "privacy_sensitive",
+          "language": "nl",
+          "note": "Sanitized placeholder contains no classifier trigger; excluded from privacy accuracy scoring.",
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "nl-privatesession",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 228.868708,
+          "evaluation_status": "native_paused_session_control",
+          "expected_observation_ids": [],
+          "index_mode": "hybrid",
+          "kind": "privacy_private_session",
+          "language": "nl",
+          "max_bytes": 4096,
+          "packet_bytes": 245,
+          "privacy_trigger": "private_session",
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "nl-nomatch2",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 230.27900000000002,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "hybrid",
+          "kind": "no_match",
+          "language": "nl",
+          "max_bytes": 4096,
+          "packet_bytes": 245,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "fr-coffee",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 230.826708,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "fr-coffee-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 604,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "fr-coffee-o1"
+          ]
+        },
+        {
+          "case_id": "fr-lamp",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 231.96975,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "fr-lamp-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 245,
+          "privacy_trigger": null,
+          "quality_class": "miss",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "fr-garden",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 229.889083,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "fr-garden-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 602,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "fr-garden-o1"
+          ]
+        },
+        {
+          "case_id": "fr-bike",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 232.356958,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "fr-bike-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 605,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "fr-bike-o1"
+          ]
+        },
+        {
+          "case_id": "fr-bread",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 230.875041,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "fr-bread-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 583,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "fr-bread-o1"
+          ]
+        },
+        {
+          "case_id": "fr-unit",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 232.413417,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "fr-unit-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "exact_unit",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 598,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "fr-unit-o1"
+          ]
+        },
+        {
+          "case_id": "fr-gift",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 232.15366600000002,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "fr-gift-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "gift_research",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 615,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "fr-gift-o1"
+          ]
+        },
+        {
+          "case_id": "fr-criticism",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 229.712083,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "fr-criticism-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "criticism",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 604,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "fr-criticism-o1"
+          ]
+        },
+        {
+          "case_id": "fr-negation",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 227.468625,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "fr-negation-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "negation",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 612,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "fr-negation-o1"
+          ]
+        },
+        {
+          "case_id": "fr-nomatch1",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 229.919542,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "hybrid",
+          "kind": "no_match",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 245,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "fr-repeat",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 230.078791,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "fr-repeat-o1",
+            "fr-repeat-o2",
+            "fr-repeat-o3"
+          ],
+          "index_mode": "hybrid",
+          "kind": "repeated_source",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 978,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 2,
+          "returned_observation_ids": [
+            "fr-repeat-o1",
+            "fr-repeat-o2",
+            "fr-repeat-o3"
+          ]
+        },
+        {
+          "case_id": "fr-work",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 228.990792,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "fr-work-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "work_context",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 616,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "fr-work-o1"
+          ]
+        },
+        {
+          "case_id": "fr-privateinfo",
+          "evaluation_status": "unsupported_privacy_placeholder",
+          "expected_observation_ids": [],
+          "kind": "privacy_sensitive",
+          "language": "fr",
+          "note": "Sanitized placeholder contains no classifier trigger; excluded from privacy accuracy scoring.",
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "fr-privatesession",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 229.86124999999998,
+          "evaluation_status": "native_paused_session_control",
+          "expected_observation_ids": [],
+          "index_mode": "hybrid",
+          "kind": "privacy_private_session",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 245,
+          "privacy_trigger": "private_session",
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "fr-nomatch2",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 227.637917,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "hybrid",
+          "kind": "no_match",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 245,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "ja-coffee",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 227.892708,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "ja-coffee-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "ja",
+          "max_bytes": 4096,
+          "packet_bytes": 617,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "ja-coffee-o1"
+          ]
+        },
+        {
+          "case_id": "ja-lamp",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 231.742875,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "ja-lamp-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "ja",
+          "max_bytes": 4096,
+          "packet_bytes": 245,
+          "privacy_trigger": null,
+          "quality_class": "miss",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "ja-garden",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 230.958541,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "ja-garden-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "ja",
+          "max_bytes": 4096,
+          "packet_bytes": 245,
+          "privacy_trigger": null,
+          "quality_class": "miss",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "ja-bike",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 229.64425,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "ja-bike-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "ja",
+          "max_bytes": 4096,
+          "packet_bytes": 607,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "ja-bike-o1"
+          ]
+        },
+        {
+          "case_id": "ja-bread",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 229.719,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "ja-bread-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "ja",
+          "max_bytes": 4096,
+          "packet_bytes": 245,
+          "privacy_trigger": null,
+          "quality_class": "miss",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "ja-unit",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 233.368916,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "ja-unit-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "exact_unit",
+          "language": "ja",
+          "max_bytes": 4096,
+          "packet_bytes": 595,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "ja-unit-o1"
+          ]
+        },
+        {
+          "case_id": "ja-gift",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 260.345875,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "ja-gift-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "gift_research",
+          "language": "ja",
+          "max_bytes": 4096,
+          "packet_bytes": 607,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "ja-gift-o1"
+          ]
+        },
+        {
+          "case_id": "ja-criticism",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 232.73962500000002,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "ja-criticism-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "criticism",
+          "language": "ja",
+          "max_bytes": 4096,
+          "packet_bytes": 613,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "ja-criticism-o1"
+          ]
+        },
+        {
+          "case_id": "ja-negation",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 227.158041,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "ja-negation-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "negation",
+          "language": "ja",
+          "max_bytes": 4096,
+          "packet_bytes": 608,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "ja-negation-o1"
+          ]
+        },
+        {
+          "case_id": "ja-nomatch1",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 227.089583,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "hybrid",
+          "kind": "no_match",
+          "language": "ja",
+          "max_bytes": 4096,
+          "packet_bytes": 245,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "ja-repeat",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 231.213292,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "ja-repeat-o1",
+            "ja-repeat-o2",
+            "ja-repeat-o3"
+          ],
+          "index_mode": "hybrid",
+          "kind": "repeated_source",
+          "language": "ja",
+          "max_bytes": 4096,
+          "packet_bytes": 603,
+          "privacy_trigger": null,
+          "quality_class": "partial_or_extra",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "ja-repeat-o2",
+            "ja-repeat-o3"
+          ]
+        },
+        {
+          "case_id": "ja-work",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 230.01725000000002,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "ja-work-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "work_context",
+          "language": "ja",
+          "max_bytes": 4096,
+          "packet_bytes": 623,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "ja-work-o1"
+          ]
+        },
+        {
+          "case_id": "ja-privateinfo",
+          "evaluation_status": "unsupported_privacy_placeholder",
+          "expected_observation_ids": [],
+          "kind": "privacy_sensitive",
+          "language": "ja",
+          "note": "Sanitized placeholder contains no classifier trigger; excluded from privacy accuracy scoring.",
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "ja-privatesession",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 229.684417,
+          "evaluation_status": "native_paused_session_control",
+          "expected_observation_ids": [],
+          "index_mode": "hybrid",
+          "kind": "privacy_private_session",
+          "language": "ja",
+          "max_bytes": 4096,
+          "packet_bytes": 245,
+          "privacy_trigger": "private_session",
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "ja-nomatch2",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 235.163,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "hybrid",
+          "kind": "no_match",
+          "language": "ja",
+          "max_bytes": 4096,
+          "packet_bytes": 245,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "zh-coffee",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 231.029875,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "zh-coffee-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "zh",
+          "max_bytes": 4096,
+          "packet_bytes": 604,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "zh-coffee-o1"
+          ]
+        },
+        {
+          "case_id": "zh-lamp",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 230.541417,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "zh-lamp-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "zh",
+          "max_bytes": 4096,
+          "packet_bytes": 245,
+          "privacy_trigger": null,
+          "quality_class": "miss",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "zh-garden",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 229.605708,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "zh-garden-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "zh",
+          "max_bytes": 4096,
+          "packet_bytes": 245,
+          "privacy_trigger": null,
+          "quality_class": "miss",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "zh-bike",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 232.88875000000002,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "zh-bike-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "zh",
+          "max_bytes": 4096,
+          "packet_bytes": 598,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "zh-bike-o1"
+          ]
+        },
+        {
+          "case_id": "zh-bread",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 231.312208,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "zh-bread-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "zh",
+          "max_bytes": 4096,
+          "packet_bytes": 245,
+          "privacy_trigger": null,
+          "quality_class": "miss",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "zh-unit",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 231.679041,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "zh-unit-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "exact_unit",
+          "language": "zh",
+          "max_bytes": 4096,
+          "packet_bytes": 595,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "zh-unit-o1"
+          ]
+        },
+        {
+          "case_id": "zh-gift",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 232.069084,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "zh-gift-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "gift_research",
+          "language": "zh",
+          "max_bytes": 4096,
+          "packet_bytes": 598,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "zh-gift-o1"
+          ]
+        },
+        {
+          "case_id": "zh-criticism",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 228.809333,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "zh-criticism-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "criticism",
+          "language": "zh",
+          "max_bytes": 4096,
+          "packet_bytes": 611,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "zh-criticism-o1"
+          ]
+        },
+        {
+          "case_id": "zh-negation",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 233.416083,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "zh-negation-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "negation",
+          "language": "zh",
+          "max_bytes": 4096,
+          "packet_bytes": 598,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "zh-negation-o1"
+          ]
+        },
+        {
+          "case_id": "zh-nomatch1",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 232.548542,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "hybrid",
+          "kind": "no_match",
+          "language": "zh",
+          "max_bytes": 4096,
+          "packet_bytes": 245,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "zh-repeat",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 231.504375,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "zh-repeat-o1",
+            "zh-repeat-o2",
+            "zh-repeat-o3"
+          ],
+          "index_mode": "hybrid",
+          "kind": "repeated_source",
+          "language": "zh",
+          "max_bytes": 4096,
+          "packet_bytes": 936,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 2,
+          "returned_observation_ids": [
+            "zh-repeat-o1",
+            "zh-repeat-o2",
+            "zh-repeat-o3"
+          ]
+        },
+        {
+          "case_id": "zh-work",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 229.854334,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "zh-work-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "work_context",
+          "language": "zh",
+          "max_bytes": 4096,
+          "packet_bytes": 608,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "zh-work-o1"
+          ]
+        },
+        {
+          "case_id": "zh-privateinfo",
+          "evaluation_status": "unsupported_privacy_placeholder",
+          "expected_observation_ids": [],
+          "kind": "privacy_sensitive",
+          "language": "zh",
+          "note": "Sanitized placeholder contains no classifier trigger; excluded from privacy accuracy scoring.",
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "zh-privatesession",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 229.735083,
+          "evaluation_status": "native_paused_session_control",
+          "expected_observation_ids": [],
+          "index_mode": "hybrid",
+          "kind": "privacy_private_session",
+          "language": "zh",
+          "max_bytes": 4096,
+          "packet_bytes": 245,
+          "privacy_trigger": "private_session",
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "zh-nomatch2",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 231.2915,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [],
+          "index_mode": "hybrid",
+          "kind": "no_match",
+          "language": "zh",
+          "max_bytes": 4096,
+          "packet_bytes": 245,
+          "privacy_trigger": null,
+          "quality_class": "correct_empty",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        }
+      ],
+      "evaluated_case_count": 84,
+      "hard_invariants": {
+        "browser_evidence_state_and_subject": "observed/unknown",
+        "byte_bound_failure_count": 0,
+        "duplicate_return_id_count": 0,
+        "privacy_drop_return_count": 0,
+        "unexpected_attribution_count": 0
+      },
+      "hybrid_index_mode_case_count": 84,
+      "latency_ms": {
+        "median": 230.2276665,
+        "p95": 234.634333
+      },
+      "mode": "semantic_pack",
+      "model_path": "models/pack",
+      "privacy_case_count": 12,
+      "quality_summary": {
+        "classification_counts": {
+          "correct_empty": 18,
+          "exact_match": 55,
+          "miss": 10,
+          "partial_or_extra": 1
+        },
+        "expected_observation_count": 78,
+        "no_match_cases_with_results": 0,
+        "note": "Curated illustrative fixtures are not a validated human benchmark; counts are descriptive, not a field-quality claim.",
+        "relevant_return_count": 67,
+        "returned_observation_count": 67,
+        "semantic_paraphrase_cases_with_relevant_return": 20
+      },
+      "unsupported_privacy_placeholder_count": 6
+    }
+  },
+  "quality_scope": "Curated illustrative synthetic labels; not validated as a human benchmark and not evidence of field reliability.",
+  "report_version": 1,
+  "semantic_paraphrase_gain": {
+    "cases_with_expected_id_returned_only_in_semantic_run": 4,
+    "eligible_case_count": 30
+  }
+}

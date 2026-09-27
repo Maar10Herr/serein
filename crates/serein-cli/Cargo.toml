@@ -1,0 +1,11 @@
+[package]
+name = "serein-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+[[bin]]
+name = "serein"
+path = "src/main.rs"
+[dependencies]
+serein-core = { path = "../serein-core" }
+serde_json.workspace = true

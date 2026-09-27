@@ -1,0 +1,2784 @@
+{
+  "schema_version": 1,
+  "description": "Synthetic fixtures for EN, DE, NL, FR, JA, and ZH. Expected labels are curated illustrative examples, not measured results or a validated human benchmark.",
+  "comparison": {
+    "lexical_baseline_ids": "Evidence IDs expected from title and captured-search lexical retrieval alone.",
+    "capture_expectation": "allow means eligible synthetic metadata; drop means no metadata may be retained or returned.",
+    "limits": "No confidence scores are supplied. Expected quality labels are illustrative and not validated as a human benchmark. Repeated records from one site remain one independent source. Privacy placeholders contain no private details.",
+    "semantic_augmented_ids": "Evidence IDs expected from lexical retrieval plus semantic retrieval; semantic_paraphrase cases add evidence absent from lexical_baseline_ids."
+  },
+  "cases": [
+    {
+      "id": "en-coffee",
+      "kind": "semantic_paraphrase",
+      "language": "en",
+      "observations": [
+        {
+          "id": "en-coffee-o1",
+          "title": "Quiet hand grinders for compact test benches",
+          "search_query": "quiet hand burr mill compact test setup",
+          "site_key": "coffee.example"
+        }
+      ],
+      "query": "Which hand grinder runs quietly in a compact test setup?",
+      "query_facets": [
+        "topic:coffee",
+        "constraint:low_noise",
+        "constraint:small_space"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "en-coffee-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "en-lamp",
+      "kind": "semantic_paraphrase",
+      "language": "en",
+      "observations": [
+        {
+          "id": "en-lamp-o1",
+          "title": "Repairable desk lamps with replaceable joints",
+          "search_query": "desk lamp repair hinge parts",
+          "site_key": "repair.example"
+        }
+      ],
+      "query": "How can a bent reading light stay useful for years?",
+      "query_facets": [
+        "topic:lighting",
+        "constraint:repairable"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "en-lamp-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "en-garden",
+      "kind": "semantic_paraphrase",
+      "language": "en",
+      "observations": [
+        {
+          "id": "en-garden-o1",
+          "title": "Shade-tolerant herb varieties for controlled growing tests",
+          "search_query": "herbs partial shade controlled growing test pots",
+          "site_key": "garden.example"
+        }
+      ],
+      "query": "Which herb varieties tolerate limited afternoon light?",
+      "query_facets": [
+        "topic:gardening",
+        "constraint:partial_shade",
+        "constraint:small_space"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "en-garden-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "en-bike",
+      "kind": "semantic_paraphrase",
+      "language": "en",
+      "observations": [
+        {
+          "id": "en-bike-o1",
+          "title": "Lightweight panniers for rain and load tests",
+          "search_query": "light pannier equipment rain cover cycling test",
+          "site_key": "cycle.example"
+        }
+      ],
+      "query": "Which pannier keeps equipment dry in a rain test and remains easy to lift?",
+      "query_facets": [
+        "topic:cycling",
+        "constraint:lightweight",
+        "constraint:weatherproof"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "en-bike-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "en-bread",
+      "kind": "semantic_paraphrase",
+      "language": "en",
+      "observations": [
+        {
+          "id": "en-bread-o1",
+          "title": "No-knead rye loaf with an overnight rise",
+          "search_query": "overnight rye bread no kneading",
+          "site_key": "bake.example"
+        }
+      ],
+      "query": "Which rye-bread process uses minimal kneading?",
+      "query_facets": [
+        "topic:baking",
+        "constraint:low_effort"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "en-bread-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "en-unit",
+      "kind": "exact_unit",
+      "language": "en",
+      "observations": [
+        {
+          "id": "en-unit-o1",
+          "title": "Mock test-rack shelf measurement: 42 cm",
+          "search_query": "mock test rack shelf opening 42 cm wide",
+          "site_key": "home.example"
+        }
+      ],
+      "query": "What exact width is specified for the mock test-rack shelf?",
+      "query_facets": [
+        "topic:testing",
+        "constraint:exact_measurement",
+        "unit:cm"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "en-unit-o1"
+        ],
+        "semantic_augmented_ids": [
+          "en-unit-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Any room or home attribute beyond the recorded measurement"
+      ]
+    },
+    {
+      "id": "en-gift",
+      "kind": "gift_research",
+      "language": "en",
+      "observations": [
+        {
+          "id": "en-gift-o1",
+          "title": "Sample astronomy gift comparison: beginner telescope and star atlas",
+          "search_query": "astronomy gift comparison beginner telescope star atlas",
+          "site_key": "gift.example"
+        }
+      ],
+      "query": "Which beginner telescope appears in the sample astronomy gift comparison?",
+      "query_facets": [
+        "topic:gifts",
+        "recipient:sibling",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "en-gift-o1"
+        ],
+        "semantic_augmented_ids": [
+          "en-gift-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "That the user personally wants or likes the gift",
+        "That the user is the intended recipient"
+      ]
+    },
+    {
+      "id": "en-criticism",
+      "kind": "criticism",
+      "language": "en",
+      "observations": [
+        {
+          "id": "en-criticism-o1",
+          "title": "Critical review of the Morrow K2 espresso grinder",
+          "search_query": "Morrow K2 grinder review noisy burr alignment complaints",
+          "site_key": "reviews.example"
+        }
+      ],
+      "query": "What problems were raised in the Morrow K2 review?",
+      "query_facets": [
+        "topic:coffee",
+        "sentiment:critical",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "en-criticism-o1"
+        ],
+        "semantic_augmented_ids": [
+          "en-criticism-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Endorsement of the criticized product",
+        "Ownership or purchase intent"
+      ]
+    },
+    {
+      "id": "en-negation",
+      "kind": "negation",
+      "language": "en",
+      "observations": [
+        {
+          "id": "en-negation-o1",
+          "title": "Blue glazed kettle rejected in the synthetic product test",
+          "search_query": "exclude blue glazed kettle handle overheats",
+          "site_key": "kitchen.example"
+        }
+      ],
+      "query": "Which blue kettle is rejected because its handle overheats?",
+      "query_facets": [
+        "topic:kitchen",
+        "sentiment:rejected",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "en-negation-o1"
+        ],
+        "semantic_augmented_ids": [
+          "en-negation-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Positive purchase intent",
+        "Ownership of the rejected item"
+      ]
+    },
+    {
+      "id": "en-nomatch1",
+      "kind": "no_match",
+      "language": "en",
+      "observations": [
+        {
+          "id": "en-nomatch1-o1",
+          "title": "Ceramic filter media for a water-flow test",
+          "search_query": "ceramic filter water flow test porous media",
+          "site_key": "garden.example"
+        }
+      ],
+      "query": "Which router setting configures a guest network?",
+      "query_facets": [
+        "topic:networking",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": []
+      },
+      "prohibited_inferences": [
+        "A personal fact based on unrelated evidence"
+      ]
+    },
+    {
+      "id": "en-repeat",
+      "kind": "repeated_source",
+      "language": "en",
+      "observations": [
+        {
+          "id": "en-repeat-o1",
+          "title": "Rainproof trail shoes in a synthetic product review",
+          "search_query": "trail shoe grip wet rock review test",
+          "site_key": "trail.example"
+        },
+        {
+          "id": "en-repeat-o2",
+          "title": "Rainproof trail shoes compared on one review site",
+          "search_query": "trail shoe grip wet rock review",
+          "site_key": "trail.example"
+        },
+        {
+          "id": "en-repeat-o3",
+          "title": "Rainproof trail shoes compared on one review site",
+          "search_query": "trail shoe grip wet rock review",
+          "site_key": "trail.example"
+        }
+      ],
+      "query": "Which trail shoe review describes grip on wet rock?",
+      "query_facets": [
+        "topic:footwear",
+        "constraint:wet_grip",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "en-repeat-o1",
+          "en-repeat-o2",
+          "en-repeat-o3"
+        ],
+        "independent_source_count": 1,
+        "semantic_augmented_ids": [
+          "en-repeat-o1",
+          "en-repeat-o2",
+          "en-repeat-o3"
+        ]
+      },
+      "prohibited_inferences": [
+        "Three independent sources or endorsements",
+        "A stable brand preference"
+      ]
+    },
+    {
+      "id": "en-work",
+      "kind": "work_context",
+      "language": "en",
+      "observations": [
+        {
+          "id": "en-work-o1",
+          "title": "Spreadsheet libraries for a synthetic XLSX report",
+          "search_query": "Python spreadsheet library xlsx sample report formatting",
+          "site_key": "work.example"
+        }
+      ],
+      "query": "Which package is listed for formatting the sample spreadsheet report?",
+      "query_facets": [
+        "topic:software",
+        "context:work",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "en-work-o1"
+        ],
+        "semantic_augmented_ids": [
+          "en-work-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Personal use or preference",
+        "A job title inferred from one work task"
+      ]
+    },
+    {
+      "id": "en-privateinfo",
+      "kind": "privacy_sensitive",
+      "language": "en",
+      "observations": [
+        {
+          "id": "en-privateinfo-o1",
+          "title": "[redacted sensitive title]",
+          "search_query": null,
+          "site_key": "private-portal.example"
+        }
+      ],
+      "query": "Does the sanitized sample contain sensitive health metadata?",
+      "query_facets": [
+        "privacy:sensitive_metadata",
+        "intent:recall"
+      ],
+      "capture_expectation": "drop",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": []
+      },
+      "prohibited_inferences": [
+        "Any diagnosis, condition, treatment, or sensitive attribute"
+      ],
+      "privacy_trigger": "sensitive_metadata"
+    },
+    {
+      "id": "en-privatesession",
+      "kind": "privacy_private_session",
+      "language": "en",
+      "observations": [
+        {
+          "id": "en-privatesession-o1",
+          "title": "[private-session content omitted]",
+          "search_query": null,
+          "site_key": "session.example"
+        }
+      ],
+      "query": "What content is retained from the simulated paused session?",
+      "query_facets": [
+        "privacy:private_session",
+        "intent:recall"
+      ],
+      "capture_expectation": "drop",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": []
+      },
+      "prohibited_inferences": [
+        "Any activity from a private session"
+      ],
+      "privacy_trigger": "private_session"
+    },
+    {
+      "id": "en-nomatch2",
+      "kind": "no_match",
+      "language": "en",
+      "observations": [
+        {
+          "id": "en-nomatch2-o1",
+          "title": "LED driver current range for a mock desk lamp",
+          "search_query": "mock desk lamp LED driver current range",
+          "site_key": "bake.example"
+        }
+      ],
+      "query": "Which firmware build is listed for the synthetic router model R-17?",
+      "query_facets": [
+        "topic:transit",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": []
+      },
+      "prohibited_inferences": [
+        "A personal fact based on unrelated evidence"
+      ]
+    },
+    {
+      "id": "de-coffee",
+      "kind": "semantic_paraphrase",
+      "language": "de",
+      "observations": [
+        {
+          "id": "de-coffee-o1",
+          "title": "Leise Handmühlen für kompakte Prüfstände",
+          "search_query": "leise manuelle Kaffeemühle kompakter Testaufbau",
+          "site_key": "coffee.example"
+        }
+      ],
+      "query": "Welche Handmühle arbeitet in einem kompakten Testaufbau leise?",
+      "query_facets": [
+        "topic:coffee",
+        "constraint:low_noise",
+        "constraint:small_space"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "de-coffee-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "de-lamp",
+      "kind": "semantic_paraphrase",
+      "language": "de",
+      "observations": [
+        {
+          "id": "de-lamp-o1",
+          "title": "Reparierbare Schreibtischlampen mit austauschbarem Gelenk",
+          "search_query": "Schreibtischlampe Gelenk Ersatzteil Reparatur",
+          "site_key": "repair.example"
+        }
+      ],
+      "query": "Wie bleibt eine verbogene Leselampe noch viele Jahre brauchbar?",
+      "query_facets": [
+        "topic:lighting",
+        "constraint:repairable"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "de-lamp-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "de-garden",
+      "kind": "semantic_paraphrase",
+      "language": "de",
+      "observations": [
+        {
+          "id": "de-garden-o1",
+          "title": "Schattenverträgliche Kräutersorten für kontrollierte Anbauversuche",
+          "search_query": "Kräuter Halbschatten kontrollierter Anbauversuch Töpfe",
+          "site_key": "garden.example"
+        }
+      ],
+      "query": "Welche Kräutersorten vertragen wenig Nachmittagslicht?",
+      "query_facets": [
+        "topic:gardening",
+        "constraint:partial_shade",
+        "constraint:small_space"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "de-garden-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "de-bike",
+      "kind": "semantic_paraphrase",
+      "language": "de",
+      "observations": [
+        {
+          "id": "de-bike-o1",
+          "title": "Leichte Fahrradtaschen für Regen- und Belastungstests",
+          "search_query": "leichte Fahrradtasche Ausrüstung Regenhülle Fahrrad Test",
+          "site_key": "cycle.example"
+        }
+      ],
+      "query": "Welche Fahrradtasche hält Ausrüstung im Regentest trocken und lässt sich leicht anheben?",
+      "query_facets": [
+        "topic:cycling",
+        "constraint:lightweight",
+        "constraint:weatherproof"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "de-bike-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "de-bread",
+      "kind": "semantic_paraphrase",
+      "language": "de",
+      "observations": [
+        {
+          "id": "de-bread-o1",
+          "title": "Roggenbrot über Nacht ohne Kneten",
+          "search_query": "Roggenbrot über Nacht Gehzeit ohne kneten",
+          "site_key": "bake.example"
+        }
+      ],
+      "query": "Welches Roggenbrotverfahren kommt mit wenig Kneten aus?",
+      "query_facets": [
+        "topic:baking",
+        "constraint:low_effort"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "de-bread-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "de-unit",
+      "kind": "exact_unit",
+      "language": "de",
+      "observations": [
+        {
+          "id": "de-unit-o1",
+          "title": "Regal des simulierten Prüfgestells: 42 cm",
+          "search_query": "Prüfgestell Regalöffnung 42 cm breit",
+          "site_key": "home.example"
+        }
+      ],
+      "query": "Welche genaue Breite ist für das Regal des simulierten Prüfgestells angegeben?",
+      "query_facets": [
+        "topic:testing",
+        "constraint:exact_measurement",
+        "unit:cm"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "de-unit-o1"
+        ],
+        "semantic_augmented_ids": [
+          "de-unit-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Any room or home attribute beyond the recorded measurement"
+      ]
+    },
+    {
+      "id": "de-gift",
+      "kind": "gift_research",
+      "language": "de",
+      "observations": [
+        {
+          "id": "de-gift-o1",
+          "title": "Simulierter Astronomie-Geschenkvergleich: Einsteigerteleskop und Sternkarte",
+          "search_query": "Astronomie Geschenkvergleich Anfänger Teleskop Sternkarte",
+          "site_key": "gift.example"
+        }
+      ],
+      "query": "Welches Einsteigerteleskop wird im simulierten Astronomie-Geschenkvergleich genannt?",
+      "query_facets": [
+        "topic:gifts",
+        "recipient:sibling",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "de-gift-o1"
+        ],
+        "semantic_augmented_ids": [
+          "de-gift-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "That the user personally wants or likes the gift",
+        "That the user is the intended recipient"
+      ]
+    },
+    {
+      "id": "de-criticism",
+      "kind": "criticism",
+      "language": "de",
+      "observations": [
+        {
+          "id": "de-criticism-o1",
+          "title": "Kritische Rezension der Morrow-K2-Kaffeemühle",
+          "search_query": "Morrow K2 Mühle Rezension laut Mahlwerk Ausrichtung Kritik",
+          "site_key": "reviews.example"
+        }
+      ],
+      "query": "Welche Probleme wurden in der Rezension zur Morrow K2 genannt?",
+      "query_facets": [
+        "topic:coffee",
+        "sentiment:critical",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "de-criticism-o1"
+        ],
+        "semantic_augmented_ids": [
+          "de-criticism-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Endorsement of the criticized product",
+        "Ownership or purchase intent"
+      ]
+    },
+    {
+      "id": "de-negation",
+      "kind": "negation",
+      "language": "de",
+      "observations": [
+        {
+          "id": "de-negation-o1",
+          "title": "Blau glasierter Wasserkocher im synthetischen Produkttest ausgeschlossen",
+          "search_query": "blauen glasierten Wasserkocher ausschließen Griff überhitzt",
+          "site_key": "kitchen.example"
+        }
+      ],
+      "query": "Welcher blaue Wasserkocher wird wegen eines überhitzenden Griffs im Produkttest ausgeschlossen?",
+      "query_facets": [
+        "topic:kitchen",
+        "sentiment:rejected",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "de-negation-o1"
+        ],
+        "semantic_augmented_ids": [
+          "de-negation-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Positive purchase intent",
+        "Ownership of the rejected item"
+      ]
+    },
+    {
+      "id": "de-nomatch1",
+      "kind": "no_match",
+      "language": "de",
+      "observations": [
+        {
+          "id": "de-nomatch1-o1",
+          "title": "Keramikfiltermaterial für einen Wasser-Durchflusstest",
+          "search_query": "Keramikfilter Wasser Durchflusstest poröses Material",
+          "site_key": "garden.example"
+        }
+      ],
+      "query": "Welche Router-Option richtet ein Gästenetz ein?",
+      "query_facets": [
+        "topic:networking",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": []
+      },
+      "prohibited_inferences": [
+        "A personal fact based on unrelated evidence"
+      ]
+    },
+    {
+      "id": "de-repeat",
+      "kind": "repeated_source",
+      "language": "de",
+      "observations": [
+        {
+          "id": "de-repeat-o1",
+          "title": "Wasserdichte Wanderschuhe in einem synthetischen Produkttest",
+          "search_query": "Wanderschuh Grip nasser Fels Rezension Test",
+          "site_key": "trail.example"
+        },
+        {
+          "id": "de-repeat-o2",
+          "title": "Wasserdichte Wanderschuhe auf einer Testseite verglichen",
+          "search_query": "Wanderschuhe Grip nasser Fels Test",
+          "site_key": "trail.example"
+        },
+        {
+          "id": "de-repeat-o3",
+          "title": "Wasserdichte Wanderschuhe auf einer Testseite verglichen",
+          "search_query": "Wanderschuhe Grip nasser Fels Test",
+          "site_key": "trail.example"
+        }
+      ],
+      "query": "Welche Wanderschuh-Rezension beschreibt Grip auf nassem Fels?",
+      "query_facets": [
+        "topic:footwear",
+        "constraint:wet_grip",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "de-repeat-o1",
+          "de-repeat-o2",
+          "de-repeat-o3"
+        ],
+        "independent_source_count": 1,
+        "semantic_augmented_ids": [
+          "de-repeat-o1",
+          "de-repeat-o2",
+          "de-repeat-o3"
+        ]
+      },
+      "prohibited_inferences": [
+        "Three independent sources or endorsements",
+        "A stable brand preference"
+      ]
+    },
+    {
+      "id": "de-work",
+      "kind": "work_context",
+      "language": "de",
+      "observations": [
+        {
+          "id": "de-work-o1",
+          "title": "Tabellenbibliotheken für einen synthetischen XLSX-Bericht",
+          "search_query": "Python Tabellenbibliothek xlsx Beispielbericht Formatierung",
+          "site_key": "work.example"
+        }
+      ],
+      "query": "Welches Paket ist für die Formatierung des Beispieldokuments angegeben?",
+      "query_facets": [
+        "topic:software",
+        "context:work",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "de-work-o1"
+        ],
+        "semantic_augmented_ids": [
+          "de-work-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Personal use or preference",
+        "A job title inferred from one work task"
+      ]
+    },
+    {
+      "id": "de-privateinfo",
+      "kind": "privacy_sensitive",
+      "language": "de",
+      "observations": [
+        {
+          "id": "de-privateinfo-o1",
+          "title": "[sensible Metadaten redigiert]",
+          "search_query": null,
+          "site_key": "private-portal.example"
+        }
+      ],
+      "query": "Enthält das bereinigte Beispiel sensible Gesundheitsmetadaten?",
+      "query_facets": [
+        "privacy:sensitive_metadata",
+        "intent:recall"
+      ],
+      "capture_expectation": "drop",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": []
+      },
+      "prohibited_inferences": [
+        "Any diagnosis, condition, treatment, or sensitive attribute"
+      ],
+      "privacy_trigger": "sensitive_metadata"
+    },
+    {
+      "id": "de-privatesession",
+      "kind": "privacy_private_session",
+      "language": "de",
+      "observations": [
+        {
+          "id": "de-privatesession-o1",
+          "title": "[Inhalt der privaten Sitzung ausgelassen]",
+          "search_query": null,
+          "site_key": "session.example"
+        }
+      ],
+      "query": "Welche Inhalte bleiben in der simulierten pausierten Sitzung erhalten?",
+      "query_facets": [
+        "privacy:private_session",
+        "intent:recall"
+      ],
+      "capture_expectation": "drop",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": []
+      },
+      "prohibited_inferences": [
+        "Any activity from a private session"
+      ],
+      "privacy_trigger": "private_session"
+    },
+    {
+      "id": "de-nomatch2",
+      "kind": "no_match",
+      "language": "de",
+      "observations": [
+        {
+          "id": "de-nomatch2-o1",
+          "title": "LED-Treiberstrom für eine simulierte Schreibtischlampe",
+          "search_query": "simulierte Schreibtischlampe LED Treiberstrom",
+          "site_key": "bake.example"
+        }
+      ],
+      "query": "Welcher Firmware-Build ist für das synthetische Routermodell R-17 angegeben?",
+      "query_facets": [
+        "topic:transit",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": []
+      },
+      "prohibited_inferences": [
+        "A personal fact based on unrelated evidence"
+      ]
+    },
+    {
+      "id": "nl-coffee",
+      "kind": "semantic_paraphrase",
+      "language": "nl",
+      "observations": [
+        {
+          "id": "nl-coffee-o1",
+          "title": "Stille handmolens voor compacte testopstellingen",
+          "search_query": "stille handmatige koffiemolen compacte testopstelling",
+          "site_key": "coffee.example"
+        }
+      ],
+      "query": "Welke handmolen werkt stil in een compacte testopstelling?",
+      "query_facets": [
+        "topic:coffee",
+        "constraint:low_noise",
+        "constraint:small_space"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "nl-coffee-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "nl-lamp",
+      "kind": "semantic_paraphrase",
+      "language": "nl",
+      "observations": [
+        {
+          "id": "nl-lamp-o1",
+          "title": "Bureaulampen met vervangbare, repareerbare scharnieren",
+          "search_query": "bureaulamp scharnier onderdeel repareren",
+          "site_key": "repair.example"
+        }
+      ],
+      "query": "Hoe blijft een verbogen leeslamp jarenlang bruikbaar?",
+      "query_facets": [
+        "topic:lighting",
+        "constraint:repairable"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "nl-lamp-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "nl-garden",
+      "kind": "semantic_paraphrase",
+      "language": "nl",
+      "observations": [
+        {
+          "id": "nl-garden-o1",
+          "title": "Schaduwtolerante kruiden voor gecontroleerde kweektests",
+          "search_query": "kruiden halfschaduw gecontroleerde kweektest potten",
+          "site_key": "garden.example"
+        }
+      ],
+      "query": "Welke kruidensoorten verdragen weinig middaglicht?",
+      "query_facets": [
+        "topic:gardening",
+        "constraint:partial_shade",
+        "constraint:small_space"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "nl-garden-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "nl-bike",
+      "kind": "semantic_paraphrase",
+      "language": "nl",
+      "observations": [
+        {
+          "id": "nl-bike-o1",
+          "title": "Lichte fietstassen voor regen- en belastingstests",
+          "search_query": "lichte fietstas apparatuur regenhoes fietstest",
+          "site_key": "cycle.example"
+        }
+      ],
+      "query": "Welke fietstas houdt apparatuur droog in een regentest en blijft makkelijk op te tillen?",
+      "query_facets": [
+        "topic:cycling",
+        "constraint:lightweight",
+        "constraint:weatherproof"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "nl-bike-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "nl-bread",
+      "kind": "semantic_paraphrase",
+      "language": "nl",
+      "observations": [
+        {
+          "id": "nl-bread-o1",
+          "title": "Roggebrood dat een nacht rijst zonder kneden",
+          "search_query": "overnacht roggebrood niet kneden",
+          "site_key": "bake.example"
+        }
+      ],
+      "query": "Welk roggebroodproces gebruikt weinig kneden?",
+      "query_facets": [
+        "topic:baking",
+        "constraint:low_effort"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "nl-bread-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "nl-unit",
+      "kind": "exact_unit",
+      "language": "nl",
+      "observations": [
+        {
+          "id": "nl-unit-o1",
+          "title": "Mockschap van testrek: 42 cm",
+          "search_query": "testrek mockschap opening 42 cm breed",
+          "site_key": "home.example"
+        }
+      ],
+      "query": "Welke exacte breedte staat voor de mockschap van het testrek vermeld?",
+      "query_facets": [
+        "topic:testing",
+        "constraint:exact_measurement",
+        "unit:cm"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "nl-unit-o1"
+        ],
+        "semantic_augmented_ids": [
+          "nl-unit-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Any room or home attribute beyond the recorded measurement"
+      ]
+    },
+    {
+      "id": "nl-gift",
+      "kind": "gift_research",
+      "language": "nl",
+      "observations": [
+        {
+          "id": "nl-gift-o1",
+          "title": "Voorbeeldvergelijking van astronomische cadeaus: begintelescoop en sterrenkaart",
+          "search_query": "astronomie cadeauvergelijking beginner telescoop sterrenkaart",
+          "site_key": "gift.example"
+        }
+      ],
+      "query": "Welke begintelescoop staat in de voorbeeldvergelijking van astronomische cadeaus?",
+      "query_facets": [
+        "topic:gifts",
+        "recipient:sibling",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "nl-gift-o1"
+        ],
+        "semantic_augmented_ids": [
+          "nl-gift-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "That the user personally wants or likes the gift",
+        "That the user is the intended recipient"
+      ]
+    },
+    {
+      "id": "nl-criticism",
+      "kind": "criticism",
+      "language": "nl",
+      "observations": [
+        {
+          "id": "nl-criticism-o1",
+          "title": "Kritische bespreking van de Morrow K2 koffiemolen",
+          "search_query": "Morrow K2 molen review luid uitlijning kritiek",
+          "site_key": "reviews.example"
+        }
+      ],
+      "query": "Welke minpunten stonden in de bespreking van de Morrow K2?",
+      "query_facets": [
+        "topic:coffee",
+        "sentiment:critical",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "nl-criticism-o1"
+        ],
+        "semantic_augmented_ids": [
+          "nl-criticism-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Endorsement of the criticized product",
+        "Ownership or purchase intent"
+      ]
+    },
+    {
+      "id": "nl-negation",
+      "kind": "negation",
+      "language": "nl",
+      "observations": [
+        {
+          "id": "nl-negation-o1",
+          "title": "Blauw geglazuurde waterkoker afgewezen in een synthetische producttest",
+          "search_query": "blauwe geglazuurde waterkoker uitsluiten handvat wordt te heet",
+          "site_key": "kitchen.example"
+        }
+      ],
+      "query": "Welke blauwe waterkoker wordt afgewezen omdat het handvat te heet wordt?",
+      "query_facets": [
+        "topic:kitchen",
+        "sentiment:rejected",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "nl-negation-o1"
+        ],
+        "semantic_augmented_ids": [
+          "nl-negation-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Positive purchase intent",
+        "Ownership of the rejected item"
+      ]
+    },
+    {
+      "id": "nl-nomatch1",
+      "kind": "no_match",
+      "language": "nl",
+      "observations": [
+        {
+          "id": "nl-nomatch1-o1",
+          "title": "Keramisch filtermateriaal voor een waterstromingstest",
+          "search_query": "keramisch filter waterstromingstest poreus materiaal",
+          "site_key": "garden.example"
+        }
+      ],
+      "query": "Welke routeroptie configureert een gastnetwerk?",
+      "query_facets": [
+        "topic:networking",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": []
+      },
+      "prohibited_inferences": [
+        "A personal fact based on unrelated evidence"
+      ]
+    },
+    {
+      "id": "nl-repeat",
+      "kind": "repeated_source",
+      "language": "nl",
+      "observations": [
+        {
+          "id": "nl-repeat-o1",
+          "title": "Waterdichte wandelschoenen in een synthetische productreview",
+          "search_query": "wandelschoen grip natte rots review test",
+          "site_key": "trail.example"
+        },
+        {
+          "id": "nl-repeat-o2",
+          "title": "Waterdichte wandelschoenen vergeleken op één recensiesite",
+          "search_query": "wandelschoen grip natte rots recensie",
+          "site_key": "trail.example"
+        },
+        {
+          "id": "nl-repeat-o3",
+          "title": "Waterdichte wandelschoenen vergeleken op één recensiesite",
+          "search_query": "wandelschoen grip natte rots recensie",
+          "site_key": "trail.example"
+        }
+      ],
+      "query": "Welke schoenreview beschrijft grip op natte rotsen?",
+      "query_facets": [
+        "topic:footwear",
+        "constraint:wet_grip",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "nl-repeat-o1",
+          "nl-repeat-o2",
+          "nl-repeat-o3"
+        ],
+        "independent_source_count": 1,
+        "semantic_augmented_ids": [
+          "nl-repeat-o1",
+          "nl-repeat-o2",
+          "nl-repeat-o3"
+        ]
+      },
+      "prohibited_inferences": [
+        "Three independent sources or endorsements",
+        "A stable brand preference"
+      ]
+    },
+    {
+      "id": "nl-work",
+      "kind": "work_context",
+      "language": "nl",
+      "observations": [
+        {
+          "id": "nl-work-o1",
+          "title": "Spreadsheetbibliotheken voor een synthetisch XLSX-rapport",
+          "search_query": "Python spreadsheetbibliotheek xlsx voorbeeldrapport opmaak",
+          "site_key": "work.example"
+        }
+      ],
+      "query": "Welk pakket staat vermeld voor de opmaak van het voorbeeldspreadsheet?",
+      "query_facets": [
+        "topic:software",
+        "context:work",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "nl-work-o1"
+        ],
+        "semantic_augmented_ids": [
+          "nl-work-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Personal use or preference",
+        "A job title inferred from one work task"
+      ]
+    },
+    {
+      "id": "nl-privateinfo",
+      "kind": "privacy_sensitive",
+      "language": "nl",
+      "observations": [
+        {
+          "id": "nl-privateinfo-o1",
+          "title": "[gevoelige metadata verwijderd]",
+          "search_query": null,
+          "site_key": "private-portal.example"
+        }
+      ],
+      "query": "Bevat het opgeschoonde voorbeeld gevoelige gezondheidsmetadata?",
+      "query_facets": [
+        "privacy:sensitive_metadata",
+        "intent:recall"
+      ],
+      "capture_expectation": "drop",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": []
+      },
+      "prohibited_inferences": [
+        "Any diagnosis, condition, treatment, or sensitive attribute"
+      ],
+      "privacy_trigger": "sensitive_metadata"
+    },
+    {
+      "id": "nl-privatesession",
+      "kind": "privacy_private_session",
+      "language": "nl",
+      "observations": [
+        {
+          "id": "nl-privatesession-o1",
+          "title": "[inhoud van privésessie weggelaten]",
+          "search_query": null,
+          "site_key": "session.example"
+        }
+      ],
+      "query": "Welke inhoud wordt bewaard uit de gesimuleerde gepauzeerde sessie?",
+      "query_facets": [
+        "privacy:private_session",
+        "intent:recall"
+      ],
+      "capture_expectation": "drop",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": []
+      },
+      "prohibited_inferences": [
+        "Any activity from a private session"
+      ],
+      "privacy_trigger": "private_session"
+    },
+    {
+      "id": "nl-nomatch2",
+      "kind": "no_match",
+      "language": "nl",
+      "observations": [
+        {
+          "id": "nl-nomatch2-o1",
+          "title": "LED-driverstroom voor een mock bureaulamp",
+          "search_query": "mock bureaulamp LED-driver stroomsterkte",
+          "site_key": "bake.example"
+        }
+      ],
+      "query": "Welke firmwarebuild staat vermeld voor de synthetische router R-17?",
+      "query_facets": [
+        "topic:transit",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": []
+      },
+      "prohibited_inferences": [
+        "A personal fact based on unrelated evidence"
+      ]
+    },
+    {
+      "id": "fr-coffee",
+      "kind": "semantic_paraphrase",
+      "language": "fr",
+      "observations": [
+        {
+          "id": "fr-coffee-o1",
+          "title": "Moulins manuels discrets pour bancs de test compacts",
+          "search_query": "moulin café manuel silencieux banc test compact",
+          "site_key": "coffee.example"
+        }
+      ],
+      "query": "Quel moulin manuel fonctionne discrètement dans un banc de test compact ?",
+      "query_facets": [
+        "topic:coffee",
+        "constraint:low_noise",
+        "constraint:small_space"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "fr-coffee-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "fr-lamp",
+      "kind": "semantic_paraphrase",
+      "language": "fr",
+      "observations": [
+        {
+          "id": "fr-lamp-o1",
+          "title": "Lampes de bureau réparables avec articulation remplaçable",
+          "search_query": "lampe bureau charnière pièce rechange réparation",
+          "site_key": "repair.example"
+        }
+      ],
+      "query": "Comment garder une liseuse tordue en service pendant des années ?",
+      "query_facets": [
+        "topic:lighting",
+        "constraint:repairable"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "fr-lamp-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "fr-garden",
+      "kind": "semantic_paraphrase",
+      "language": "fr",
+      "observations": [
+        {
+          "id": "fr-garden-o1",
+          "title": "Herbes tolérantes à l’ombre pour des essais de culture contrôlés",
+          "search_query": "herbes mi-ombre essai culture contrôlée pots",
+          "site_key": "garden.example"
+        }
+      ],
+      "query": "Quelles variétés d’herbes tolèrent une faible lumière l’après-midi ?",
+      "query_facets": [
+        "topic:gardening",
+        "constraint:partial_shade",
+        "constraint:small_space"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "fr-garden-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "fr-bike",
+      "kind": "semantic_paraphrase",
+      "language": "fr",
+      "observations": [
+        {
+          "id": "fr-bike-o1",
+          "title": "Sacoches légères pour tests de pluie et de charge",
+          "search_query": "sacoche vélo légère matériel housse pluie test",
+          "site_key": "cycle.example"
+        }
+      ],
+      "query": "Quelle sacoche garde le matériel au sec pendant un test sous la pluie et reste facile à soulever ?",
+      "query_facets": [
+        "topic:cycling",
+        "constraint:lightweight",
+        "constraint:weatherproof"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "fr-bike-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "fr-bread",
+      "kind": "semantic_paraphrase",
+      "language": "fr",
+      "observations": [
+        {
+          "id": "fr-bread-o1",
+          "title": "Pain de seigle qui lève toute la nuit sans pétrissage",
+          "search_query": "pain seigle nuit sans pétrir",
+          "site_key": "bake.example"
+        }
+      ],
+      "query": "Quel procédé produit un pain de seigle avec peu de pétrissage ?",
+      "query_facets": [
+        "topic:baking",
+        "constraint:low_effort"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "fr-bread-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "fr-unit",
+      "kind": "exact_unit",
+      "language": "fr",
+      "observations": [
+        {
+          "id": "fr-unit-o1",
+          "title": "Étagère du banc de test simulé : 42 cm",
+          "search_query": "banc test étagère simulée ouverture 42 cm",
+          "site_key": "home.example"
+        }
+      ],
+      "query": "Quelle largeur exacte est indiquée pour l’étagère du banc de test simulé ?",
+      "query_facets": [
+        "topic:testing",
+        "constraint:exact_measurement",
+        "unit:cm"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "fr-unit-o1"
+        ],
+        "semantic_augmented_ids": [
+          "fr-unit-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Any room or home attribute beyond the recorded measurement"
+      ]
+    },
+    {
+      "id": "fr-gift",
+      "kind": "gift_research",
+      "language": "fr",
+      "observations": [
+        {
+          "id": "fr-gift-o1",
+          "title": "Comparaison fictive de cadeaux astronomiques : télescope débutant et carte du ciel",
+          "search_query": "comparaison cadeau astronomie télescope débutant carte ciel",
+          "site_key": "gift.example"
+        }
+      ],
+      "query": "Quel télescope débutant figure dans la comparaison fictive de cadeaux astronomiques ?",
+      "query_facets": [
+        "topic:gifts",
+        "recipient:sibling",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "fr-gift-o1"
+        ],
+        "semantic_augmented_ids": [
+          "fr-gift-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "That the user personally wants or likes the gift",
+        "That the user is the intended recipient"
+      ]
+    },
+    {
+      "id": "fr-criticism",
+      "kind": "criticism",
+      "language": "fr",
+      "observations": [
+        {
+          "id": "fr-criticism-o1",
+          "title": "Avis critique sur le moulin à café Morrow K2",
+          "search_query": "Morrow K2 moulin avis bruit alignement critique",
+          "site_key": "reviews.example"
+        }
+      ],
+      "query": "Quels défauts étaient mentionnés dans l’avis du Morrow K2 ?",
+      "query_facets": [
+        "topic:coffee",
+        "sentiment:critical",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "fr-criticism-o1"
+        ],
+        "semantic_augmented_ids": [
+          "fr-criticism-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Endorsement of the criticized product",
+        "Ownership or purchase intent"
+      ]
+    },
+    {
+      "id": "fr-negation",
+      "kind": "negation",
+      "language": "fr",
+      "observations": [
+        {
+          "id": "fr-negation-o1",
+          "title": "Bouilloire bleue émaillée écartée lors d’un test produit synthétique",
+          "search_query": "exclure bouilloire bleue émaillée poignée surchauffe",
+          "site_key": "kitchen.example"
+        }
+      ],
+      "query": "Quelle bouilloire bleue est écartée car sa poignée surchauffe ?",
+      "query_facets": [
+        "topic:kitchen",
+        "sentiment:rejected",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "fr-negation-o1"
+        ],
+        "semantic_augmented_ids": [
+          "fr-negation-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Positive purchase intent",
+        "Ownership of the rejected item"
+      ]
+    },
+    {
+      "id": "fr-nomatch1",
+      "kind": "no_match",
+      "language": "fr",
+      "observations": [
+        {
+          "id": "fr-nomatch1-o1",
+          "title": "Média filtrant en céramique pour un test de débit d’eau",
+          "search_query": "filtre céramique débit eau matériau poreux",
+          "site_key": "garden.example"
+        }
+      ],
+      "query": "Quel réglage du routeur configure un réseau invité ?",
+      "query_facets": [
+        "topic:networking",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": []
+      },
+      "prohibited_inferences": [
+        "A personal fact based on unrelated evidence"
+      ]
+    },
+    {
+      "id": "fr-repeat",
+      "kind": "repeated_source",
+      "language": "fr",
+      "observations": [
+        {
+          "id": "fr-repeat-o1",
+          "title": "Chaussures imperméables dans un test produit synthétique",
+          "search_query": "chaussure randonnée adhérence roche mouillée avis test",
+          "site_key": "trail.example"
+        },
+        {
+          "id": "fr-repeat-o2",
+          "title": "Chaussures de randonnée imperméables comparées sur un seul site",
+          "search_query": "chaussure randonnée adhérence roche mouillée avis",
+          "site_key": "trail.example"
+        },
+        {
+          "id": "fr-repeat-o3",
+          "title": "Chaussures de randonnée imperméables comparées sur un seul site",
+          "search_query": "chaussure randonnée adhérence roche mouillée avis",
+          "site_key": "trail.example"
+        }
+      ],
+      "query": "Quel avis sur des chaussures décrit l’adhérence sur roche mouillée ?",
+      "query_facets": [
+        "topic:footwear",
+        "constraint:wet_grip",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "fr-repeat-o1",
+          "fr-repeat-o2",
+          "fr-repeat-o3"
+        ],
+        "independent_source_count": 1,
+        "semantic_augmented_ids": [
+          "fr-repeat-o1",
+          "fr-repeat-o2",
+          "fr-repeat-o3"
+        ]
+      },
+      "prohibited_inferences": [
+        "Three independent sources or endorsements",
+        "A stable brand preference"
+      ]
+    },
+    {
+      "id": "fr-work",
+      "kind": "work_context",
+      "language": "fr",
+      "observations": [
+        {
+          "id": "fr-work-o1",
+          "title": "Bibliothèques de tableur pour un rapport XLSX synthétique",
+          "search_query": "Python tableur bibliothèque xlsx exemple rapport mise en page",
+          "site_key": "work.example"
+        }
+      ],
+      "query": "Quel paquet est indiqué pour la mise en forme du tableur exemple ?",
+      "query_facets": [
+        "topic:software",
+        "context:work",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "fr-work-o1"
+        ],
+        "semantic_augmented_ids": [
+          "fr-work-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Personal use or preference",
+        "A job title inferred from one work task"
+      ]
+    },
+    {
+      "id": "fr-privateinfo",
+      "kind": "privacy_sensitive",
+      "language": "fr",
+      "observations": [
+        {
+          "id": "fr-privateinfo-o1",
+          "title": "[métadonnées sensibles supprimées]",
+          "search_query": null,
+          "site_key": "private-portal.example"
+        }
+      ],
+      "query": "L’exemple assaini contient-il des métadonnées de santé sensibles ?",
+      "query_facets": [
+        "privacy:sensitive_metadata",
+        "intent:recall"
+      ],
+      "capture_expectation": "drop",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": []
+      },
+      "prohibited_inferences": [
+        "Any diagnosis, condition, treatment, or sensitive attribute"
+      ],
+      "privacy_trigger": "sensitive_metadata"
+    },
+    {
+      "id": "fr-privatesession",
+      "kind": "privacy_private_session",
+      "language": "fr",
+      "observations": [
+        {
+          "id": "fr-privatesession-o1",
+          "title": "[contenu de session privée omis]",
+          "search_query": null,
+          "site_key": "session.example"
+        }
+      ],
+      "query": "Quel contenu est conservé dans la session simulée en pause ?",
+      "query_facets": [
+        "privacy:private_session",
+        "intent:recall"
+      ],
+      "capture_expectation": "drop",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": []
+      },
+      "prohibited_inferences": [
+        "Any activity from a private session"
+      ],
+      "privacy_trigger": "private_session"
+    },
+    {
+      "id": "fr-nomatch2",
+      "kind": "no_match",
+      "language": "fr",
+      "observations": [
+        {
+          "id": "fr-nomatch2-o1",
+          "title": "Courant du pilote LED pour une lampe de bureau simulée",
+          "search_query": "lampe bureau simulée courant pilote LED",
+          "site_key": "bake.example"
+        }
+      ],
+      "query": "Quelle version de micrologiciel est indiquée pour le routeur synthétique R-17 ?",
+      "query_facets": [
+        "topic:transit",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": []
+      },
+      "prohibited_inferences": [
+        "A personal fact based on unrelated evidence"
+      ]
+    },
+    {
+      "id": "ja-coffee",
+      "kind": "semantic_paraphrase",
+      "language": "ja",
+      "observations": [
+        {
+          "id": "ja-coffee-o1",
+          "title": "コンパクトな試験台向けの静かな手挽きミル",
+          "search_query": "コンパクト 試験環境 静音 手動 コーヒーミル",
+          "site_key": "coffee.example"
+        }
+      ],
+      "query": "コンパクトな試験環境で静かに動く手挽きミルは？",
+      "query_facets": [
+        "topic:coffee",
+        "constraint:low_noise",
+        "constraint:small_space"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "ja-coffee-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "ja-lamp",
+      "kind": "semantic_paraphrase",
+      "language": "ja",
+      "observations": [
+        {
+          "id": "ja-lamp-o1",
+          "title": "関節部品を交換できる修理可能なデスクライト",
+          "search_query": "デスクライト ヒンジ 交換部品 修理",
+          "site_key": "repair.example"
+        }
+      ],
+      "query": "腕が曲がった読書灯を長く使い続けるには？",
+      "query_facets": [
+        "topic:lighting",
+        "constraint:repairable"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "ja-lamp-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "ja-garden",
+      "kind": "semantic_paraphrase",
+      "language": "ja",
+      "observations": [
+        {
+          "id": "ja-garden-o1",
+          "title": "管理された栽培試験に適した耐陰性ハーブ",
+          "search_query": "ハーブ 半日陰 管理栽培 試験 鉢",
+          "site_key": "garden.example"
+        }
+      ],
+      "query": "午後の光が少ない環境に耐えるハーブの品種は？",
+      "query_facets": [
+        "topic:gardening",
+        "constraint:partial_shade",
+        "constraint:small_space"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "ja-garden-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "ja-bike",
+      "kind": "semantic_paraphrase",
+      "language": "ja",
+      "observations": [
+        {
+          "id": "ja-bike-o1",
+          "title": "雨天・荷重試験向けの軽量自転車バッグ",
+          "search_query": "自転車バッグ 軽量 機材 雨カバー 試験",
+          "site_key": "cycle.example"
+        }
+      ],
+      "query": "雨天試験で機材を濡らさず、持ち上げやすい自転車バッグは？",
+      "query_facets": [
+        "topic:cycling",
+        "constraint:lightweight",
+        "constraint:weatherproof"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "ja-bike-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "ja-bread",
+      "kind": "semantic_paraphrase",
+      "language": "ja",
+      "observations": [
+        {
+          "id": "ja-bread-o1",
+          "title": "こねずに一晩発酵させるライ麦パン",
+          "search_query": "ライ麦パン 一晩発酵 こねない",
+          "site_key": "bake.example"
+        }
+      ],
+      "query": "こねる回数を抑えて作れるライ麦パンの工程は？",
+      "query_facets": [
+        "topic:baking",
+        "constraint:low_effort"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "ja-bread-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "ja-unit",
+      "kind": "exact_unit",
+      "language": "ja",
+      "observations": [
+        {
+          "id": "ja-unit-o1",
+          "title": "模擬試験ラックの棚幅：42 cm",
+          "search_query": "試験ラック 模擬棚 開口幅 42 cm",
+          "site_key": "home.example"
+        }
+      ],
+      "query": "模擬試験ラックの棚に指定された正確な幅は？",
+      "query_facets": [
+        "topic:testing",
+        "constraint:exact_measurement",
+        "unit:cm"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "ja-unit-o1"
+        ],
+        "semantic_augmented_ids": [
+          "ja-unit-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Any room or home attribute beyond the recorded measurement"
+      ]
+    },
+    {
+      "id": "ja-gift",
+      "kind": "gift_research",
+      "language": "ja",
+      "observations": [
+        {
+          "id": "ja-gift-o1",
+          "title": "天文学ギフトのサンプル比較：初心者向け望遠鏡と星図",
+          "search_query": "天文学 ギフト 比較 初心者 望遠鏡 星図",
+          "site_key": "gift.example"
+        }
+      ],
+      "query": "天文学ギフトのサンプル比較に挙がる初心者向け望遠鏡は？",
+      "query_facets": [
+        "topic:gifts",
+        "recipient:sibling",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "ja-gift-o1"
+        ],
+        "semantic_augmented_ids": [
+          "ja-gift-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "That the user personally wants or likes the gift",
+        "That the user is the intended recipient"
+      ]
+    },
+    {
+      "id": "ja-criticism",
+      "kind": "criticism",
+      "language": "ja",
+      "observations": [
+        {
+          "id": "ja-criticism-o1",
+          "title": "Morrow K2 コーヒーミルの批判的レビュー",
+          "search_query": "Morrow K2 ミル レビュー 騒音 刃の調整 問題",
+          "site_key": "reviews.example"
+        }
+      ],
+      "query": "Morrow K2 のレビューで指摘された問題は何？",
+      "query_facets": [
+        "topic:coffee",
+        "sentiment:critical",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "ja-criticism-o1"
+        ],
+        "semantic_augmented_ids": [
+          "ja-criticism-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Endorsement of the criticized product",
+        "Ownership or purchase intent"
+      ]
+    },
+    {
+      "id": "ja-negation",
+      "kind": "negation",
+      "language": "ja",
+      "observations": [
+        {
+          "id": "ja-negation-o1",
+          "title": "合成製品試験で除外された青いホーローケトル",
+          "search_query": "青いホーローケトル 除外 持ち手 過熱",
+          "site_key": "kitchen.example"
+        }
+      ],
+      "query": "持ち手が過熱するため製品試験で除外された青いケトルは？",
+      "query_facets": [
+        "topic:kitchen",
+        "sentiment:rejected",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "ja-negation-o1"
+        ],
+        "semantic_augmented_ids": [
+          "ja-negation-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Positive purchase intent",
+        "Ownership of the rejected item"
+      ]
+    },
+    {
+      "id": "ja-nomatch1",
+      "kind": "no_match",
+      "language": "ja",
+      "observations": [
+        {
+          "id": "ja-nomatch1-o1",
+          "title": "水流試験用のセラミックろ材",
+          "search_query": "水流 試験 セラミック ろ材 多孔質素材",
+          "site_key": "garden.example"
+        }
+      ],
+      "query": "ゲスト Wi-Fi を設定するルーターの項目は？",
+      "query_facets": [
+        "topic:networking",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": []
+      },
+      "prohibited_inferences": [
+        "A personal fact based on unrelated evidence"
+      ]
+    },
+    {
+      "id": "ja-repeat",
+      "kind": "repeated_source",
+      "language": "ja",
+      "observations": [
+        {
+          "id": "ja-repeat-o1",
+          "title": "合成製品レビューで比較した防水トレッキングシューズ",
+          "search_query": "トレッキングシューズ 濡れた岩 グリップ レビュー 試験",
+          "site_key": "trail.example"
+        },
+        {
+          "id": "ja-repeat-o2",
+          "title": "同じレビューサイトで比べた雨天向け登山靴",
+          "search_query": "登山靴 濡れた岩 グリップ レビュー",
+          "site_key": "trail.example"
+        },
+        {
+          "id": "ja-repeat-o3",
+          "title": "同じレビューサイトで比べた雨天向け登山靴",
+          "search_query": "登山靴 濡れた岩 グリップ レビュー",
+          "site_key": "trail.example"
+        }
+      ],
+      "query": "濡れた岩場でのグリップを説明する靴のレビューは？",
+      "query_facets": [
+        "topic:footwear",
+        "constraint:wet_grip",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "ja-repeat-o1",
+          "ja-repeat-o2",
+          "ja-repeat-o3"
+        ],
+        "independent_source_count": 1,
+        "semantic_augmented_ids": [
+          "ja-repeat-o1",
+          "ja-repeat-o2",
+          "ja-repeat-o3"
+        ]
+      },
+      "prohibited_inferences": [
+        "Three independent sources or endorsements",
+        "A stable brand preference"
+      ]
+    },
+    {
+      "id": "ja-work",
+      "kind": "work_context",
+      "language": "ja",
+      "observations": [
+        {
+          "id": "ja-work-o1",
+          "title": "合成 XLSX レポート用の表計算ライブラリ",
+          "search_query": "Python xlsx 表計算ライブラリ サンプル レポート 書式",
+          "site_key": "work.example"
+        }
+      ],
+      "query": "サンプル表計算レポートの書式設定に使うパッケージは？",
+      "query_facets": [
+        "topic:software",
+        "context:work",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "ja-work-o1"
+        ],
+        "semantic_augmented_ids": [
+          "ja-work-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Personal use or preference",
+        "A job title inferred from one work task"
+      ]
+    },
+    {
+      "id": "ja-privateinfo",
+      "kind": "privacy_sensitive",
+      "language": "ja",
+      "observations": [
+        {
+          "id": "ja-privateinfo-o1",
+          "title": "[機微なメタデータを削除]",
+          "search_query": null,
+          "site_key": "private-portal.example"
+        }
+      ],
+      "query": "匿名化されたサンプルに機微な健康メタデータは含まれる？",
+      "query_facets": [
+        "privacy:sensitive_metadata",
+        "intent:recall"
+      ],
+      "capture_expectation": "drop",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": []
+      },
+      "prohibited_inferences": [
+        "Any diagnosis, condition, treatment, or sensitive attribute"
+      ],
+      "privacy_trigger": "sensitive_metadata"
+    },
+    {
+      "id": "ja-privatesession",
+      "kind": "privacy_private_session",
+      "language": "ja",
+      "observations": [
+        {
+          "id": "ja-privatesession-o1",
+          "title": "[プライベートセッションの内容を省略]",
+          "search_query": null,
+          "site_key": "session.example"
+        }
+      ],
+      "query": "一時停止を模擬したセッションからどの内容が保持される？",
+      "query_facets": [
+        "privacy:private_session",
+        "intent:recall"
+      ],
+      "capture_expectation": "drop",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": []
+      },
+      "prohibited_inferences": [
+        "Any activity from a private session"
+      ],
+      "privacy_trigger": "private_session"
+    },
+    {
+      "id": "ja-nomatch2",
+      "kind": "no_match",
+      "language": "ja",
+      "observations": [
+        {
+          "id": "ja-nomatch2-o1",
+          "title": "模擬デスクライトの LED ドライバー電流",
+          "search_query": "模擬 デスクライト LED ドライバー 電流",
+          "site_key": "bake.example"
+        }
+      ],
+      "query": "合成ルーター R-17 のファームウェアビルドは？",
+      "query_facets": [
+        "topic:transit",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": []
+      },
+      "prohibited_inferences": [
+        "A personal fact based on unrelated evidence"
+      ]
+    },
+    {
+      "id": "zh-coffee",
+      "kind": "semantic_paraphrase",
+      "language": "zh",
+      "observations": [
+        {
+          "id": "zh-coffee-o1",
+          "title": "适用于紧凑测试台的安静手摇磨豆机",
+          "search_query": "紧凑测试环境 静音 手摇 咖啡磨豆机",
+          "site_key": "coffee.example"
+        }
+      ],
+      "query": "哪款手摇磨豆机能在紧凑的测试环境中安静运行？",
+      "query_facets": [
+        "topic:coffee",
+        "constraint:low_noise",
+        "constraint:small_space"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "zh-coffee-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "zh-lamp",
+      "kind": "semantic_paraphrase",
+      "language": "zh",
+      "observations": [
+        {
+          "id": "zh-lamp-o1",
+          "title": "可更换转轴的可维修台灯",
+          "search_query": "台灯 转轴 替换零件 维修",
+          "site_key": "repair.example"
+        }
+      ],
+      "query": "支臂弯了以后，怎样让阅读灯继续使用多年？",
+      "query_facets": [
+        "topic:lighting",
+        "constraint:repairable"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "zh-lamp-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "zh-garden",
+      "kind": "semantic_paraphrase",
+      "language": "zh",
+      "observations": [
+        {
+          "id": "zh-garden-o1",
+          "title": "用于受控种植测试的耐阴香草品种",
+          "search_query": "香草 半阴 受控种植 测试 花盆",
+          "site_key": "garden.example"
+        }
+      ],
+      "query": "哪些香草品种能适应午后光照不足的环境？",
+      "query_facets": [
+        "topic:gardening",
+        "constraint:partial_shade",
+        "constraint:small_space"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "zh-garden-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "zh-bike",
+      "kind": "semantic_paraphrase",
+      "language": "zh",
+      "observations": [
+        {
+          "id": "zh-bike-o1",
+          "title": "适用于淋雨和负载测试的轻便自行车包",
+          "search_query": "轻便 自行车包 设备 防雨罩 测试",
+          "site_key": "cycle.example"
+        }
+      ],
+      "query": "哪种自行车包能在淋雨测试中保护设备且便于提起？",
+      "query_facets": [
+        "topic:cycling",
+        "constraint:lightweight",
+        "constraint:weatherproof"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "zh-bike-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "zh-bread",
+      "kind": "semantic_paraphrase",
+      "language": "zh",
+      "observations": [
+        {
+          "id": "zh-bread-o1",
+          "title": "免揉并经过夜间发酵的黑麦面包",
+          "search_query": "黑麦面包 过夜发酵 不揉面",
+          "site_key": "bake.example"
+        }
+      ],
+      "query": "哪种黑麦面包工艺需要较少揉面？",
+      "query_facets": [
+        "topic:baking",
+        "constraint:low_effort"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": [
+          "zh-bread-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Ownership of the item",
+        "A stable preference or brand loyalty"
+      ]
+    },
+    {
+      "id": "zh-unit",
+      "kind": "exact_unit",
+      "language": "zh",
+      "observations": [
+        {
+          "id": "zh-unit-o1",
+          "title": "模拟测试架层板宽度：42 cm",
+          "search_query": "测试架 模拟层板 开口宽度 42 cm",
+          "site_key": "home.example"
+        }
+      ],
+      "query": "模拟测试架层板的准确宽度是多少？",
+      "query_facets": [
+        "topic:testing",
+        "constraint:exact_measurement",
+        "unit:cm"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "zh-unit-o1"
+        ],
+        "semantic_augmented_ids": [
+          "zh-unit-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Any room or home attribute beyond the recorded measurement"
+      ]
+    },
+    {
+      "id": "zh-gift",
+      "kind": "gift_research",
+      "language": "zh",
+      "observations": [
+        {
+          "id": "zh-gift-o1",
+          "title": "天文礼品样例比较：入门望远镜与星图",
+          "search_query": "天文 礼品 比较 入门 望远镜 星图",
+          "site_key": "gift.example"
+        }
+      ],
+      "query": "天文礼品样例比较中列出了哪款入门望远镜？",
+      "query_facets": [
+        "topic:gifts",
+        "recipient:sibling",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "zh-gift-o1"
+        ],
+        "semantic_augmented_ids": [
+          "zh-gift-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "That the user personally wants or likes the gift",
+        "That the user is the intended recipient"
+      ]
+    },
+    {
+      "id": "zh-criticism",
+      "kind": "criticism",
+      "language": "zh",
+      "observations": [
+        {
+          "id": "zh-criticism-o1",
+          "title": "对 Morrow K2 磨豆机的批评性评测",
+          "search_query": "Morrow K2 磨豆机 评测 噪音 刀盘 调整 问题",
+          "site_key": "reviews.example"
+        }
+      ],
+      "query": "Morrow K2 的评测提到了哪些问题？",
+      "query_facets": [
+        "topic:coffee",
+        "sentiment:critical",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "zh-criticism-o1"
+        ],
+        "semantic_augmented_ids": [
+          "zh-criticism-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Endorsement of the criticized product",
+        "Ownership or purchase intent"
+      ]
+    },
+    {
+      "id": "zh-negation",
+      "kind": "negation",
+      "language": "zh",
+      "observations": [
+        {
+          "id": "zh-negation-o1",
+          "title": "合成产品测试中排除的蓝色搪瓷水壶",
+          "search_query": "排除 蓝色 搪瓷 水壶 手柄 过热",
+          "site_key": "kitchen.example"
+        }
+      ],
+      "query": "哪款蓝色水壶因手柄过热而在合成产品测试中被排除？",
+      "query_facets": [
+        "topic:kitchen",
+        "sentiment:rejected",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "zh-negation-o1"
+        ],
+        "semantic_augmented_ids": [
+          "zh-negation-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Positive purchase intent",
+        "Ownership of the rejected item"
+      ]
+    },
+    {
+      "id": "zh-nomatch1",
+      "kind": "no_match",
+      "language": "zh",
+      "observations": [
+        {
+          "id": "zh-nomatch1-o1",
+          "title": "用于水流测试的陶瓷过滤材料",
+          "search_query": "水流测试 陶瓷过滤材料 多孔材料",
+          "site_key": "garden.example"
+        }
+      ],
+      "query": "路由器的哪项设置可以配置访客网络？",
+      "query_facets": [
+        "topic:networking",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": []
+      },
+      "prohibited_inferences": [
+        "A personal fact based on unrelated evidence"
+      ]
+    },
+    {
+      "id": "zh-repeat",
+      "kind": "repeated_source",
+      "language": "zh",
+      "observations": [
+        {
+          "id": "zh-repeat-o1",
+          "title": "合成产品评测中的防水徒步鞋",
+          "search_query": "徒步鞋 湿岩 抓地 评测 测试",
+          "site_key": "trail.example"
+        },
+        {
+          "id": "zh-repeat-o2",
+          "title": "在同一个评测网站比较的雨天徒步鞋",
+          "search_query": "徒步鞋 湿岩 抓地 评测",
+          "site_key": "trail.example"
+        },
+        {
+          "id": "zh-repeat-o3",
+          "title": "在同一个评测网站比较的雨天徒步鞋",
+          "search_query": "徒步鞋 湿岩 抓地 评测",
+          "site_key": "trail.example"
+        }
+      ],
+      "query": "哪篇鞋类评测描述了湿岩石上的抓地力？",
+      "query_facets": [
+        "topic:footwear",
+        "constraint:wet_grip",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "zh-repeat-o1",
+          "zh-repeat-o2",
+          "zh-repeat-o3"
+        ],
+        "independent_source_count": 1,
+        "semantic_augmented_ids": [
+          "zh-repeat-o1",
+          "zh-repeat-o2",
+          "zh-repeat-o3"
+        ]
+      },
+      "prohibited_inferences": [
+        "Three independent sources or endorsements",
+        "A stable brand preference"
+      ]
+    },
+    {
+      "id": "zh-work",
+      "kind": "work_context",
+      "language": "zh",
+      "observations": [
+        {
+          "id": "zh-work-o1",
+          "title": "用于合成 XLSX 报告的电子表格库",
+          "search_query": "Python xlsx 电子表格库 样例 报告 格式设置",
+          "site_key": "work.example"
+        }
+      ],
+      "query": "样例电子表格报告格式设置使用了哪个软件包？",
+      "query_facets": [
+        "topic:software",
+        "context:work",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [
+          "zh-work-o1"
+        ],
+        "semantic_augmented_ids": [
+          "zh-work-o1"
+        ]
+      },
+      "prohibited_inferences": [
+        "Personal use or preference",
+        "A job title inferred from one work task"
+      ]
+    },
+    {
+      "id": "zh-privateinfo",
+      "kind": "privacy_sensitive",
+      "language": "zh",
+      "observations": [
+        {
+          "id": "zh-privateinfo-o1",
+          "title": "[已删除敏感元数据]",
+          "search_query": null,
+          "site_key": "private-portal.example"
+        }
+      ],
+      "query": "清理后的样例是否含有敏感健康元数据？",
+      "query_facets": [
+        "privacy:sensitive_metadata",
+        "intent:recall"
+      ],
+      "capture_expectation": "drop",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": []
+      },
+      "prohibited_inferences": [
+        "Any diagnosis, condition, treatment, or sensitive attribute"
+      ],
+      "privacy_trigger": "sensitive_metadata"
+    },
+    {
+      "id": "zh-privatesession",
+      "kind": "privacy_private_session",
+      "language": "zh",
+      "observations": [
+        {
+          "id": "zh-privatesession-o1",
+          "title": "[已省略私人会话内容]",
+          "search_query": null,
+          "site_key": "session.example"
+        }
+      ],
+      "query": "模拟暂停的会话中保留了哪些内容？",
+      "query_facets": [
+        "privacy:private_session",
+        "intent:recall"
+      ],
+      "capture_expectation": "drop",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": []
+      },
+      "prohibited_inferences": [
+        "Any activity from a private session"
+      ],
+      "privacy_trigger": "private_session"
+    },
+    {
+      "id": "zh-nomatch2",
+      "kind": "no_match",
+      "language": "zh",
+      "observations": [
+        {
+          "id": "zh-nomatch2-o1",
+          "title": "模拟台灯 LED 驱动器电流范围",
+          "search_query": "模拟 台灯 LED 驱动器 电流范围",
+          "site_key": "bake.example"
+        }
+      ],
+      "query": "合成路由器 R-17 使用哪个固件版本？",
+      "query_facets": [
+        "topic:transit",
+        "intent:recall"
+      ],
+      "capture_expectation": "allow",
+      "expected_match": {
+        "lexical_baseline_ids": [],
+        "semantic_augmented_ids": []
+      },
+      "prohibited_inferences": [
+        "A personal fact based on unrelated evidence"
+      ]
+    }
+  ]
+}

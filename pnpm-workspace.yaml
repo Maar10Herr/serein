@@ -1,0 +1,5 @@
+packages:
+  - apps/extension
+allowBuilds:
+  esbuild: true
+  spawn-sync: false
