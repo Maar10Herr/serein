@@ -1,22 +1,24 @@
-# Serein v0.1.1
+# Serein v0.1.2
 
-Serein gives local assistants access to browsing context you choose to save. This release supports macOS on Apple silicon with Chrome or Firefox.
+Your AI forgets what you researched. Serein gives a local assistant a way to find relevant pages and searches you chose to save, with their sources.
+
+This release supports macOS on Apple silicon with Chrome and Firefox. The browser extension and the `serein-context` skill work together; the skill includes the local helper, model, and reader.
+
+![Serein's first-run screen after linking](https://raw.githubusercontent.com/Maar10Herr/serein/v0.1.2/docs/screenshots/connected-first-run.png)
 
 ## Install
 
-1. Download the [Chrome extension](https://github.com/Maar10Herr/serein/releases/download/v0.1.1/serein-chrome-0.1.1-unsigned.zip) or [Firefox extension](https://github.com/Maar10Herr/serein/releases/download/v0.1.1/serein-firefox-0.1.1-unsigned.zip). Extract the ZIP. In Chrome, open `chrome://extensions`, enable **Developer mode**, and choose **Load unpacked**. In Firefox, open `about:debugging#/runtime/this-firefox` and choose **Load Temporary Add-on** with `manifest.json`.
-2. Ask your local assistant to install the `serein-context` skill from `https://github.com/Maar10Herr/serein` with its native skill installer. The skill includes the helper, model, and reader; no separate runtime download is needed.
-3. Open **Connections** in the extension, review the capture settings, and choose **Copy link instruction**. Paste it into the same local assistant. Serein checks the connection automatically.
+1. Download the [Chrome extension](https://github.com/Maar10Herr/serein/releases/download/v0.1.2/serein-chrome-0.1.2-unsigned.zip) or [Firefox extension](https://github.com/Maar10Herr/serein/releases/download/v0.1.2/serein-firefox-0.1.2-unsigned.zip). Extract the ZIP. In Chrome, open `chrome://extensions`, enable **Developer mode**, and select **Load unpacked**. In Firefox, open `about:debugging#/runtime/this-firefox`, select **Load Temporary Add-on**, and choose `manifest.json`.
+2. Use your assistant's skill installer to install `serein-context` from [the Serein repository](https://github.com/Maar10Herr/serein). The [skill ZIP](https://github.com/Maar10Herr/serein/releases/download/v0.1.2/serein-skills-0.1.2.zip) is available for inspection or installers that accept archives.
+3. In the extension, open **Connections**, review the capture and recall choices, and select **Copy link instruction**. Paste it into the same local assistant to link the skill. Serein checks the connection automatically.
 
-The [install guide](https://github.com/Maar10Herr/serein/blob/v0.1.1/docs/INSTALL.md) has the full steps. The [skill ZIP](https://github.com/Maar10Herr/serein/releases/download/v0.1.1/serein-skills-0.1.1.zip) is available for inspection or installers that accept archives.
+See the [installation guide](https://github.com/Maar10Herr/serein/blob/v0.1.2/docs/INSTALL.md) for the Codex Skills CLI command and full steps.
 
-## Changes
+## What's new
 
-- Retrieval now ranks lexical, semantic, and confirmed evidence separately before combining them. Exact values such as product identifiers, dates, prices, and measurements must match in full.
-- Model changes rebuild topic assignments deterministically. Deletion updates affected topics, and topic labels follow the current evidence.
-- Recall reserves time for retrieval and opens the model once per request. Local file and database failures have distinct, actionable error codes.
-- The extension follows the system appearance by default. Explicit light and dark choices remain saved.
+- The empty dashboard now guides a newly connected user through the first useful recall question and shows the connection and search-readiness checks.
+- The installed skill includes **Serein Doctor**, an on-demand diagnostic for browser pairing, native registration, vault access, model availability, skill discovery, and the recall setting. It reports saved setup state; it does not check whether a browser is currently open or prove that an assistant has executed the skill.
+- Recall now uses a small recency and repeat-session signal when ordering its existing candidates. A constructed evaluation found modest gains on development journeys with mixed results on held-out Spanish and Japanese journeys; this is not evidence of overall or field accuracy. See the [test report](https://github.com/Maar10Herr/serein/blob/v0.1.2/docs/TEST_REPORT.md) for the scores and method.
+- The repository adds a repeatable synthetic retrieval evaluation built from public-page metadata and hand-curated queries. Its timing and repeat-session values are constructed test inputs, not actual browsing activity.
 
-An isolated 10,000-atom vault returned hybrid recall in 255 ms median and 275 ms p95 across 30 warm calls on the tested Apple silicon Mac. See the [benchmark method](https://github.com/Maar10Herr/serein/blob/v0.1.1/docs/benchmark-10k.md) and [test report](https://github.com/Maar10Herr/serein/blob/v0.1.1/docs/TEST_REPORT.md) for scope and limits.
-
-The extension and macOS helper are unsigned. Firefox's temporary installation expires when the browser restarts; permanent installation requires Mozilla signing. The assistant must run on the same Mac as the extension.
+The extension and macOS helper are unsigned; the helper is not notarized. Firefox's temporary installation expires when the browser restarts. Permanent Firefox installation requires Mozilla signing. The assistant must run on the same Mac as the extension.

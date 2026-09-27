@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "topic": "Synthetic Spanish-language public-web research journey about preparing specialty coffee at home",
+  "seed_fingerprint": "ba9209fdb2e5dfae",
+  "evidence": [
+    {"id":"mercado-v60","title":"Guía V60 — Cómo preparar café","site_key":"mercado.cafe","search_query":null,"days_ago":2,"sessions":2},
+    {"id":"quinto-v60","title":"Cafetera V60: Guía completa de preparación + Kit Hario","site_key":"quintocafe.es","search_query":null,"days_ago":7,"sessions":1},
+    {"id":"nesa-espresso-grind","title":"Cómo ajustar un molino manual para espresso","site_key":"nesacoffee.com","search_query":null,"days_ago":3,"sessions":2},
+    {"id":"rincon-v60","title":"Cómo hacer café V60 paso a paso: guía de un barista SCA","site_key":"elrincondecafe.es","search_query":null,"days_ago":9,"sessions":1},
+    {"id":"nomad-v60","title":"Aprende a Preparar Café de Especialidad con el Método V60","site_key":"nomadcoffee.es","search_query":null,"days_ago":12,"sessions":1},
+    {"id":"treslobos-espresso","title":"Las variables del espresso","site_key":"cafetreslobos.com","search_query":null,"days_ago":6,"sessions":1},
+    {"id":"sensi-espresso-dialin","title":"Cómo dial-in (calibrar) un espresso paso a paso: la guía visual para baristas caseros","site_key":"sensibarista.com","search_query":null,"days_ago":4,"sessions":1},
+    {"id":"gallo-aeropress","title":"Cómo preparar un café con AeroPress","site_key":"gallo.coffee","search_query":null,"days_ago":15,"sessions":1},
+    {"id":"escuela-weiss","title":"¿Qué es la técnica de Weiss?","site_key":"laescueladebaristas.com","search_query":null,"days_ago":10,"sessions":1},
+    {"id":"elpais-metodos","title":"Cómo hacer mejor el café en cafetera italiana, exprés, de filtro o de cápsulas","site_key":"elpais.com","search_query":null,"days_ago":5,"sessions":2},
+    {"id":"icoffee-aeropress","title":"Receta de AeroPress: La preparación de la casa iCoffee","site_key":"icoffeeapp.com","search_query":null,"days_ago":1,"sessions":2},
+    {"id":"cafe-especialidad-filtro","title":"Cómo Preparar Café de Filtro Perfecto","site_key":"cafedeespecialidad.com.es","search_query":null,"days_ago":8,"sessions":1},
+    {"id":"aeropress-mexico","title":"¿Qué es la AeroPress? — La cafetera que cambió el café","site_key":"aeropressmexico.com","search_query":null,"days_ago":13,"sessions":1},
+    {"id":"gota-hoffmann","title":"Definitiva — Receta para AeroPress por James Hoffmann","site_key":"gota.cafe","search_query":null,"days_ago":11,"sessions":1},
+    {"id":"britt-v60","title":"GUÍA PARA PREPARAR CAFÉ EN V60","site_key":"cafebritt.cr","search_query":null,"days_ago":14,"sessions":1},
+    {"id":"sensi-v60","title":"V60 paso a paso: la guía del café de filtro en casa (y cómo tomarlo helado en verano)","site_key":"sensibarista.com","search_query":null,"days_ago":2,"sessions":1},
+    {"id":"cafessio-espresso","title":"Cómo preparar café en Espresso","site_key":"cafessio.com","search_query":null,"days_ago":17,"sessions":1}
+  ],
+  "queries": [
+    {"id":"q-v60-proporcion","query":"¿Qué páginas consulté para preparar V60 y recordar la proporción de café y agua?","facets":["método:V60","tema:proporción"],"expected_ids":["quinto-v60","rincon-v60","britt-v60","mercado-v60"],"kind":"positive"},
+    {"id":"q-v60-bloom","query":"¿Dónde leí sobre la preinfusión o bloom antes de hacer los vertidos del café filtrado?","facets":["método:V60","paso:preinfusión"],"expected_ids":["quinto-v60","nomad-v60","cafe-especialidad-filtro","sensi-v60"],"kind":"positive"},
+    {"id":"q-v60-helar","query":"¿Qué guía explicaba cómo hacer un V60 frío usando hielo en la jarra?","facets":["método:V60","variante:café frío"],"expected_ids":["sensi-v60"],"kind":"positive"},
+    {"id":"q-espresso-ajuste","query":"¿Qué había leído para ajustar el molinillo cuando el espresso salía demasiado rápido o lento?","facets":["método:espresso","variable:molienda"],"expected_ids":["nesa-espresso-grind","sensi-espresso-dialin","cafessio-espresso"],"kind":"positive"},
+    {"id":"q-espresso-distribucion","query":"¿Dónde consulté cómo repartir el café molido en el portafiltro antes de prensarlo?","facets":["método:espresso","técnica:distribución"],"expected_ids":["escuela-weiss","treslobos-espresso","sensi-espresso-dialin","cafessio-espresso"],"kind":"positive"},
+    {"id":"q-aeropress-receta","query":"¿Qué páginas tenían una receta paso a paso de AeroPress con cantidades y temperatura?","facets":["método:AeroPress","tipo:receta"],"expected_ids":["icoffee-aeropress","gallo-aeropress","gota-hoffmann"],"kind":"positive"},
+    {"id":"q-moka-comparacion","query":"¿Qué artículo comparaba cómo preparar café en cafetera italiana, espresso y filtro?","facets":["método:moka","tipo:comparación"],"expected_ids":["elpais-metodos"],"kind":"positive"},
+    {"id":"q-reciente-revisitas","query":"¿Qué referencias de café filtrado o AeroPress volví a abrir más recientemente?","facets":["recencia:reciente","sesiones:repetidas"],"expected_ids":["icoffee-aeropress","mercado-v60","sensi-v60"],"kind":"recency"},
+    {"id":"q-trap-tamper","query":"¿Qué página consulté sobre el calibrado de un molinillo manual de espresso, no sobre comprar una cafetera?","facets":["método:espresso","tarea:ajuste de molino"],"expected_ids":["nesa-espresso-grind"],"kind":"facet_trap"},
+    {"id":"q-no-match-extension","query":"¿Qué aplicación instalé para que una cafetera conectada ajustara automáticamente el molido según mi historial de sueño?","facets":["equipo:cafetera conectada","tarea:instalación de aplicación"],"expected_ids":[],"kind":"no_match"}
+  ],
+  "sources": [
+    {"id":"mercado-v60","title":"Guía V60 — Cómo preparar café","url":"https://www.mercado.cafe/guias/v60"},
+    {"id":"quinto-v60","title":"Cafetera V60: Guía completa de preparación + Kit Hario","url":"https://quintocafe.es/blogs/preparar-un-cafe-rico/como-preparar-cafe-en-v60-para-disfrutar-del-mejor-sabor"},
+    {"id":"nesa-espresso-grind","title":"Cómo ajustar un molino manual para espresso","url":"https://www.nesacoffee.com/tutoriales/como-ajustar-un-molino-manual-para-espresso"},
+    {"id":"rincon-v60","title":"Cómo hacer café V60 paso a paso: guía de un barista SCA","url":"https://elrincondecafe.es/como-hacer-cafe-v60-paso-a-paso"},
+    {"id":"nomad-v60","title":"Aprende a Preparar Café de Especialidad con el Método V60","url":"https://nomadcoffee.es/blogs/at-home/v60"},
+    {"id":"treslobos-espresso","title":"Las variables del espresso","url":"https://www.cafetreslobos.com/learning/espresso"},
+    {"id":"sensi-espresso-dialin","title":"Cómo dial-in (calibrar) un espresso paso a paso: la guía visual para baristas caseros","url":"https://www.sensibarista.com/blog/dial-in-espresso-paso-a-paso/"},
+    {"id":"gallo-aeropress","title":"Cómo preparar un café con AeroPress","url":"https://gallo.coffee/blogs/guias-de-preparacion/como-preparar-un-cafe-con-aeropress"},
+    {"id":"escuela-weiss","title":"¿Qué es la técnica de Weiss?","url":"https://laescueladebaristas.com/2023/06/22/que-es-la-tecnica-de-weiss/"},
+    {"id":"elpais-metodos","title":"Cómo hacer mejor el café en cafetera italiana, exprés, de filtro o de cápsulas","url":"https://elpais.com/gastronomia/el-comidista/2025-05-06/como-hacer-mejor-el-cafe-en-cafetera-italiana-expres-de-filtro-o-de-capsulas.html"},
+    {"id":"icoffee-aeropress","title":"Receta de AeroPress: La preparación de la casa iCoffee","url":"https://icoffeeapp.com/es/recetas/aeropress-standard-icoffee"},
+    {"id":"cafe-especialidad-filtro","title":"Cómo Preparar Café de Filtro Perfecto","url":"https://cafedeespecialidad.com.es/articulo/como-preparar-cafe-filtro"},
+    {"id":"aeropress-mexico","title":"¿Qué es la AeroPress? — La cafetera que cambió el café","url":"https://aeropressmexico.com/pages/guia-de-preparacion"},
+    {"id":"gota-hoffmann","title":"Definitiva — Receta para AeroPress por James Hoffmann","url":"https://gota.cafe/es/recetas/aeropress/hoffmann-aeropress"},
+    {"id":"britt-v60","title":"GUÍA PARA PREPARAR CAFÉ EN V60","url":"https://cafebritt.cr/blogs/introduccion-al-cafe/guia-para-preparar-cafe-en-v60"},
+    {"id":"sensi-v60","title":"V60 paso a paso: la guía del café de filtro en casa (y cómo tomarlo helado en verano)","url":"https://www.sensibarista.com/blog/v60-cafe-filtrado-guia-paso-a-paso/"},
+    {"id":"cafessio-espresso","title":"Cómo preparar café en Espresso","url":"https://cafessio.com/metodos/espresso/"}
+  ],
+  "caveats": [
+    "Synthetic evaluation fixture based on public search results and opened public content pages; no private browser history, accounts, or actual user activity were accessed.",
+    "All content-page evidence has search_query:null. Relative ages and repeat-session counts are invented solely to exercise retrieval behavior.",
+    "Spanish recall queries and expected IDs are hand-curated labels, not measured algorithm outputs or validated human judgments. Pages and titles may change."
+  ]
+}

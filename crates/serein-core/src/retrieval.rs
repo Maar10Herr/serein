@@ -161,8 +161,8 @@ fn tokens(request: &Recall) -> Vec<String> {
         "comment",
         "avais",
     ];
-    std::iter::once(&request.query)
-        .chain(request.facets.iter())
+    std::iter::once(request.query.as_str())
+        .chain(request.facets.iter().map(String::as_str))
         .flat_map(|s| {
             s.to_lowercase()
                 .split(|c: char| !c.is_alphanumeric())
@@ -189,6 +189,45 @@ fn rrf(ranks: &[HashMap<String, usize>]) -> Vec<(String, f32)> {
     }
     let mut fused: Vec<_> = fused.into_iter().collect();
     fused.sort_by(|a, b| b.1.total_cmp(&a.1).then(a.0.cmp(&b.0)));
+    fused
+}
+
+fn temporal_rerank(
+    mut fused: Vec<(String, f32)>,
+    last_seen: &HashMap<String, i64>,
+    sessions: &HashMap<String, i64>,
+    weight: f32,
+) -> Vec<(String, f32)> {
+    let mut recency_values: Vec<_> = fused
+        .iter()
+        .map(|(id, _)| (id.clone(), last_seen.get(id).copied().unwrap_or(i64::MIN)))
+        .collect();
+    recency_values.sort_by(|a, b| b.1.cmp(&a.1).then(a.0.cmp(&b.0)));
+    let mut recency = HashMap::new();
+    let mut current_time = None;
+    let mut current_rank = 0;
+    for (index, (id, timestamp)) in recency_values.into_iter().enumerate() {
+        if current_time != Some(timestamp) {
+            current_time = Some(timestamp);
+            current_rank = index + 1;
+        }
+        recency.insert(id, current_rank);
+    }
+    let recency_score: HashMap<_, _> = rrf(&[recency]).into_iter().collect();
+    for (id, score) in &mut fused {
+        *score += weight * recency_score.get(id).copied().unwrap_or_default();
+    }
+    fused.sort_by(|a, b| {
+        b.1.total_cmp(&a.1)
+            .then_with(|| {
+                sessions
+                    .get(&b.0)
+                    .copied()
+                    .unwrap_or_default()
+                    .cmp(&sessions.get(&a.0).copied().unwrap_or_default())
+            })
+            .then(a.0.cmp(&b.0))
+    });
     fused
 }
 
@@ -376,7 +415,47 @@ pub fn candidates(
     start: Instant,
     budget: u64,
 ) -> Result<Vec<(f32, String, Value)>> {
+    candidates_with_variant(
+        conn,
+        source,
+        policy,
+        request,
+        encoder,
+        start,
+        budget,
+        configured_variant(),
+    )
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+enum RankingVariant {
+    Baseline,
+    TemporalRrf,
+}
+
+fn configured_variant() -> RankingVariant {
+    match algorithm::RETRIEVAL_RANKING_VERSION {
+        1 => RankingVariant::Baseline,
+        2 => RankingVariant::TemporalRrf,
+        version => panic!("unsupported retrieval ranking version {version}"),
+    }
+}
+
+fn candidates_with_variant(
+    conn: &Connection,
+    source: &str,
+    policy: &crate::Policy,
+    request: &Recall,
+    encoder: Option<&model::Encoder>,
+    start: Instant,
+    budget: u64,
+    variant: RankingVariant,
+) -> Result<Vec<(f32, String, Value)>> {
     let terms = tokens(request);
+    let lexical = lexical_ranks(conn, source, policy, &terms)?;
+    let semantic = semantic_ranks(conn, source, policy, encoder, request, start, budget)?;
+    let confirmed = confirmed_ranks(conn, source, policy, &terms)?;
+    let mut fused = rrf(&[lexical, semantic, confirmed]);
     let exact = exact_constraints(
         &std::iter::once(&request.query)
             .chain(request.facets.iter())
@@ -384,10 +463,6 @@ pub fn candidates(
             .collect::<Vec<_>>()
             .join(" "),
     );
-    let lexical = lexical_ranks(conn, source, policy, &terms)?;
-    let semantic = semantic_ranks(conn, source, policy, encoder, request, start, budget)?;
-    let confirmed = confirmed_ranks(conn, source, policy, &terms)?;
-    let fused = rrf(&[lexical, semantic, confirmed]);
     if fused.is_empty() {
         return Ok(vec![]);
     }
@@ -439,6 +514,22 @@ pub fn candidates(
     {
         let (id, count) = row?;
         sessions.insert(id, count);
+    }
+    if variant == RankingVariant::TemporalRrf {
+        let last_seen: HashMap<String, i64> = metadata
+            .iter()
+            .filter_map(|(id, (_, _, _, time))| {
+                chrono::DateTime::parse_from_rfc3339(time)
+                    .ok()
+                    .map(|parsed| (id.clone(), parsed.timestamp()))
+            })
+            .collect();
+        fused = temporal_rerank(
+            fused,
+            &last_seen,
+            &sessions,
+            algorithm::RETRIEVAL_TEMPORAL_WEIGHT,
+        );
     }
     let mut output = vec![];
     for (id, score) in fused {
@@ -538,6 +629,55 @@ mod tests {
     use super::*;
     use crate::Policy;
     use rusqlite::params;
+
+    fn recall(query: &str, facets: &[&str]) -> Recall {
+        Recall {
+            protocol: 1,
+            request_id: crate::id(),
+            client: "generic".into(),
+            vault: "default".into(),
+            query: query.into(),
+            facets: facets.iter().map(|facet| (*facet).to_string()).collect(),
+            scope: vec!["research".into()],
+            max_bytes: 4096,
+            budget_ms: 1500,
+        }
+    }
+
+    fn retrieval_conn() -> Connection {
+        let conn = Connection::open_in_memory().unwrap();
+        conn.execute_batch(
+            "CREATE TABLE atoms(id TEXT,source TEXT,site TEXT,title TEXT,query TEXT,last_seen TEXT);
+CREATE VIRTUAL TABLE atom_fts USING fts5(id UNINDEXED,title,query);
+CREATE TABLE feedback(id INTEGER PRIMARY KEY,atom TEXT,action TEXT,text TEXT,time TEXT);
+CREATE TABLE atom_days(atom TEXT,session TEXT);",
+        )
+        .unwrap();
+        conn
+    }
+
+    fn insert_observation(conn: &Connection, id: &str, title: &str, last_seen: &str) {
+        conn.execute(
+            "INSERT INTO atoms VALUES(?,?,?,?,?,?)",
+            params![
+                id,
+                "source",
+                "docs.example",
+                title,
+                Option::<String>::None,
+                last_seen
+            ],
+        )
+        .unwrap();
+        conn.execute(
+            "INSERT INTO atom_fts VALUES(?,?,?)",
+            params![id, title, Option::<String>::None],
+        )
+        .unwrap();
+        conn.execute("INSERT INTO atom_days VALUES(?,?)", params![id, id])
+            .unwrap();
+    }
+
     #[test]
     fn rrf_candidate_cannot_be_dropped_by_cross_scale_prefusion() {
         let lexical: HashMap<_, _> = (0..96)
@@ -546,6 +686,106 @@ mod tests {
         let semantic = HashMap::from([("semantic-best".to_owned(), 1)]);
         let fused = rrf(&[lexical, semantic]);
         assert!(fused.iter().take(64).any(|(id, _)| id == "semantic-best"));
+    }
+
+    #[test]
+    fn temporal_variant_preserves_baseline_facet_candidate_eligibility() {
+        let conn = retrieval_conn();
+        insert_observation(
+            &conn,
+            "query-hit",
+            "Office chair and monitor setup",
+            &crate::now(),
+        );
+        insert_observation(
+            &conn,
+            "facet-only",
+            "Ergonomic posture guide",
+            &crate::now(),
+        );
+        let request = recall("office chair setup", &["ergonomic"]);
+        let policy = Policy {
+            consent: true,
+            recall_enabled: true,
+            ..Policy::default()
+        };
+
+        let baseline = candidates_with_variant(
+            &conn,
+            "source",
+            &policy,
+            &request,
+            None,
+            Instant::now(),
+            1500,
+            RankingVariant::Baseline,
+        )
+        .unwrap();
+        let proposed = candidates_with_variant(
+            &conn,
+            "source",
+            &policy,
+            &request,
+            None,
+            Instant::now(),
+            1500,
+            RankingVariant::TemporalRrf,
+        )
+        .unwrap();
+        let baseline_ids: BTreeSet<_> = baseline
+            .iter()
+            .map(|(_, _, record)| record["id"].as_str().unwrap())
+            .collect();
+        let proposed_ids: BTreeSet<_> = proposed
+            .iter()
+            .map(|(_, _, record)| record["id"].as_str().unwrap())
+            .collect();
+        assert!(baseline_ids.contains("facet-only"));
+        assert_eq!(proposed_ids, baseline_ids);
+    }
+
+    #[test]
+    fn recency_reranks_within_candidate_pool_and_sessions_break_time_ties() {
+        let recency_candidates = vec![("older".to_string(), 1.0), ("newer".to_string(), 1.0)];
+        let timestamps = HashMap::from([
+            ("older".to_string(), 1_767_225_600),
+            ("newer".to_string(), 1_790_784_000),
+        ]);
+        let sessions = HashMap::from([("older".to_string(), 4), ("newer".to_string(), 1)]);
+        let reranked = temporal_rerank(
+            recency_candidates,
+            &timestamps,
+            &sessions,
+            algorithm::RETRIEVAL_TEMPORAL_WEIGHT,
+        );
+        assert_eq!(reranked[0].0, "newer");
+        assert_eq!(
+            reranked
+                .iter()
+                .map(|(id, _)| id.as_str())
+                .collect::<BTreeSet<_>>(),
+            BTreeSet::from(["newer", "older"])
+        );
+
+        let session_candidates = vec![
+            ("one-session".to_string(), 1.0),
+            ("many-sessions".to_string(), 1.0),
+        ];
+        let same_timestamp = HashMap::from([
+            ("one-session".to_string(), 1_790_784_000),
+            ("many-sessions".to_string(), 1_790_784_000),
+        ]);
+        let session_counts = HashMap::from([
+            ("one-session".to_string(), 1),
+            ("many-sessions".to_string(), 4),
+        ]);
+        let reranked = temporal_rerank(
+            session_candidates,
+            &same_timestamp,
+            &session_counts,
+            algorithm::RETRIEVAL_TEMPORAL_WEIGHT,
+        );
+        assert_eq!(reranked[0].0, "many-sessions");
     }
     #[test]
     fn multi_identifier_query_requires_all_identifiers() {

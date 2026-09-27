@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "topic": "Synthetic public-web research journey about designing reduced-motion experiences for the web",
+  "seed_fingerprint": "4f17f85cb8342373",
+  "evidence": [
+    {"id":"mdn-prm","title":"prefers-reduced-motion CSS media feature","site_key":"developer.mozilla.org","search_query":null,"days_ago":1,"sessions":2},
+    {"id":"mdn-media-a11y","title":"Using media queries for accessibility","site_key":"developer.mozilla.org","search_query":null,"days_ago":4,"sessions":1},
+    {"id":"w3c-animation-interactions","title":"Understanding Success Criterion 2.3.3: Animation from Interactions","site_key":"www.w3.org","search_query":null,"days_ago":2,"sessions":2},
+    {"id":"w3c-c39","title":"C39: Using the CSS prefers-reduced-motion query to prevent motion","site_key":"www.w3.org","search_query":null,"days_ago":8,"sessions":1},
+    {"id":"webkit-motion","title":"Responsive Design for Motion","site_key":"webkit.org","search_query":null,"days_ago":6,"sessions":1},
+    {"id":"webkit-demo","title":"Demo: prefers-reduced-motion media query","site_key":"webkit.org","search_query":null,"days_ago":1,"sessions":1},
+    {"id":"css-tricks-revisiting","title":"Revisiting prefers-reduced-motion, the reduced motion media query","site_key":"css-tricks.com","search_query":null,"days_ago":9,"sessions":1},
+    {"id":"chrome-view-transitions","title":"Same-document view transitions for single-page applications","site_key":"developer.chrome.com","search_query":null,"days_ago":5,"sessions":1},
+    {"id":"mdn-animation-cancel","title":"Animation: cancel() method","site_key":"developer.mozilla.org","search_query":null,"days_ago":3,"sessions":1},
+    {"id":"mdn-waapi","title":"Using the Web Animations API","site_key":"developer.mozilla.org","search_query":null,"days_ago":11,"sessions":1},
+    {"id":"w3c-pause-stop","title":"Understanding Success Criterion 2.2.2: Pause, Stop, Hide","site_key":"www.w3.org","search_query":null,"days_ago":7,"sessions":1},
+    {"id":"mdn-animation-property","title":"animation CSS property","site_key":"developer.mozilla.org","search_query":null,"days_ago":10,"sessions":1},
+    {"id":"mdn-client-hints","title":"Sec-CH-Prefers-Reduced-Motion header","site_key":"developer.mozilla.org","search_query":null,"days_ago":13,"sessions":1},
+    {"id":"mdn-css-performance","title":"CSS performance optimization","site_key":"developer.mozilla.org","search_query":null,"days_ago":12,"sessions":1},
+    {"id":"w3c-wcag21","title":"Web Content Accessibility Guidelines (WCAG) 2.1","site_key":"www.w3.org","search_query":null,"days_ago":14,"sessions":1},
+    {"id":"webkit-safari-features","title":"New Web Features in Safari 10.1","site_key":"webkit.org","search_query":null,"days_ago":15,"sessions":1},
+    {"id":"mdn-color-scheme","title":"prefers-color-scheme CSS media feature","site_key":"developer.mozilla.org","search_query":null,"days_ago":3,"sessions":1}
+  ],
+  "queries": [
+    {"id":"q-css-preference","query":"What was the CSS switch I was looking at that detects someone’s system setting to reduce motion?","facets":["feature:prefers-reduced-motion","technology:CSS"],"expected_ids":["mdn-prm","mdn-media-a11y","webkit-motion","css-tricks-revisiting"],"kind":"positive"},
+    {"id":"q-wcag-trigger","query":"Which WCAG guidance covered animation that starts after a person interacts with a page?","facets":["standard:WCAG","criterion:2.3.3","topic:interaction-triggered-animation"],"expected_ids":["w3c-animation-interactions","w3c-c39","w3c-wcag21"],"kind":"positive"},
+    {"id":"q-css-code","query":"Where did I find a practical example of using the reduced-motion media query in CSS?","facets":["technology:CSS","task:implementation-example"],"expected_ids":["webkit-demo","w3c-c39","mdn-prm"],"kind":"positive"},
+    {"id":"q-js-api","query":"What did I read about checking a motion preference from JavaScript and stopping an animation?","facets":["technology:JavaScript","api:Web Animations","task:stop-animation"],"expected_ids":["webkit-motion","mdn-animation-cancel","mdn-waapi"],"kind":"positive"},
+    {"id":"q-transition","query":"How can a single-page app keep its view transitions from moving around for people who prefer reduced motion?","facets":["technology:View Transitions","feature:prefers-reduced-motion","task:transition-accessibility"],"expected_ids":["chrome-view-transitions","mdn-prm"],"kind":"positive"},
+    {"id":"q-auto-animation","query":"Which accessibility criterion was about animations that begin on their own and need a way to pause or hide them?","facets":["standard:WCAG","criterion:2.2.2","topic:auto-updating-motion"],"expected_ids":["w3c-pause-stop"],"kind":"positive"},
+    {"id":"q-latest-revisit","query":"What reduced-motion reference did I revisit most recently, and what live demo went with it?","facets":["feature:prefers-reduced-motion","recency:recent","sessions:repeat"],"expected_ids":["mdn-prm","webkit-demo"],"kind":"recency"},
+    {"id":"q-contrast-scheme","query":"Which page did I read about changing a site's light and dark colors based on the operating-system preference?","facets":["feature:prefers-color-scheme","topic:color-scheme"],"expected_ids":["mdn-color-scheme"],"kind":"positive"},
+    {"id":"q-trap-js-cancel","query":"Which page gives the official WCAG CSS technique for honoring reduced motion?","facets":["standard:WCAG","technique:C39","technology:CSS"],"expected_ids":["w3c-c39"],"kind":"facet_trap"},
+    {"id":"q-trap-client-hint","query":"Which standard HTTP request header can tell a server the visitor prefers reduced motion?","facets":["technology:HTTP","feature:client-hint","feature:prefers-reduced-motion"],"expected_ids":["mdn-client-hints","mdn-prm"],"kind":"facet_trap"},
+    {"id":"q-no-match","query":"Which browser extension did I install to automatically disable every animation on every website?","facets":["task:extension-install","intent:automatic-blocking"],"expected_ids":[],"kind":"no_match"}
+  ],
+  "sources": [
+    {"url":"https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/%40media/prefers-reduced-motion","title":"prefers-reduced-motion CSS media feature"},
+    {"url":"https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Media_queries/Using_for_accessibility","title":"Using media queries for accessibility"},
+    {"url":"https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions","title":"Understanding Success Criterion 2.3.3: Animation from Interactions"},
+    {"url":"https://www.w3.org/WAI/WCAG22/Techniques/css/C39","title":"C39: Using the CSS prefers-reduced-motion query to prevent motion"},
+    {"url":"https://webkit.org/blog/7551/responsive-design-for-motion/","title":"Responsive Design for Motion"},
+    {"url":"https://webkit.org/blog-files/prefers-reduced-motion/prm.htm","title":"Demo: prefers-reduced-motion media query"},
+    {"url":"https://css-tricks.com/revisiting-prefers-reduced-motion/","title":"Revisiting prefers-reduced-motion, the reduced motion media query"},
+    {"url":"https://developer.chrome.com/docs/web-platform/view-transitions/same-document","title":"Same-document view transitions for single-page applications"},
+    {"url":"https://developer.mozilla.org/en-US/docs/Web/API/Animation/cancel","title":"Animation: cancel() method"},
+    {"url":"https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API/Using_the_Web_Animations_API","title":"Using the Web Animations API"},
+    {"url":"https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide","title":"Understanding Success Criterion 2.2.2: Pause, Stop, Hide"},
+    {"url":"https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/animation","title":"animation CSS property"},
+    {"url":"https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Sec-CH-Prefers-Reduced-Motion","title":"Sec-CH-Prefers-Reduced-Motion header"},
+    {"url":"https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Performance/CSS","title":"CSS performance optimization"},
+    {"url":"https://www.w3.org/TR/WCAG21/","title":"Web Content Accessibility Guidelines (WCAG) 2.1"},
+    {"url":"https://webkit.org/blog/7477/new-web-features-in-safari-10-1/","title":"New Web Features in Safari 10.1"},
+    {"url":"https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/%40media/prefers-color-scheme","title":"prefers-color-scheme CSS media feature"}
+  ],
+  "caveats": [
+    "Synthetic research journey assembled from public documentation and search-result metadata; no browser history, account data, or actual browsing activity was accessed.",
+    "Evidence rows represent opened content pages. Search query metadata is null because no actual search-results-page event was included. Relative ages and session counts are invented for evaluation coverage.",
+    "Expected IDs are hand-curated relevance labels for exercising retrieval, not measured algorithm outputs or validated human judgments. Public titles and page availability can change."
+  ]
+}

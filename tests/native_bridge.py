@@ -22,6 +22,13 @@ with tempfile.TemporaryDirectory(prefix='serein-',dir=str(pathlib.Path(tempfile.
     r,_=native('status',{},caller='chrome-extension://'+'a'*32+'/');assert r['error']['code']=='ACCESS_DENIED'
     policy={'consent':True,'paused':False,'recall_enabled':True,'selected_only':False,'selected_sites':[],'excluded_sites':[],'capture_epoch':2}
     r,_=native('policy.update',policy);assert r['status']=='ok',r
+    _,doctor=command(['doctor']);assert doctor['checks']['browser']['state']=='paired',doctor
+    assert doctor['checks']['native_host']['state']=='ready',doctor
+    assert doctor['checks']['vault']['state']=='ready',doctor
+    assert doctor['checks']['recall']['state']=='ready',doctor
+    assert doctor['checks']['model']['state']=='ready',doctor
+    assert not {'data_root','executable','default_vault','connections'} & doctor.keys(),doctor
+    assert tmp not in json.dumps(doctor),doctor
     e={'event_id':uid(),'visit_id':uid(),'site_key':'example.com','site_epoch':0,'observed_at':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),'kind':'search','title':'Desk lamp research','search_query':'desk lamp research','foreground_seconds':10}
     r,ms=native('ingest',{'events':[e]});assert r['acknowledged_ids']==[e['event_id']],r
     r,_=native('ingest',{'events':[e]});assert r['duplicate_ids']==[e['event_id']] and r['atoms']==1,r
@@ -38,5 +45,5 @@ with tempfile.TemporaryDirectory(prefix='serein-',dir=str(pathlib.Path(tempfile.
     for b in [struct.pack('=I',300000),struct.pack('=I',1)+b'\xff',struct.pack('=I',1)+b'{']:
         p=subprocess.run([str(host)],input=b,capture_output=True,env=env,timeout=2);assert json.loads(p.stdout[4:])['status']=='error'
     _,doctor=command(['doctor'])
-    report={'passed':['setup isolated user registration','hello caller pairing','wrong caller denied','save ACK','retry idempotent','bounded recall','forget + replay tombstone','native malformed frames','host exits within 2s'],'status_latency_ms':{'median':statistics.median(samples),'p95':sorted(samples)[18]},'browser_invocation':'not tested: native process harness only','semantic_model':'installed model pack' if doctor['model_available'] else 'absent; explicit lexical fallback'}
+    report={'passed':['setup isolated user registration','hello caller pairing','wrong caller denied','doctor pairing/host/vault/model/recall checks','save ACK','retry idempotent','bounded recall','forget + replay tombstone','native malformed frames','host exits within 2s'],'status_latency_ms':{'median':statistics.median(samples),'p95':sorted(samples)[18]},'browser_invocation':'not tested: native process harness only','semantic_model':'installed model pack' if doctor['model_available'] else 'absent; explicit lexical fallback'}
     (ROOT/'docs/native-test-results.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))

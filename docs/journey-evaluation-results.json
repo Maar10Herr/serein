@@ -1,0 +1,1023 @@
+{
+  "description": "Constructed journeys from public-page metadata with simulated recency and sessions. Hand-curated labels are illustrative, not field accuracy or user validation.",
+  "journeys": [
+    {
+      "empty_query_count": 2,
+      "evidence_count": 16,
+      "fixture": "eval_journey_a.json",
+      "hard_invariants": {
+        "byte_bound_failure_count": 0,
+        "duplicate_atom_id_count": 0,
+        "unexpected_attribution_count": 0
+      },
+      "metrics": {
+        "empty_query_specificity": 0.0,
+        "mean_precision_returned": 0.3645833333333333,
+        "mean_recall_at_6": 0.625,
+        "mrr": 0.625,
+        "ndcg_at_6": 0.625
+      },
+      "positive_query_count": 8,
+      "queries": [
+        {
+          "expected_ids": [
+            "cam-a01",
+            "cam-a10",
+            "cam-a11",
+            "cam-a16"
+          ],
+          "id": "cam-q01",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 626,
+          "relevant_count": 0,
+          "returned_ids": [
+            "cam-a17"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "cam-a02",
+            "cam-a04",
+            "cam-a13"
+          ],
+          "id": "cam-q02",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 1376,
+          "relevant_count": 0,
+          "returned_ids": [
+            "cam-a16",
+            "cam-a01",
+            "cam-a11"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "cam-a03",
+            "cam-a05",
+            "cam-a12"
+          ],
+          "id": "cam-q03",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 2411,
+          "relevant_count": 3,
+          "returned_ids": [
+            "cam-a12",
+            "cam-a03",
+            "cam-a05",
+            "cam-a10",
+            "cam-a16",
+            "cam-a11"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "cam-a06",
+            "cam-a07",
+            "cam-a15"
+          ],
+          "id": "cam-q04",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 1242,
+          "relevant_count": 3,
+          "returned_ids": [
+            "cam-a06",
+            "cam-a15",
+            "cam-a07"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "cam-a08",
+            "cam-a14"
+          ],
+          "id": "cam-q05",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 914,
+          "relevant_count": 2,
+          "returned_ids": [
+            "cam-a14",
+            "cam-a08"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "cam-a17"
+          ],
+          "id": "cam-q06",
+          "index_mode": "hybrid",
+          "kind": "recency",
+          "packet_bytes": 1745,
+          "relevant_count": 1,
+          "returned_ids": [
+            "cam-a17",
+            "cam-a08",
+            "cam-a13",
+            "cam-a11"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "cam-a04",
+            "cam-a13"
+          ],
+          "id": "cam-q07",
+          "index_mode": "hybrid",
+          "kind": "facet_trap",
+          "packet_bytes": 1376,
+          "relevant_count": 0,
+          "returned_ids": [
+            "cam-a01",
+            "cam-a16",
+            "cam-a11"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "cam-a12"
+          ],
+          "id": "cam-q08",
+          "index_mode": "hybrid",
+          "kind": "facet_trap",
+          "packet_bytes": 2423,
+          "relevant_count": 1,
+          "returned_ids": [
+            "cam-a12",
+            "cam-a03",
+            "cam-a05",
+            "cam-a10",
+            "cam-a11",
+            "cam-a01"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [],
+          "id": "cam-q09",
+          "index_mode": "hybrid",
+          "kind": "no_match",
+          "packet_bytes": 1360,
+          "relevant_count": 0,
+          "returned_ids": [
+            "cam-a08",
+            "cam-a13",
+            "cam-a11"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [],
+          "id": "cam-q10",
+          "index_mode": "hybrid",
+          "kind": "no_match",
+          "packet_bytes": 614,
+          "relevant_count": 0,
+          "returned_ids": [
+            "cam-a13"
+          ],
+          "status": "ok"
+        }
+      ],
+      "query_count": 10,
+      "topic": "Choosing a compact APS-C mirrorless camera for travel photos and occasional video"
+    },
+    {
+      "empty_query_count": 2,
+      "evidence_count": 16,
+      "fixture": "eval_journey_b.json",
+      "hard_invariants": {
+        "byte_bound_failure_count": 0,
+        "duplicate_atom_id_count": 0,
+        "unexpected_attribution_count": 0
+      },
+      "metrics": {
+        "empty_query_specificity": 0.5,
+        "mean_precision_returned": 0.5833333333333334,
+        "mean_recall_at_6": 0.7777777777777778,
+        "mrr": 0.7037037037037037,
+        "ndcg_at_6": 0.7222222222222222
+      },
+      "positive_query_count": 9,
+      "queries": [
+        {
+          "expected_ids": [
+            "uv-lock",
+            "uv-features"
+          ],
+          "id": "q-locking",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 930,
+          "relevant_count": 0,
+          "returned_ids": [
+            "uv-deps",
+            "pip-constraints"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "uv-deps"
+          ],
+          "id": "q-groups",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 1625,
+          "relevant_count": 1,
+          "returned_ids": [
+            "gh-cache",
+            "gh-python-ci",
+            "uv-deps",
+            "pip-constraints"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "pytest-parametrize"
+          ],
+          "id": "q-parametrize",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 607,
+          "relevant_count": 1,
+          "returned_ids": [
+            "pytest-parametrize"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "pytest-monkeypatch"
+          ],
+          "id": "q-cleanup",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 607,
+          "relevant_count": 0,
+          "returned_ids": [
+            "pytest-parametrize"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "ruff-formatter"
+          ],
+          "id": "q-ruff-format",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 912,
+          "relevant_count": 1,
+          "returned_ids": [
+            "ruff-formatter",
+            "ruff-linter"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [],
+          "id": "q-ruff-types-trap",
+          "index_mode": "hybrid",
+          "kind": "facet_trap",
+          "packet_bytes": 912,
+          "relevant_count": 0,
+          "returned_ids": [
+            "ruff-formatter",
+            "ruff-linter"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "gh-python-ci"
+          ],
+          "id": "q-ci",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 588,
+          "relevant_count": 1,
+          "returned_ids": [
+            "gh-python-ci"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "gh-cache"
+          ],
+          "id": "q-cache",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 936,
+          "relevant_count": 1,
+          "returned_ids": [
+            "gh-cache",
+            "gh-python-ci"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "coverage-branch"
+          ],
+          "id": "q-branch",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 596,
+          "relevant_count": 1,
+          "returned_ids": [
+            "coverage-branch"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "pytest-monkeypatch"
+          ],
+          "id": "q-repeat-recency",
+          "index_mode": "hybrid",
+          "kind": "recency",
+          "packet_bytes": 604,
+          "relevant_count": 1,
+          "returned_ids": [
+            "pytest-monkeypatch"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [],
+          "id": "q-no-match",
+          "index_mode": "hybrid",
+          "kind": "no_match",
+          "packet_bytes": 245,
+          "relevant_count": 0,
+          "returned_ids": [],
+          "status": "empty"
+        }
+      ],
+      "query_count": 11,
+      "topic": "Synthetic public-web research journey about a Python project quality and reproducibility toolchain"
+    },
+    {
+      "empty_query_count": 1,
+      "evidence_count": 17,
+      "fixture": "eval_journey_c.json",
+      "hard_invariants": {
+        "byte_bound_failure_count": 0,
+        "duplicate_atom_id_count": 0,
+        "unexpected_attribution_count": 0
+      },
+      "metrics": {
+        "empty_query_specificity": 0.0,
+        "mean_precision_returned": 0.42333333333333334,
+        "mean_recall_at_6": 0.9416666666666667,
+        "mrr": 0.95,
+        "ndcg_at_6": 0.8929338337703587
+      },
+      "positive_query_count": 10,
+      "queries": [
+        {
+          "expected_ids": [
+            "mdn-prm",
+            "mdn-media-a11y",
+            "webkit-motion",
+            "css-tricks-revisiting"
+          ],
+          "id": "q-css-preference",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 2433,
+          "relevant_count": 3,
+          "returned_ids": [
+            "mdn-prm",
+            "webkit-demo",
+            "css-tricks-revisiting",
+            "mdn-color-scheme",
+            "w3c-c39",
+            "webkit-motion"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "w3c-animation-interactions",
+            "w3c-c39",
+            "w3c-wcag21"
+          ],
+          "id": "q-wcag-trigger",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 2068,
+          "relevant_count": 2,
+          "returned_ids": [
+            "w3c-animation-interactions",
+            "w3c-wcag21",
+            "mdn-animation-cancel",
+            "mdn-animation-property",
+            "chrome-view-transitions"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "webkit-demo",
+            "w3c-c39",
+            "mdn-prm"
+          ],
+          "id": "q-css-code",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 2433,
+          "relevant_count": 3,
+          "returned_ids": [
+            "mdn-prm",
+            "w3c-c39",
+            "mdn-color-scheme",
+            "webkit-demo",
+            "css-tricks-revisiting",
+            "webkit-motion"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "webkit-motion",
+            "mdn-animation-cancel",
+            "mdn-waapi"
+          ],
+          "id": "q-js-api",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 2426,
+          "relevant_count": 3,
+          "returned_ids": [
+            "mdn-waapi",
+            "mdn-animation-cancel",
+            "w3c-animation-interactions",
+            "w3c-pause-stop",
+            "webkit-motion",
+            "css-tricks-revisiting"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "chrome-view-transitions",
+            "mdn-prm"
+          ],
+          "id": "q-transition",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 2472,
+          "relevant_count": 2,
+          "returned_ids": [
+            "webkit-demo",
+            "mdn-prm",
+            "css-tricks-revisiting",
+            "mdn-client-hints",
+            "w3c-c39",
+            "chrome-view-transitions"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "w3c-pause-stop"
+          ],
+          "id": "q-auto-animation",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 2437,
+          "relevant_count": 1,
+          "returned_ids": [
+            "w3c-pause-stop",
+            "w3c-animation-interactions",
+            "mdn-media-a11y",
+            "mdn-waapi",
+            "webkit-motion",
+            "css-tricks-revisiting"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "mdn-prm",
+            "webkit-demo"
+          ],
+          "id": "q-latest-revisit",
+          "index_mode": "hybrid",
+          "kind": "recency",
+          "packet_bytes": 2431,
+          "relevant_count": 2,
+          "returned_ids": [
+            "webkit-demo",
+            "mdn-prm",
+            "css-tricks-revisiting",
+            "mdn-client-hints",
+            "w3c-c39",
+            "webkit-motion"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "mdn-color-scheme"
+          ],
+          "id": "q-contrast-scheme",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 2474,
+          "relevant_count": 1,
+          "returned_ids": [
+            "mdn-color-scheme",
+            "mdn-prm",
+            "chrome-view-transitions",
+            "webkit-demo",
+            "css-tricks-revisiting",
+            "w3c-c39"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "w3c-c39"
+          ],
+          "id": "q-trap-js-cancel",
+          "index_mode": "hybrid",
+          "kind": "facet_trap",
+          "packet_bytes": 621,
+          "relevant_count": 1,
+          "returned_ids": [
+            "w3c-c39"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "mdn-client-hints",
+            "mdn-prm"
+          ],
+          "id": "q-trap-client-hint",
+          "index_mode": "hybrid",
+          "kind": "facet_trap",
+          "packet_bytes": 2431,
+          "relevant_count": 2,
+          "returned_ids": [
+            "mdn-prm",
+            "webkit-demo",
+            "mdn-client-hints",
+            "css-tricks-revisiting",
+            "w3c-c39",
+            "webkit-motion"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [],
+          "id": "q-no-match",
+          "index_mode": "hybrid",
+          "kind": "no_match",
+          "packet_bytes": 1322,
+          "relevant_count": 0,
+          "returned_ids": [
+            "mdn-animation-property",
+            "mdn-animation-cancel",
+            "w3c-animation-interactions"
+          ],
+          "status": "ok"
+        }
+      ],
+      "query_count": 11,
+      "topic": "Synthetic public-web research journey about designing reduced-motion experiences for the web"
+    },
+    {
+      "empty_query_count": 1,
+      "evidence_count": 17,
+      "fixture": "eval_journey_d.json",
+      "hard_invariants": {
+        "byte_bound_failure_count": 0,
+        "duplicate_atom_id_count": 0,
+        "unexpected_attribution_count": 0
+      },
+      "metrics": {
+        "empty_query_specificity": 0.0,
+        "mean_precision_returned": 0.38888888888888884,
+        "mean_recall_at_6": 0.9074074074074076,
+        "mrr": 0.8425925925925926,
+        "ndcg_at_6": 0.8002867422632619
+      },
+      "positive_query_count": 9,
+      "queries": [
+        {
+          "expected_ids": [
+            "quinto-v60",
+            "rincon-v60",
+            "britt-v60",
+            "mercado-v60"
+          ],
+          "id": "q-v60-proporcion",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 2482,
+          "relevant_count": 4,
+          "returned_ids": [
+            "britt-v60",
+            "mercado-v60",
+            "nomad-v60",
+            "quinto-v60",
+            "sensi-v60",
+            "rincon-v60"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "quinto-v60",
+            "nomad-v60",
+            "cafe-especialidad-filtro",
+            "sensi-v60"
+          ],
+          "id": "q-v60-bloom",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 2482,
+          "relevant_count": 3,
+          "returned_ids": [
+            "sensi-v60",
+            "rincon-v60",
+            "mercado-v60",
+            "nomad-v60",
+            "quinto-v60",
+            "britt-v60"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "sensi-v60"
+          ],
+          "id": "q-v60-helar",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 2482,
+          "relevant_count": 1,
+          "returned_ids": [
+            "mercado-v60",
+            "nomad-v60",
+            "rincon-v60",
+            "sensi-v60",
+            "quinto-v60",
+            "britt-v60"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "nesa-espresso-grind",
+            "sensi-espresso-dialin",
+            "cafessio-espresso"
+          ],
+          "id": "q-espresso-ajuste",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 2452,
+          "relevant_count": 3,
+          "returned_ids": [
+            "nesa-espresso-grind",
+            "treslobos-espresso",
+            "sensi-espresso-dialin",
+            "cafessio-espresso",
+            "aeropress-mexico",
+            "escuela-weiss"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "escuela-weiss",
+            "treslobos-espresso",
+            "sensi-espresso-dialin",
+            "cafessio-espresso"
+          ],
+          "id": "q-espresso-distribucion",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 2448,
+          "relevant_count": 3,
+          "returned_ids": [
+            "escuela-weiss",
+            "treslobos-espresso",
+            "nesa-espresso-grind",
+            "nomad-v60",
+            "mercado-v60",
+            "sensi-espresso-dialin"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "icoffee-aeropress",
+            "gallo-aeropress",
+            "gota-hoffmann"
+          ],
+          "id": "q-aeropress-receta",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 2510,
+          "relevant_count": 3,
+          "returned_ids": [
+            "icoffee-aeropress",
+            "gota-hoffmann",
+            "gallo-aeropress",
+            "aeropress-mexico",
+            "rincon-v60",
+            "sensi-espresso-dialin"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "elpais-metodos"
+          ],
+          "id": "q-moka-comparacion",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 2472,
+          "relevant_count": 1,
+          "returned_ids": [
+            "elpais-metodos",
+            "cafe-especialidad-filtro",
+            "aeropress-mexico",
+            "cafessio-espresso",
+            "gallo-aeropress",
+            "nomad-v60"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "icoffee-aeropress",
+            "mercado-v60",
+            "sensi-v60"
+          ],
+          "id": "q-reciente-revisitas",
+          "index_mode": "hybrid",
+          "kind": "recency",
+          "packet_bytes": 2432,
+          "relevant_count": 2,
+          "returned_ids": [
+            "aeropress-mexico",
+            "escuela-weiss",
+            "icoffee-aeropress",
+            "mercado-v60",
+            "gota-hoffmann",
+            "gallo-aeropress"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "nesa-espresso-grind"
+          ],
+          "id": "q-trap-tamper",
+          "index_mode": "hybrid",
+          "kind": "facet_trap",
+          "packet_bytes": 2471,
+          "relevant_count": 1,
+          "returned_ids": [
+            "nesa-espresso-grind",
+            "treslobos-espresso",
+            "aeropress-mexico",
+            "sensi-espresso-dialin",
+            "cafessio-espresso",
+            "nomad-v60"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [],
+          "id": "q-no-match-extension",
+          "index_mode": "hybrid",
+          "kind": "no_match",
+          "packet_bytes": 2526,
+          "relevant_count": 0,
+          "returned_ids": [
+            "quinto-v60",
+            "aeropress-mexico",
+            "elpais-metodos",
+            "nesa-espresso-grind",
+            "escuela-weiss",
+            "sensi-espresso-dialin"
+          ],
+          "status": "ok"
+        }
+      ],
+      "query_count": 10,
+      "topic": "Synthetic Spanish-language public-web research journey about preparing specialty coffee at home"
+    },
+    {
+      "empty_query_count": 2,
+      "evidence_count": 18,
+      "fixture": "eval_journey_e.json",
+      "hard_invariants": {
+        "byte_bound_failure_count": 0,
+        "duplicate_atom_id_count": 0,
+        "unexpected_attribution_count": 0
+      },
+      "metrics": {
+        "empty_query_specificity": 1.0,
+        "mean_precision_returned": 0.7,
+        "mean_recall_at_6": 0.6666666666666666,
+        "mrr": 0.7,
+        "ndcg_at_6": 0.6765360636988621
+      },
+      "positive_query_count": 10,
+      "queries": [
+        {
+          "expected_ids": [
+            "gard-e01",
+            "gard-e02",
+            "gard-e14"
+          ],
+          "id": "gard-q01",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 1101,
+          "relevant_count": 2,
+          "returned_ids": [
+            "gard-e02",
+            "gard-e01"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "gard-e18"
+          ],
+          "id": "gard-q02",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 245,
+          "relevant_count": 0,
+          "returned_ids": [],
+          "status": "empty"
+        },
+        {
+          "expected_ids": [
+            "gard-e03",
+            "gard-e04",
+            "gard-e05",
+            "gard-e09"
+          ],
+          "id": "gard-q03",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 1874,
+          "relevant_count": 4,
+          "returned_ids": [
+            "gard-e09",
+            "gard-e04",
+            "gard-e05",
+            "gard-e03"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "gard-e06",
+            "gard-e07"
+          ],
+          "id": "gard-q04",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 245,
+          "relevant_count": 0,
+          "returned_ids": [],
+          "status": "empty"
+        },
+        {
+          "expected_ids": [
+            "gard-e09"
+          ],
+          "id": "gard-q05",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 652,
+          "relevant_count": 1,
+          "returned_ids": [
+            "gard-e09"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "gard-e16"
+          ],
+          "id": "gard-q06",
+          "index_mode": "hybrid",
+          "kind": "positive",
+          "packet_bytes": 608,
+          "relevant_count": 1,
+          "returned_ids": [
+            "gard-e16"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "gard-e17"
+          ],
+          "id": "gard-q07",
+          "index_mode": "hybrid",
+          "kind": "recency",
+          "packet_bytes": 628,
+          "relevant_count": 1,
+          "returned_ids": [
+            "gard-e17"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "gard-e10"
+          ],
+          "id": "gard-q08",
+          "index_mode": "hybrid",
+          "kind": "facet_trap",
+          "packet_bytes": 661,
+          "relevant_count": 1,
+          "returned_ids": [
+            "gard-e10"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "gard-e08"
+          ],
+          "id": "gard-q09",
+          "index_mode": "hybrid",
+          "kind": "facet_trap",
+          "packet_bytes": 1830,
+          "relevant_count": 0,
+          "returned_ids": [
+            "gard-e13",
+            "gard-e18",
+            "gard-e09",
+            "gard-e01"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [
+            "gard-e12"
+          ],
+          "id": "gard-q10",
+          "index_mode": "hybrid",
+          "kind": "facet_trap",
+          "packet_bytes": 666,
+          "relevant_count": 1,
+          "returned_ids": [
+            "gard-e12"
+          ],
+          "status": "ok"
+        },
+        {
+          "expected_ids": [],
+          "id": "gard-q11",
+          "index_mode": "hybrid",
+          "kind": "no_match",
+          "packet_bytes": 245,
+          "relevant_count": 0,
+          "returned_ids": [],
+          "status": "empty"
+        },
+        {
+          "expected_ids": [],
+          "id": "gard-q12",
+          "index_mode": "hybrid",
+          "kind": "no_match",
+          "packet_bytes": 245,
+          "relevant_count": 0,
+          "returned_ids": [],
+          "status": "empty"
+        }
+      ],
+      "query_count": 12,
+      "topic": "日本語の公開情報を見ながら進める、ベランダのプランター菜園の検討"
+    }
+  ],
+  "model_pack": "models/pack"
+}

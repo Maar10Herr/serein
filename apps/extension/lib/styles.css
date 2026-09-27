@@ -356,6 +356,108 @@ hr {
 .empty p {
   max-width: 365px;
 }
+.first-run {
+  display: grid;
+  gap: 18px;
+  margin-bottom: 24px;
+  border-color: var(--line);
+  background: linear-gradient(120deg, var(--tint), var(--surface) 74%);
+}
+.first-run-header {
+  display: grid;
+  gap: 18px;
+}
+.first-run-header h2 {
+  font-size: 23px;
+  letter-spacing: -0.6px;
+}
+.first-run-header p {
+  margin-top: 6px;
+  max-width: 620px;
+}
+.first-run-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.first-run-status-item {
+  min-width: 126px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 8px 11px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+}
+.first-run-status-item > span {
+  color: var(--muted);
+  font-size: 10px;
+}
+.first-run-status-item strong {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 570;
+}
+.first-run-status-item .dot {
+  color: var(--accent);
+}
+.first-run-steps {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.first-run-steps li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+}
+.first-run-number {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--accent);
+  font-size: 12px;
+}
+.first-run-steps li > div {
+  min-width: 0;
+}
+.first-run-steps h3 {
+  margin: 3px 0 5px;
+  font-size: 14px;
+}
+.first-run-steps p {
+  font-size: 12px;
+}
+.first-run-question {
+  margin: 12px 0 8px;
+  padding: 9px 11px;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 6px 6px 0;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 570;
+  overflow-wrap: anywhere;
+}
+.first-run-steps small {
+  display: block;
+  line-height: 1.45;
+}
 .section-note {
   margin-top: 24px;
   display: flex;
@@ -649,7 +751,8 @@ body {
     padding: 24px 12px;
   }
   .context-grid,
-  .connections {
+  .connections,
+  .first-run-steps {
     grid-template-columns: 1fr 1fr;
   }
   .stats {
@@ -684,6 +787,9 @@ body {
     padding: 24px;
   }
   .context-grid {
+    grid-template-columns: 1fr;
+  }
+  .first-run-steps {
     grid-template-columns: 1fr;
   }
   .topbar {

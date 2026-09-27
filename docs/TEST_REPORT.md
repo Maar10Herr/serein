@@ -1,4 +1,4 @@
-# Serein 0.1.1 test report
+# Serein 0.1.2 test report
 
 This report covers the macOS Apple silicon release and records the tested scope and known limits. Browser checks use isolated profiles; the real-site demo below is clearly separated from tests that use synthetic evidence.
 
@@ -6,14 +6,14 @@ This report covers the macOS Apple silicon release and records the tested scope 
 
 | Area | Result and scope |
 | --- | --- |
-| Rust tests | Core, privacy, model-parity and optimized evaluation suites passed. Covers transactional ingestion, retries, stale epochs, deletion lineage, model migration and deterministic topic rebuild, concurrent callers, exact identifiers/units, the 10,000 atom ceiling, bounded recall/explain and corrections. |
-| Extension | 42 tests passed, including six-language catalog and placeholder checks; TypeScript check passed; Chrome and Firefox MV3 production builds passed. |
-| Wire contracts | 14 valid examples and 13 unknown-field mutation checks passed. Schemas and Rust types are maintained separately. |
-| Google Chrome for Testing 148.0.7778.96 | Actual loaded extension and native messaging: automatic pairing through the bundled skill, queued privacy controls, ingest, duplicate ACK, skill reader recall and exclude-and-forget. Batching checks cover 19 events without a helper launch, 20 events with one launch, an aged event, and a real browser alarm with the extension page closed. Relinking preserves the existing connection and vault. Consent defaults, persistent pause, system theme, keyboard focus, icon paths, minimal permissions, six-language persistence and screenshots checked. |
-| Firefox 156.0.1 | Actual temporary unsigned extension/native messaging: automatic pairing through the bundled skill, ingest, duplicate ACK, exclusion/deletion, persistent pause and system dark-theme default passed. Permanent installation signing remains untested. |
-| System theme behavior | Passed in isolated Chrome via `tests/theme.mjs` (OS dark/light switch and saved manual override) and Firefox 156 via `tests/firefox_bridge.py` (simulated dark OS preference). The default follows the system preference; a manual choice persists. |
+| Rust tests | `cargo test --release --workspace --offline` passed: 30 core unit tests, the evaluation and journey suites, two model-parity tests, and 15 privacy tests. Coverage includes transactional ingestion, retries, stale epochs, deletion lineage, model migration and deterministic topic rebuild, concurrent callers, exact identifiers/units, the 10,000-atom ceiling, bounded recall/explain and corrections. |
+| Extension | WXT preparation, TypeScript `--noEmit`, 42 Vitest tests, and Chrome and Firefox MV3 production builds passed. The catalog and placeholder checks cover all six UI languages. |
+| Native, install and wire harnesses | Native bridge, skill bundle, install/uninstall, and wire-contract checks passed. This includes 14 valid contract examples and 13 unknown-field mutation checks. The 800-atom process recall benchmark passed. |
+| Google Chrome for Testing 148.0.7778.96 | The v0.1.2 extension loaded with native messaging. Automatic pairing through the bundled skill, queued privacy controls, ingest, duplicate ACK, skill reader recall and exclude-and-forget passed. The first-run prompt appeared with an empty paired vault and disappeared after the first saved observation. Batching checks covered 19 events without a helper launch, 20 events with one launch, an aged event, and a real browser alarm with the extension page closed. Relinking preserved the connection and vault. Consent defaults, persistent pause, keyboard focus, icon paths, minimal permissions, six-language persistence and screenshots were checked. |
+| Firefox 156.0.1 | v0.1.2 temporary unsigned extension and native-messaging E2E passed: pairing, ingest, duplicate ACK, exclude-and-forget, persistent pause and system dark-theme default. Permanent installation signing remains untested. |
+| System theme behavior | The v0.1.2 Chrome check covered OS dark/light switching and a saved manual override; the Firefox check covered the simulated dark OS preference. The default follows the system preference; a manual choice persists. |
 | Native process harness | Framing, setup, pairing, ingestion, retry, deletion and bounded process exit passed. The process harness and real-browser runs used the installed model pack. |
-| Skill installer integration | The built-in Codex GitHub installer downloaded the complete skill from the public repository; its installed payload passed setup. A relocated skill connects with the bundled helper after executable bits are removed, exercising archive-installer behavior and paths containing spaces. Setup preserves an existing GitHub-installed skill and user-edited registration; owned registration upgrades retain the vault. Discovery and triggered execution inside all six assistants remain unverified. |
+| Skill installer integration | In the earlier public-repository check, the built-in Codex GitHub installer downloaded the skill and its installed payload passed setup. The v0.1.2 relocated skill connects with the bundled helper after executable bits are removed, exercising archive-installer behavior and paths containing spaces. Setup preserves an existing GitHub-installed skill and user-edited registration; owned registration upgrades retain the vault. Discovery and triggered execution inside all six assistants remain unverified. |
 | Model conversion | Pinned upstream, 256 dimensions, row-wise int8. 264 conversion fixtures: exact token IDs, minimum cosine 0.99996468; 18 non-tied ranking comparisons preserved. Rust parity covers 12 texts across six languages. This measures conversion fidelity, not usefulness. |
 
 ## Real-site research demo
@@ -32,7 +32,23 @@ The five retained pages returned HTTP 200. The [OSHA workstation page](https://w
 
 The original capture-only run passed and produced the five-card screenshots above. A later attempt to repeat the run with a fresh profile and add a skill-reader check could not reproduce capture on this host: the headed Chrome window reported `focused=false`, and the Mac was locked. The repeat stopped before a `skills/serein-context/scripts/recall.sh` query could run. Reproducibility from a fresh profile and skill recall over this captured vault therefore remain unverified; the demo script keeps its foreground, queue, and dashboard assertions enabled.
 
-## Retrieval evidence and limits
+## Constructed research journey evaluation
+
+The new ranking check uses 84 page-title and hostname records across five constructed research journeys, with 54 hand-curated queries. The journeys cover a camera comparison, Python tooling, reduced-motion web design, Spanish-language coffee research, and Japanese balcony gardening. Eight queries expect no match. The titles and hostnames came from public web searches; relative dates and repeat sessions were invented to exercise ranking. This harness feeds constructed metadata directly into an isolated vault. It does not record browser activity or validate actual user history.
+
+The current ranker adds a small recency signal to reciprocal-rank fusion over the existing candidate pool, with session count used as a tie-break. Compared with the previous ranking, results were mixed:
+
+| Evaluation slice | Previous ranking | Recency and session signal |
+| --- | --- | --- |
+| Development journeys a–c, repeated runs: macro Recall@6 | 0.7704 | 0.7815 |
+| Held-out Spanish journey d: Recall@6 | 0.935 | 0.907 |
+| Held-out Spanish journey d: nDCG@6 | 0.777 | 0.800 |
+| Held-out Japanese journey e: Recall@6 / nDCG@6 | 0.667 / 0.677 | 0.667 / 0.677 |
+| Expected-empty queries returned empty | 3 of 8 | 3 of 8 |
+
+This is not evidence of improved overall or field accuracy: the development slice gains slightly, Spanish recall falls as ordering improves, Japanese results do not change, and abstention remains weak. The labels are illustrative and hand-curated, not human-validated. Machine-readable [baseline](journey-evaluation-baseline.json) and [current results](journey-evaluation-results.json) preserve the per-query outputs and invariant checks.
+
+## Existing retrieval fixture suite
 
 The 90 fixtures are illustrative synthetic examples across EN, DE, NL, FR, JA and ZH. Six redacted sensitive-topic placeholders are unsupported for classifier evaluation; 84 cases are evaluated. The private-session fixtures exercise a native paused-policy gate, not browser incognito capture end to end.
 
@@ -40,7 +56,7 @@ With the real pack, 55 cases exactly matched, 18 correctly returned empty, 10 mi
 
 ## Performance
 
-At 10,000 synthetic atoms with 30 warm samples including process launch, indexed hybrid recall measured median 254.77 ms / p95 275.23 ms. All 10,000 atoms were indexed and all calls completed inside the 1,500 ms budget. The [benchmark record](benchmark-10k.md) includes the method, lexical comparison and refresh timing. The 800-atom process harness measured indexed recall at median 164.51 ms / p95 200.11 ms. Cold-cache performance and the specified dual-core/4 GiB reference machine were not measured.
+The v0.1.2 release build indexed all 10,000 synthetic atoms. Across 30 warm recall calls including process launch, indexed hybrid recall measured median 242.26 ms and p95 247.34 ms; every call completed inside the 1,500 ms budget. The [benchmark record](benchmark-10k.md) includes the method, lexical comparison and refresh timing. The separate 800-atom process harness measured indexed recall at median 118.81 ms / p95 120.40 ms across 25 warm calls. Cold-cache performance and the specified dual-core/4 GiB reference machine were not measured.
 
 ## Limits
 

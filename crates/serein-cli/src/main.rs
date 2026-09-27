@@ -1,6 +1,7 @@
 use serde_json::{json, Value};
 use serein_core::*;
 use std::io::Read;
+mod doctor;
 fn input() -> Result<Value> {
     let mut b = vec![];
     std::io::stdin().take(16385).read_to_end(&mut b)?;
@@ -18,12 +19,7 @@ fn run() -> Result<Value> {
     match args.first().map(String::as_str) {
         Some("--version") => Ok(json!({"version":env!("CARGO_PKG_VERSION")})),
         Some("setup") => install::setup(&root, serde_json::from_value(input()?)?),
-        Some("doctor") => {
-            let r = install::read_registry(&root)?;
-            Ok(
-                json!({"status":if r.connections.iter().any(|c|c.paired){"ok"}else{"blocked"},"version":env!("CARGO_PKG_VERSION"),"data_root":root,"executable":std::env::current_exe()?,"default_vault":r.default_vault,"connections":r.connections.iter().map(|c|json!({"vault_id":c.vault_id,"label":c.label,"paired":c.paired})).collect::<Vec<_>>(),"model_available":root.join("models/current/manifest.json").is_file(),"resident_process":false}),
-            )
-        }
+        Some("doctor") => doctor::run(&root),
         Some("recall") => {
             let r: Recall = serde_json::from_value(input()?)?;
             r.validate()?;

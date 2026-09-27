@@ -3,6 +3,7 @@
     "setup isolated user registration",
     "hello caller pairing",
     "wrong caller denied",
+    "doctor pairing/host/vault/model/recall checks",
     "save ACK",
     "retry idempotent",
     "bounded recall",
@@ -11,8 +12,8 @@
     "host exits within 2s"
   ],
   "status_latency_ms": {
-    "median": 3.868083469569683,
-    "p95": 4.281291039660573
+    "median": 3.441270557232201,
+    "p95": 3.6219588946551085
   },
   "browser_invocation": "not tested: native process harness only",
   "semantic_model": "installed model pack"

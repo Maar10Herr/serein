@@ -60,6 +60,11 @@ try{
  await writeFile(candidatePath,JSON.stringify(manifest),{flag:'wx',mode:0o600});registeredPath=candidatePath;
  await page.waitForFunction(async ()=>(await chrome.runtime.sendMessage({type:'state'})).state.paired,{},{timeout:15000});
  const connected=await send({type:'state'});assert.equal(connected.state.paired,true);assert.equal(connected.controls,0,JSON.stringify(connected));
+ await page.goto(`chrome-extension://${id}/dashboard.html#connections`);
+ await page.reload();
+ await page.getByRole('heading',{name:"You're connected",exact:true}).waitFor();
+ await page.getByText('What was I just researching?').waitFor();
+ await page.screenshot({animations:'disabled',path:path.join(evidence,'connected-first-run.png'),fullPage:true});
  const baseline=await nativeCalls();
  const queueSynthetic=async(count,ageMs=0)=>page.evaluate(async ({count,ageMs})=>{
    const request=indexedDB.open('serein',1);
@@ -96,6 +101,9 @@ try{
  const acknowledgement=await page.evaluate(request=>chrome.runtime.sendNativeMessage('com.serein.context',request),nativeRequest);assert.deepEqual(acknowledgement.acknowledged_ids,[sample.event_id]);
  const second=await page.evaluate(request=>chrome.runtime.sendNativeMessage('com.serein.context',request),nativeRequest);assert.deepEqual(second.duplicate_ids,[sample.event_id]);
  await page.reload();await page.getByRole('heading',{name:'Desk lamp research',exact:true}).waitFor();
+ await page.goto(`chrome-extension://${id}/dashboard.html#connections`);
+ assert.equal(await page.getByRole('heading',{name:"You're connected",exact:true}).count(),0,'first-run prompt should end after the first saved observation');
+ await page.goto(`chrome-extension://${id}/dashboard.html#context`);
  await setTheme('dark');await page.screenshot({animations:'disabled',path:path.join(evidence,'context-populated-dark.png'),fullPage:true});
  await setTheme('light');await page.screenshot({animations:'disabled',path:path.join(evidence,'context-populated-light.png'),fullPage:true});
  const recallRequest={protocol:1,request_id:crypto.randomUUID(),client:'generic',vault:'default',query:'desk lamp research',facets:['desk'],scope:['research'],max_bytes:4096,budget_ms:1500};
@@ -120,5 +128,5 @@ try{
  await page.waitForFunction(async ()=>{const {state}=await chrome.runtime.sendMessage({type:'state'});return state.paired&&!state.ticket;},{},{timeout:15000});
  assert.deepEqual(errors,[]);const builtManifest=JSON.parse(await readFile(path.join(extension,'manifest.json')));assert.deepEqual([...builtManifest.permissions].sort(),['alarms','idle','nativeMessaging','storage','tabs']);assert.ok(!builtManifest.content_scripts&&!builtManifest.host_permissions);
  for(const icon of Object.values(builtManifest.icons))await readFile(path.join(extension,icon));
- const result={browser:await context.browser()?.version(),extension_id:id,checks:['actual extension loaded','consent off by default','pause survives reload','exclusion persisted before helper connection','automatic native hello pairing','19 queued events launch no helper','20 events launch one helper','one-minute-old event flushes','browser alarm drains queue with extension page closed','relink preserves existing connection and vault','deletion pending exposed','popup renders','keyboard focus','light and dark screenshots','six UI languages persist across reload','no console errors','manifest exact permissions','icon paths exist'],nativeMessaging:'PASS: actual sendNativeMessage hello, policy flush, batched ingest ACK, duplicate ACK, skill reader recall, exclude-and-forget'};await writeFile('docs/browser-test-results.json',JSON.stringify(result,null,2));console.log(result);
+ const result={browser:await context.browser()?.version(),extension_id:id,checks:['actual extension loaded','consent off by default','pause survives reload','exclusion persisted before helper connection','automatic native hello pairing','first-run prompt appears only before saved observations','19 queued events launch no helper','20 events launch one helper','one-minute-old event flushes','browser alarm drains queue with extension page closed','relink preserves existing connection and vault','deletion pending exposed','popup renders','keyboard focus','light and dark screenshots','six UI languages persist across reload','no console errors','manifest exact permissions','icon paths exist'],nativeMessaging:'PASS: actual sendNativeMessage hello, policy flush, batched ingest ACK, duplicate ACK, skill reader recall, exclude-and-forget'};await writeFile('docs/browser-test-results.json',JSON.stringify(result,null,2));console.log(result);
 }finally{if(context)await context.close();if(registeredPath)await unlink(registeredPath).catch(()=>{});await rm(temp,{recursive:true,force:true})}

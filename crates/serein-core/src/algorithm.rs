@@ -16,6 +16,13 @@ pub const BURST_DAILY_RATE_PRIOR: f64 = 0.01;
 pub const RRF_OFFSET: usize = 60;
 pub const RETRIEVAL_CANDIDATES_PER_CHANNEL: usize = 64;
 pub const CONFIRMED_FEEDBACK_CANDIDATES: usize = 32;
+/// Retrieval v2 preserves baseline lexical/facet eligibility and adds bounded
+/// temporal prominence after relevance fusion.
+pub(crate) const RETRIEVAL_RANKING_VERSION: u32 = 2;
+/// Relative weight of the recency RRF channel; session counts only break ties.
+/// Selected from 0.1/0.25/0.5/0.75 sweeps on synthetic development journeys a/b/c;
+/// held-out relevance still needs to support keeping this reranker enabled.
+pub(crate) const RETRIEVAL_TEMPORAL_WEIGHT: f32 = 0.5;
 
 #[cfg(test)]
 mod tests {
@@ -34,5 +41,8 @@ mod tests {
             .all(|pair| pair[0] < pair[1]));
         assert!(ACTIVITY_PRIOR_STRENGTH > 0.0 && BURST_DAILY_RATE_PRIOR > 0.0);
         assert!(RRF_OFFSET >= MAX_CONTEXT_RECORDS);
+        assert_eq!(RETRIEVAL_RANKING_VERSION, 2);
+        assert!(RETRIEVAL_TEMPORAL_WEIGHT.is_finite());
+        assert!((0.0..=1.0).contains(&RETRIEVAL_TEMPORAL_WEIGHT));
     }
 }

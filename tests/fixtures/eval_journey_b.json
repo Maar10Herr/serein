@@ -1,0 +1,355 @@
+{
+  "schema_version": 1,
+  "topic": "Synthetic public-web research journey about a Python project quality and reproducibility toolchain",
+  "seed_fingerprint": "b18b70fb34307de6",
+  "evidence": [
+    {
+      "id": "uv-lock",
+      "title": "Locking and syncing",
+      "site_key": "docs.astral.sh",
+      "search_query": null,
+      "days_ago": 1,
+      "sessions": 2
+    },
+    {
+      "id": "uv-deps",
+      "title": "Managing dependencies",
+      "site_key": "docs.astral.sh",
+      "search_query": null,
+      "days_ago": 6,
+      "sessions": 1
+    },
+    {
+      "id": "uv-features",
+      "title": "Features | uv",
+      "site_key": "docs.astral.sh",
+      "search_query": null,
+      "days_ago": 8,
+      "sessions": 1
+    },
+    {
+      "id": "pytest-parametrize",
+      "title": "How to parametrize fixtures and test functions",
+      "site_key": "docs.pytest.org",
+      "search_query": null,
+      "days_ago": 2,
+      "sessions": 2
+    },
+    {
+      "id": "pytest-fixtures",
+      "title": "About fixtures",
+      "site_key": "www.pytest.org",
+      "search_query": null,
+      "days_ago": 10,
+      "sessions": 1
+    },
+    {
+      "id": "pytest-monkeypatch",
+      "title": "How to monkeypatch/mock modules and environments",
+      "site_key": "pytest.org",
+      "search_query": null,
+      "days_ago": 3,
+      "sessions": 2
+    },
+    {
+      "id": "ruff-linter",
+      "title": "The Ruff Linter",
+      "site_key": "docs.astral.sh",
+      "search_query": null,
+      "days_ago": 5,
+      "sessions": 1
+    },
+    {
+      "id": "ruff-formatter",
+      "title": "The Ruff Formatter",
+      "site_key": "docs.astral.sh",
+      "search_query": null,
+      "days_ago": 5,
+      "sessions": 1
+    },
+    {
+      "id": "precommit",
+      "title": "pre-commit",
+      "site_key": "pre-commit.com",
+      "search_query": null,
+      "days_ago": 13,
+      "sessions": 1
+    },
+    {
+      "id": "gh-python-ci",
+      "title": "Building and testing Python",
+      "site_key": "docs.github.com",
+      "search_query": null,
+      "days_ago": 4,
+      "sessions": 2
+    },
+    {
+      "id": "gh-cache",
+      "title": "Dependency caching reference",
+      "site_key": "docs.github.com",
+      "search_query": null,
+      "days_ago": 4,
+      "sessions": 1
+    },
+    {
+      "id": "coverage-branch",
+      "title": "Branch coverage measurement",
+      "site_key": "coverage.readthedocs.io",
+      "search_query": null,
+      "days_ago": 11,
+      "sessions": 1
+    },
+    {
+      "id": "coverage-config",
+      "title": "Configuration reference",
+      "site_key": "coverage.readthedocs.io",
+      "search_query": null,
+      "days_ago": 11,
+      "sessions": 1
+    },
+    {
+      "id": "mypy",
+      "title": "Mypy Documentation",
+      "site_key": "mypy.readthedocs.io",
+      "search_query": null,
+      "days_ago": 7,
+      "sessions": 1
+    },
+    {
+      "id": "packaging-pyproject",
+      "title": "Writing your pyproject.toml",
+      "site_key": "packaging.python.org",
+      "search_query": null,
+      "days_ago": 9,
+      "sessions": 1
+    },
+    {
+      "id": "pip-constraints",
+      "title": "Managing Application Dependencies",
+      "site_key": "pip.pypa.io",
+      "search_query": null,
+      "days_ago": 15,
+      "sessions": 1
+    }
+  ],
+  "queries": [
+    {
+      "id": "q-locking",
+      "query": "Which tool docs did I read about keeping project dependencies reproducible with a lockfile?",
+      "facets": [
+        "tool:uv",
+        "concept:lockfile"
+      ],
+      "expected_ids": [
+        "uv-lock",
+        "uv-features"
+      ],
+      "kind": "positive"
+    },
+    {
+      "id": "q-groups",
+      "query": "Where did I look up separating development dependencies from packages published with a Python project?",
+      "facets": [
+        "tool:uv",
+        "concept:dependency-groups"
+      ],
+      "expected_ids": [
+        "uv-deps"
+      ],
+      "kind": "positive"
+    },
+    {
+      "id": "q-parametrize",
+      "query": "How can I test the same function with several input and expected-output pairs in pytest?",
+      "facets": [
+        "tool:pytest",
+        "concept:parametrization"
+      ],
+      "expected_ids": [
+        "pytest-parametrize"
+      ],
+      "kind": "positive"
+    },
+    {
+      "id": "q-cleanup",
+      "query": "Which pytest feature temporarily changes an environment variable and restores it after the test?",
+      "facets": [
+        "tool:pytest",
+        "concept:environment-mocking"
+      ],
+      "expected_ids": [
+        "pytest-monkeypatch"
+      ],
+      "kind": "positive"
+    },
+    {
+      "id": "q-ruff-format",
+      "query": "Which page explains Ruff's formatter command and checking files without rewriting them?",
+      "facets": [
+        "tool:ruff",
+        "task:formatting"
+      ],
+      "expected_ids": [
+        "ruff-formatter"
+      ],
+      "kind": "positive"
+    },
+    {
+      "id": "q-ruff-types-trap",
+      "query": "Which Ruff page explains static type checking with annotations?",
+      "facets": [
+        "tool:ruff",
+        "task:type-checking"
+      ],
+      "expected_ids": [],
+      "kind": "facet_trap"
+    },
+    {
+      "id": "q-ci",
+      "query": "What official GitHub guide did I read for running Python tests across configured Python versions?",
+      "facets": [
+        "platform:github-actions",
+        "task:python-ci"
+      ],
+      "expected_ids": [
+        "gh-python-ci"
+      ],
+      "kind": "positive"
+    },
+    {
+      "id": "q-cache",
+      "query": "Where was the Python dependency cache behavior and cache key matching documented?",
+      "facets": [
+        "platform:github-actions",
+        "task:dependency-cache"
+      ],
+      "expected_ids": [
+        "gh-cache"
+      ],
+      "kind": "positive"
+    },
+    {
+      "id": "q-branch",
+      "query": "What does branch coverage reveal that statement coverage can miss?",
+      "facets": [
+        "tool:coverage.py",
+        "concept:branch-coverage"
+      ],
+      "expected_ids": [
+        "coverage-branch"
+      ],
+      "kind": "positive"
+    },
+    {
+      "id": "q-repeat-recency",
+      "query": "Which topic did I revisit in two sessions most recently, about restoring patched environment state?",
+      "facets": [
+        "concept:monkeypatch",
+        "recency:recent",
+        "sessions:repeat"
+      ],
+      "expected_ids": [
+        "pytest-monkeypatch"
+      ],
+      "kind": "recency"
+    },
+    {
+      "id": "q-no-match",
+      "query": "Which browser automation library did I choose for controlling a logged-in shopping account?",
+      "facets": [
+        "topic:browser-automation",
+        "intent:selection"
+      ],
+      "expected_ids": [],
+      "kind": "no_match"
+    }
+  ],
+  "sources": [
+    {
+      "id": "uv-lock",
+      "title": "Locking and syncing",
+      "url": "https://docs.astral.sh/uv/concepts/projects/sync/"
+    },
+    {
+      "id": "uv-deps",
+      "title": "Managing dependencies",
+      "url": "https://docs.astral.sh/uv/concepts/projects/dependencies/"
+    },
+    {
+      "id": "uv-features",
+      "title": "Features | uv",
+      "url": "https://docs.astral.sh/uv/getting-started/features/"
+    },
+    {
+      "id": "pytest-parametrize",
+      "title": "How to parametrize fixtures and test functions",
+      "url": "https://docs.pytest.org/en/7.1.x/how-to/parametrize.html"
+    },
+    {
+      "id": "pytest-fixtures",
+      "title": "About fixtures",
+      "url": "https://www.pytest.org/en/latest/explanation/fixtures.html"
+    },
+    {
+      "id": "pytest-monkeypatch",
+      "title": "How to monkeypatch/mock modules and environments",
+      "url": "https://pytest.org/en/latest/how-to/monkeypatch.html"
+    },
+    {
+      "id": "ruff-linter",
+      "title": "The Ruff Linter",
+      "url": "https://docs.astral.sh/ruff/linter/"
+    },
+    {
+      "id": "ruff-formatter",
+      "title": "The Ruff Formatter",
+      "url": "https://docs.astral.sh/ruff/formatter/"
+    },
+    {
+      "id": "precommit",
+      "title": "pre-commit",
+      "url": "https://pre-commit.com/"
+    },
+    {
+      "id": "gh-python-ci",
+      "title": "Building and testing Python",
+      "url": "https://docs.github.com/en/actions/tutorials/build-and-test-code/python"
+    },
+    {
+      "id": "gh-cache",
+      "title": "Dependency caching reference",
+      "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/dependency-caching"
+    },
+    {
+      "id": "coverage-branch",
+      "title": "Branch coverage measurement",
+      "url": "https://coverage.readthedocs.io/en/6.5.0/branch.html"
+    },
+    {
+      "id": "coverage-config",
+      "title": "Configuration reference",
+      "url": "https://coverage.readthedocs.io/en/7.13.5/config.html"
+    },
+    {
+      "id": "mypy",
+      "title": "Mypy Documentation",
+      "url": "https://mypy.readthedocs.io/en/stable/"
+    },
+    {
+      "id": "packaging-pyproject",
+      "title": "Writing your pyproject.toml",
+      "url": "https://packaging.python.org/en/latest/guides/writing-pyproject-toml/"
+    },
+    {
+      "id": "pip-constraints",
+      "title": "Managing Application Dependencies",
+      "url": "https://pip.pypa.io/en/stable/topics/dependency-resolution/"
+    }
+  ],
+  "caveats": [
+    "Entirely synthetic journey assembled from public search results and documentation page metadata; no browser capture, private history, or account data was used.",
+    "Evidence titles, search terms, recency, and session counts are illustrative metadata, not observed user activity. Search phrases are plausible queries that a browser could expose under user-enabled capture.",
+    "Expected IDs are hand-curated relevance labels, not measured algorithm outcomes or validated human judgments. Search result/page availability and documentation content can change.",
+    "The two Ruff pages share a hostname; repeated sessions are not independent sources. The fixture contains only public metadata, not page contents."
+  ]
+}

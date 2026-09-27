@@ -1,5 +1,6 @@
 # Isolated developer toolchains and project dependencies.
 .toolchain/
+.pnpm-store/
 node_modules/
 
 # Generated builds, browser profiles, and test output.

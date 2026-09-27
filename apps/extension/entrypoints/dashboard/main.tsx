@@ -86,6 +86,7 @@ function App() {
   const [prefsLoaded, setPrefsLoaded] = useState(false);
   const [s, setS] = useState<State>();
   const [data, setData] = useState<any>({ cards: [] });
+  const [dashboardLoaded, setDashboardLoaded] = useState(false);
   const [queue, setQueue] = useState(0);
   const [pending, setPending] = useState(0);
   const [error, setError] = useState("");
@@ -123,9 +124,15 @@ function App() {
     if (r.state.paired) {
       try {
         setData(await host("dashboard"));
+        setDashboardLoaded(true);
       } catch (e) {
+        setDashboardLoaded(false);
+        setData({ cards: [] });
         setError((e as Error).message);
       }
+    } else {
+      setDashboardLoaded(false);
+      setData({ cards: [] });
     }
   }
   useEffect(() => {
@@ -221,7 +228,7 @@ function App() {
       setError((e as Error).message || tr("errors.generic"));
     }
   }
-  const cards = (data.cards || []).filter(
+  const cards = (dashboardLoaded ? data.cards || [] : []).filter(
     (c: any) =>
       (filter === "all" || c.state === filter) &&
       c.text.toLowerCase().includes(search.toLowerCase()),
@@ -443,12 +450,12 @@ function App() {
               <Icon name="why" size={16} />
               {tr("context.evidenceNote")}
             </p>
-            {s?.paired && !data.model_available && (
+            {s?.paired && dashboardLoaded && data.model_available === false && (
               <div class="notice" style={{ marginTop: 20 }}>
                 {tr("context.semanticUnavailable")}
               </div>
             )}
-            {s?.paired && data.model_available && (
+            {s?.paired && dashboardLoaded && data.model_available === true && (
               <div class="notice" style={{ marginTop: 20 }}>
                 {tr("context.semanticEnabled")}
               </div>
@@ -465,6 +472,80 @@ function App() {
                   : tr("connections.getStartedDescription")}
               </p>
             </div>
+            {s?.paired && dashboardLoaded && data.atoms === 0 && (
+              <section class="first-run card" aria-labelledby="first-run-title">
+                <div class="first-run-header">
+                  <div>
+                    <h2 id="first-run-title">{tr("journey.connected")}</h2>
+                    <p>{tr("journey.intro")}</p>
+                  </div>
+                  <div
+                    class="first-run-status"
+                    role="list"
+                    aria-label={tr("journey.statusLabel")}
+                  >
+                    <div class="first-run-status-item" role="listitem">
+                      <span>{tr("journey.browser")}</span>
+                      <strong>
+                        <span class="dot" aria-hidden="true" />
+                        {tr("journey.paired")}
+                      </strong>
+                    </div>
+                    <div class="first-run-status-item" role="listitem">
+                      <span>{tr("journey.savedContext")}</span>
+                      <strong>
+                        {new Intl.NumberFormat(locale).format(data.atoms)}
+                      </strong>
+                    </div>
+                    {typeof data.model_available === "boolean" && (
+                      <div class="first-run-status-item" role="listitem">
+                        <span>{tr("journey.retrieval")}</span>
+                        <strong>
+                          {tr(
+                            data.model_available
+                              ? "journey.semanticAvailable"
+                              : "journey.lexicalFallback",
+                          )}
+                        </strong>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <ol class="first-run-steps">
+                  <li>
+                    <span class="first-run-number" aria-hidden="true">1</span>
+                    <div>
+                      <h3>{tr("journey.researchTitle")}</h3>
+                      <p>
+                        {s.policy.consent && !s.policy.paused
+                          ? tr("journey.researchDetail")
+                          : tr("journey.researchPaused")}
+                      </p>
+                    </div>
+                  </li>
+                  <li>
+                    <span class="first-run-number" aria-hidden="true">2</span>
+                    <div>
+                      <h3>{tr("journey.askTitle")}</h3>
+                      <p>{tr("journey.askDetail")}</p>
+                      <blockquote class="first-run-question">
+                        “{tr("journey.question")}”
+                      </blockquote>
+                      {!s.policy.recall_enabled && (
+                        <small>{tr("journey.recallDisabled")}</small>
+                      )}
+                    </div>
+                  </li>
+                </ol>
+                {(!s.policy.consent || s.policy.paused || !s.policy.recall_enabled) && (
+                  <div>
+                    <button class="ghost" onClick={() => go("privacy")}>
+                      {tr("journey.reviewPrivacy")}
+                    </button>
+                  </div>
+                )}
+              </section>
+            )}
             {!s?.paired && (
               <div class="card stack">
                 <div class="row">

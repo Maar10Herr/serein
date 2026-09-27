@@ -1,0 +1,434 @@
+{
+  "schema_version": 1,
+  "topic": "日本語の公開情報を見ながら進める、ベランダのプランター菜園の検討",
+  "seed_fingerprint": "12b23ef1e4e42c56",
+  "synthetic_notice": "合成した評価用ジャーニーです。日本語の公開検索結果と公開ページのタイトル・ホスト名を材料にしています。実際の閲覧履歴や拡張機能の収集データは使っていません。各ページ訪問の search_query は null です。日付間隔、セッション、検索意図、正解ラベルは合成であり、ページ本文の事実を閲覧者が読んだことや、栽培計画・購入決定を示すものではありません。",
+  "evidence": [
+    {
+      "id": "gard-e01",
+      "title": "プランターで鈴なり！〖ミニトマトの育て方〗初心者さん｜ベランダ菜園を詳しく解説",
+      "site_key": "berasai.com",
+      "search_query": null,
+      "days_ago": 12,
+      "sessions": [
+        "summer-crops"
+      ]
+    },
+    {
+      "id": "gard-e02",
+      "title": "〖春から始めるベランダ菜園〗初心者でできるミニトマトをとれたてのおいしさで！",
+      "site_key": "esse-online.jp",
+      "search_query": null,
+      "days_ago": 12,
+      "sessions": [
+        "summer-crops"
+      ]
+    },
+    {
+      "id": "gard-e03",
+      "title": "小松菜栽培＆育て方！約1カ月で収穫の簡単プランター家庭菜園｜カゴメ株式会社",
+      "site_key": "kagome.co.jp",
+      "search_query": null,
+      "days_ago": 10,
+      "sessions": [
+        "leafy-greens"
+      ]
+    },
+    {
+      "id": "gard-e04",
+      "title": "小松菜（コマツナ）の育て方｜プランター栽培、肥料の与え方も解説 – 自然暮らし",
+      "site_key": "shizengurashi.jp",
+      "search_query": null,
+      "days_ago": 10,
+      "sessions": [
+        "leafy-greens"
+      ]
+    },
+    {
+      "id": "gard-e05",
+      "title": "1年中収穫できる！　小松菜のプランター栽培",
+      "site_key": "noukaweb.com",
+      "search_query": null,
+      "days_ago": 9,
+      "sessions": [
+        "leafy-greens"
+      ]
+    },
+    {
+      "id": "gard-e06",
+      "title": "しそ（大葉）の栽培＆育て方！プランターで約30日で収穫できる｜カゴメ株式会社",
+      "site_key": "kagome.co.jp",
+      "search_query": null,
+      "days_ago": 8,
+      "sessions": [
+        "herbs"
+      ]
+    },
+    {
+      "id": "gard-e07",
+      "title": "あると便利！　プランターでシソ栽培",
+      "site_key": "bookstand.webdoku.jp",
+      "search_query": null,
+      "days_ago": 8,
+      "sessions": [
+        "herbs"
+      ]
+    },
+    {
+      "id": "gard-e08",
+      "title": "ＮＨＫ趣味の園芸　やさいの時間 深町貴子のプランター菜園スタートBOOK",
+      "site_key": "nhk-book.co.jp",
+      "search_query": null,
+      "days_ago": 7,
+      "sessions": [
+        "planning"
+      ]
+    },
+    {
+      "id": "gard-e09",
+      "title": "プロが教える“プランター菜園のトリセツ”～小松菜・ラディッシュ編～",
+      "site_key": "takii.co.jp",
+      "search_query": null,
+      "days_ago": 6,
+      "sessions": [
+        "root-crops"
+      ]
+    },
+    {
+      "id": "gard-e10",
+      "title": "タキイ交配 赤丸 ニューコメット | 品種ピックアップ | 最前線WEB - タキイ種苗",
+      "site_key": "takii.co.jp",
+      "search_query": null,
+      "days_ago": 6,
+      "sessions": [
+        "root-crops"
+      ]
+    },
+    {
+      "id": "gard-e11",
+      "title": "春の家庭菜園シーズン到来！初心者におすすめ！“セルトレイ栽培”",
+      "site_key": "takii.co.jp",
+      "search_query": null,
+      "days_ago": 5,
+      "sessions": [
+        "herbs-and-seedlings"
+      ]
+    },
+    {
+      "id": "gard-e12",
+      "title": "レタス | [野菜]山田式家庭菜園教室～Dr.藤目改訂版～ ｜ 調べる ｜ タキイ種苗株式会社",
+      "site_key": "takii.co.jp",
+      "search_query": null,
+      "days_ago": 5,
+      "sessions": [
+        "leafy-greens"
+      ]
+    },
+    {
+      "id": "gard-e13",
+      "title": "ベランダ菜園の楽しみ（4）",
+      "site_key": "ur-net.go.jp",
+      "search_query": null,
+      "days_ago": 4,
+      "sessions": [
+        "summer-crops"
+      ]
+    },
+    {
+      "id": "gard-e14",
+      "title": "ミニトマトのベランダ菜園｜マンションもOK！始め方や注意点を解説",
+      "site_key": "greensnap.jp",
+      "search_query": null,
+      "days_ago": 4,
+      "sessions": [
+        "summer-crops"
+      ]
+    },
+    {
+      "id": "gard-e15",
+      "title": "vol_59_ceresa_pal_web",
+      "site_key": "jaceresa.or.jp",
+      "search_query": null,
+      "days_ago": 3,
+      "sessions": [
+        "root-crops"
+      ]
+    },
+    {
+      "id": "gard-e16",
+      "title": "スピーディベジタブル 「バジル」",
+      "site_key": "sakataseed.co.jp",
+      "search_query": null,
+      "days_ago": 2,
+      "sessions": [
+        "herbs-and-seedlings"
+      ]
+    },
+    {
+      "id": "gard-e17",
+      "title": "水菜のプランター栽培　タネから始める手順と育て方",
+      "site_key": "noukaweb.com",
+      "search_query": null,
+      "days_ago": 0,
+      "sessions": [
+        "leafy-greens-revisit"
+      ]
+    },
+    {
+      "id": "gard-e18",
+      "title": "トマト栽培＆育て方［準備と植付け］プランターで家庭菜園入門！",
+      "site_key": "kagome.co.jp",
+      "search_query": null,
+      "days_ago": 1,
+      "sessions": [
+        "summer-crops-revisit"
+      ]
+    }
+  ],
+  "queries": [
+    {
+      "id": "gard-q01",
+      "query": "ベランダでミニトマトを育てる話、初心者向けの記事をどれ見てた？",
+      "facets": [
+        "crop:ミニトマト",
+        "place:ベランダ",
+        "audience:初心者"
+      ],
+      "expected_ids": [
+        "gard-e01",
+        "gard-e02",
+        "gard-e14"
+      ],
+      "kind": "positive"
+    },
+    {
+      "id": "gard-q02",
+      "query": "トマトの苗をプランターに植える準備を説明していたページを探して",
+      "facets": [
+        "crop:トマト",
+        "task:植え付け",
+        "container:プランター"
+      ],
+      "expected_ids": [
+        "gard-e18"
+      ],
+      "kind": "positive"
+    },
+    {
+      "id": "gard-q03",
+      "query": "小松菜のプランター栽培について開いた記事は？",
+      "facets": [
+        "crop:小松菜",
+        "container:プランター"
+      ],
+      "expected_ids": [
+        "gard-e03",
+        "gard-e04",
+        "gard-e05",
+        "gard-e09"
+      ],
+      "kind": "positive"
+    },
+    {
+      "id": "gard-q04",
+      "query": "シソをベランダで育てる方法の記事を探して。青じその話も含めて",
+      "facets": [
+        "crop:シソ",
+        "container:プランター"
+      ],
+      "expected_ids": [
+        "gard-e06",
+        "gard-e07"
+      ],
+      "kind": "positive"
+    },
+    {
+      "id": "gard-q05",
+      "query": "プランター菜園のトリセツで、ラディッシュを扱っていた記事はどれ？",
+      "facets": [
+        "crop:ラディッシュ",
+        "container:プランター"
+      ],
+      "expected_ids": [
+        "gard-e09"
+      ],
+      "kind": "positive"
+    },
+    {
+      "id": "gard-q06",
+      "query": "バジルの種の商品情報を見たページを探して",
+      "facets": [
+        "crop:バジル",
+        "task:seed_product"
+      ],
+      "expected_ids": [
+        "gard-e16"
+      ],
+      "kind": "positive"
+    },
+    {
+      "id": "gard-q07",
+      "query": "水菜のプランター栽培について最後に開いた記事はどれ？",
+      "facets": [
+        "crop:水菜",
+        "container:プランター",
+        "recency:latest"
+      ],
+      "expected_ids": [
+        "gard-e17"
+      ],
+      "kind": "recency"
+    },
+    {
+      "id": "gard-q08",
+      "query": "タキイの赤丸ニューコメットというページを探して",
+      "facets": [
+        "source:official",
+        "brand:タキイ",
+        "title:ニューコメット"
+      ],
+      "expected_ids": [
+        "gard-e10"
+      ],
+      "kind": "facet_trap"
+    },
+    {
+      "id": "gard-q09",
+      "query": "野菜とハーブのプランター菜園を広く扱うNHK出版の本のページは？",
+      "facets": [
+        "topic:プランター菜園",
+        "source:publisher",
+        "source:official"
+      ],
+      "expected_ids": [
+        "gard-e08"
+      ],
+      "kind": "facet_trap"
+    },
+    {
+      "id": "gard-q10",
+      "query": "レタスを育てる話で、タキイの家庭菜園教室のページを探して",
+      "facets": [
+        "crop:レタス",
+        "source:official",
+        "brand:タキイ"
+      ],
+      "expected_ids": [
+        "gard-e12"
+      ],
+      "kind": "facet_trap"
+    },
+    {
+      "id": "gard-q11",
+      "query": "最終的に何を植えることに決めた？",
+      "facets": [
+        "task:planting_decision"
+      ],
+      "expected_ids": [],
+      "kind": "no_match"
+    },
+    {
+      "id": "gard-q12",
+      "query": "買ったプランターのメーカーとサイズ、覚えてる？",
+      "facets": [
+        "task:purchase",
+        "detail:brand",
+        "detail:size"
+      ],
+      "expected_ids": [],
+      "kind": "no_match"
+    }
+  ],
+  "sources": [
+    {
+      "id": "gard-e01",
+      "title": "プランターで鈴なり！〖ミニトマトの育て方〗初心者さん｜ベランダ菜園を詳しく解説",
+      "url": "https://berasai.com/mini-tomato/"
+    },
+    {
+      "id": "gard-e02",
+      "title": "〖春から始めるベランダ菜園〗初心者でできるミニトマトをとれたてのおいしさで！",
+      "url": "https://esse-online.jp/articles/-/11667"
+    },
+    {
+      "id": "gard-e03",
+      "title": "小松菜栽培＆育て方！約1カ月で収穫の簡単プランター家庭菜園｜カゴメ株式会社",
+      "url": "https://www.kagome.co.jp/vegeday/grow/201709/8387/"
+    },
+    {
+      "id": "gard-e04",
+      "title": "小松菜（コマツナ）の育て方｜プランター栽培、肥料の与え方も解説 – 自然暮らし",
+      "url": "https://shizengurashi.jp/blogs/method/komatsuna"
+    },
+    {
+      "id": "gard-e05",
+      "title": "1年中収穫できる！　小松菜のプランター栽培",
+      "url": "https://www.noukaweb.com/cultivation-planter-mustard-spinach/"
+    },
+    {
+      "id": "gard-e06",
+      "title": "しそ（大葉）の栽培＆育て方！プランターで約30日で収穫できる｜カゴメ株式会社",
+      "url": "https://www.kagome.co.jp/vegeday/grow/202303/12813/"
+    },
+    {
+      "id": "gard-e07",
+      "title": "あると便利！　プランターでシソ栽培",
+      "url": "https://bookstand.webdoku.jp/news/textview/2020/06/28/080008.html"
+    },
+    {
+      "id": "gard-e08",
+      "title": "ＮＨＫ趣味の園芸　やさいの時間 深町貴子のプランター菜園スタートBOOK",
+      "url": "https://www.nhk-book.co.jp/detail/000061993222023.html"
+    },
+    {
+      "id": "gard-e09",
+      "title": "プロが教える“プランター菜園のトリセツ”～小松菜・ラディッシュ編～",
+      "url": "https://www.takii.co.jp/info/news_210901.html"
+    },
+    {
+      "id": "gard-e10",
+      "title": "タキイ交配 赤丸 ニューコメット | 品種ピックアップ | 最前線WEB - タキイ種苗",
+      "url": "https://www.takii.co.jp/tsk/saizensen_web/Announcement/newkometto.html"
+    },
+    {
+      "id": "gard-e11",
+      "title": "春の家庭菜園シーズン到来！初心者におすすめ！“セルトレイ栽培”",
+      "url": "https://www.takii.co.jp/info/news_220324.html"
+    },
+    {
+      "id": "gard-e12",
+      "title": "レタス | [野菜]山田式家庭菜園教室～Dr.藤目改訂版～ ｜ 調べる ｜ タキイ種苗株式会社",
+      "url": "https://www.takii.co.jp/tsk/y_garden/autumnsummer/lettuce/index.html"
+    },
+    {
+      "id": "gard-e13",
+      "title": "ベランダ菜園の楽しみ（4）",
+      "url": "https://www.ur-net.go.jp/aboutus/publication/web-urpress41/saien.html"
+    },
+    {
+      "id": "gard-e14",
+      "title": "ミニトマトのベランダ菜園｜マンションもOK！始め方や注意点を解説",
+      "url": "https://greensnap.jp/article/9730"
+    },
+    {
+      "id": "gard-e15",
+      "title": "vol_59_ceresa_pal_web",
+      "url": "https://www.jaceresa.or.jp/pdf/about/assets/vol_59_ceresa_pal_web.pdf"
+    },
+    {
+      "id": "gard-e16",
+      "title": "スピーディベジタブル 「バジル」",
+      "url": "https://www.sakataseed.co.jp/product/item/?code=970916"
+    },
+    {
+      "id": "gard-e17",
+      "title": "水菜のプランター栽培　タネから始める手順と育て方",
+      "url": "https://www.noukaweb.com/cultivation-planter-mizuna/"
+    },
+    {
+      "id": "gard-e18",
+      "title": "トマト栽培＆育て方［準備と植付け］プランターで家庭菜園入門！",
+      "url": "https://www.kagome.co.jp/vegeday/grow/201704/6746/"
+    }
+  ]
+}

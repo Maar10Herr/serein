@@ -7,6 +7,7 @@
     "pause survives reload",
     "exclusion persisted before helper connection",
     "automatic native hello pairing",
+    "first-run prompt appears only before saved observations",
     "19 queued events launch no helper",
     "20 events launch one helper",
     "one-minute-old event flushes",

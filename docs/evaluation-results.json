@@ -32,7 +32,7 @@
         {
           "case_id": "en-coffee",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.7086250000000001,
+          "elapsed_ms": 0.5892080000000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -51,7 +51,7 @@
         {
           "case_id": "en-lamp",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.22933299999999998,
+          "elapsed_ms": 0.268125,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -70,7 +70,7 @@
         {
           "case_id": "en-garden",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.236875,
+          "elapsed_ms": 0.24933399999999997,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -89,7 +89,7 @@
         {
           "case_id": "en-bike",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.261458,
+          "elapsed_ms": 0.273416,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -108,7 +108,7 @@
         {
           "case_id": "en-bread",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.213959,
+          "elapsed_ms": 0.214458,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -127,7 +127,7 @@
         {
           "case_id": "en-unit",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.26154200000000005,
+          "elapsed_ms": 0.266,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-unit-o1"
@@ -148,7 +148,7 @@
         {
           "case_id": "en-gift",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.231208,
+          "elapsed_ms": 0.22958399999999998,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-gift-o1"
@@ -169,7 +169,7 @@
         {
           "case_id": "en-criticism",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.376125,
+          "elapsed_ms": 0.210625,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-criticism-o1"
@@ -190,7 +190,7 @@
         {
           "case_id": "en-negation",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.287667,
+          "elapsed_ms": 0.202958,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-negation-o1"
@@ -211,7 +211,7 @@
         {
           "case_id": "en-nomatch1",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.196959,
+          "elapsed_ms": 0.127833,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -228,7 +228,7 @@
         {
           "case_id": "en-repeat",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.31,
+          "elapsed_ms": 0.250208,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-repeat-o1",
@@ -253,7 +253,7 @@
         {
           "case_id": "en-work",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.23566700000000002,
+          "elapsed_ms": 0.222583,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-work-o1"
@@ -283,7 +283,7 @@
         {
           "case_id": "en-privatesession",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.142333,
+          "elapsed_ms": 0.14741600000000002,
           "evaluation_status": "native_paused_session_control",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -300,7 +300,7 @@
         {
           "case_id": "en-nomatch2",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.14675,
+          "elapsed_ms": 0.138708,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -317,7 +317,7 @@
         {
           "case_id": "de-coffee",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.233125,
+          "elapsed_ms": 0.23358299999999999,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -336,7 +336,7 @@
         {
           "case_id": "de-lamp",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.14200000000000002,
+          "elapsed_ms": 0.16525,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -353,7 +353,7 @@
         {
           "case_id": "de-garden",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.208875,
+          "elapsed_ms": 0.235791,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -372,7 +372,7 @@
         {
           "case_id": "de-bike",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.261291,
+          "elapsed_ms": 0.269125,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -391,7 +391,7 @@
         {
           "case_id": "de-bread",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.18120899999999998,
+          "elapsed_ms": 0.18795800000000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -410,7 +410,7 @@
         {
           "case_id": "de-unit",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.232833,
+          "elapsed_ms": 0.26225,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-unit-o1"
@@ -431,7 +431,7 @@
         {
           "case_id": "de-gift",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.22020800000000001,
+          "elapsed_ms": 0.22824999999999998,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-gift-o1"
@@ -452,7 +452,7 @@
         {
           "case_id": "de-criticism",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.23049999999999998,
+          "elapsed_ms": 0.220833,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-criticism-o1"
@@ -473,7 +473,7 @@
         {
           "case_id": "de-negation",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.23149999999999998,
+          "elapsed_ms": 0.230875,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-negation-o1"
@@ -494,7 +494,7 @@
         {
           "case_id": "de-nomatch1",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.138125,
+          "elapsed_ms": 0.138208,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -511,7 +511,7 @@
         {
           "case_id": "de-repeat",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.224083,
+          "elapsed_ms": 0.232333,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-repeat-o1",
@@ -536,7 +536,7 @@
         {
           "case_id": "de-work",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.207417,
+          "elapsed_ms": 0.19975,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-work-o1"
@@ -566,7 +566,7 @@
         {
           "case_id": "de-privatesession",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.164125,
+          "elapsed_ms": 0.143583,
           "evaluation_status": "native_paused_session_control",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -583,7 +583,7 @@
         {
           "case_id": "de-nomatch2",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.15320899999999998,
+          "elapsed_ms": 0.15512499999999999,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -600,7 +600,7 @@
         {
           "case_id": "nl-coffee",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.22566599999999998,
+          "elapsed_ms": 0.211709,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -619,7 +619,7 @@
         {
           "case_id": "nl-lamp",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.14775000000000002,
+          "elapsed_ms": 0.13333299999999998,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -636,7 +636,7 @@
         {
           "case_id": "nl-garden",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.148625,
+          "elapsed_ms": 0.149292,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -653,7 +653,7 @@
         {
           "case_id": "nl-bike",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.225042,
+          "elapsed_ms": 0.22024999999999997,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -672,7 +672,7 @@
         {
           "case_id": "nl-bread",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.253708,
+          "elapsed_ms": 0.188041,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -691,7 +691,7 @@
         {
           "case_id": "nl-unit",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.249583,
+          "elapsed_ms": 0.207625,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-unit-o1"
@@ -712,7 +712,7 @@
         {
           "case_id": "nl-gift",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.203708,
+          "elapsed_ms": 0.203125,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-gift-o1"
@@ -733,7 +733,7 @@
         {
           "case_id": "nl-criticism",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.190583,
+          "elapsed_ms": 0.19520900000000002,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-criticism-o1"
@@ -754,7 +754,7 @@
         {
           "case_id": "nl-negation",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.241875,
+          "elapsed_ms": 0.22495800000000002,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-negation-o1"
@@ -775,7 +775,7 @@
         {
           "case_id": "nl-nomatch1",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.142292,
+          "elapsed_ms": 0.121625,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -792,7 +792,7 @@
         {
           "case_id": "nl-repeat",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.217084,
+          "elapsed_ms": 0.222,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-repeat-o1",
@@ -817,7 +817,7 @@
         {
           "case_id": "nl-work",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.18895800000000001,
+          "elapsed_ms": 0.196,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-work-o1"
@@ -847,7 +847,7 @@
         {
           "case_id": "nl-privatesession",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.158458,
+          "elapsed_ms": 0.15100000000000002,
           "evaluation_status": "native_paused_session_control",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -864,7 +864,7 @@
         {
           "case_id": "nl-nomatch2",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.132125,
+          "elapsed_ms": 0.134,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -881,7 +881,7 @@
         {
           "case_id": "fr-coffee",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.25,
+          "elapsed_ms": 0.255,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -900,7 +900,7 @@
         {
           "case_id": "fr-lamp",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.148334,
+          "elapsed_ms": 0.15308300000000002,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -917,7 +917,7 @@
         {
           "case_id": "fr-garden",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.23625,
+          "elapsed_ms": 0.257292,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -936,7 +936,7 @@
         {
           "case_id": "fr-bike",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.31116699999999997,
+          "elapsed_ms": 0.27841600000000005,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -955,7 +955,7 @@
         {
           "case_id": "fr-bread",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.28025,
+          "elapsed_ms": 0.213875,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -974,7 +974,7 @@
         {
           "case_id": "fr-unit",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.281542,
+          "elapsed_ms": 0.24020899999999998,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-unit-o1"
@@ -995,7 +995,7 @@
         {
           "case_id": "fr-gift",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.233458,
+          "elapsed_ms": 0.225708,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-gift-o1"
@@ -1016,7 +1016,7 @@
         {
           "case_id": "fr-criticism",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.220042,
+          "elapsed_ms": 0.206791,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-criticism-o1"
@@ -1037,7 +1037,7 @@
         {
           "case_id": "fr-negation",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.212792,
+          "elapsed_ms": 0.217042,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-negation-o1"
@@ -1058,7 +1058,7 @@
         {
           "case_id": "fr-nomatch1",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.15045799999999998,
+          "elapsed_ms": 0.144666,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1075,7 +1075,7 @@
         {
           "case_id": "fr-repeat",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.23458400000000001,
+          "elapsed_ms": 0.317583,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-repeat-o1",
@@ -1100,7 +1100,7 @@
         {
           "case_id": "fr-work",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.22933299999999998,
+          "elapsed_ms": 0.239083,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-work-o1"
@@ -1130,7 +1130,7 @@
         {
           "case_id": "fr-privatesession",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.14200000000000002,
+          "elapsed_ms": 0.164292,
           "evaluation_status": "native_paused_session_control",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1147,7 +1147,7 @@
         {
           "case_id": "fr-nomatch2",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.146584,
+          "elapsed_ms": 0.143791,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1164,7 +1164,7 @@
         {
           "case_id": "ja-coffee",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.147791,
+          "elapsed_ms": 0.139541,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1181,7 +1181,7 @@
         {
           "case_id": "ja-lamp",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.129625,
+          "elapsed_ms": 0.12812500000000002,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1198,7 +1198,7 @@
         {
           "case_id": "ja-garden",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.13975,
+          "elapsed_ms": 0.135792,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1215,7 +1215,7 @@
         {
           "case_id": "ja-bike",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.143166,
+          "elapsed_ms": 0.139125,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1232,7 +1232,7 @@
         {
           "case_id": "ja-bread",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.124208,
+          "elapsed_ms": 0.127542,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1249,7 +1249,7 @@
         {
           "case_id": "ja-unit",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.14075000000000001,
+          "elapsed_ms": 0.136667,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-unit-o1"
@@ -1268,7 +1268,7 @@
         {
           "case_id": "ja-gift",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.129542,
+          "elapsed_ms": 0.1315,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-gift-o1"
@@ -1287,7 +1287,7 @@
         {
           "case_id": "ja-criticism",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.774208,
+          "elapsed_ms": 0.189917,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-criticism-o1"
@@ -1308,7 +1308,7 @@
         {
           "case_id": "ja-negation",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.16124999999999998,
+          "elapsed_ms": 0.157167,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-negation-o1"
@@ -1327,7 +1327,7 @@
         {
           "case_id": "ja-nomatch1",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.13345800000000002,
+          "elapsed_ms": 0.296083,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1344,7 +1344,7 @@
         {
           "case_id": "ja-repeat",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.135417,
+          "elapsed_ms": 0.146,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-repeat-o1",
@@ -1365,7 +1365,7 @@
         {
           "case_id": "ja-work",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.129416,
+          "elapsed_ms": 0.131625,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-work-o1"
@@ -1393,7 +1393,7 @@
         {
           "case_id": "ja-privatesession",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.12945900000000002,
+          "elapsed_ms": 0.128542,
           "evaluation_status": "native_paused_session_control",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1410,7 +1410,7 @@
         {
           "case_id": "ja-nomatch2",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.129291,
+          "elapsed_ms": 0.132125,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1427,7 +1427,7 @@
         {
           "case_id": "zh-coffee",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.136167,
+          "elapsed_ms": 0.137958,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1444,7 +1444,7 @@
         {
           "case_id": "zh-lamp",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.139834,
+          "elapsed_ms": 0.12704200000000002,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1461,7 +1461,7 @@
         {
           "case_id": "zh-garden",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.14825,
+          "elapsed_ms": 0.137584,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1478,7 +1478,7 @@
         {
           "case_id": "zh-bike",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.142375,
+          "elapsed_ms": 0.13224999999999998,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1495,7 +1495,7 @@
         {
           "case_id": "zh-bread",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.135875,
+          "elapsed_ms": 0.126583,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1512,7 +1512,7 @@
         {
           "case_id": "zh-unit",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.142208,
+          "elapsed_ms": 0.13416599999999998,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-unit-o1"
@@ -1531,7 +1531,7 @@
         {
           "case_id": "zh-gift",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.136875,
+          "elapsed_ms": 0.12562500000000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-gift-o1"
@@ -1550,7 +1550,7 @@
         {
           "case_id": "zh-criticism",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.206125,
+          "elapsed_ms": 0.187333,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-criticism-o1"
@@ -1571,7 +1571,7 @@
         {
           "case_id": "zh-negation",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.14200000000000002,
+          "elapsed_ms": 0.146708,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-negation-o1"
@@ -1590,7 +1590,7 @@
         {
           "case_id": "zh-nomatch1",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.143125,
+          "elapsed_ms": 0.135708,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1607,7 +1607,7 @@
         {
           "case_id": "zh-repeat",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.148791,
+          "elapsed_ms": 0.142875,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-repeat-o1",
@@ -1628,7 +1628,7 @@
         {
           "case_id": "zh-work",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.15329199999999998,
+          "elapsed_ms": 0.136459,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-work-o1"
@@ -1656,7 +1656,7 @@
         {
           "case_id": "zh-privatesession",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.138458,
+          "elapsed_ms": 0.13245800000000002,
           "evaluation_status": "native_paused_session_control",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1673,7 +1673,7 @@
         {
           "case_id": "zh-nomatch2",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.138792,
+          "elapsed_ms": 0.130625,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1698,8 +1698,8 @@
       },
       "hybrid_index_mode_case_count": 0,
       "latency_ms": {
-        "median": 0.1850835,
-        "p95": 0.31
+        "median": 0.18764550000000002,
+        "p95": 0.273416
       },
       "mode": "lexical_missing_pack",
       "model_path": "models/pack",
@@ -1726,7 +1726,7 @@
         {
           "case_id": "en-coffee",
           "duplicate_return_ids": [],
-          "elapsed_ms": 202.26412499999998,
+          "elapsed_ms": 169.17237500000002,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-coffee-o1"
@@ -1747,7 +1747,7 @@
         {
           "case_id": "en-lamp",
           "duplicate_return_ids": [],
-          "elapsed_ms": 119.72687499999999,
+          "elapsed_ms": 106.13020900000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-lamp-o1"
@@ -1768,7 +1768,7 @@
         {
           "case_id": "en-garden",
           "duplicate_return_ids": [],
-          "elapsed_ms": 115.1915,
+          "elapsed_ms": 108.711375,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-garden-o1"
@@ -1789,7 +1789,7 @@
         {
           "case_id": "en-bike",
           "duplicate_return_ids": [],
-          "elapsed_ms": 117.73075,
+          "elapsed_ms": 108.63325,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-bike-o1"
@@ -1810,7 +1810,7 @@
         {
           "case_id": "en-bread",
           "duplicate_return_ids": [],
-          "elapsed_ms": 123.717958,
+          "elapsed_ms": 108.142291,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-bread-o1"
@@ -1831,7 +1831,7 @@
         {
           "case_id": "en-unit",
           "duplicate_return_ids": [],
-          "elapsed_ms": 113.24012499999999,
+          "elapsed_ms": 109.64033400000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-unit-o1"
@@ -1852,7 +1852,7 @@
         {
           "case_id": "en-gift",
           "duplicate_return_ids": [],
-          "elapsed_ms": 109.913208,
+          "elapsed_ms": 108.565875,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-gift-o1"
@@ -1873,7 +1873,7 @@
         {
           "case_id": "en-criticism",
           "duplicate_return_ids": [],
-          "elapsed_ms": 110.531167,
+          "elapsed_ms": 105.771,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-criticism-o1"
@@ -1894,7 +1894,7 @@
         {
           "case_id": "en-negation",
           "duplicate_return_ids": [],
-          "elapsed_ms": 119.20262500000001,
+          "elapsed_ms": 104.4845,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-negation-o1"
@@ -1915,7 +1915,7 @@
         {
           "case_id": "en-nomatch1",
           "duplicate_return_ids": [],
-          "elapsed_ms": 120.453125,
+          "elapsed_ms": 105.11045800000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
@@ -1932,7 +1932,7 @@
         {
           "case_id": "en-repeat",
           "duplicate_return_ids": [],
-          "elapsed_ms": 113.374166,
+          "elapsed_ms": 104.985667,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-repeat-o1",
@@ -1957,7 +1957,7 @@
         {
           "case_id": "en-work",
           "duplicate_return_ids": [],
-          "elapsed_ms": 120.786167,
+          "elapsed_ms": 104.481083,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-work-o1"
@@ -1987,7 +1987,7 @@
         {
           "case_id": "en-privatesession",
           "duplicate_return_ids": [],
-          "elapsed_ms": 113.099916,
+          "elapsed_ms": 105.140791,
           "evaluation_status": "native_paused_session_control",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
@@ -2004,7 +2004,7 @@
         {
           "case_id": "en-nomatch2",
           "duplicate_return_ids": [],
-          "elapsed_ms": 117.9725,
+          "elapsed_ms": 104.317834,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
@@ -2021,7 +2021,7 @@
         {
           "case_id": "de-coffee",
           "duplicate_return_ids": [],
-          "elapsed_ms": 118.601209,
+          "elapsed_ms": 104.375916,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-coffee-o1"
@@ -2042,7 +2042,7 @@
         {
           "case_id": "de-lamp",
           "duplicate_return_ids": [],
-          "elapsed_ms": 113.615792,
+          "elapsed_ms": 105.19416600000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-lamp-o1"
@@ -2061,7 +2061,7 @@
         {
           "case_id": "de-garden",
           "duplicate_return_ids": [],
-          "elapsed_ms": 115.154083,
+          "elapsed_ms": 108.12462500000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-garden-o1"
@@ -2082,7 +2082,7 @@
         {
           "case_id": "de-bike",
           "duplicate_return_ids": [],
-          "elapsed_ms": 112.74733400000001,
+          "elapsed_ms": 107.77025,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-bike-o1"
@@ -2103,7 +2103,7 @@
         {
           "case_id": "de-bread",
           "duplicate_return_ids": [],
-          "elapsed_ms": 111.806667,
+          "elapsed_ms": 107.590667,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-bread-o1"
@@ -2124,7 +2124,7 @@
         {
           "case_id": "de-unit",
           "duplicate_return_ids": [],
-          "elapsed_ms": 110.360125,
+          "elapsed_ms": 108.468042,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-unit-o1"
@@ -2145,7 +2145,7 @@
         {
           "case_id": "de-gift",
           "duplicate_return_ids": [],
-          "elapsed_ms": 116.96883399999999,
+          "elapsed_ms": 107.228667,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-gift-o1"
@@ -2166,7 +2166,7 @@
         {
           "case_id": "de-criticism",
           "duplicate_return_ids": [],
-          "elapsed_ms": 120.77579200000001,
+          "elapsed_ms": 107.116666,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-criticism-o1"
@@ -2187,7 +2187,7 @@
         {
           "case_id": "de-negation",
           "duplicate_return_ids": [],
-          "elapsed_ms": 111.744916,
+          "elapsed_ms": 108.64154199999999,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-negation-o1"
@@ -2208,7 +2208,7 @@
         {
           "case_id": "de-nomatch1",
           "duplicate_return_ids": [],
-          "elapsed_ms": 109.79887500000001,
+          "elapsed_ms": 106.83166700000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
@@ -2225,7 +2225,7 @@
         {
           "case_id": "de-repeat",
           "duplicate_return_ids": [],
-          "elapsed_ms": 113.675583,
+          "elapsed_ms": 104.582833,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-repeat-o1",
@@ -2250,7 +2250,7 @@
         {
           "case_id": "de-work",
           "duplicate_return_ids": [],
-          "elapsed_ms": 110.370625,
+          "elapsed_ms": 104.379125,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-work-o1"
@@ -2280,7 +2280,7 @@
         {
           "case_id": "de-privatesession",
           "duplicate_return_ids": [],
-          "elapsed_ms": 111.427125,
+          "elapsed_ms": 104.35975,
           "evaluation_status": "native_paused_session_control",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
@@ -2297,7 +2297,7 @@
         {
           "case_id": "de-nomatch2",
           "duplicate_return_ids": [],
-          "elapsed_ms": 110.572459,
+          "elapsed_ms": 104.920458,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
@@ -2314,7 +2314,7 @@
         {
           "case_id": "nl-coffee",
           "duplicate_return_ids": [],
-          "elapsed_ms": 116.104584,
+          "elapsed_ms": 104.13775,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-coffee-o1"
@@ -2335,7 +2335,7 @@
         {
           "case_id": "nl-lamp",
           "duplicate_return_ids": [],
-          "elapsed_ms": 114.681333,
+          "elapsed_ms": 107.501125,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-lamp-o1"
@@ -2354,7 +2354,7 @@
         {
           "case_id": "nl-garden",
           "duplicate_return_ids": [],
-          "elapsed_ms": 110.345084,
+          "elapsed_ms": 110.019666,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-garden-o1"
@@ -2373,7 +2373,7 @@
         {
           "case_id": "nl-bike",
           "duplicate_return_ids": [],
-          "elapsed_ms": 111.48983299999999,
+          "elapsed_ms": 109.00479200000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-bike-o1"
@@ -2394,7 +2394,7 @@
         {
           "case_id": "nl-bread",
           "duplicate_return_ids": [],
-          "elapsed_ms": 116.002416,
+          "elapsed_ms": 108.35470799999999,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-bread-o1"
@@ -2415,7 +2415,7 @@
         {
           "case_id": "nl-unit",
           "duplicate_return_ids": [],
-          "elapsed_ms": 115.208375,
+          "elapsed_ms": 108.219541,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-unit-o1"
@@ -2436,7 +2436,7 @@
         {
           "case_id": "nl-gift",
           "duplicate_return_ids": [],
-          "elapsed_ms": 110.427667,
+          "elapsed_ms": 108.678083,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-gift-o1"
@@ -2457,7 +2457,7 @@
         {
           "case_id": "nl-criticism",
           "duplicate_return_ids": [],
-          "elapsed_ms": 110.34349999999999,
+          "elapsed_ms": 107.813584,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-criticism-o1"
@@ -2478,7 +2478,7 @@
         {
           "case_id": "nl-negation",
           "duplicate_return_ids": [],
-          "elapsed_ms": 110.23670800000001,
+          "elapsed_ms": 108.121625,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-negation-o1"
@@ -2499,7 +2499,7 @@
         {
           "case_id": "nl-nomatch1",
           "duplicate_return_ids": [],
-          "elapsed_ms": 111.518,
+          "elapsed_ms": 107.839291,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
@@ -2516,7 +2516,7 @@
         {
           "case_id": "nl-repeat",
           "duplicate_return_ids": [],
-          "elapsed_ms": 118.502083,
+          "elapsed_ms": 108.405209,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-repeat-o1",
@@ -2541,7 +2541,7 @@
         {
           "case_id": "nl-work",
           "duplicate_return_ids": [],
-          "elapsed_ms": 114.2085,
+          "elapsed_ms": 108.393208,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-work-o1"
@@ -2571,7 +2571,7 @@
         {
           "case_id": "nl-privatesession",
           "duplicate_return_ids": [],
-          "elapsed_ms": 110.5235,
+          "elapsed_ms": 108.15983299999999,
           "evaluation_status": "native_paused_session_control",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
@@ -2588,7 +2588,7 @@
         {
           "case_id": "nl-nomatch2",
           "duplicate_return_ids": [],
-          "elapsed_ms": 111.32050000000001,
+          "elapsed_ms": 113.816583,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
@@ -2605,7 +2605,7 @@
         {
           "case_id": "fr-coffee",
           "duplicate_return_ids": [],
-          "elapsed_ms": 112.80995800000001,
+          "elapsed_ms": 104.80449999999999,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-coffee-o1"
@@ -2626,7 +2626,7 @@
         {
           "case_id": "fr-lamp",
           "duplicate_return_ids": [],
-          "elapsed_ms": 114.022583,
+          "elapsed_ms": 104.789125,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-lamp-o1"
@@ -2645,7 +2645,7 @@
         {
           "case_id": "fr-garden",
           "duplicate_return_ids": [],
-          "elapsed_ms": 113.297875,
+          "elapsed_ms": 104.054083,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-garden-o1"
@@ -2666,7 +2666,7 @@
         {
           "case_id": "fr-bike",
           "duplicate_return_ids": [],
-          "elapsed_ms": 117.855167,
+          "elapsed_ms": 104.441792,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-bike-o1"
@@ -2687,7 +2687,7 @@
         {
           "case_id": "fr-bread",
           "duplicate_return_ids": [],
-          "elapsed_ms": 113.679042,
+          "elapsed_ms": 104.489542,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-bread-o1"
@@ -2708,7 +2708,7 @@
         {
           "case_id": "fr-unit",
           "duplicate_return_ids": [],
-          "elapsed_ms": 111.899959,
+          "elapsed_ms": 104.685,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-unit-o1"
@@ -2729,7 +2729,7 @@
         {
           "case_id": "fr-gift",
           "duplicate_return_ids": [],
-          "elapsed_ms": 116.014417,
+          "elapsed_ms": 104.652167,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-gift-o1"
@@ -2750,7 +2750,7 @@
         {
           "case_id": "fr-criticism",
           "duplicate_return_ids": [],
-          "elapsed_ms": 117.568875,
+          "elapsed_ms": 105.068458,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-criticism-o1"
@@ -2771,7 +2771,7 @@
         {
           "case_id": "fr-negation",
           "duplicate_return_ids": [],
-          "elapsed_ms": 115.490083,
+          "elapsed_ms": 104.317,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-negation-o1"
@@ -2792,7 +2792,7 @@
         {
           "case_id": "fr-nomatch1",
           "duplicate_return_ids": [],
-          "elapsed_ms": 118.012792,
+          "elapsed_ms": 105.15929200000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
@@ -2809,7 +2809,7 @@
         {
           "case_id": "fr-repeat",
           "duplicate_return_ids": [],
-          "elapsed_ms": 116.125167,
+          "elapsed_ms": 105.521084,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-repeat-o1",
@@ -2834,7 +2834,7 @@
         {
           "case_id": "fr-work",
           "duplicate_return_ids": [],
-          "elapsed_ms": 130.69787499999998,
+          "elapsed_ms": 104.302041,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-work-o1"
@@ -2864,7 +2864,7 @@
         {
           "case_id": "fr-privatesession",
           "duplicate_return_ids": [],
-          "elapsed_ms": 123.983209,
+          "elapsed_ms": 103.999583,
           "evaluation_status": "native_paused_session_control",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
@@ -2881,7 +2881,7 @@
         {
           "case_id": "fr-nomatch2",
           "duplicate_return_ids": [],
-          "elapsed_ms": 120.08966699999999,
+          "elapsed_ms": 105.06500000000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
@@ -2898,7 +2898,7 @@
         {
           "case_id": "ja-coffee",
           "duplicate_return_ids": [],
-          "elapsed_ms": 120.28245899999999,
+          "elapsed_ms": 107.322666,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-coffee-o1"
@@ -2919,7 +2919,7 @@
         {
           "case_id": "ja-lamp",
           "duplicate_return_ids": [],
-          "elapsed_ms": 120.0185,
+          "elapsed_ms": 105.665125,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-lamp-o1"
@@ -2938,7 +2938,7 @@
         {
           "case_id": "ja-garden",
           "duplicate_return_ids": [],
-          "elapsed_ms": 168.495416,
+          "elapsed_ms": 107.862333,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-garden-o1"
@@ -2957,7 +2957,7 @@
         {
           "case_id": "ja-bike",
           "duplicate_return_ids": [],
-          "elapsed_ms": 120.646917,
+          "elapsed_ms": 106.561167,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-bike-o1"
@@ -2978,7 +2978,7 @@
         {
           "case_id": "ja-bread",
           "duplicate_return_ids": [],
-          "elapsed_ms": 119.39058299999999,
+          "elapsed_ms": 105.157542,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-bread-o1"
@@ -2997,7 +2997,7 @@
         {
           "case_id": "ja-unit",
           "duplicate_return_ids": [],
-          "elapsed_ms": 122.48037500000001,
+          "elapsed_ms": 104.355709,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-unit-o1"
@@ -3018,7 +3018,7 @@
         {
           "case_id": "ja-gift",
           "duplicate_return_ids": [],
-          "elapsed_ms": 120.50166700000001,
+          "elapsed_ms": 104.278708,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-gift-o1"
@@ -3039,7 +3039,7 @@
         {
           "case_id": "ja-criticism",
           "duplicate_return_ids": [],
-          "elapsed_ms": 117.116792,
+          "elapsed_ms": 105.181834,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-criticism-o1"
@@ -3060,7 +3060,7 @@
         {
           "case_id": "ja-negation",
           "duplicate_return_ids": [],
-          "elapsed_ms": 127.560875,
+          "elapsed_ms": 104.41912500000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-negation-o1"
@@ -3081,7 +3081,7 @@
         {
           "case_id": "ja-nomatch1",
           "duplicate_return_ids": [],
-          "elapsed_ms": 120.550125,
+          "elapsed_ms": 109.266042,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
@@ -3098,7 +3098,7 @@
         {
           "case_id": "ja-repeat",
           "duplicate_return_ids": [],
-          "elapsed_ms": 120.48625,
+          "elapsed_ms": 110.475667,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-repeat-o1",
@@ -3122,7 +3122,7 @@
         {
           "case_id": "ja-work",
           "duplicate_return_ids": [],
-          "elapsed_ms": 118.68624999999999,
+          "elapsed_ms": 105.723916,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-work-o1"
@@ -3152,7 +3152,7 @@
         {
           "case_id": "ja-privatesession",
           "duplicate_return_ids": [],
-          "elapsed_ms": 117.380125,
+          "elapsed_ms": 104.04425,
           "evaluation_status": "native_paused_session_control",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
@@ -3169,7 +3169,7 @@
         {
           "case_id": "ja-nomatch2",
           "duplicate_return_ids": [],
-          "elapsed_ms": 114.78812500000001,
+          "elapsed_ms": 106.719583,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
@@ -3186,7 +3186,7 @@
         {
           "case_id": "zh-coffee",
           "duplicate_return_ids": [],
-          "elapsed_ms": 110.4085,
+          "elapsed_ms": 108.243375,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-coffee-o1"
@@ -3207,7 +3207,7 @@
         {
           "case_id": "zh-lamp",
           "duplicate_return_ids": [],
-          "elapsed_ms": 112.044333,
+          "elapsed_ms": 104.66258400000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-lamp-o1"
@@ -3226,7 +3226,7 @@
         {
           "case_id": "zh-garden",
           "duplicate_return_ids": [],
-          "elapsed_ms": 119.007042,
+          "elapsed_ms": 104.284625,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-garden-o1"
@@ -3245,7 +3245,7 @@
         {
           "case_id": "zh-bike",
           "duplicate_return_ids": [],
-          "elapsed_ms": 116.845084,
+          "elapsed_ms": 104.55475,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-bike-o1"
@@ -3266,7 +3266,7 @@
         {
           "case_id": "zh-bread",
           "duplicate_return_ids": [],
-          "elapsed_ms": 111.6865,
+          "elapsed_ms": 105.34175,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-bread-o1"
@@ -3285,7 +3285,7 @@
         {
           "case_id": "zh-unit",
           "duplicate_return_ids": [],
-          "elapsed_ms": 111.65174999999999,
+          "elapsed_ms": 112.48391600000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-unit-o1"
@@ -3306,7 +3306,7 @@
         {
           "case_id": "zh-gift",
           "duplicate_return_ids": [],
-          "elapsed_ms": 118.55212499999999,
+          "elapsed_ms": 115.402375,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-gift-o1"
@@ -3327,7 +3327,7 @@
         {
           "case_id": "zh-criticism",
           "duplicate_return_ids": [],
-          "elapsed_ms": 119.896417,
+          "elapsed_ms": 127.71225,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-criticism-o1"
@@ -3348,7 +3348,7 @@
         {
           "case_id": "zh-negation",
           "duplicate_return_ids": [],
-          "elapsed_ms": 120.58891700000001,
+          "elapsed_ms": 105.65158299999999,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-negation-o1"
@@ -3369,7 +3369,7 @@
         {
           "case_id": "zh-nomatch1",
           "duplicate_return_ids": [],
-          "elapsed_ms": 115.19987499999999,
+          "elapsed_ms": 106.062667,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
@@ -3386,7 +3386,7 @@
         {
           "case_id": "zh-repeat",
           "duplicate_return_ids": [],
-          "elapsed_ms": 113.259541,
+          "elapsed_ms": 104.717708,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-repeat-o1",
@@ -3411,7 +3411,7 @@
         {
           "case_id": "zh-work",
           "duplicate_return_ids": [],
-          "elapsed_ms": 111.749125,
+          "elapsed_ms": 104.686584,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-work-o1"
@@ -3441,7 +3441,7 @@
         {
           "case_id": "zh-privatesession",
           "duplicate_return_ids": [],
-          "elapsed_ms": 118.900458,
+          "elapsed_ms": 103.851584,
           "evaluation_status": "native_paused_session_control",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
@@ -3458,7 +3458,7 @@
         {
           "case_id": "zh-nomatch2",
           "duplicate_return_ids": [],
-          "elapsed_ms": 117.70925,
+          "elapsed_ms": 105.766542,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
@@ -3483,8 +3483,8 @@
       },
       "hybrid_index_mode_case_count": 84,
       "latency_ms": {
-        "median": 115.7462495,
-        "p95": 123.983209
+        "median": 105.69452050000001,
+        "p95": 112.48391600000001
       },
       "mode": "semantic_pack",
       "model_path": "models/pack",
