@@ -1,8 +1,12 @@
 # Serein
 
-Browser context for local AI assistants.
+## Your AI forgets what you researched. Serein doesn't.
 
-Serein saves the tab titles, sites, and searches you allow. When a local assistant needs context from earlier research, the Serein skill returns relevant context with sources. Collection starts only after you opt in. Serein does not read page bodies or import browser history.
+Pick up where your research left off. Serein gives your local AI assistant relevant pages and searches you chose to save, with sources, so you can keep moving instead of rebuilding the trail in every new chat.
+
+Browse as usual. Serein keeps the useful context you allow. When you ask, your assistant can bring it back.
+
+No browser-history import or upload. No page-body reading. No background service. Collection starts only after you opt in. The extension and helper work locally; when you ask for recall, selected context is sent to the assistant you paired, and may reach its model provider.
 
 [Download](https://github.com/Maar10Herr/serein/releases/tag/v0.1.1) · [Install guide](docs/INSTALL.md) · [Privacy](docs/PRIVACY.md) · [Test results](docs/TEST_REPORT.md)
 
