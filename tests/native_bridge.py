@@ -5,7 +5,7 @@ ROOT=pathlib.Path(__file__).resolve().parents[1]
 def uid():return str(uuid.uuid4())
 with tempfile.TemporaryDirectory(prefix='serein-',dir=str(pathlib.Path(tempfile.gettempdir()).resolve())) as tmp:
     env={**os.environ,'SEREIN_DATA_DIR':tmp+'/data','SEREIN_INSTALL_HOME':tmp+'/home'}
-    cli=ROOT/'target/debug/serein';host=ROOT/'target/debug/serein-host'
+    cli=ROOT/'target/release/serein';host=ROOT/'target/release/serein-host'
     ids=json.loads((ROOT/'release/extension-identity.json').read_text());extension=ids['chrome_extension_id'];source=uid();nonce=uid()+uid()
     def command(args,req=None):
         p=subprocess.run([str(cli),*args,'--json'],input=json.dumps(req).encode() if req is not None else None,capture_output=True,env=env,timeout=5)
@@ -37,5 +37,6 @@ with tempfile.TemporaryDirectory(prefix='serein-',dir=str(pathlib.Path(tempfile.
     # Malformed / oversized frames return one bounded error then exit.
     for b in [struct.pack('=I',300000),struct.pack('=I',1)+b'\xff',struct.pack('=I',1)+b'{']:
         p=subprocess.run([str(host)],input=b,capture_output=True,env=env,timeout=2);assert json.loads(p.stdout[4:])['status']=='error'
-    report={'passed':['setup isolated user registration','hello caller pairing','wrong caller denied','save ACK','retry idempotent','bounded lexical recall','forget + replay tombstone','native malformed frames','host exits within 2s'],'status_latency_ms':{'median':statistics.median(samples),'p95':sorted(samples)[18]},'browser_invocation':'not tested: native process harness only','semantic_model':'absent; explicit lexical fallback'}
+    _,doctor=command(['doctor'])
+    report={'passed':['setup isolated user registration','hello caller pairing','wrong caller denied','save ACK','retry idempotent','bounded recall','forget + replay tombstone','native malformed frames','host exits within 2s'],'status_latency_ms':{'median':statistics.median(samples),'p95':sorted(samples)[18]},'browser_invocation':'not tested: native process harness only','semantic_model':'installed model pack' if doctor['model_available'] else 'absent; explicit lexical fallback'}
     (ROOT/'docs/native-test-results.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))

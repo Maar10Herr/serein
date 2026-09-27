@@ -1,0 +1,10 @@
+{
+  "format": 1,
+  "dimensions": 256,
+  "rows": 105879,
+  "model_hash": "sentence-transformers/static-similarity-mrl-multilingual-v1@bae9c8b1d48e8962a2ce7cb207662ed2a8441ccc:dim256:int8sym-v1",
+  "weights_sha256": "ea6daccc4c4fdf27eecfcd2716f5408142947622b5e3dcc356231ea8ddade15e",
+  "scales_sha256": "2b42e8dedf1b2b5e45a5cac326ea17d3d9b1e07e12d571f6a09181d73d72c1ee",
+  "tokenizer_sha256": "11aaf894a4ccf3d95e8830e27c0f8152791fbbff2b988e29a265580b86edd216",
+  "special_ids": []
+}

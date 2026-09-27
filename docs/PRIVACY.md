@@ -12,6 +12,10 @@ Titles and permitted search terms are untrusted input. Obvious emails, credentia
 
 ## Local storage and assistant disclosure
 
+The extension keeps a durable queue in its browser storage, limited to 2,000 events or 2 MiB. It sends a batch after 20 queued events or approximately 60 seconds; browser scheduling can delay that timer. Opening the context dashboard can flush sooner. Pause, exclusion, and deletion requests are sent immediately. If the helper is unavailable, queued events remain local and retries use backoff; the extension reports events dropped at the queue limit.
+
+The skill includes the helper and model. Linking copies them to a stable per-user location and registers the helper with the browser. The browser starts the helper for each request, and it exits after replying. Collection does not depend on an assistant app staying open. The database lives in Serein's application-data directory, outside the installed skill, so replacing a skill does not replace its saved context.
+
 The design stores evidence and derived local representations in the user's Serein data directory. No analytics SDK is part of the design. Default diagnostics contain operational metadata such as error codes, durations, counts, and versions, not titles, queries, raw URLs, or full context packets. A debug export is opt-in and previews its contents before writing.
 
 Recall returns a bounded context packet to the paired assistant integration on invocation, subject to the user's disclosure choice and the integration's configured scope. Once a packet has been sent to an external model or service, deleting the local copy cannot recall that disclosure or control the recipient's retention. Integrations should expose which evidence was returned and must not silently widen their filesystem or assistant access.

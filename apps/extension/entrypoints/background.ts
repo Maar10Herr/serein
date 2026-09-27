@@ -25,19 +25,32 @@ async function native(
     payload,
   });
 }
-async function flush() {
+const BATCH_SIZE = 20;
+const BATCH_AGE_MS = 60_000;
+async function flush(force = false) {
   let s = await db.getState();
   if (!s.paired) return;
+  if (s.retryAt && Date.now() < s.retryAt && !force) return;
   try {
-    for (const c of (await db.controls()).sort(
+    const controls = (await db.controls()).sort(
       (a, b) => a.epoch - b.epoch || (a.op === "policy.update" ? -1 : 1),
-    )) {
+    );
+    for (const c of controls) {
       const r = await native(s, c.op, c.payload, c.epoch);
       if (r.status === "error")
         throw new Error(r.error?.remedy || "Policy update failed");
       await db.removeControl(c.id);
     }
     const items = await db.pending();
+    if (items.length && !s.batchSince) {
+      s.batchSince = Date.now();
+      await db.saveState(s);
+    }
+    const oldest = s.batchSince || Date.now();
+    if (!force && !controls.length && items.length < BATCH_SIZE && Date.now() - oldest < BATCH_AGE_MS) {
+      if (items.length) await browser.alarms.create("batch", { when: oldest + BATCH_AGE_MS });
+      return;
+    }
     const batch = [];
     for (const e of items.slice(0, 32)) {
       if (
@@ -56,23 +69,46 @@ async function flush() {
         ...(r.rejected || []).map((x: { id: string }) => x.id),
       ]);
       s.lastStatus = r;
+      s.batchSince = (await db.getState()).batchSince;
     }
     s.lastError = undefined;
     s.retry = 0;
+    s.retryAt = undefined;
     await db.saveState(s);
     if ((await db.pending()).length)
-      await browser.alarms.create("retry", { when: Date.now() + 1000 });
+      await browser.alarms.create("batch", { when: Date.now() + 1000 });
   } catch {
     s.lastError = "Finish local setup";
-    s.retry++;
+    s.retry = Math.min(s.retry + 1, 8);
+    s.retryAt = Date.now() + Math.min(120_000, 1000 * 2 ** (s.retry - 1)) * (0.9 + Math.random() * 0.2);
     await db.saveState(s);
-    if (s.retry <= 4)
-      await browser.alarms.create("retry", {
-        when:
-          Date.now() +
-          [1000, 5000, 30000, 120000][s.retry - 1] *
-            (0.9 + Math.random() * 0.2),
-      });
+    await browser.alarms.create("retry", { when: s.retryAt });
+  }
+}
+async function tryPair() {
+  const s = await db.getState();
+  if (!s.ticket) return;
+  if (Date.now() / 1000 > s.ticket.expires_at) {
+    s.ticket = undefined;
+    s.lastError = "Pairing ticket expired. Copy a new link instruction.";
+    await db.saveState(s);
+    return;
+  }
+  try {
+    const r = await native(s, "hello", { nonce: s.ticket.nonce });
+    if (r.status === "error") throw new Error(r.error?.remedy || "Pairing failed");
+    s.paired = true;
+    s.ticket = undefined;
+    s.retry = 0;
+    s.retryAt = undefined;
+    s.lastStatus = r;
+    s.lastError = undefined;
+    s.policy.capture_epoch = Math.max(s.policy.capture_epoch, r.policy.capture_epoch);
+    await db.saveState(s);
+    await changePolicy({ ...s.policy });
+    await browser.alarms.clear("pairing");
+  } catch {
+    await browser.alarms.create("pairing", { when: Date.now() + 30_000 });
   }
 }
 async function finalize(v: Visit) {
@@ -180,19 +216,22 @@ async function changePolicy(policy: Policy) {
     epoch: policy.capture_epoch,
     payload: policy,
   });
-  await flush();
+  await flush(true);
 }
 export default defineBackground(() => {
-  browser.runtime.onStartup.addListener(() => {
-    void serial(async () => {
-      await db.setVisit();
-      const s = await db.getState();
-      if (s.pauseUntil)
-        await browser.alarms.create("resume", {
-          when: Math.max(Date.now() + 1000, s.pauseUntil),
-        });
-    });
+  const restoreAlarms = () => void serial(async () => {
+    await db.setVisit();
+    const s = await db.getState();
+    if (s.pauseUntil)
+      await browser.alarms.create("resume", { when: Math.max(Date.now() + 1000, s.pauseUntil) });
+    if (s.ticket)
+      await browser.alarms.create("pairing", { when: Date.now() + 30_000 });
+    if (s.retryAt && s.retryAt > Date.now())
+      await browser.alarms.create("retry", { when: s.retryAt });
+    else if ((await db.pending()).length) await flush();
   });
+  browser.runtime.onStartup.addListener(restoreAlarms);
+  browser.runtime.onInstalled.addListener(restoreAlarms);
   browser.tabs.onUpdated.addListener((tabId, info) => {
     if (info.url || info.title || info.status === "complete")
       void serial(() => observe(false, info.url ? tabId : undefined));
@@ -206,7 +245,8 @@ export default defineBackground(() => {
   browser.alarms.onAlarm.addListener(
     (a) =>
       void serial(async () => {
-        if (a.name === "retry") await flush();
+        if (a.name === "pairing") await tryPair();
+        else if (a.name === "retry" || a.name === "batch") await flush();
         else await observe(a.name === "attention");
       }),
   );
@@ -220,6 +260,7 @@ export default defineBackground(() => {
       const s = await db.getState();
       switch (message.type) {
         case "state":
+          await tryPair();
           await flush();
           return {
             state: await db.getState(),
@@ -276,7 +317,7 @@ export default defineBackground(() => {
               },
               message.site,
             );
-          await flush();
+          await flush(true);
           return { ok: true };
         }
         case "include":
@@ -309,22 +350,12 @@ export default defineBackground(() => {
           };
           s.ticket = t;
           await db.saveState(s);
+          await browser.alarms.create("pairing", { when: Date.now() + 30_000 });
           return t;
         }
         case "verify": {
-          if (!s.ticket) throw new Error("Create setup instructions first");
-          const r = await native(s, "hello", { nonce: s.ticket.nonce });
-          if (r.status === "error") throw new Error(r.error.remedy);
-          s.paired = true;
-          s.lastStatus = r;
-          s.lastError = undefined;
-          s.policy.capture_epoch = Math.max(
-            s.policy.capture_epoch,
-            r.policy.capture_epoch,
-          );
-          await db.saveState(s);
-          await changePolicy({ ...s.policy });
-          return r;
+          await tryPair();
+          return (await db.getState()).lastStatus;
         }
         case "host": {
           if (message.op === "forget" && message.payload?.atom_id) {
@@ -332,7 +363,7 @@ export default defineBackground(() => {
             s.policy = (await db.getState()).policy;
           }
           if (!s.paired) throw new Error("Finish local setup");
-          await flush();
+          await flush(true);
           if ((await db.controls()).length)
             throw new Error(
               "Privacy changes are pending. Restore local connection first.",

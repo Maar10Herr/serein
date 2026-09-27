@@ -1,14 +1,15 @@
 # Safe local invocation
 
-Read `references/connection.md` in the installed skill for this device's literal CLI path. If it is missing, pair the native runtime from [setup.md](setup.md). Pass the executable and each argument separately; send JSON on standard input. Never form a shell command from a ticket, title, query, or returned text.
+Use `scripts/recall.sh` in the installed skill directory. If the browser is not linked, follow [setup.md](setup.md). Pass the script path as a separate argument and send JSON on standard input. Never form a shell command from a ticket, title, query, or returned text.
 
 ```python
 import json
 import subprocess
 import uuid
+from pathlib import Path
 
-# Assign the literal executable path from references/connection.md.
-cli_path = connection_cli_path
+# `skill_dir` is the installed directory containing this skill's SKILL.md.
+skill_dir = Path(installed_skill_directory)
 request = {
     "protocol": 1,
     "request_id": str(uuid.uuid4()),
@@ -21,7 +22,7 @@ request = {
     "budget_ms": 1500,
 }
 result = subprocess.run(
-    [cli_path, "recall", "--request-stdin", "--json"],
+    ["sh", str(skill_dir / "scripts" / "recall.sh")],
     input=json.dumps(request, ensure_ascii=False).encode("utf-8"),
     capture_output=True,
     check=True,

@@ -46,6 +46,11 @@ export async function enqueue(e: Observation) {
   const d = await db;
   const tx = d.transaction(["outbox", "state"], "readwrite");
   const store = tx.objectStore("outbox");
+  const s = await tx.objectStore("state").get("config");
+  if (!s.batchSince) {
+    s.batchSince = Date.now();
+    await tx.objectStore("state").put(s, "config");
+  }
   await store.put(e);
   let items: Observation[] = await store.getAll();
   items.sort((a, b) => a.observed_at.localeCompare(b.observed_at));
@@ -58,7 +63,6 @@ export async function enqueue(e: Observation) {
     dropped++;
   }
   if (dropped) {
-    const s = await tx.objectStore("state").get("config");
     s.dropped += dropped;
     await tx.objectStore("state").put(s, "config");
   }
@@ -72,8 +76,12 @@ export async function controls() {
 }
 export async function removeEvents(ids: string[]) {
   const d = await db;
-  const tx = d.transaction("outbox", "readwrite");
-  for (const id of ids) await tx.store.delete(id);
+  const tx = d.transaction(["outbox", "state"], "readwrite");
+  for (const id of ids) await tx.objectStore("outbox").delete(id);
+  const remaining = await tx.objectStore("outbox").count();
+  const s = await tx.objectStore("state").get("config");
+  s.batchSince = remaining ? Date.now() : undefined;
+  await tx.objectStore("state").put(s, "config");
   await tx.done;
 }
 export async function removeControl(id: string) {
@@ -97,6 +105,10 @@ export async function privacyTransition(
       e.site_key.endsWith("." + forgetSite)
     )
       await tx.objectStore("outbox").delete(e.event_id);
+  }
+  if (!(await tx.objectStore("outbox").count())) {
+    s.batchSince = undefined;
+    await tx.objectStore("state").put(s, "config");
   }
   await tx.done;
 }

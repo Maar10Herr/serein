@@ -16,7 +16,7 @@ with tempfile.TemporaryDirectory(prefix='serein-firefox-',dir=str(pathlib.Path(t
  port_socket=socket.socket();port_socket.bind(('127.0.0.1',0));port=port_socket.getsockname()[1];port_socket.close()
  prefs={'marionette.port':port,'marionette.enabled':True,'extensions.webextensions.uuids':json.dumps({extension_id:extension_uuid}),'browser.shell.checkDefaultBrowser':False,'browser.startup.homepage_override.mstone':'ignore','datareporting.policy.dataSubmissionEnabled':False}
  (profile/'user.js').write_text('\n'.join('user_pref('+json.dumps(k)+','+json.dumps(v)+');' for k,v in prefs.items()))
- env={**os.environ,'HOME':str(home),'SEREIN_INSTALL_HOME':str(home),'SEREIN_DATA_DIR':str(p/'data'),'MOZ_HEADLESS':'1','MOZ_CRASHREPORTER_DISABLE':'1'}
+ env={**os.environ,'SEREIN_INSTALL_HOME':str(home),'SEREIN_DATA_DIR':str(p/'data'),'MOZ_HEADLESS':'1','MOZ_CRASHREPORTER_DISABLE':'1'}
  log=open(p/'firefox.log','wb');process=subprocess.Popen([firefox_binary,'--headless','--remote-allow-system-access','--no-remote','--profile',str(profile),'--marionette'],stdout=log,stderr=log,env=env)
  sock=None;counter=0;registered=None
  try:
@@ -46,21 +46,24 @@ with tempfile.TemporaryDirectory(prefix='serein-firefox-',dir=str(pathlib.Path(t
   state=send({'type':'state'});assert state['state']['policy']['consent']==False,state
   send({'type':'policy','patch':{'consent':True,'recall_enabled':True}})
   ticket=send({'type':'ticket','adapters':['generic'],'label':'Synthetic Firefox fixture'})
-  setup=json.loads(subprocess.check_output([str(ROOT/'target/release/serein'),'setup','--request-stdin','--json'],input=json.dumps(ticket).encode(),env=env))
+  setup=json.loads(subprocess.check_output(['sh',str(ROOT/'skills/serein-context/scripts/connect.sh')],input=json.dumps(ticket).encode(),env=env))
   actual=native_directory/'com.serein.context.json'
   actual.parent.mkdir(parents=True,exist_ok=True)
   with actual.open('x') as f:f.write(pathlib.Path(setup['manifest']).read_text())
   registered=actual
-  verification=send({'type':'verify'});assert not verification.get('error'),verification
-  state=send({'type':'state'});assert state['state']['paired'],state
+  for _ in range(30):
+   state=send({'type':'state'})
+   if state['state']['paired']:break
+   time.sleep(.25)
+  assert state['state']['paired'],state
   event={'event_id':str(uuid.uuid4()),'visit_id':str(uuid.uuid4()),'site_key':'example.com','site_epoch':0,'observed_at':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),'kind':'search','title':'Desk lamp research','search_query':'desk lamp research','foreground_seconds':30}
   request={'protocol':1,'request_id':str(uuid.uuid4()),'source_id':ticket['source_id'],'op':'ingest','capture_epoch':state['state']['policy']['capture_epoch'],'payload':{'events':[event]}}
   response=script('const done=arguments[arguments.length-1]; browser.runtime.sendNativeMessage("com.serein.context",arguments[0]).then(done,e=>done({error:e.message}));',[request]);assert response['acknowledged_ids']==[event['event_id']],response
   response=script('const done=arguments[arguments.length-1]; browser.runtime.sendNativeMessage("com.serein.context",arguments[0]).then(done);',[request]);assert response['duplicate_ids']==[event['event_id']]
   send({'type':'exclude','site':'example.com','forget':True});assert send({'type':'host','op':'dashboard'})['cards']==[]
   send({'type':'pause','paused':True});cmd('WebDriver:Refresh');assert send({'type':'state'})['state']['policy']['paused']
-  appearance=script('document.documentElement.dataset.theme="light";const done=arguments[arguments.length-1];setTimeout(()=>{const card=document.querySelector(".assistant");done({background:getComputedStyle(card).backgroundColor,color:getComputedStyle(card).color})},250);')
-  assert appearance['background']=='rgb(255, 255, 255)',appearance
+  appearance=script('document.documentElement.dataset.theme="light";const done=arguments[arguments.length-1];const deadline=Date.now()+3000;function check(){const card=document.body;const style=getComputedStyle(card);const result={background:style.backgroundColor,color:style.color};if(result.background==="rgb(247, 246, 242)"||Date.now()>deadline)done(result);else setTimeout(check,100)}check();')
+  assert appearance['background']=='rgb(247, 246, 242)',appearance
   screenshot=cmd('WebDriver:TakeScreenshot',{'id':None,'full':True})['value'];(ROOT/'docs/screenshots/firefox-onboarding.png').write_bytes(base64.b64decode(screenshot))
   report={'browser':session.get('capabilities',{}).get('browserVersion'),'nativeMessaging':'PASS','checks':['temporary unsigned installation','consent off by default','actual hello pairing','ingest ACK','duplicate ACK','exclude and forget','persistent pause','screenshot'],'permanent_installation':'requires Mozilla signing'};(ROOT/'docs/firefox-test-results.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
  finally:

@@ -1,11 +1,17 @@
 {
-  "browser": "148.0.7778.96",
+  "browser": "154.0.8037.57",
   "extension_id": "leakblpkjoielijhdnbkcafdgmfbpbib",
   "checks": [
     "actual extension loaded",
     "consent off by default",
     "pause survives reload",
     "exclusion persisted before helper connection",
+    "automatic native hello pairing",
+    "19 queued events launch no helper",
+    "20 events launch one helper",
+    "one-minute-old event flushes",
+    "browser alarm drains queue with extension page closed",
+    "relink preserves existing connection and vault",
     "deletion pending exposed",
     "popup renders",
     "keyboard focus",
@@ -15,5 +21,5 @@
     "manifest exact permissions",
     "icon paths exist"
   ],
-  "nativeMessaging": "PASS: actual sendNativeMessage hello, policy flush, ingest ACK, duplicate ACK, CLI recall, exclude-and-forget"
+  "nativeMessaging": "PASS: actual sendNativeMessage hello, policy flush, batched ingest ACK, duplicate ACK, skill reader recall, exclude-and-forget"
 }

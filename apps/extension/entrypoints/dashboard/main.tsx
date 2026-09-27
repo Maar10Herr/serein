@@ -94,7 +94,6 @@ function App() {
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState(["codex"]);
-  const [installSkills, setInstallSkills] = useState(false);
   const [consent, setConsent] = useState(false);
   const [disclosure, setDisclosure] = useState(false);
   const [selectedOnly, setSelectedOnly] = useState(false);
@@ -114,10 +113,11 @@ function App() {
     skillRepository && skillTargets.length
       ? `npx --yes skills add ${skillRepository} --skill serein-context ${skillTargets.map((id) => `--agent ${id}`).join(" ")} --global --yes --copy`
       : "";
-  const installSkillsOnSetup = installSkills && Boolean(skillInstallCommand);
   async function load() {
     const r = await call({ type: "state" });
     setS(r.state);
+    if (r.state.lastError?.startsWith("Pairing ticket expired"))
+      setError(r.state.lastError);
     setQueue(r.queued);
     setPending(r.controls);
     if (r.state.paired) {
@@ -139,6 +139,11 @@ function App() {
       .catch(() => {})
       .finally(() => setPrefsLoaded(true));
   }, []);
+  useEffect(() => {
+    if (!s?.ticket) return;
+    const timer = window.setInterval(() => void load().catch(() => {}), 3000);
+    return () => window.clearInterval(timer);
+  }, [s?.ticket?.nonce, s?.paired]);
   useEffect(() => {
     document.documentElement.lang = locale;
     document.documentElement.dataset.theme = theme;
@@ -185,19 +190,12 @@ function App() {
     const ticket = await call({
       type: "ticket",
       adapters: selected,
-      install_skills: installSkillsOnSetup,
+      install_skills: false,
       label:
         "Personal · " +
         (import.meta.env.BROWSER === "firefox" ? "Firefox" : "Chrome"),
     });
     const text = tr("setup.assistantInstructions", {
-      skillStep: !skillRepository
-        ? tr("setup.skillStepUnconfigured")
-        : !skillTargets.length
-          ? tr("setup.skillStepNoTargets")
-          : installSkillsOnSetup
-            ? tr("setup.skillStepEnabled", { command: skillInstallCommand })
-            : tr("setup.skillStepManual"),
       ticket: JSON.stringify(ticket, null, 2),
     });
     setSetupText(text);
@@ -208,9 +206,9 @@ function App() {
     await load();
   }
   async function copySkillInstallCommand() {
-    if (!skillInstallCommand) return;
+    if (!skillRepository) return;
     try {
-      await navigator.clipboard.writeText(skillInstallCommand);
+      await navigator.clipboard.writeText(tr("connections.skillInstallPrompt", { repository: skillRepository }));
       setError("");
       setNotice(tr("connections.skillCommandCopied"));
     } catch (e) {
@@ -258,6 +256,7 @@ function App() {
           <div class="row">
             <select
               aria-label={tr("dashboard.language")}
+              disabled={!prefsLoaded}
               value={locale}
               onChange={(e) => setLocale(e.currentTarget.value as Locale)}
             >
@@ -271,6 +270,7 @@ function App() {
             <button
               class="ghost"
               aria-label={tr("dashboard.themeToggle")}
+              disabled={!prefsLoaded}
               onClick={() => setTheme(theme === "light" ? "dark" : "light")}
             >
               <Icon name="sun" size={18} />
@@ -494,6 +494,12 @@ function App() {
                 <small>{tr("connections.filterLimitShort")}</small>
               </div>
             )}
+            <details class="link-steps" open={!s?.paired}>
+              <summary class="small">
+                {s?.paired
+                  ? tr("connections.linkAnother")
+                  : tr("connections.setupSteps")}
+              </summary>
             <div class="step">
               <span class="step-number">1</span>
               <h3>{tr("connections.chooseAssistants")}</h3>
@@ -506,7 +512,6 @@ function App() {
                   }
                   aria-pressed={selected.includes(id)}
                   onClick={() => {
-                    setInstallSkills(false);
                     setSelected(
                       selected.includes(id)
                         ? selected.filter((x) => x !== id)
@@ -539,7 +544,7 @@ function App() {
             </div>
             <div class="card">
               <p>{tr("connections.skillInstallDetails")}</p>
-              {skillRepository && skillInstallCommand ? (
+              {skillRepository ? (
                 <div class="stack" style={{ gap: 12, marginTop: 16 }}>
                   <a
                     class="skill-source"
@@ -549,18 +554,7 @@ function App() {
                   >
                     {skillRepository}
                   </a>
-                  <code class="path skill-command">{skillInstallCommand}</code>
                   <small>{tr("connections.skillGlobalNote")}</small>
-                  <label class="checklabel">
-                    <input
-                      type="checkbox"
-                      checked={installSkills}
-                      onChange={(e) =>
-                        setInstallSkills(e.currentTarget.checked)
-                      }
-                    />
-                    <span>{tr("connections.installDuringSetup")}</span>
-                  </label>
                   <div>
                     <button
                       class="primary"
@@ -570,11 +564,13 @@ function App() {
                       {tr("connections.copySkillCommand")}
                     </button>
                   </div>
+                  {skillInstallCommand && (
+                    <details>
+                      <summary class="small">Skills CLI</summary>
+                      <code class="path skill-command">{skillInstallCommand}</code>
+                    </details>
+                  )}
                 </div>
-              ) : skillRepository ? (
-                <p class="notice" style={{ marginTop: 16 }}>
-                  {tr("connections.skillSelectTarget")}
-                </p>
               ) : (
                 <p class="notice" style={{ marginTop: 16 }}>
                   {tr("connections.skillSourceUnconfigured")}
@@ -605,20 +601,6 @@ function App() {
                   <Icon name="copy" size={16} />
                   {tr("setup.copyInstructions")}
                 </button>
-                <button
-                  disabled={busy || !s?.ticket}
-                  onClick={() =>
-                    run(
-                      () => call({ type: "verify" }),
-                      tr("connections.localConnectionVerified"),
-                    )
-                  }
-                >
-                  <Icon name="link" size={16} />
-                  {s?.paired
-                    ? tr("connections.retestLocal")
-                    : tr("connections.verifyConnection")}
-                </button>
               </div>
               {setupText && (
                 <details style={{ marginTop: 16 }}>
@@ -632,6 +614,7 @@ function App() {
                 {tr("connections.helperSeparateFromSkill")}
               </small>
             </div>
+            </details>
             {s?.paired && (
               <details class="card" style={{ marginTop: 20 }}>
                 <summary>{tr("connections.advancedVault")}</summary>

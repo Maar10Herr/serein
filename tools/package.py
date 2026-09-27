@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build explicit Serein preview artifacts and scan their publication contents."""
+"""Build Serein release artifacts and scan their publication contents."""
 
 from __future__ import annotations
 
@@ -7,8 +7,8 @@ import hashlib
 import json
 import os
 import pathlib
-import platform
 import re
+import subprocess
 import tarfile
 import zipfile
 from datetime import datetime, timezone
@@ -16,7 +16,7 @@ from datetime import datetime, timezone
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 OUT = ROOT / "release"
-VERSION = os.environ.get("SEREIN_VERSION", "0.1.0-beta.3")
+VERSION = os.environ.get("SEREIN_VERSION", "0.1.0")
 if not re.fullmatch(r"\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?", VERSION):
     raise SystemExit("SEREIN_VERSION must be a simple semantic version.")
 AUDIT_PATH = ROOT / "docs/publication-audit.json"
@@ -156,13 +156,15 @@ def source_files() -> tuple[list[pathlib.Path], dict[str, int]]:
 
 
 def scan_file(path: pathlib.Path, display_name: str) -> list[dict[str, str]]:
-    if path.suffix.lower() not in TEXT_SUFFIXES:
+    binary = path.name in {"serein", "serein-host"} and "runtime" in path.parts
+    if path.suffix.lower() not in TEXT_SUFFIXES and not binary:
         return []
     data = path.read_bytes()
+    patterns = ("user_home_path", "windows_user_path") if binary else SENSITIVE_TEXT_PATTERNS
     return [
         {"file": display_name, "rule": rule}
-        for rule, pattern in SENSITIVE_TEXT_PATTERNS.items()
-        if pattern.search(data)
+        for rule in patterns
+        if SENSITIVE_TEXT_PATTERNS[rule].search(data)
     ]
 
 
@@ -187,6 +189,11 @@ def scan_zip(path: pathlib.Path) -> tuple[list[dict[str, str]], int, int]:
                     for rule, pattern in SENSITIVE_TEXT_PATTERNS.items()
                     if pattern.search(data)
                 )
+            elif name.name in {"serein", "serein-host"} and "runtime" in name.parts:
+                data = archive.read(member)
+                for rule in ("user_home_path", "windows_user_path"):
+                    if SENSITIVE_TEXT_PATTERNS[rule].search(data):
+                        findings.append({"file": f"{path.name}:{member.filename}", "rule": rule})
     return findings, count, excluded_count
 
 
@@ -213,7 +220,7 @@ def scan_tar(path: pathlib.Path) -> tuple[list[dict[str, str]], int, int]:
                     for rule, pattern in SENSITIVE_TEXT_PATTERNS.items()
                     if pattern.search(data)
                 )
-            elif name.as_posix() in {"serein/serein", "serein/serein-host"}:
+            elif name.name in {"serein", "serein-host"} and "runtime" in name.parts:
                 # Rust binaries can retain dependency source paths even in release mode.
                 stream = archive.extractfile(member)
                 data = stream.read() if stream else b""
@@ -253,7 +260,35 @@ def sha256(path: pathlib.Path) -> str:
     return digest.hexdigest()
 
 
+def validate_skill_runtime() -> None:
+    runtime = ROOT / "skills/serein-context/runtime/macos-arm64"
+    checksum_file = runtime / "SHA256SUMS"
+    expected = {}
+    for line in checksum_file.read_text(encoding="utf-8").splitlines():
+        digest, relative = line.split("  ", 1)
+        path = pathlib.PurePosixPath(relative)
+        if path.is_absolute() or ".." in path.parts or relative in expected:
+            raise SystemExit("Invalid skill runtime checksum manifest.")
+        expected[relative] = digest
+    actual = {
+        path.relative_to(runtime).as_posix()
+        for path in runtime.rglob("*")
+        if path.is_file() and path.name != "SHA256SUMS"
+    }
+    if actual != set(expected):
+        raise SystemExit("Skill runtime files differ from checksum manifest. Run tools/bundle_skill.py.")
+    if any(sha256(runtime / path) != digest for path, digest in expected.items()):
+        raise SystemExit("Skill runtime checksum mismatch. Run tools/bundle_skill.py.")
+    for required in ("serein", "serein-host", "model/manifest.json", "model/weights.i8", "model/tokenizer.json", "THIRD_PARTY_LICENSES.json"):
+        if required not in expected:
+            raise SystemExit(f"Missing skill runtime file: {required}")
+    built = json.loads(subprocess.check_output([runtime / "serein", "--version"], timeout=5))
+    if built.get("version") != VERSION:
+        raise SystemExit("Bundled helper version differs from package version. Run tools/bundle_skill.py.")
+
+
 def main() -> None:
+    validate_skill_runtime()
     OUT.mkdir(exist_ok=True)
     generated: list[pathlib.Path] = []
 
@@ -264,11 +299,16 @@ def main() -> None:
         if not manifest_path.is_file():
             raise SystemExit(f"Missing {manifest_path}; build both MV3 extensions first.")
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        if manifest.get("version") != VERSION:
+            raise SystemExit(f"{browser} extension version differs from package version. Rebuild the extension.")
         expected = {"tabs", "storage", "alarms", "idle", "nativeMessaging"}
         if set(manifest.get("permissions", [])) != expected:
             raise SystemExit(f"Unexpected {browser} extension permission set.")
         if manifest.get("content_scripts") or manifest.get("host_permissions"):
             raise SystemExit(f"Unexpected broad page access in {browser} extension manifest.")
+        repository = b"https://github.com/Maar10Herr/serein"
+        if not any(repository in file.read_bytes() for file in source.rglob("*.js")):
+            raise SystemExit(f"{browser} build is missing the public skill repository. Set SEREIN_SKILL_REPOSITORY and rebuild.")
         artifact = OUT / f"serein-{browser}-{VERSION}-unsigned.zip"
         with zipfile.ZipFile(artifact, "w", zipfile.ZIP_DEFLATED) as archive:
             for file in sorted(source.rglob("*")):
@@ -278,59 +318,7 @@ def main() -> None:
             archive.write(ROOT / "README.md", "README.md")
         generated.append(artifact)
 
-    architecture = platform.machine().lower()
-    system = platform.system().lower()
-    if system == "darwin":
-        system = "macos"
-        if architecture in {"arm64", "aarch64"}:
-            architecture = "arm64"
-    native_name = f"serein-{system}-{architecture}-{VERSION}-unsigned.tar.gz"
-    native_files: list[tuple[pathlib.Path, str]] = []
-    for binary in ("serein", "serein-host"):
-        source = ROOT / "target/release" / binary
-        if not source.is_file():
-            raise SystemExit(f"Missing {source}; build the release binaries first.")
-        native_files.append((source, f"serein/{binary}"))
-    model = ROOT / "models/pack"
-    required_model_files = (
-        "manifest.json",
-        "tokenizer.json",
-        "weights.i8",
-        "scales.f32",
-        "LICENSE-2.0.txt",
-        "NOTICE.md",
-    )
-    missing_model_files = [name for name in required_model_files if not (model / name).is_file()]
-    if missing_model_files:
-        raise SystemExit(f"Model pack is incomplete: {', '.join(missing_model_files)}")
-    for source in sorted(model.rglob("*")):
-        relative = source.relative_to(model)
-        if source.is_file() and not source.is_symlink() and relative.name != "parity.json" and not excluded(relative):
-            native_files.append((source, (pathlib.PurePosixPath("serein/model") / relative).as_posix()))
-    for name in ("README.md", "LICENSE"):
-        native_files.append((ROOT / name, f"serein/{name}"))
     skill_root = ROOT / "skills/serein-context"
-    if not (skill_root / "SKILL.md").is_file():
-        raise SystemExit("The Serein skill entry point is missing.")
-    for source in sorted(skill_root.rglob("*")):
-        relative = source.relative_to(skill_root)
-        if source.is_file() and not source.is_symlink() and not excluded(relative):
-            native_files.append((source, (pathlib.PurePosixPath("serein/skill") / relative).as_posix()))
-    dependency_licenses = ROOT / "release/dependency-licenses"
-    if not dependency_licenses.is_dir():
-        raise SystemExit("Third-party dependency license files are missing.")
-    for source in sorted(dependency_licenses.rglob("*")):
-        relative = source.relative_to(dependency_licenses)
-        if source.is_file() and not source.is_symlink() and not excluded(relative):
-            native_files.append((source, (pathlib.PurePosixPath("serein/dependency-licenses") / relative).as_posix()))
-    inventory = ROOT / "docs/THIRD_PARTY_LICENSES.json"
-    if not inventory.is_file():
-        raise SystemExit("The third-party license inventory is missing.")
-    native_files.append((inventory, "serein/THIRD_PARTY_LICENSES.json"))
-    native_artifact = OUT / native_name
-    make_tar(native_artifact, native_files)
-    generated.append(native_artifact)
-
     skill_artifact = OUT / f"serein-skills-{VERSION}.zip"
     with zipfile.ZipFile(skill_artifact, "w", zipfile.ZIP_DEFLATED) as archive:
         for file in sorted(skill_root.rglob("*")):
@@ -360,7 +348,7 @@ def main() -> None:
     report = {
         "report_version": 1,
         "generated_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        "scope": "Source archive allowlist, browser extension bundles, native archive, and skill archive.",
+        "scope": "Source archive allowlist, browser extension bundles, and bundled skill runtime.",
         "source_allowlist": SOURCE_ALLOWLIST,
         "source_file_count_scanned": source_count,
         "excluded_source_file_counts": skipped,
@@ -378,8 +366,8 @@ def main() -> None:
         "limitations": [
             "This scan covers packaged source files and generated archives; it does not inspect Git history.",
             "A clean automated scan is not a substitute for reviewing the files and release notes.",
-            "The native binary contains only the current build machine's operating system and architecture.",
-            "Unsigned preview artifacts have platform and validation limits described in the test report.",
+            "The bundled helper currently supports macOS Apple silicon only.",
+            "Unsigned artifacts have platform and validation limits described in the test report.",
         ],
     }
     AUDIT_PATH.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
@@ -424,7 +412,7 @@ def main() -> None:
     )
     status = {
         "version": VERSION,
-        "distribution": "unsigned-public-preview",
+        "distribution": "unsigned-macos-arm64",
         "signed": False,
         "published": False,
         "publisher_key": None,

@@ -2,6 +2,7 @@
 """Verify skill handoff and owned local connection files in isolated directories."""
 
 import json
+import hashlib
 import os
 import pathlib
 import subprocess
@@ -79,6 +80,34 @@ with tempfile.TemporaryDirectory(
     )
     assert codex.read_text() == original_skill
 
+    # A release upgrade must replace our old host path without overwriting a
+    # registration the user has edited since its ownership receipt was written.
+    manifest_path = pathlib.Path(first["manifest"])
+    receipt_path = pathlib.Path(tmp) / "data/receipts/native-chrome.json"
+    old_manifest = json.loads(manifest_path.read_text())
+    old_manifest["path"] = str(pathlib.Path(tmp) / "previous-version/serein-host")
+    old_bytes = json.dumps(old_manifest).encode()
+    manifest_path.write_bytes(old_bytes)
+    receipt = json.loads(receipt_path.read_text())
+    receipt["sha256"] = hashlib.sha256(old_bytes).hexdigest()
+    receipt_path.write_text(json.dumps(receipt))
+    upgraded = run("setup", ticket)
+    installed_bytes = manifest_path.read_bytes()
+    assert json.loads(installed_bytes)["path"] != old_manifest["path"]
+    assert upgraded["database_path"] == first["database_path"]
+
+    customized = json.loads(installed_bytes)
+    customized["description"] = "User-managed registration"
+    customized_bytes = json.dumps(customized).encode()
+    manifest_path.write_bytes(customized_bytes)
+    try:
+        run("setup", ticket)
+        raise AssertionError("setup replaced a user-modified registration")
+    except subprocess.CalledProcessError as exc:
+        assert json.loads(exc.output)["error"]["code"] == "ACCESS_DENIED"
+    assert manifest_path.read_bytes() == customized_bytes
+    manifest_path.write_bytes(installed_bytes)
+
     result = run("uninstall", {"consent": True, "erase_vaults": False})
     assert codex.exists()
     assert connection.exists()
@@ -92,6 +121,8 @@ with tempfile.TemporaryDirectory(
             "setup does not copy a skill without explicit native installer request",
             "existing GitHub-installed SKILL.md is preserved",
             "local executable pointer is created and user edits are preserved",
+            "owned browser registration upgrades while retaining the vault",
+            "user-modified browser registration is preserved and rejected",
             "native manifest removed",
             "vault retained by explicit choice",
         ],

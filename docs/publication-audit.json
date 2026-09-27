@@ -1,7 +1,7 @@
 {
   "report_version": 1,
-  "generated_at_utc": "2026-09-27T14:34:07+00:00",
-  "scope": "Source archive allowlist, browser extension bundles, native archive, and skill archive.",
+  "generated_at_utc": "2026-09-27T15:29:08+00:00",
+  "scope": "Source archive allowlist, browser extension bundles, and bundled skill runtime.",
   "source_allowlist": [
     ".github/RELEASE_NOTES.md",
     ".github/workflows/ci.yml",
@@ -29,23 +29,21 @@
     "models/manifest.json",
     "models/pack"
   ],
-  "source_file_count_scanned": 367,
+  "source_file_count_scanned": 619,
   "excluded_source_file_counts": {
-    "generated_or_sensitive_name": 82
+    "generated_or_sensitive_name": 83
   },
   "generated_archives": {
-    "serein-chrome-0.1.0-beta.3-unsigned.zip": 14,
-    "serein-firefox-0.1.0-beta.3-unsigned.zip": 14,
-    "serein-macos-arm64-0.1.0-beta.3-unsigned.tar.gz": 255,
-    "serein-skills-0.1.0-beta.3.zip": 5,
-    "serein-source-0.1.0-beta.3.tar.gz": 367
+    "serein-chrome-0.1.0-unsigned.zip": 14,
+    "serein-firefox-0.1.0-unsigned.zip": 14,
+    "serein-skills-0.1.0.zip": 255,
+    "serein-source-0.1.0.tar.gz": 619
   },
   "excluded_archive_member_counts": {
-    "serein-chrome-0.1.0-beta.3-unsigned.zip": 0,
-    "serein-firefox-0.1.0-beta.3-unsigned.zip": 0,
-    "serein-macos-arm64-0.1.0-beta.3-unsigned.tar.gz": 0,
-    "serein-skills-0.1.0-beta.3.zip": 0,
-    "serein-source-0.1.0-beta.3.tar.gz": 0
+    "serein-chrome-0.1.0-unsigned.zip": 0,
+    "serein-firefox-0.1.0-unsigned.zip": 0,
+    "serein-skills-0.1.0.zip": 0,
+    "serein-source-0.1.0.tar.gz": 0
   },
   "automated_checks": {
     "private_key_marker": "passed",
@@ -59,7 +57,7 @@
   "limitations": [
     "This scan covers packaged source files and generated archives; it does not inspect Git history.",
     "A clean automated scan is not a substitute for reviewing the files and release notes.",
-    "The native binary contains only the current build machine's operating system and architecture.",
-    "Unsigned preview artifacts have platform and validation limits described in the test report."
+    "The bundled helper currently supports macOS Apple silicon only.",
+    "Unsigned artifacts have platform and validation limits described in the test report."
   ]
 }

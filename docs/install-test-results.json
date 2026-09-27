@@ -4,6 +4,8 @@
     "setup does not copy a skill without explicit native installer request",
     "existing GitHub-installed SKILL.md is preserved",
     "local executable pointer is created and user edits are preserved",
+    "owned browser registration upgrades while retaining the vault",
+    "user-modified browser registration is preserved and rejected",
     "native manifest removed",
     "vault retained by explicit choice"
   ],

@@ -5,15 +5,15 @@
     "wrong caller denied",
     "save ACK",
     "retry idempotent",
-    "bounded lexical recall",
+    "bounded recall",
     "forget + replay tombstone",
     "native malformed frames",
     "host exits within 2s"
   ],
   "status_latency_ms": {
-    "median": 5.096146021969616,
-    "p95": 5.318917101249099
+    "median": 5.050083389505744,
+    "p95": 5.522500025108457
   },
   "browser_invocation": "not tested: native process harness only",
-  "semantic_model": "absent; explicit lexical fallback"
+  "semantic_model": "installed model pack"
 }

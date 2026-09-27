@@ -27,6 +27,8 @@ export interface State {
   lastError?: string;
   dropped: number;
   retry: number;
+  retryAt?: number;
+  batchSince?: number;
   lastStatus?: Record<string, any>;
   pauseUntil?: number;
 }

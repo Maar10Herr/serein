@@ -1,6 +1,6 @@
 # Build Serein
 
-The release includes browser extensions and a macOS Apple silicon runtime. Build from source for development or another platform.
+The release includes browser extensions and a skill with the macOS Apple silicon runtime. Source builds on other platforms are possible, but this release does not package or validate them.
 
 You need Rust, Node.js, pnpm, and Python 3. The included model pack is ready to use; rebuilding the model also requires NumPy and tokenizers.
 
@@ -14,11 +14,12 @@ pnpm --dir apps/extension build
 pnpm --dir apps/extension build:firefox
 cargo test --workspace --release
 cargo build --workspace --release
+python3 tools/bundle_skill.py
 python3 tools/check_contracts.py
 python3 tools/package.py
 ```
 
-Extension builds are in `apps/extension/.output/`. Packaging writes distribution archives and `SHA256SUMS` to `release/` and scans them for local paths, tokens, and temporary files. The native archive contains the executable for the machine on which you build it.
+Extension builds are in `apps/extension/.output/`. `tools/bundle_skill.py` copies the release binaries, model, and dependency notices into the installable skill and writes runtime checksums. Packaging verifies the bundled version and checksums before writing the extension, skill, and source archives to `release/`. It scans them for local paths, tokens, and temporary files.
 
 Set `SEREIN_SKILL_REPOSITORY` before building the extension and native runtime so both point to the published skill. `RUSTFLAGS` removes local filesystem paths from the binaries; packaging checks for them.
 

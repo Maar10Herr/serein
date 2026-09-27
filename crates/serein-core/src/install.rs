@@ -358,9 +358,7 @@ pub fn setup(root: &Path, s: Setup) -> Result<Value> {
     let manifest = register_host(root, &c, &host)?;
     let owned = json!({"path":manifest,"sha256":hash(&fs::read(&manifest)?),"browser":c.browser});
     atomic(
-        &root
-            .join("receipts")
-            .join(format!("native-{}.json", c.browser)),
+        &root.join("receipts").join(format!("native-{}.json", c.browser)),
         &serde_json::to_vec_pretty(&owned)?,
     )?;
     r.connections.retain(|x| x.source_id != c.source_id);
@@ -378,7 +376,7 @@ pub fn setup(root: &Path, s: Setup) -> Result<Value> {
     let adapters = inspect_adapters(root)?["adapters"].clone();
     let skill_installation = skill_result["skill_installation"].clone();
     Ok(
-        json!({"status":"ok","next":"Click Verify connection in the extension.","database_path":db_path(root,&c),"manifest":manifest,"selected_adapters":c.adapters,"adapters":adapters,"connections":skill_result["connections"],"skill_installation":skill_installation}),
+        json!({"status":"ok","next":"Return to the extension; it will connect automatically.","database_path":db_path(root,&c),"manifest":manifest,"selected_adapters":c.adapters,"adapters":adapters,"connections":skill_result["connections"],"skill_installation":skill_installation}),
     )
 }
 fn register_host(root: &Path, c: &Connection, host: &Path) -> Result<PathBuf> {
@@ -422,8 +420,12 @@ fn register_host(root: &Path, c: &Connection, host: &Path) -> Result<PathBuf> {
             .collect::<Vec<_>>())
     }
     if path.exists() {
+        if fs::symlink_metadata(&path)?.file_type().is_symlink() {
+            return Err(Error("ACCESS_DENIED", "Refusing a symlink native registration.".into()));
+        }
         let v: Value = serde_json::from_slice(&fs::read(&path)?)?;
-        if v["name"] != "com.serein.context" || v["path"] != json!(host) {
+        let previous_owned = owned_registration(root, &path, &c.browser);
+        if v != manifest && !previous_owned {
             return Err(Error(
                 "ACCESS_DENIED",
                 "A different native registration exists; inspect before replacing.".into(),
@@ -460,6 +462,34 @@ fn register_host(root: &Path, c: &Connection, host: &Path) -> Result<PathBuf> {
         }
     }
     Ok(path)
+}
+fn owned_registration(root: &Path, path: &Path, browser: &str) -> bool {
+    let receipt = fs::read(root.join("receipts").join(format!("native-{browser}.json")))
+        .ok()
+        .and_then(|bytes| serde_json::from_slice::<Value>(&bytes).ok());
+    let bytes = fs::read(path).ok();
+    receipt.zip(bytes).is_some_and(|(receipt, bytes)| {
+        receipt["path"] == json!(path)
+            && receipt["sha256"].as_str() == Some(hash(&bytes).as_str())
+    })
+}
+#[cfg(test)]
+mod registration_tests {
+    use super::*;
+
+    #[test]
+    fn old_owned_manifest_can_upgrade_but_modified_manifest_cannot() {
+        let temp = tempfile::tempdir().unwrap();
+        let root = temp.path().join("data");
+        let path = temp.path().join("com.serein.context.json");
+        fs::create_dir_all(root.join("receipts")).unwrap();
+        fs::write(&path, br#"{"name":"com.serein.context","path":"old-host"}"#).unwrap();
+        let receipt = json!({"path":path,"sha256":hash(&fs::read(&path).unwrap())});
+        fs::write(root.join("receipts/native-firefox.json"), serde_json::to_vec(&receipt).unwrap()).unwrap();
+        assert!(owned_registration(&root, &path, "firefox"));
+        fs::write(&path, br#"{"name":"com.serein.context","path":"user-host"}"#).unwrap();
+        assert!(!owned_registration(&root, &path, "firefox"));
+    }
 }
 pub fn adapter_path(root: &Path, name: &str) -> Result<PathBuf> {
     let home = user_home()?;

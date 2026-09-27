@@ -1,6 +1,6 @@
 # Security model
 
-This page records the security boundary required by the build specification. It is not a security audit or a claim that every control is implemented. Current implementation, integration, and executed-test status belongs in [STATE.md](STATE.md) and [TEST_REPORT.md](TEST_REPORT.md).
+This page describes Serein's security boundaries. See the [test report](TEST_REPORT.md) for verified behavior and remaining limits. Serein has not undergone an independent security audit.
 
 ## Boundaries and untrusted input
 
@@ -12,7 +12,7 @@ Assistant integrations receive only the bounded context returned for an explicit
 
 ## Storage, logs, and deletion
 
-Use user-only directory and file permissions where the platform supports them and rely on normal OS account protections. Do not claim encryption at rest unless it is implemented and tested. The beta does not promise protection from malware or another process running as the same user.
+Use user-only directory and file permissions where the platform supports them and rely on normal OS account protections. The database is not encrypted at rest. Serein does not protect it from malware or another process running as the same user.
 
 Default diagnostics are metadata-only. Raw URLs, titles, queries, and full context packets must stay out of crash reports and CI artifacts. Any opt-in debug export must show a preview before writing. Do not add analytics or telemetry.
 

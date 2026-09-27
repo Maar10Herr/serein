@@ -1052,8 +1052,7 @@ const uiEn = {
   "context.semanticUnavailable":
     "Lexical index active. A verified semantic model pack is not installed; multilingual semantic recall is not enabled.",
   "context.semanticEnabled": "Semantic indexing is available.",
-  "connections.readyDescription":
-    "Your local connection is ready. Assistant execution is tested separately.",
+  "connections.readyDescription": "Your browser is linked. Your local assistant can now use Serein.",
   "connections.getStartedDescription":
     "A more helpful assistant starts with a little context.",
   "connections.localControlTitle": "Local by design. Yours to control.",
@@ -1068,40 +1067,29 @@ const uiEn = {
   "connections.filterLimitShort":
     "Automatic filters cannot detect every sensitive page. For stricter control, use Only selected sites.",
   "connections.chooseAssistants": "Choose your AI assistants",
-  "connections.executionNotTested": "Installed · execution not tested",
-  "connections.localExecutionRequired": "Local execution required",
-  "connections.remoteLimit":
-    "Remote, hosted, and isolated sessions cannot access this device’s vault. Serein does not change assistant sandbox permissions.",
+  "connections.executionNotTested": "Skill detected",
+  "connections.localExecutionRequired": "Use on this Mac",
+  "connections.remoteLimit": "Use an assistant running on this Mac.",
   "connections.connectLocally": "Connect locally",
   "connections.installSkill": "Install the Serein skill",
-  "connections.skillInstallDetails":
-    "Use the Skills CLI to install the GitHub-hosted skill into the locations recognized by compatible assistants. Local browser pairing is a separate step.",
-  "connections.skillGlobalNote":
-    "This command installs the skill globally for the selected assistants. It does not configure the local browser helper.",
-  "connections.installDuringSetup":
-    "Install the GitHub skill for these assistants when local setup runs",
-  "connections.copySkillCommand": "Copy Skills CLI command",
-  "connections.skillCommandCopied": "Skills CLI command copied.",
+  "connections.setupSteps": "Install the skill and link it to this browser",
+  "connections.linkAnother": "Link another assistant",
+  "connections.skillInstallDetails": "Use your assistant’s skill installer to install the GitHub skill. The helper and reader are included.",
+  "connections.skillGlobalNote": "The skill installs for the selected assistant. Link it to this browser next.",
+  "connections.copySkillCommand": "Copy install request",
+  "connections.skillInstallPrompt": "Install the serein-context skill from {repository} using your native skill installer. Copy the complete skill folder, including its scripts and runtime assets. Do not run setup yet; I will link it to the extension next.",
+  "connections.skillCommandCopied": "Installation instructions copied.",
   "connections.skillSourceUnconfigured":
     "This build has no public GitHub skill source configured. No files or skill directory setup are needed; the install command will appear once the repository is configured.",
-  "connections.skillSelectTarget":
-    "Select at least one named assistant above to prepare its Skills CLI install. The generic local executor has no named Skills CLI target.",
-  "connections.helperSeparateFromSkill":
-    "The browser helper runs only to store or retrieve context, then exits. This setup registers it for this browser and links it with any selected skill already installed by the Skills CLI.",
+  "connections.helperSeparateFromSkill": "The skill contains the helper. Linking registers it for this browser, then Serein checks the connection automatically.",
   "connections.connectedBrowser": "Connected to this browser",
   "connections.helperTitle": "One small helper. No always-on service.",
-  "connections.helperDetails":
-    "The native helper runs only to save or recall context, then exits. Setup registers it for this browser; GitHub skill installation is a separate step below.",
+  "connections.helperDetails": "Copy the link instruction into the local assistant where you installed the skill. Serein connects automatically when setup finishes.",
   "connections.reviewInstructions": "Review copied instructions",
-  "connections.developmentBuild":
-    "Local native-helper setup · agent skill installation is shown separately.",
   "connections.advancedVault": "Advanced · your local vault",
   "connections.actualDatabasePath": "Actual database path",
   "connections.copyDatabasePath": "Copy database path",
   "connections.databasePathCopied": "Database path copied.",
-  "connections.retestLocal": "Retest local connection",
-  "connections.verifyConnection": "Verify connection",
-  "connections.localConnectionVerified": "Local connection verified.",
   "privacy.pageDescription": "You choose what is saved, and when it is shared.",
   "privacy.captureDescription":
     "Only permitted metadata from foreground, non-private tabs.",
@@ -1154,7 +1142,7 @@ const uiEn = {
   "about.quieterContext": "A quieter kind of context.",
   "about.description":
     "Serein remembers the useful pieces, so you can pick up where you left off.",
-  "about.developmentVersion": "0.1.0-beta.3 · development",
+  "about.developmentVersion": "0.1.0",
   "about.filesAtRest": "Files at rest. Programs on demand.",
   "about.filesDescription":
     "Serein uses your browser’s tab metadata, a short-lived native helper, and a local SQLite vault. There is no resident Serein service, cloud sync, or telemetry.",
@@ -1192,17 +1180,8 @@ const uiEn = {
   "modal.eraseAndPause": "Erase and pause",
   "modal.forgetObservation": "Forget observation",
   "modal.savedEvidenceRemoved": "Saved evidence removed.",
-  "setup.assistantInstructions":
-    "{skillStep}\n\nSet up my local Serein browser helper. I have an extracted or built Serein runtime. Keep the serein and serein-host executables in the same folder; ask me for that folder's path if needed. After reviewing the local setup, pass the included JSON to serein setup --request-stdin --json via stdin, without shell interpolation. Then ask me to click Verify connection in the extension.\n\n{ticket}",
-  "setup.skillStepEnabled":
-    "The user explicitly enabled GitHub skill installation in this setup ticket. Let serein setup run the configured Skills CLI installer for the selected named assistants, then link their installed skill to the local browser helper. Do not copy or create skill files manually.",
-  "setup.skillStepManual":
-    "Keep skill installation separate from browser helper setup. If requested, use the Skills CLI command shown in Connections to install the GitHub skill; do not copy files into a skill directory manually.",
-  "setup.skillStepUnconfigured":
-    "This extension build has no GitHub skill repository configured. Set up the local browser helper only; do not invent a repository URL or copy skill files manually.",
-  "setup.skillStepNoTargets":
-    "The GitHub source is configured. Select a named assistant above to prepare a Skills CLI command. The generic local executor has no named Skills CLI target.",
-  "setup.copyInstructions": "Copy local helper setup instructions",
+  "setup.assistantInstructions": "Link my installed Serein skill to this browser. Find the installed serein-context skill folder containing SKILL.md. On this Mac, run its scripts/connect.sh with sh, passing only the JSON ticket below on standard input. Do not put the ticket in a shell argument, command string, or remote service. The script finds the bundled helper and model. Do not ask me for a runtime path or download one. Serein checks the connection automatically. Report the setup result and whether the skill is usable.\n\n{ticket}",
+  "setup.copyInstructions": "Copy link instruction",
   "setup.instructionsPasteHint": "Paste them into your local assistant.",
 } as const;
 
@@ -1258,8 +1237,7 @@ const uiDe = {
   "context.semanticUnavailable":
     "Lexikalischer Index aktiv. Ein geprüftes semantisches Modellpaket ist nicht installiert; mehrsprachiger semantischer Abruf ist nicht aktiviert.",
   "context.semanticEnabled": "Semantische Indexierung ist verfügbar.",
-  "connections.readyDescription":
-    "Die lokale Verbindung ist bereit. Die Ausführung der Assistenten wird separat getestet.",
+  "connections.readyDescription": "Dein Browser ist verbunden. Dein lokaler Assistent kann Serein jetzt verwenden.",
   "connections.getStartedDescription":
     "Ein hilfreicherer Assistent beginnt mit etwas Kontext.",
   "connections.localControlTitle": "Lokal. Unter deiner Kontrolle.",
@@ -1274,40 +1252,29 @@ const uiDe = {
   "connections.filterLimitShort":
     "Automatische Filter erkennen nicht jede sensible Seite. Für strengere Kontrolle verwende nur ausgewählte Websites.",
   "connections.chooseAssistants": "Wähle deine KI-Assistenten",
-  "connections.executionNotTested": "Installiert · Ausführung nicht getestet",
-  "connections.localExecutionRequired": "Lokale Ausführung erforderlich",
-  "connections.remoteLimit":
-    "Remote-, gehostete und isolierte Sitzungen können nicht auf diesen Tresor zugreifen. Serein ändert keine Sandbox-Berechtigungen der Assistenten.",
+  "connections.executionNotTested": "Skill erkannt",
+  "connections.localExecutionRequired": "Auf diesem Mac verwenden",
+  "connections.remoteLimit": "Verwende einen Assistenten auf diesem Mac.",
   "connections.connectLocally": "Lokal verbinden",
   "connections.installSkill": "Serein-Skill installieren",
-  "connections.skillInstallDetails":
-    "Installiere den GitHub-Skill mit der Skills CLI in den Verzeichnissen, die kompatible Assistenten erkennen. Die lokale Browserverbindung ist ein eigener Schritt.",
-  "connections.skillGlobalNote":
-    "Dieser Befehl installiert den Skill global für die ausgewählten Assistenten. Er richtet den lokalen Browserhelfer nicht ein.",
-  "connections.installDuringSetup":
-    "GitHub-Skill für diese Assistenten während der lokalen Einrichtung installieren",
-  "connections.copySkillCommand": "Skills-CLI-Befehl kopieren",
-  "connections.skillCommandCopied": "Skills-CLI-Befehl kopiert.",
+  "connections.setupSteps": "Skill installieren und mit diesem Browser verbinden",
+  "connections.linkAnother": "Weiteren Assistenten verbinden",
+  "connections.skillInstallDetails": "Installiere den GitHub-Skill mit dem Skill-Installer deines Assistenten. Helfer und Leser sind enthalten.",
+  "connections.skillGlobalNote": "Der Skill wird für den gewählten Assistenten installiert. Verbinde ihn danach mit diesem Browser.",
+  "connections.copySkillCommand": "Installationsanfrage kopieren",
+  "connections.skillInstallPrompt": "Installiere den Skill serein-context von {repository} mit deinem Skill-Installer. Kopiere den gesamten Skill-Ordner einschließlich Skripten und Laufzeitdateien. Führe die Einrichtung noch nicht aus; danach verbinde ich ihn mit der Erweiterung.",
+  "connections.skillCommandCopied": "Installationsanweisung kopiert.",
   "connections.skillSourceUnconfigured":
     "Für diesen Build ist keine öffentliche GitHub-Skillquelle konfiguriert. Dateien oder Skill-Verzeichnisse müssen nicht manuell eingerichtet werden. Der Installationsbefehl erscheint, sobald das Repository konfiguriert ist.",
-  "connections.skillSelectTarget":
-    "Wähle oben mindestens einen benannten Assistenten aus, um dessen Skills-CLI-Installation vorzubereiten. Der allgemeine lokale Executor hat kein benanntes Skills-CLI-Ziel.",
-  "connections.helperSeparateFromSkill":
-    "Der Browserhelfer läuft nur zum Speichern oder Abrufen von Kontext und wird danach beendet. Diese Einrichtung registriert ihn für den Browser und verknüpft ihn mit bereits per Skills CLI installierten ausgewählten Skills.",
+  "connections.helperSeparateFromSkill": "Der Helfer ist im Skill enthalten. Beim Verbinden wird er für diesen Browser registriert; Serein prüft die Verbindung automatisch.",
   "connections.connectedBrowser": "Mit diesem Browser verbunden",
   "connections.helperTitle": "Ein kleiner Helfer. Kein dauerhafter Dienst.",
-  "connections.helperDetails":
-    "Der native Helfer läuft nur zum Speichern oder Abrufen von Kontext und wird danach beendet. Die Einrichtung registriert ihn für diesen Browser; der GitHub-Skill wird unten separat installiert.",
+  "connections.helperDetails": "Kopiere die Verbindungsanweisung in den lokalen Assistenten, in dem du den Skill installiert hast. Serein verbindet sich nach der Einrichtung automatisch.",
   "connections.reviewInstructions": "Kopierte Anweisungen prüfen",
-  "connections.developmentBuild":
-    "Lokale Einrichtung des nativen Helfers · die Skill-Installation wird separat angezeigt.",
   "connections.advancedVault": "Erweitert · dein lokaler Tresor",
   "connections.actualDatabasePath": "Tatsächlicher Datenbankpfad",
   "connections.copyDatabasePath": "Datenbankpfad kopieren",
   "connections.databasePathCopied": "Datenbankpfad kopiert.",
-  "connections.retestLocal": "Lokale Verbindung erneut testen",
-  "connections.verifyConnection": "Verbindung bestätigen",
-  "connections.localConnectionVerified": "Lokale Verbindung bestätigt.",
   "privacy.pageDescription":
     "Du entscheidest, was gespeichert und wann es geteilt wird.",
   "privacy.captureDescription":
@@ -1364,7 +1331,7 @@ const uiDe = {
   "about.quieterContext": "Eine ruhigere Art von Kontext.",
   "about.description":
     "Serein merkt sich Nützliches, damit du dort weitermachen kannst, wo du aufgehört hast.",
-  "about.developmentVersion": "0.1.0-beta.3 · Entwicklung",
+  "about.developmentVersion": "0.1.0",
   "about.filesAtRest": "Dateien ruhen. Programme starten bei Bedarf.",
   "about.filesDescription":
     "Serein nutzt Tab-Metadaten deines Browsers, einen kurzlebigen nativen Helfer und einen lokalen SQLite-Tresor. Es gibt keinen dauerhaften Serein-Dienst, keine Cloud-Synchronisierung und keine Telemetrie.",
@@ -1404,17 +1371,8 @@ const uiDe = {
   "modal.eraseAndPause": "Löschen und pausieren",
   "modal.forgetObservation": "Beobachtung vergessen",
   "modal.savedEvidenceRemoved": "Gespeicherte Belege entfernt.",
-  "setup.assistantInstructions":
-    "{skillStep}\n\nRichte meinen lokalen Serein-Browserhelfer ein. Ich habe eine entpackte oder gebaute Serein-Laufzeitumgebung. Lege die ausführbaren Dateien serein und serein-host in denselben Ordner. Falls du den Pfad benötigst, frage mich danach. Prüfe die lokale Einrichtung und übergib das enthaltene JSON über die Standardeingabe an serein setup --request-stdin --json, ohne Shell-Interpolation. Bitte mich anschließend, in der Erweiterung auf Verbindung verifizieren zu klicken.\n\n{ticket}",
-  "setup.skillStepEnabled":
-    "Der Nutzer hat die Installation des GitHub-Skills in diesem Einrichtungsticket ausdrücklich aktiviert. Lass serein setup den konfigurierten Skills-CLI-Installer für die ausgewählten benannten Assistenten ausführen und verknüpfe danach deren installierten Skill mit dem lokalen Browserhelfer. Skill-Dateien nicht manuell kopieren oder erstellen.",
-  "setup.skillStepManual":
-    "Halte die Skill-Installation getrennt von der Einrichtung des Browserhelfers. Verwende bei Bedarf den in Verbindungen angezeigten Skills-CLI-Befehl, um den GitHub-Skill zu installieren. Kopiere keine Dateien manuell in ein Skill-Verzeichnis.",
-  "setup.skillStepUnconfigured":
-    "Für diesen Erweiterungsbuild ist kein GitHub-Skill-Repository konfiguriert. Richte nur den lokalen Browserhelfer ein. Erfinde keine Repository-URL und kopiere keine Skill-Dateien manuell.",
-  "setup.skillStepNoTargets":
-    "Die GitHub-Quelle ist konfiguriert. Wähle oben einen benannten Assistenten aus, um einen Skills-CLI-Befehl vorzubereiten. Der allgemeine lokale Executor hat kein benanntes Skills-CLI-Ziel.",
-  "setup.copyInstructions": "Anleitung für den lokalen Helfer kopieren",
+  "setup.assistantInstructions": "Verbinde meinen installierten Serein-Skill mit diesem Browser. Finde den installierten Skill-Ordner serein-context mit SKILL.md. Führe auf diesem Mac scripts/connect.sh aus diesem Ordner mit sh aus und übergib nur das JSON-Ticket unten über die Standardeingabe. Gib das Ticket nicht als Shell-Argument oder an einen entfernten Dienst weiter. Das Skript findet Helfer und Modell selbst. Frage mich nicht nach einem Laufzeitpfad und lade keine separate Laufzeit herunter. Serein prüft die Verbindung automatisch. Melde das Ergebnis und ob der Skill nutzbar ist.\n\n{ticket}",
+  "setup.copyInstructions": "Verbindungsanweisung kopieren",
   "setup.instructionsPasteHint": "Füge sie in deinen lokalen Assistenten ein.",
 } satisfies Record<UiKey, string>;
 
@@ -1470,8 +1428,7 @@ const uiNl = {
   "context.semanticUnavailable":
     "Lexicale index actief. Er is geen geverifieerd semantisch modelpakket geïnstalleerd; meertalisch semantisch ophalen is niet ingeschakeld.",
   "context.semanticEnabled": "Semantische indexering is beschikbaar.",
-  "connections.readyDescription":
-    "Je lokale verbinding is klaar. Assistentuitvoering wordt afzonderlijk getest.",
+  "connections.readyDescription": "Je browser is gekoppeld. Je lokale assistent kan Serein nu gebruiken.",
   "connections.getStartedDescription":
     "Een behulpzamere assistent begint met een beetje context.",
   "connections.localControlTitle": "Lokaal ontworpen. Jij houdt de controle.",
@@ -1486,40 +1443,29 @@ const uiNl = {
   "connections.filterLimitShort":
     "Automatische filters kunnen niet elke gevoelige pagina herkennen. Gebruik Alleen geselecteerde sites voor strengere controle.",
   "connections.chooseAssistants": "Kies je AI-assistenten",
-  "connections.executionNotTested": "Geïnstalleerd · uitvoering niet getest",
-  "connections.localExecutionRequired": "Lokale uitvoering vereist",
-  "connections.remoteLimit":
-    "Externe, gehoste en geïsoleerde sessies hebben geen toegang tot deze kluis. Serein wijzigt de sandboxrechten van assistenten niet.",
+  "connections.executionNotTested": "Skill gevonden",
+  "connections.localExecutionRequired": "Gebruik op deze Mac",
+  "connections.remoteLimit": "Gebruik een assistent op deze Mac.",
   "connections.connectLocally": "Lokaal verbinden",
   "connections.installSkill": "De Serein-skill installeren",
-  "connections.skillInstallDetails":
-    "Gebruik de Skills CLI om de GitHub-skill te installeren op de locaties die compatibele assistenten herkennen. De lokale browserverbinding is een aparte stap.",
-  "connections.skillGlobalNote":
-    "Deze opdracht installeert de skill globaal voor de geselecteerde assistenten. De lokale browserhulp wordt hiermee niet ingesteld.",
-  "connections.installDuringSetup":
-    "Installeer de GitHub-skill voor deze assistenten tijdens de lokale installatie",
-  "connections.copySkillCommand": "Skills CLI-opdracht kopiëren",
-  "connections.skillCommandCopied": "Skills CLI-opdracht gekopieerd.",
+  "connections.setupSteps": "Installeer de skill en koppel deze browser",
+  "connections.linkAnother": "Nog een assistent koppelen",
+  "connections.skillInstallDetails": "Installeer de GitHub-skill met de skillinstaller van je assistent. De helper en lezer zitten erbij.",
+  "connections.skillGlobalNote": "De skill wordt voor je gekozen assistent geïnstalleerd. Koppel daarna deze browser.",
+  "connections.copySkillCommand": "Installatieverzoek kopiëren",
+  "connections.skillInstallPrompt": "Installeer de skill serein-context vanaf {repository} met je eigen skillinstaller. Kopieer de volledige skillmap, inclusief scripts en runtimebestanden. Voer de configuratie nog niet uit; daarna koppel ik hem aan de extensie.",
+  "connections.skillCommandCopied": "Installatie-instructies gekopieerd.",
   "connections.skillSourceUnconfigured":
     "Voor deze build is geen openbare GitHub-skillbron ingesteld. Bestanden of een skillmap hoef je niet handmatig te beheren; de installatieopdracht verschijnt zodra de repository is ingesteld.",
-  "connections.skillSelectTarget":
-    "Selecteer hierboven minstens één benoemde assistent om de Skills CLI-installatie voor te bereiden. De generieke lokale uitvoerder heeft geen benoemd Skills CLI-doel.",
-  "connections.helperSeparateFromSkill":
-    "De browserhulp draait alleen om context op te slaan of op te halen en sluit daarna af. Deze installatie registreert de hulp voor deze browser en koppelt die aan geselecteerde skills die al met de Skills CLI zijn geïnstalleerd.",
+  "connections.helperSeparateFromSkill": "De skill bevat de helper. Bij het koppelen wordt die voor deze browser geregistreerd; Serein controleert de verbinding automatisch.",
   "connections.connectedBrowser": "Verbonden met deze browser",
   "connections.helperTitle": "Eén kleine hulp. Geen blijvende dienst.",
-  "connections.helperDetails":
-    "De native hulp draait alleen om context op te slaan of op te halen en sluit daarna af. De installatie registreert deze voor de browser; de GitHub-skill wordt hieronder apart geïnstalleerd.",
+  "connections.helperDetails": "Kopieer de koppelinstructie naar de lokale assistent waarin je de skill hebt geïnstalleerd. Serein maakt automatisch verbinding zodra de installatie klaar is.",
   "connections.reviewInstructions": "Gekopieerde instructies bekijken",
-  "connections.developmentBuild":
-    "Lokale installatie van de native hulp · de skillinstallatie wordt apart getoond.",
   "connections.advancedVault": "Geavanceerd · je lokale kluis",
   "connections.actualDatabasePath": "Werkelijk databasepad",
   "connections.copyDatabasePath": "Databasepad kopiëren",
   "connections.databasePathCopied": "Databasepad gekopieerd.",
-  "connections.retestLocal": "Lokale verbinding opnieuw testen",
-  "connections.verifyConnection": "Verbinding verifiëren",
-  "connections.localConnectionVerified": "Lokale verbinding geverifieerd.",
   "privacy.pageDescription":
     "Jij bepaalt wat wordt opgeslagen en wanneer het wordt gedeeld.",
   "privacy.captureDescription":
@@ -1576,7 +1522,7 @@ const uiNl = {
   "about.quieterContext": "Een rustigere vorm van context.",
   "about.description":
     "Serein onthoudt de nuttige onderdelen, zodat je verder kunt waar je gebleven was.",
-  "about.developmentVersion": "0.1.0-beta.3 · ontwikkeling",
+  "about.developmentVersion": "0.1.0",
   "about.filesAtRest": "Bestanden in rust. Programma's op aanvraag.",
   "about.filesDescription":
     "Serein gebruikt tabmetadata van je browser, een kortstondige native hulp en een lokale SQLite-kluis. Er is geen blijvende Serein-dienst, cloudsynchronisatie of telemetrie.",
@@ -1615,17 +1561,8 @@ const uiNl = {
   "modal.eraseAndPause": "Wissen en pauzeren",
   "modal.forgetObservation": "Waarneming vergeten",
   "modal.savedEvidenceRemoved": "Opgeslagen bewijs verwijderd.",
-  "setup.assistantInstructions":
-    "{skillStep}\n\nRicht mijn lokale Serein-browserhulp in. Ik heb een uitgepakte of gebouwde Serein-runtime. Houd de uitvoerbare bestanden serein en serein-host in dezelfde map; vraag me om het pad naar die map als je dat nodig hebt. Beoordeel de lokale configuratie en geef de meegeleverde JSON via stdin door aan serein setup --request-stdin --json, zonder shellinterpolatie. Vraag me daarna om in de extensie op Verbinding verifiëren te klikken.\n\n{ticket}",
-  "setup.skillStepEnabled":
-    "De gebruiker heeft de installatie van de GitHub-skill in dit installatieticket uitdrukkelijk ingeschakeld. Laat serein setup de ingestelde Skills CLI-installer uitvoeren voor de geselecteerde benoemde assistenten en koppel daarna hun geïnstalleerde skill aan de lokale browserhulp. Kopieer of maak geen skillbestanden handmatig.",
-  "setup.skillStepManual":
-    "Houd de installatie van de skill gescheiden van de browserhulp. Gebruik desgewenst de Skills CLI-opdracht in Verbindingen om de GitHub-skill te installeren. Kopieer geen bestanden handmatig naar een skillmap.",
-  "setup.skillStepUnconfigured":
-    "Voor deze extensiebuild is geen GitHub-skillrepository ingesteld. Stel alleen de lokale browserhulp in; verzin geen repository-URL en kopieer geen skillbestanden handmatig.",
-  "setup.skillStepNoTargets":
-    "De GitHub-bron is ingesteld. Selecteer hierboven een benoemde assistent om een Skills CLI-opdracht voor te bereiden. De generieke lokale uitvoerder heeft geen benoemd Skills CLI-doel.",
-  "setup.copyInstructions": "Instructies voor lokale hulp kopiëren",
+  "setup.assistantInstructions": "Koppel mijn geïnstalleerde Serein-skill aan deze browser. Zoek de geïnstalleerde map serein-context met SKILL.md. Voer op deze Mac scripts/connect.sh uit die map uit met sh en geef alleen het JSON-ticket hieronder via standaardinvoer door. Zet het ticket niet in een shellargument of externe dienst. Het script vindt de helper en het model zelf. Vraag me niet om een runtimepad en download geen aparte runtime. Serein controleert de verbinding automatisch. Meld het resultaat en of de skill bruikbaar is.\n\n{ticket}",
+  "setup.copyInstructions": "Koppelinstructie kopiëren",
   "setup.instructionsPasteHint": "Plak ze in je lokale assistent.",
 } satisfies Record<UiKey, string>;
 
@@ -1670,7 +1607,7 @@ const uiZhCN = {
   "context.evidenceNote": "浏览活动只能说明发生过访问，不能证明存在偏好。只有经过你的更正，内容才会标记为已确认。",
   "context.semanticUnavailable": "语义索引未启用。尚未安装经过验证的语义模型包，因此不支持多语言语义检索。",
   "context.semanticEnabled": "语义索引可用。",
-  "connections.readyDescription": "本地连接已就绪。助手执行功能会单独测试。",
+  "connections.readyDescription": "浏览器已连接。本机助手现在可以使用 Serein。",
   "connections.getStartedDescription": "一点上下文，就能让助手更有帮助。",
   "connections.localControlTitle": "专为本地运行，始终由你掌控。",
   "connections.captureDetails": "Serein 会保存获准的标签页标题、网站名称、搜索词和粗略的前台活动信息。它不会读取网页内容。",
@@ -1680,31 +1617,28 @@ const uiZhCN = {
   "connections.recommendedExclusions": "建议排除的网站",
   "connections.filterLimitShort": "自动筛选无法识别所有敏感页面。如需更严格的控制，请选择“仅限指定网站”。",
   "connections.chooseAssistants": "选择 AI 助手",
-  "connections.executionNotTested": "已安装 · 尚未测试执行",
-  "connections.localExecutionRequired": "需要本地执行",
-  "connections.remoteLimit": "远程、托管和隔离会话无法访问此设备的本地库。Serein 不会更改助手的沙盒权限。",
+  "connections.executionNotTested": "已检测到技能",
+  "connections.localExecutionRequired": "在此 Mac 上使用",
+  "connections.remoteLimit": "请使用在此 Mac 上运行的助手。",
   "connections.connectLocally": "连接本地助手",
   "connections.installSkill": "安装 Serein 技能",
-  "connections.skillInstallDetails": "使用 Skills CLI 将托管在 GitHub 上的技能安装到兼容助手识别的位置。本地浏览器配对需要单独设置。",
-  "connections.skillGlobalNote": "此命令会为所选助手全局安装技能，但不会配置本地浏览器助手程序。",
-  "connections.installDuringSetup": "运行本地设置时，为这些助手安装 GitHub 技能",
-  "connections.copySkillCommand": "复制 Skills CLI 命令",
-  "connections.skillCommandCopied": "Skills CLI 命令已复制。",
+  "connections.setupSteps": "安装技能并连接此浏览器",
+  "connections.linkAnother": "连接其他助手",
+  "connections.skillInstallDetails": "使用助手的技能安装器安装 GitHub 技能。技能内含本地辅助程序和读取器。",
+  "connections.skillGlobalNote": "技能会安装到所选助手；下一步将它连接到此浏览器。",
+  "connections.copySkillCommand": "复制安装请求",
+  "connections.skillInstallPrompt": "请使用你的原生技能安装器从 {repository} 安装 serein-context 技能。复制完整的技能目录，包括脚本和运行时文件。暂时不要运行设置；下一步我会将它连接到扩展程序。",
+  "connections.skillCommandCopied": "安装说明已复制。",
   "connections.skillSourceUnconfigured": "此构建未配置公开的 GitHub 技能源。无需下载文件或手动设置技能目录；配置代码库后，此处会显示安装命令。",
-  "connections.skillSelectTarget": "请至少选择上方一个具名助手，以准备 Skills CLI 安装命令。通用本地执行器没有具名的 Skills CLI 目标。",
-  "connections.helperSeparateFromSkill": "浏览器助手程序仅在存储或检索上下文时运行，随后立即退出。此设置会为当前浏览器注册该程序，并与已通过 Skills CLI 安装的所选技能关联。",
+  "connections.helperSeparateFromSkill": "辅助程序包含在技能中。连接时会为此浏览器注册；Serein 随后自动检查连接。",
   "connections.connectedBrowser": "已连接到此浏览器",
   "connections.helperTitle": "轻量助手程序，无常驻服务。",
-  "connections.helperDetails": "本地助手程序仅在保存或检索上下文时运行，随后立即退出。设置会为此浏览器注册程序；GitHub 技能需在下方单独安装。",
+  "connections.helperDetails": "将连接说明粘贴到已安装此技能的本地助手中。设置完成后，Serein 会自动连接。",
   "connections.reviewInstructions": "检查已复制的说明",
-  "connections.developmentBuild": "本地助手程序设置 · 单独显示智能体技能安装选项。",
   "connections.advancedVault": "高级 · 你的本地库",
   "connections.actualDatabasePath": "实际数据库路径",
   "connections.copyDatabasePath": "复制数据库路径",
   "connections.databasePathCopied": "数据库路径已复制。",
-  "connections.retestLocal": "重新测试本地连接",
-  "connections.verifyConnection": "验证连接",
-  "connections.localConnectionVerified": "本地连接已验证。",
   "privacy.pageDescription": "由你决定保存哪些内容，以及何时共享。",
   "privacy.captureDescription": "仅采集符合条件的前台标签页元数据，不包括无痕窗口。",
   "privacy.recallDescription": "允许已连接的本地助手检索相关的已保存上下文。模型提供商可能会收到这些内容。",
@@ -1747,7 +1681,7 @@ const uiZhCN = {
   "storage.deletionLimit": "逻辑删除无法清除 SSD 残留、备份或已发送给助手模型提供商的上下文。达到存储上限后，已丢弃 {count} 个排队事件。",
   "about.quieterContext": "更安静、更从容的上下文。",
   "about.description": "Serein 会记住有用的信息，让你轻松接续之前的工作。",
-  "about.developmentVersion": "0.1.0-beta.3 · 开发版",
+  "about.developmentVersion": "0.1.0",
   "about.filesAtRest": "文件静态存储，程序按需运行。",
   "about.filesDescription": "Serein 使用浏览器标签页元数据、短时运行的本地助手程序和本地 SQLite 数据库。没有常驻服务、云同步或遥测。",
   "about.evidenceTitle": "先看证据，再作判断。",
@@ -1777,12 +1711,8 @@ const uiZhCN = {
   "modal.eraseAndPause": "删除并暂停",
   "modal.forgetObservation": "忘记记录",
   "modal.savedEvidenceRemoved": "已保存的证据已删除。",
-  "setup.assistantInstructions": "{skillStep}\n\n设置我的 Serein 本地浏览器助手程序。我有一个已解压或自行构建的 Serein 运行时。请将 serein 和 serein-host 可执行文件放在同一文件夹中；如需该文件夹的路径，请向我询问。检查本地设置后，将随附的 JSON 通过标准输入传给 serein setup --request-stdin --json，不要使用 shell 字符串插值。然后请提醒我在扩展中点击“验证连接”。\n\n{ticket}",
-  "setup.skillStepEnabled": "用户已在此设置请求中明确启用 GitHub 技能安装。让 serein setup 为所选的具名助手运行已配置的 Skills CLI 安装程序，然后将已安装的技能关联到本地浏览器助手程序。不要手动复制或创建技能文件。",
-  "setup.skillStepManual": "将技能安装与浏览器助手程序设置分开。如有需要，请使用“连接”中显示的 Skills CLI 命令安装 GitHub 技能；不要手动将文件复制到技能目录。",
-  "setup.skillStepUnconfigured": "此扩展构建未配置 GitHub 技能代码库。仅设置本地浏览器助手程序；不要猜测代码库网址，也不要手动复制技能文件。",
-  "setup.skillStepNoTargets": "已配置 GitHub 源。请在上方选择一个具名助手，以准备 Skills CLI 命令。通用本地执行器没有具名的 Skills CLI 目标。",
-  "setup.copyInstructions": "复制本地助手程序的设置说明",
+  "setup.assistantInstructions": "将已安装的 Serein 技能连接到此浏览器。找到包含 SKILL.md 的已安装 serein-context 技能目录。在这台 Mac 上用 sh 运行其中的 scripts/connect.sh，仅通过标准输入传入下面的 JSON 配对票据。不要将票据放入 shell 参数或远程服务。脚本会自行找到辅助程序和模型。不要向我询问运行时路径，也不要下载单独的运行时。Serein 会自动检查连接。请报告设置结果及技能是否可用。\n\n{ticket}",
+  "setup.copyInstructions": "复制连接说明",
   "setup.instructionsPasteHint": "将说明粘贴到你的本地助手中。",
 } satisfies Record<UiKey, string>;
 
@@ -1827,7 +1757,7 @@ const uiJa = {
   "context.evidenceNote": "閲覧履歴はアクティビティの証拠であり、好みを示すものではありません。あなたが修正するまで、情報が確認済みになることはありません。",
   "context.semanticUnavailable": "語句検索を利用できます。検証済みのセマンティックモデルパックが未インストールのため、多言語の意味検索は無効です。",
   "context.semanticEnabled": "セマンティック検索を利用できます。",
-  "connections.readyDescription": "ローカル接続は準備完了です。アシスタントの実行は別途テストされます。",
+  "connections.readyDescription": "ブラウザーを接続しました。この Mac のアシスタントで Serein を使用できます。",
   "connections.getStartedDescription": "少しのコンテキストが、アシスタントをより便利にします。",
   "connections.localControlTitle": "ローカルで動作し、操作はあなたの手元に。",
   "connections.captureDetails": "Serein は許可されたタブのタイトル、サイト名、検索語句、大まかなフォアグラウンド操作を保存します。ページの内容は読み取りません。",
@@ -1837,31 +1767,28 @@ const uiJa = {
   "connections.recommendedExclusions": "除外のおすすめ",
   "connections.filterLimitShort": "自動フィルターですべての機微なページを検出することはできません。より厳密に管理するには「選択したサイトのみ」を使用してください。",
   "connections.chooseAssistants": "AI アシスタントを選択",
-  "connections.executionNotTested": "インストール済み · 実行テスト未実施",
-  "connections.localExecutionRequired": "ローカル実行が必要です",
-  "connections.remoteLimit": "リモート、ホスト型、隔離されたセッションから、このデバイスの保管庫にはアクセスできません。Serein はアシスタントのサンドボックス権限を変更しません。",
+  "connections.executionNotTested": "スキルを検出しました",
+  "connections.localExecutionRequired": "この Mac で使用",
+  "connections.remoteLimit": "この Mac で動作するアシスタントを使用してください。",
   "connections.connectLocally": "ローカル接続",
   "connections.installSkill": "Serein スキルをインストール",
-  "connections.skillInstallDetails": "Skills CLI を使用すると、GitHub で公開されているスキルを互換性のあるアシスタントが認識する場所にインストールできます。ローカルブラウザーとのペアリングは別の手順です。",
-  "connections.skillGlobalNote": "このコマンドは選択したアシスタントにスキルをグローバルインストールします。ローカルブラウザーヘルパーは設定しません。",
-  "connections.installDuringSetup": "ローカルセットアップの実行時に、選択したアシスタントへ GitHub スキルをインストール",
-  "connections.copySkillCommand": "Skills CLI コマンドをコピー",
-  "connections.skillCommandCopied": "Skills CLI コマンドをコピーしました。",
+  "connections.setupSteps": "スキルをインストールしてブラウザーに接続",
+  "connections.linkAnother": "別のアシスタントを接続",
+  "connections.skillInstallDetails": "アシスタントのスキルインストーラーで GitHub のスキルをインストールします。ローカルヘルパーと読み取り機能も含まれます。",
+  "connections.skillGlobalNote": "選択したアシスタントにスキルをインストールします。次にこのブラウザーに接続します。",
+  "connections.copySkillCommand": "インストール依頼をコピー",
+  "connections.skillInstallPrompt": "標準のスキルインストーラーを使用して {repository} から serein-context スキルをインストールしてください。スクリプトとランタイムを含むスキルフォルダー全体をコピーしてください。設定はまだ実行せず、次に拡張機能へ接続します。",
+  "connections.skillCommandCopied": "インストール手順をコピーしました。",
   "connections.skillSourceUnconfigured": "このビルドでは GitHub の公開スキルソースが設定されていません。ファイルのダウンロードやスキルディレクトリの設定は不要です。リポジトリを設定すると、ここにインストールコマンドが表示されます。",
-  "connections.skillSelectTarget": "Skills CLI のインストールを準備するには、上から名前付きアシスタントを 1 つ以上選択してください。汎用ローカル実行ツールには名前付きの Skills CLI 対象がありません。",
-  "connections.helperSeparateFromSkill": "ブラウザーヘルパーはコンテキストの保存または取得時だけ実行され、その後終了します。この設定ではヘルパーをこのブラウザーに登録し、Skills CLI でインストール済みの選択したスキルと連携します。",
+  "connections.helperSeparateFromSkill": "ヘルパーはスキルに含まれます。接続時にこのブラウザーへ登録され、Serein が自動で接続を確認します。",
   "connections.connectedBrowser": "このブラウザーに接続済み",
   "connections.helperTitle": "小さなヘルパーを必要なときだけ実行。常駐サービスはありません。",
-  "connections.helperDetails": "ネイティブヘルパーはコンテキストの保存または取得時だけ実行され、その後終了します。セットアップでこのブラウザーに登録します。GitHub スキルのインストールは下で別途行います。",
+  "connections.helperDetails": "スキルをインストールしたローカルアシスタントに接続手順を貼り付けます。設定が完了すると Serein が自動接続します。",
   "connections.reviewInstructions": "コピーした手順を確認",
-  "connections.developmentBuild": "ローカルネイティブヘルパーの設定 · エージェントスキルのインストールは別に表示します。",
   "connections.advancedVault": "詳細 · ローカル保管庫",
   "connections.actualDatabasePath": "実際のデータベースパス",
   "connections.copyDatabasePath": "データベースパスをコピー",
   "connections.databasePathCopied": "データベースパスをコピーしました。",
-  "connections.retestLocal": "ローカル接続を再テスト",
-  "connections.verifyConnection": "接続を確認",
-  "connections.localConnectionVerified": "ローカル接続を確認しました。",
   "privacy.pageDescription": "何を保存し、いつ共有するかはあなたが決めます。",
   "privacy.captureDescription": "許可されたフォアグラウンドタブのメタデータのみ。プライベートタブは対象外です。",
   "privacy.recallDescription": "ローカル接続されたアシスタントが、関連する保存済みコンテキストを取得できるようにします。モデル提供元に送信される場合があります。",
@@ -1904,7 +1831,7 @@ const uiJa = {
   "storage.deletionLimit": "論理削除では SSD の残存データ、バックアップ、モデル提供元に送信済みのコンテキストは削除できません。ストレージ上限により、キュー内のイベント {count} 件を破棄しました。",
   "about.quieterContext": "控えめなコンテキスト。",
   "about.description": "Serein が役立つ情報を覚えておくので、前回の続きから始められます。",
-  "about.developmentVersion": "0.1.0-beta.3 · 開発版",
+  "about.developmentVersion": "0.1.0",
   "about.filesAtRest": "ファイルは保管し、プログラムは必要なときだけ実行。",
   "about.filesDescription": "Serein はブラウザーのタブメタデータ、短時間だけ動作するネイティブヘルパー、ローカル SQLite 保管庫を使用します。常駐サービス、クラウド同期、テレメトリーはありません。",
   "about.evidenceTitle": "思い込みより証拠を。",
@@ -1934,12 +1861,8 @@ const uiJa = {
   "modal.eraseAndPause": "削除して一時停止",
   "modal.forgetObservation": "記録を削除",
   "modal.savedEvidenceRemoved": "保存済みの証拠を削除しました。",
-  "setup.assistantInstructions": "{skillStep}\n\nSerein のローカルブラウザーヘルパーをセットアップします。展開済みまたはビルド済みの Serein ランタイムがあります。実行ファイル serein と serein-host は同じフォルダーに置いてください。フォルダーのパスが必要な場合は、私に尋ねてください。ローカルセットアップを確認したうえで、含まれている JSON を標準入力経由で serein setup --request-stdin --json に渡してください。シェル補間は使わないでください。その後、拡張機能で「接続を確認」をクリックするよう案内してください。\n\n{ticket}",
-  "setup.skillStepEnabled": "ユーザーはこのセットアップ依頼で GitHub スキルのインストールを明示的に有効にしました。serein setup に設定済みの Skills CLI インストーラーを実行させ、選択した名前付きアシスタントにスキルをインストールしてから、ローカルブラウザーヘルパーと連携させてください。スキルファイルを手動でコピーまたは作成しないでください。",
-  "setup.skillStepManual": "スキルのインストールとブラウザーヘルパーのセットアップは分けてください。必要に応じて「接続」に表示された Skills CLI コマンドを使って GitHub スキルをインストールしてください。スキルディレクトリにファイルを手動でコピーしないでください。",
-  "setup.skillStepUnconfigured": "この拡張機能のビルドには GitHub スキルリポジトリが設定されていません。ローカルブラウザーヘルパーだけをセットアップしてください。リポジトリ URL を推測したり、スキルファイルを手動でコピーしたりしないでください。",
-  "setup.skillStepNoTargets": "GitHub ソースは設定済みです。上から名前付きアシスタントを選択し、Skills CLI コマンドを準備してください。汎用ローカル実行ツールには名前付きの Skills CLI 対象がありません。",
-  "setup.copyInstructions": "ローカルヘルパーのセットアップ手順をコピー",
+  "setup.assistantInstructions": "インストール済みの Serein スキルをこのブラウザーに接続してください。SKILL.md を含む serein-context スキルフォルダーを見つけ、この Mac でその scripts/connect.sh を sh で実行し、以下の JSON チケットだけを標準入力で渡してください。チケットをシェル引数やリモートサービスに渡さないでください。スクリプトがヘルパーとモデルを自動で見つけます。ランタイムのパスを尋ねたり、別のランタイムをダウンロードしたりしないでください。Serein は接続を自動で確認します。設定結果とスキルが使用可能かを報告してください。\n\n{ticket}",
+  "setup.copyInstructions": "接続手順をコピー",
   "setup.instructionsPasteHint": "ローカルアシスタントに貼り付けてください。",
 } satisfies Record<UiKey, string>;
 
@@ -1984,7 +1907,7 @@ const uiEs = {
   "context.evidenceNote": "La navegación demuestra actividad, no una preferencia. Nada se confirma sin que lo corrijas.",
   "context.semanticUnavailable": "El índice léxico está activo. No hay instalado un paquete de modelo semántico verificado, por lo que la recuperación semántica multilingüe no está habilitada.",
   "context.semanticEnabled": "La indexación semántica está disponible.",
-  "connections.readyDescription": "La conexión local está lista. La ejecución del asistente se prueba por separado.",
+  "connections.readyDescription": "El navegador está vinculado. Tu asistente local ya puede usar Serein.",
   "connections.getStartedDescription": "Un poco de contexto ayuda a que el asistente sea más útil.",
   "connections.localControlTitle": "Diseñado para ejecutarse localmente y bajo tu control.",
   "connections.captureDetails": "Serein guarda títulos permitidos de pestañas, nombres de sitios, términos de búsqueda y actividad aproximada en primer plano. Nunca lee el contenido de las páginas.",
@@ -1994,31 +1917,28 @@ const uiEs = {
   "connections.recommendedExclusions": "Exclusiones recomendadas",
   "connections.filterLimitShort": "Los filtros automáticos no detectan todas las páginas sensibles. Para un control más estricto, usa «Solo sitios seleccionados».",
   "connections.chooseAssistants": "Elige tus asistentes de IA",
-  "connections.executionNotTested": "Instalado · ejecución sin probar",
-  "connections.localExecutionRequired": "Se requiere ejecución local",
-  "connections.remoteLimit": "Las sesiones remotas, alojadas o aisladas no pueden acceder al almacén de este dispositivo. Serein no cambia los permisos del entorno aislado del asistente.",
+  "connections.executionNotTested": "Skill detectada",
+  "connections.localExecutionRequired": "Usar en este Mac",
+  "connections.remoteLimit": "Usa un asistente que se ejecute en este Mac.",
   "connections.connectLocally": "Conectar localmente",
   "connections.installSkill": "Instalar la skill de Serein",
-  "connections.skillInstallDetails": "Usa Skills CLI para instalar la skill alojada en GitHub en las ubicaciones reconocidas por los asistentes compatibles. La vinculación con el navegador local es un paso aparte.",
-  "connections.skillGlobalNote": "Este comando instala la skill globalmente para los asistentes seleccionados. No configura el asistente del navegador local.",
-  "connections.installDuringSetup": "Instalar la skill de GitHub para estos asistentes al ejecutar la configuración local",
-  "connections.copySkillCommand": "Copiar comando de Skills CLI",
-  "connections.skillCommandCopied": "Comando de Skills CLI copiado.",
+  "connections.setupSteps": "Instalar la skill y vincular este navegador",
+  "connections.linkAnother": "Vincular otro asistente",
+  "connections.skillInstallDetails": "Instala la skill de GitHub con el instalador de skills de tu asistente. Incluye el asistente local y el lector.",
+  "connections.skillGlobalNote": "La skill se instala para el asistente seleccionado. Después se vincula a este navegador.",
+  "connections.copySkillCommand": "Copiar solicitud de instalación",
+  "connections.skillInstallPrompt": "Instala la skill serein-context desde {repository} con tu instalador de skills. Copia toda la carpeta, incluidos los scripts y archivos del runtime. No ejecutes la configuración todavía; después la vincularé a la extensión.",
+  "connections.skillCommandCopied": "Instrucciones de instalación copiadas.",
   "connections.skillSourceUnconfigured": "Esta compilación no tiene configurada una fuente pública de skills en GitHub. No hace falta descargar archivos ni configurar el directorio de skills; el comando de instalación aparecerá cuando se configure el repositorio.",
-  "connections.skillSelectTarget": "Selecciona al menos un asistente con nombre para preparar su instalación mediante Skills CLI. El ejecutor local genérico no tiene un destino de Skills CLI con nombre.",
-  "connections.helperSeparateFromSkill": "El asistente del navegador solo se ejecuta para guardar o recuperar contexto y después se cierra. Esta configuración lo registra para este navegador y lo vincula con cualquier skill seleccionada que ya esté instalada mediante Skills CLI.",
+  "connections.helperSeparateFromSkill": "La skill incluye el asistente local. Al vincularla se registra para este navegador y Serein comprueba la conexión automáticamente.",
   "connections.connectedBrowser": "Conectado a este navegador",
   "connections.helperTitle": "Un asistente pequeño. Ningún servicio permanente.",
-  "connections.helperDetails": "El asistente nativo solo se ejecuta para guardar o recuperar contexto y después se cierra. La configuración lo registra para este navegador; la instalación de la skill de GitHub se realiza aparte, más abajo.",
+  "connections.helperDetails": "Copia las instrucciones de vinculación en el asistente local donde instalaste la skill. Serein se conectará automáticamente al terminar la configuración.",
   "connections.reviewInstructions": "Revisar las instrucciones copiadas",
-  "connections.developmentBuild": "Configuración del asistente nativo local · la instalación de la skill del agente se muestra por separado.",
   "connections.advancedVault": "Avanzado · tu almacén local",
   "connections.actualDatabasePath": "Ruta real de la base de datos",
   "connections.copyDatabasePath": "Copiar ruta de la base de datos",
   "connections.databasePathCopied": "Ruta de la base de datos copiada.",
-  "connections.retestLocal": "Volver a probar la conexión local",
-  "connections.verifyConnection": "Verificar conexión",
-  "connections.localConnectionVerified": "Conexión local verificada.",
   "privacy.pageDescription": "Tú eliges qué se guarda y cuándo se comparte.",
   "privacy.captureDescription": "Solo metadatos permitidos de pestañas en primer plano y no privadas.",
   "privacy.recallDescription": "Permite que los asistentes conectados localmente recuperen contexto guardado relevante. El proveedor de su modelo podría recibirlo.",
@@ -2061,7 +1981,7 @@ const uiEs = {
   "storage.deletionLimit": "La eliminación lógica no puede borrar restos de SSD, copias de seguridad ni el contexto ya enviado al proveedor del modelo de un asistente. Se descartaron {count} eventos en cola al alcanzar el límite de almacenamiento.",
   "about.quieterContext": "Un contexto más discreto.",
   "about.description": "Serein recuerda lo útil para que puedas retomar lo que estabas haciendo.",
-  "about.developmentVersion": "0.1.0-beta.3 · desarrollo",
+  "about.developmentVersion": "0.1.0",
   "about.filesAtRest": "Archivos almacenados. Programas bajo demanda.",
   "about.filesDescription": "Serein usa metadatos de las pestañas del navegador, un asistente nativo de corta duración y un almacén SQLite local. No hay ningún servicio permanente de Serein, sincronización en la nube ni telemetría.",
   "about.evidenceTitle": "Evidencias antes que suposiciones.",
@@ -2091,12 +2011,8 @@ const uiEs = {
   "modal.eraseAndPause": "Borrar y pausar",
   "modal.forgetObservation": "Olvidar registro",
   "modal.savedEvidenceRemoved": "Se han eliminado las evidencias guardadas.",
-  "setup.assistantInstructions": "{skillStep}\n\nConfigura el asistente local del navegador Serein. Tengo un runtime de Serein extraído o compilado. Mantén los ejecutables serein y serein-host en la misma carpeta; si necesitas la ruta de esa carpeta, pídemela. Revisa la configuración local y pasa el JSON incluido a serein setup --request-stdin --json por la entrada estándar, sin interpolación de shell. Después, pídeme que haga clic en «Verificar conexión» en la extensión.\n\n{ticket}",
-  "setup.skillStepEnabled": "El usuario ha habilitado expresamente la instalación de la skill de GitHub en este ticket de configuración. Deja que serein setup ejecute el instalador de Skills CLI configurado para los asistentes con nombre seleccionados y, después, vincula la skill instalada al asistente local del navegador. No copies ni crees archivos de skills manualmente.",
-  "setup.skillStepManual": "Mantén la instalación de la skill separada de la configuración del asistente del navegador. Si se solicita, usa el comando de Skills CLI que aparece en Conexiones para instalar la skill de GitHub. No copies archivos manualmente a un directorio de skills.",
-  "setup.skillStepUnconfigured": "Esta compilación de la extensión no tiene configurado un repositorio de skills de GitHub. Configura únicamente el asistente local del navegador; no inventes una URL de repositorio ni copies archivos de skills manualmente.",
-  "setup.skillStepNoTargets": "La fuente de GitHub está configurada. Selecciona arriba un asistente con nombre para preparar el comando de Skills CLI. El ejecutor local genérico no tiene un destino de Skills CLI con nombre.",
-  "setup.copyInstructions": "Copiar instrucciones para configurar el asistente local",
+  "setup.assistantInstructions": "Vincula mi skill Serein instalada a este navegador. Busca la carpeta de la skill serein-context instalada que contiene SKILL.md. En este Mac, ejecuta su scripts/connect.sh con sh y pasa únicamente el JSON de abajo por la entrada estándar. No pongas el ticket en un argumento de shell ni lo envíes a un servicio remoto. El script encuentra el asistente local y el modelo. No me pidas la ruta del runtime ni descargues otro. Serein comprobará la conexión automáticamente. Informa del resultado y de si la skill funciona.\n\n{ticket}",
+  "setup.copyInstructions": "Copiar instrucciones de vinculación",
   "setup.instructionsPasteHint": "Pégalas en tu asistente local.",
 } satisfies Record<UiKey, string>;
 
