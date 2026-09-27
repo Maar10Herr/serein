@@ -1,3 +1,4 @@
+use crate::algorithm;
 use crate::*;
 use rusqlite::{params, Connection, OptionalExtension};
 use serde_json::{json, Value};
@@ -19,7 +20,7 @@ impl Vault {
         conn.busy_timeout(Duration::from_millis(1500))?;
         conn.execute_batch("PRAGMA foreign_keys=ON; PRAGMA journal_mode=WAL; PRAGMA synchronous=FULL; PRAGMA cache_size=-4096; PRAGMA wal_autocheckpoint=256; PRAGMA secure_delete=ON;")?;
         let ver: i64 = conn.query_row("PRAGMA user_version", [], |r| r.get(0))?;
-        if ver > 1 {
+        if ver > 3 {
             return Err(Error(
                 "SCHEMA_TOO_NEW",
                 "Update Serein before opening this vault.".into(),
@@ -39,8 +40,18 @@ CREATE TABLE IF NOT EXISTS feedback(id TEXT PRIMARY KEY,atom TEXT NOT NULL REFER
 CREATE TABLE IF NOT EXISTS receipts(id TEXT PRIMARY KEY,ids TEXT NOT NULL,evidence INTEGER NOT NULL,privacy INTEGER NOT NULL,bytes INTEGER NOT NULL,time TEXT NOT NULL,status TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS topics(id TEXT PRIMARY KEY,label TEXT NOT NULL,centroid BLOB NOT NULL,model TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS atom_topics(atom TEXT NOT NULL REFERENCES atoms(id) ON DELETE CASCADE,topic TEXT NOT NULL REFERENCES topics(id) ON DELETE CASCADE,mass REAL NOT NULL,PRIMARY KEY(atom,topic));
-CREATE TRIGGER IF NOT EXISTS topic_invalidate AFTER DELETE ON atoms BEGIN DELETE FROM topics; END;
-PRAGMA user_version=1;")?;
+CREATE TABLE IF NOT EXISTS topic_skips(atom TEXT PRIMARY KEY REFERENCES atoms(id) ON DELETE CASCADE,model TEXT NOT NULL);
+CREATE TRIGGER IF NOT EXISTS topic_deleted_reconsider_skips AFTER DELETE ON topics BEGIN DELETE FROM topic_skips WHERE model=old.model; END;
+        ")?;
+        if ver < 2 {
+            conn.execute_batch("BEGIN IMMEDIATE;
+DROP TRIGGER IF EXISTS topic_invalidate;
+CREATE TRIGGER topic_invalidate BEFORE DELETE ON atoms BEGIN DELETE FROM topics WHERE id IN (SELECT topic FROM atom_topics WHERE atom=old.id); END;
+PRAGMA user_version=3;
+COMMIT;")?;
+        } else if ver < 3 {
+            conn.execute_batch("PRAGMA user_version=3;")?;
+        }
         conn.execute(
             "INSERT OR IGNORE INTO meta(key,value) VALUES('canonical_salt',?)",
             [id()],
@@ -66,6 +77,56 @@ PRAGMA user_version=1;")?;
                 .parse()
                 .unwrap_or(0),
         ))
+    }
+    fn current_model_hash(&self) -> Option<String> {
+        model::current_hash(&root().join("models/current"))
+    }
+    fn pending_atoms_for_model(&self, model_hash: Option<&str>) -> Result<i64> {
+        match model_hash {
+            Some(hash) => Ok(self.conn.query_row(
+                "SELECT count(*) FROM atoms a
+WHERE NOT EXISTS (SELECT 1 FROM vectors v WHERE v.atom=a.id AND v.model=?)
+   OR (NOT EXISTS (SELECT 1 FROM atom_topics m JOIN topics t ON t.id=m.topic WHERE m.atom=a.id AND t.model=?)
+       AND NOT EXISTS (SELECT 1 FROM topic_skips s WHERE s.atom=a.id AND s.model=?))",
+                params![hash,hash,hash],
+                |r| r.get(0),
+            )?),
+            None => Ok(self.conn.query_row("SELECT count(*) FROM atoms", [], |r| r.get(0))?),
+        }
+    }
+    fn unindexed_atoms(
+        &self,
+        model_hash: &str,
+        limit: i64,
+    ) -> Result<Vec<(String, String, Option<String>)>> {
+        let rows = self.conn.prepare("SELECT a.id,a.title,a.query FROM atoms a
+WHERE NOT EXISTS (SELECT 1 FROM vectors v WHERE v.atom=a.id AND v.model=?)
+   OR (NOT EXISTS (SELECT 1 FROM atom_topics m JOIN topics t ON t.id=m.topic WHERE m.atom=a.id AND t.model=?)
+       AND NOT EXISTS (SELECT 1 FROM topic_skips s WHERE s.atom=a.id AND s.model=?))
+ORDER BY a.first_seen,a.id LIMIT ?")?
+            .query_map(params![model_hash,model_hash,model_hash,limit],|r|Ok((r.get(0)?,r.get(1)?,r.get(2)?)))?
+            .collect::<std::result::Result<Vec<_>,_>>()?;
+        Ok(rows)
+    }
+    fn activate_model(&mut self, model_hash: &str) -> Result<()> {
+        let tx = self
+            .conn
+            .transaction_with_behavior(rusqlite::TransactionBehavior::Immediate)?;
+        let previous: Option<String> = tx
+            .query_row(
+                "SELECT value FROM meta WHERE key='active_model_hash'",
+                [],
+                |r| r.get(0),
+            )
+            .optional()?;
+        if previous.as_deref() != Some(model_hash) {
+            tx.execute("DELETE FROM topics", [])?;
+            tx.execute("DELETE FROM topic_skips", [])?;
+            tx.execute("DELETE FROM vectors WHERE model<>?", [model_hash])?;
+            tx.execute("INSERT INTO meta(key,value) VALUES('active_model_hash',?) ON CONFLICT(key) DO UPDATE SET value=excluded.value", [model_hash])?;
+        }
+        tx.commit()?;
+        Ok(())
     }
     pub fn policy(&self, source: &str) -> Result<Policy> {
         let s: Option<String> = self
@@ -124,11 +185,8 @@ PRAGMA user_version=1;")?;
         let count: i64 = self
             .conn
             .query_row("SELECT count(*) FROM atoms", [], |r| r.get(0))?;
-        let pending: i64 = self.conn.query_row(
-            "SELECT count(*) FROM atoms WHERE id NOT IN (SELECT atom FROM vectors)",
-            [],
-            |r| r.get(0),
-        )?;
+        let current_model = self.current_model_hash();
+        let pending = self.pending_atoms_for_model(current_model.as_deref())?;
         let mut bytes = 0;
         for path in [
             self.path.clone(),
@@ -138,7 +196,7 @@ PRAGMA user_version=1;")?;
             bytes += std::fs::metadata(path).map(|m| m.len()).unwrap_or(0)
         }
         Ok(
-            json!({"protocol":1,"status":"ok","database_path":self.path,"evidence_generation":e,"privacy_generation":p,"atoms":count,"pending_atoms":pending,"vault_bytes":bytes,"policy":self.policy(source)?,"index_mode":if root().join("models/current/manifest.json").is_file(){"hybrid"}else{"lexical"},"model_available":root().join("models/current/manifest.json").is_file()}),
+            json!({"protocol":1,"status":"ok","database_path":self.path,"evidence_generation":e,"privacy_generation":p,"atoms":count,"pending_atoms":pending,"vault_bytes":bytes,"policy":self.policy(source)?,"index_mode":if current_model.is_some(){"hybrid"}else{"lexical"},"model_available":current_model.is_some()}),
         )
     }
     pub fn ingest(&mut self, source: &str, epoch: u64, events: Vec<Event>) -> Result<Value> {
@@ -439,7 +497,7 @@ PRAGMA user_version=1;")?;
         }
         let mut r = self.status(source)?;
         r["cards"] = json!(cards);
-        r["topics"] = inference::activity(&self.conn)?;
+        r["topics"] = inference::activity(&self.conn, self.current_model_hash().as_deref())?;
         Ok(r)
     }
     fn corrections(&self, id: &str) -> Result<Vec<Value>> {
@@ -452,6 +510,17 @@ PRAGMA user_version=1;")?;
             .collect::<std::result::Result<Vec<_>, _>>()?)
     }
     pub fn refresh(&mut self, model_path: &Path, budget: u64) -> Result<Value> {
+        let encoder = match model::Encoder::open(model_path) {
+            Ok(m) => m,
+            Err(_) => {
+                return Ok(
+                    json!({"status":"partial","mode":"lexical","reason":"MODEL_UNAVAILABLE"}),
+                )
+            }
+        };
+        self.refresh_with_encoder(&encoder, budget)
+    }
+    fn refresh_with_encoder(&mut self, encoder: &model::Encoder, budget: u64) -> Result<Value> {
         let start = Instant::now();
         let lock = std::fs::OpenOptions::new()
             .create(true)
@@ -461,16 +530,9 @@ PRAGMA user_version=1;")?;
         if fs2::FileExt::try_lock_exclusive(&lock).is_err() {
             return Ok(json!({"status":"partial","reason":"REFRESH_BUSY"}));
         }
-        let encoder = match model::Encoder::open(model_path) {
-            Ok(m) => m,
-            Err(_) => {
-                return Ok(
-                    json!({"status":"partial","mode":"lexical","reason":"MODEL_UNAVAILABLE"}),
-                )
-            }
-        };
+        self.activate_model(&encoder.manifest.model_hash)?;
         let generation = self.generation()?;
-        let rows=self.conn.prepare("SELECT id,title,query FROM atoms WHERE id NOT IN (SELECT atom FROM vectors WHERE model=?) OR id NOT IN (SELECT atom FROM atom_topics) LIMIT 256")?.query_map([&encoder.manifest.model_hash],|r|Ok((r.get::<_,String>(0)?,r.get::<_,String>(1)?,r.get::<_,Option<String>>(2)?)))?.collect::<std::result::Result<Vec<_>,_>>()?;
+        let rows = self.unindexed_atoms(&encoder.manifest.model_hash, 256)?;
         let mut processed = 0;
         for (id, title, query) in rows {
             if start.elapsed().as_millis() as u64 >= budget {
@@ -479,9 +541,12 @@ PRAGMA user_version=1;")?;
             let tv = encoder.encode(&title);
             let qv = query.as_ref().and_then(|x| encoder.encode(x));
             let v = match (tv, qv) {
-                (Some(t), Some(q)) => {
-                    model::normalize(t.iter().zip(q).map(|(t, q)| 0.3 * t + 0.7 * q).collect())
-                }
+                (Some(t), Some(q)) => model::normalize(
+                    t.iter()
+                        .zip(q)
+                        .map(|(t, q)| algorithm::TITLE_WEIGHT * t + algorithm::QUERY_WEIGHT * q)
+                        .collect(),
+                ),
                 (t, q) => t.or(q),
             };
             if let Some(v) = v {
@@ -511,11 +576,7 @@ PRAGMA user_version=1;")?;
                 processed += 1
             }
         }
-        let pending: i64 = self.conn.query_row(
-            "SELECT count(*) FROM atoms WHERE id NOT IN (SELECT atom FROM vectors WHERE model=?)",
-            [&encoder.manifest.model_hash],
-            |r| r.get(0),
-        )?;
+        let pending = self.pending_atoms_for_model(Some(&encoder.manifest.model_hash))?;
         Ok(
             json!({"status":if pending>0{"partial"}else{"ok"},"processed":processed,"pending_atoms":pending,"mode":"hybrid"}),
         )
@@ -530,337 +591,37 @@ PRAGMA user_version=1;")?;
                 json!({"protocol":1,"request_id":r.request_id,"status":"blocked","context":[],"warnings":["Assistant recall is disabled in Privacy."]}),
             );
         }
-        let refresh = self.refresh(model_path, budget.saturating_sub(150))?;
-        let encoder = if start.elapsed().as_millis() < (budget / 2) as u128 {
-            model::Encoder::open(model_path).ok()
-        } else {
-            None
+        let encoder = model::Encoder::open(model_path).ok();
+        let remaining = budget.saturating_sub(start.elapsed().as_millis() as u64);
+        let refresh_budget = (budget / 4).min(250).min(remaining / 2);
+        let refresh = match encoder.as_ref() {
+            Some(encoder) => self.refresh_with_encoder(encoder, refresh_budget)?,
+            None => json!({"status":"partial","mode":"lexical","reason":"MODEL_UNAVAILABLE"}),
         };
+        // If startup or refresh consumed the request window, report the
+        // retrieval path actually used instead of claiming a hybrid search.
+        let encoder =
+            encoder.filter(|_| (start.elapsed().as_millis() as u64) < budget.saturating_sub(25));
         let generation = self.generation()?;
-        let terms: Vec<String> = std::iter::once(&r.query)
-            .chain(r.facets.iter())
-            .map(|x| x.to_lowercase())
-            .collect();
-        let identifier_pattern = regex::Regex::new(
-            r"(?i)\b(?:[a-z]+[0-9][a-z0-9-]*|[0-9]+(?:[.,][0-9]+)?\s*(?:cm|mm|kg|gb|tb))\b",
-        )
-        .unwrap();
-        let exact_requirements: Vec<String> = terms
-            .iter()
-            .flat_map(|t| {
-                identifier_pattern
-                    .find_iter(t)
-                    .map(|m| m.as_str().split_whitespace().collect::<String>())
-                    .collect::<Vec<_>>()
-            })
-            .collect();
-        let tokens: Vec<String> = terms
-            .iter()
-            .flat_map(|s| {
-                s.split(|c: char| !c.is_alphanumeric())
-                    .filter(|x| x.chars().count() > 2)
-                    .map(String::from)
-            })
-            .filter(|s| {
-                ![
-                    "what",
-                    "about",
-                    "the",
-                    "and",
-                    "with",
-                    "that",
-                    "this",
-                    "does",
-                    "have",
-                    "for",
-                    "are",
-                    "was",
-                    "can",
-                    "how",
-                    "why",
-                    "which",
-                    "when",
-                    "where",
-                    "who",
-                    "you",
-                    "your",
-                    "our",
-                    "its",
-                    "has",
-                    "had",
-                    "did",
-                    "could",
-                    "would",
-                    "should",
-                    "from",
-                    "into",
-                    "than",
-                    "then",
-                    "not",
-                    "but",
-                    "without",
-                    "best",
-                    "topic",
-                    "intent",
-                    "constraint",
-                    "recall",
-                    "der",
-                    "die",
-                    "das",
-                    "ein",
-                    "eine",
-                    "einer",
-                    "eines",
-                    "für",
-                    "dem",
-                    "den",
-                    "mit",
-                    "von",
-                    "zum",
-                    "zur",
-                    "auf",
-                    "aus",
-                    "als",
-                    "welche",
-                    "welcher",
-                    "welches",
-                    "wie",
-                    "hatte",
-                    "ich",
-                    "mein",
-                    "meine",
-                    "voor",
-                    "het",
-                    "een",
-                    "dat",
-                    "wat",
-                    "welk",
-                    "had",
-                    "mijn",
-                    "met",
-                    "van",
-                    "naar",
-                    "welke",
-                    "pour",
-                    "les",
-                    "des",
-                    "une",
-                    "que",
-                    "quel",
-                    "quelle",
-                    "quelles",
-                    "quels",
-                    "dans",
-                    "avec",
-                    "sans",
-                    "sur",
-                    "mon",
-                    "mes",
-                    "aux",
-                    "est",
-                    "ces",
-                    "cette",
-                    "comment",
-                    "avais",
-                ]
-                .contains(&s.as_str())
-            })
-            .collect();
-        let fts_query = tokens
-            .iter()
-            .take(32)
-            .map(|t| format!("\"{}\"", t.replace('"', "\"\"")))
-            .collect::<Vec<_>>()
-            .join(" OR ");
-        let lexical_ids: HashSet<String> = if fts_query.is_empty() {
-            HashSet::new()
-        } else {
-            self.conn.prepare("SELECT id FROM atom_fts WHERE atom_fts MATCH ? ORDER BY bm25(atom_fts) LIMIT 40")?.query_map([fts_query],|r|r.get(0))?.collect::<std::result::Result<_,_>>()?
-        };
-        let qvectors: Vec<Vec<f32>> = encoder
-            .as_ref()
-            .map(|e| terms.iter().filter_map(|t| e.encode(t)).collect())
-            .unwrap_or_default();
-        let mut candidates = vec![];
-        let mut stmt=self.conn.prepare("SELECT id,site,title,query,last_seen FROM atoms WHERE source=? AND (last_seen>=strftime('%Y-%m-%dT%H:%M:%SZ','now','-90 days') OR id IN (SELECT atom FROM feedback WHERE action='confirm_constraint')) ORDER BY last_seen DESC LIMIT 10000")?;
-        let rows = stmt.query_map([source], |row| {
-            Ok((
-                row.get::<_, String>(0)?,
-                row.get::<_, String>(1)?,
-                row.get::<_, String>(2)?,
-                row.get::<_, Option<String>>(3)?,
-                row.get::<_, String>(4)?,
-            ))
-        })?;
-        for row in rows {
-            if start.elapsed().as_millis() as u64 >= budget {
-                break;
-            }
-            let (id, site, title, query, time) = row?;
-            if p.excluded_sites.iter().any(|x| policy::matches(&site, x))
-                || p.selected_only && !p.selected_sites.iter().any(|x| policy::matches(&site, x))
-            {
-                continue;
-            }
-            let corrections = self.corrections(&id)?;
-            if corrections
-                .iter()
-                .any(|c| c["action"] == "do_not_use" || c["action"] == "wrong_topic")
-            {
-                continue;
-            }
-            let confirmed = corrections
-                .iter()
-                .rev()
-                .find(|c| c["action"] == "confirm_constraint");
-            if confirmed.is_some() && !r.scope.contains(&"confirmed_preferences".into())
-                || confirmed.is_none()
-                    && !r.scope.iter().any(|x| x == "research" || x == "projects")
-            {
-                continue;
-            }
-            let raw = confirmed
-                .and_then(|c| c["text"].as_str())
-                .unwrap_or(query.as_deref().unwrap_or(&title));
-            let lower = raw.to_lowercase();
-            if !exact_requirements.is_empty() {
-                let candidate_identifiers: HashSet<String> = identifier_pattern
-                    .find_iter(&lower)
-                    .map(|m| m.as_str().split_whitespace().collect::<String>())
-                    .collect();
-                if !exact_requirements
-                    .iter()
-                    .any(|x| candidate_identifiers.contains(x))
-                {
-                    continue;
-                }
-            }
-
-            let words: HashSet<&str> = lower.split(|c: char| !c.is_alphanumeric()).collect();
-            let lexical = tokens
-                .iter()
-                .filter(|t| {
-                    if t.is_ascii() {
-                        words.contains(t.as_str())
-                    } else {
-                        lower.contains(t.as_str())
-                    }
-                })
-                .count() as f32;
-            let lexical = if !exact_requirements.is_empty() {
-                lexical.max(1.0)
-            } else if lexical_ids.contains(&id) {
-                lexical.max(1.0)
-            } else if confirmed.is_some() || tokens.iter().any(|t| !t.is_ascii()) {
-                lexical
-            } else {
-                0.0
-            };
-            let mut semantic = 0f32;
-            if let Some(enc) = &encoder {
-                let vector: Option<Vec<u8>> = self
-                    .conn
-                    .query_row(
-                        "SELECT vector FROM vectors WHERE atom=? AND model=?",
-                        params![id, enc.manifest.model_hash],
-                        |x| x.get(0),
-                    )
-                    .optional()?;
-                if let Some(v) = vector {
-                    let v: Vec<f32> = v
-                        .chunks_exact(4)
-                        .map(|b| f32::from_le_bytes(b.try_into().unwrap()))
-                        .collect();
-                    semantic = qvectors
-                        .iter()
-                        .map(|q| model::cosine(q, &v))
-                        .fold(0f32, f32::max)
-                }
-            }
-            if lexical == 0.0 && semantic < 0.55 {
-                continue;
-            }
-            let sessions: i64 = self.conn.query_row(
-                "SELECT count(DISTINCT session) FROM atom_days WHERE atom=?",
-                [&id],
-                |x| x.get(0),
-            )?;
-            let mut limits = vec![
-                "Browsing does not establish endorsement, ownership, or a settled preference."
-                    .to_string(),
-            ];
-            for c in &corrections {
-                if let Some(a) = c["action"].as_str() {
-                    if a != "confirm_constraint" {
-                        limits.push(format!("User correction: {}", a.replace('_', " ")))
-                    }
-                }
-            }
-            let subject = if corrections.iter().any(|c| c["action"] == "not_about_me") {
-                "other"
-            } else if confirmed.is_some() {
-                "self"
-            } else {
-                "unknown"
-            };
-            let text = if confirmed.is_some() {
-                raw.to_owned()
-            } else {
-                format!(
-                    "Observed {} on {}: {}",
-                    if query.is_some() {
-                        "search"
-                    } else {
-                        "page title"
-                    },
-                    site,
-                    raw
-                )
-            };
-            candidates.push((lexical,semantic,site.clone(),json!({"id":id,"kind":if confirmed.is_some(){"constraint"}else{"research_topic"},"state":if confirmed.is_some(){"confirmed"}else{"observed"},"text":text,"subject":subject,"evidence":{"sessions":sessions,"sites":1},"last_seen":time,"limits":limits})));
-            if candidates.len() > 96 {
-                candidates.sort_by(|a, b| (b.0 + b.1).total_cmp(&(a.0 + a.1)));
-                candidates.truncate(96)
-            }
-        }
-        drop(stmt);
-        // Reciprocal-rank fusion keeps incomparable lexical/semantic scales separate.
-        let mut ranks: HashMap<String, f32> = HashMap::new();
-        candidates.sort_by(|a, b| b.0.total_cmp(&a.0));
-        for (rank, c) in candidates.iter().filter(|c| c.0 > 0.0).take(40).enumerate() {
-            *ranks
-                .entry(c.3["id"].as_str().unwrap().to_string())
-                .or_default() += 1.0 / (61 + rank) as f32;
-        }
-        candidates.sort_by(|a, b| b.1.total_cmp(&a.1));
-        for (rank, c) in candidates
-            .iter()
-            .filter(|c| c.1 >= 0.55)
-            .take(40)
-            .enumerate()
-        {
-            *ranks
-                .entry(c.3["id"].as_str().unwrap().to_string())
-                .or_default() += 1.0 / (61 + rank) as f32;
-        }
-        let mut candidates: Vec<_> = candidates
-            .into_iter()
-            .filter_map(|(_, _, site, record)| {
-                ranks
-                    .get(record["id"].as_str().unwrap())
-                    .map(|score| (*score, site, record))
-            })
-            .collect();
-        candidates.sort_by(|a, b| b.0.total_cmp(&a.0));
-        candidates.truncate(64);
+        let candidates = crate::retrieval::candidates(
+            &self.conn,
+            source,
+            &p,
+            r,
+            encoder.as_ref(),
+            start,
+            budget,
+        )?;
         let mut packet = json!({"protocol":1,"request_id":r.request_id,"status":"partial","as_of":now(),"generation":{"evidence":generation.0,"privacy":generation.1},"index":{"mode":if encoder.is_some(){"hybrid"}else{"lexical"},"pending_atoms":self.status(source)?["pending_atoms"]},"context":[],"alternatives":[],"warnings":if encoder.is_none(){vec!["Semantic model unavailable; lexical matching only."]}else{vec![]}});
         let mut counts: HashMap<String, u32> = HashMap::new();
         let mut seen = HashSet::new();
         for (_, site, record) in candidates {
-            if packet["context"].as_array().unwrap().len() >= 6 {
+            if packet["context"].as_array().unwrap().len() >= algorithm::MAX_CONTEXT_RECORDS {
                 break;
             }
-            if *counts.get(&site).unwrap_or(&0) >= 2 || !seen.insert(record["text"].to_string()) {
+            if *counts.get(&site).unwrap_or(&0) >= algorithm::MAX_RECORDS_PER_SITE
+                || !seen.insert(record["text"].to_string())
+            {
                 continue;
             }
             packet["context"].as_array_mut().unwrap().push(record);
@@ -965,5 +726,273 @@ impl Vault {
             packet["status"] = json!("blocked")
         };
         Ok(packet)
+    }
+}
+
+#[cfg(test)]
+mod lifecycle_tests {
+    use super::*;
+
+    fn vault() -> (tempfile::TempDir, Vault) {
+        let dir = tempfile::tempdir().unwrap();
+        let vault = Vault::open(&dir.path().join("vault.sqlite")).unwrap();
+        (dir, vault)
+    }
+
+    fn insert_atom(v: &Vault, atom: &str, first_seen: &str, vector: &[f32], model: &str) {
+        v.conn
+            .execute(
+                "INSERT INTO atoms VALUES(?,?,?,?,?,?,?,?,?,?)",
+                params![
+                    atom,
+                    "source",
+                    "example.com",
+                    format!("Title {atom}"),
+                    Option::<String>::None,
+                    "visit",
+                    first_seen,
+                    now(),
+                    30,
+                    atom,
+                ],
+            )
+            .unwrap();
+        v.conn
+            .execute(
+                "INSERT INTO atom_days VALUES(?,?,?,?)",
+                params![atom, chrono::Utc::now().date_naive().to_string(), atom, 1.0,],
+            )
+            .unwrap();
+        let bytes: Vec<u8> = vector.iter().flat_map(|x| x.to_le_bytes()).collect();
+        v.conn
+            .execute(
+                "INSERT INTO vectors VALUES(?,?,?)",
+                params![atom, model, bytes],
+            )
+            .unwrap();
+    }
+
+    fn axis(index: usize) -> Vec<f32> {
+        let mut vector = vec![0.0; 256];
+        vector[index] = 1.0;
+        vector
+    }
+
+    #[test]
+    fn status_pending_atoms_tracks_active_model() {
+        let (_dir, v) = vault();
+        insert_atom(&v, "a", "2026-01-01T00:00:00Z", &axis(0), "old");
+        inference::assign(&v.conn, "a", &axis(0), "Old", "old").unwrap();
+        assert_eq!(v.pending_atoms_for_model(Some("old")).unwrap(), 0);
+        assert_eq!(v.pending_atoms_for_model(Some("new")).unwrap(), 1);
+    }
+
+    #[test]
+    fn model_change_leaves_no_old_model_topic_assignments() {
+        let (_dir, mut v) = vault();
+        insert_atom(&v, "a", "2026-01-01T00:00:00Z", &axis(0), "old");
+        v.activate_model("old").unwrap();
+        inference::assign(&v.conn, "a", &axis(0), "Old label", "old").unwrap();
+        assert_eq!(
+            inference::activity(&v.conn, Some("old"))
+                .unwrap()
+                .as_array()
+                .unwrap()
+                .len(),
+            1
+        );
+        assert!(inference::activity(&v.conn, Some("new"))
+            .unwrap()
+            .as_array()
+            .unwrap()
+            .is_empty());
+        v.activate_model("new").unwrap();
+        for table in ["topics", "atom_topics", "vectors"] {
+            let count: i64 = v
+                .conn
+                .query_row(&format!("SELECT count(*) FROM {table}"), [], |r| r.get(0))
+                .unwrap();
+            assert_eq!(count, 0, "{table}");
+        }
+        assert_eq!(v.pending_atoms_for_model(Some("new")).unwrap(), 1);
+    }
+
+    #[test]
+    fn topic_rebuild_is_deterministic_given_same_atoms() {
+        let (_dir, mut v) = vault();
+        v.activate_model("model").unwrap();
+        insert_atom(&v, "b", "2026-01-02T00:00:00Z", &axis(0), "model");
+        insert_atom(&v, "a", "2026-01-01T00:00:00Z", &axis(1), "model");
+        let rebuild = |v: &Vault| {
+            let ids = v.unindexed_atoms("model", 256).unwrap();
+            assert_eq!(
+                ids.iter().map(|x| x.0.as_str()).collect::<Vec<_>>(),
+                vec!["a", "b"]
+            );
+            for (atom, _, _) in ids {
+                let vector = if atom == "a" { axis(1) } else { axis(0) };
+                inference::assign(&v.conn, &atom, &vector, &format!("Title {atom}"), "model")
+                    .unwrap();
+            }
+            v.conn.prepare("SELECT m.atom,m.topic,t.label FROM atom_topics m JOIN topics t ON t.id=m.topic ORDER BY m.atom,m.topic").unwrap()
+                .query_map([],|r|Ok((r.get::<_,String>(0)?,r.get::<_,String>(1)?,r.get::<_,String>(2)?))).unwrap()
+                .collect::<std::result::Result<Vec<_>,_>>().unwrap()
+        };
+        let first = rebuild(&v);
+        v.conn.execute("DELETE FROM topics", []).unwrap();
+        assert_eq!(first, rebuild(&v));
+    }
+
+    #[test]
+    fn reassignment_does_not_duplicate_old_and_new_topic_membership() {
+        let (_dir, mut v) = vault();
+        insert_atom(&v, "a", "2026-01-01T00:00:00Z", &axis(0), "old");
+        v.activate_model("old").unwrap();
+        inference::assign(&v.conn, "a", &axis(0), "Old", "old").unwrap();
+        v.activate_model("new").unwrap();
+        v.conn
+            .execute(
+                "INSERT INTO vectors VALUES(?,?,?)",
+                params![
+                    "a",
+                    "new",
+                    axis(1)
+                        .iter()
+                        .flat_map(|x| x.to_le_bytes())
+                        .collect::<Vec<_>>()
+                ],
+            )
+            .unwrap();
+        inference::assign(&v.conn, "a", &axis(1), "New", "new").unwrap();
+        inference::assign(&v.conn, "a", &axis(1), "New", "new").unwrap();
+        let count: i64 = v
+            .conn
+            .query_row("SELECT count(*) FROM atom_topics WHERE atom='a'", [], |r| {
+                r.get(0)
+            })
+            .unwrap();
+        assert_eq!(count, 1);
+        let wrong:i64=v.conn.query_row("SELECT count(*) FROM atom_topics m JOIN topics t ON t.id=m.topic WHERE t.model<>'new'",[],|r|r.get(0)).unwrap();
+        assert_eq!(wrong, 0);
+    }
+
+    #[test]
+    fn deleting_one_atom_preserves_unrelated_topics() {
+        let (_dir, v) = vault();
+        insert_atom(&v, "a", "2026-01-01T00:00:00Z", &axis(0), "model");
+        insert_atom(&v, "b", "2026-01-02T00:00:00Z", &axis(1), "model");
+        inference::assign(&v.conn, "a", &axis(0), "A", "model").unwrap();
+        inference::assign(&v.conn, "b", &axis(1), "B", "model").unwrap();
+        v.conn
+            .execute("DELETE FROM atoms WHERE id='a'", [])
+            .unwrap();
+        let labels: Vec<String> = v
+            .conn
+            .prepare("SELECT label FROM topics ORDER BY label")
+            .unwrap()
+            .query_map([], |r| r.get(0))
+            .unwrap()
+            .collect::<std::result::Result<_, _>>()
+            .unwrap();
+        assert_eq!(labels, vec!["Title b"]);
+    }
+
+    #[test]
+    fn v1_trigger_migrates_without_erasing_other_topics() {
+        let (dir, v) = vault();
+        insert_atom(&v, "a", "2026-01-01T00:00:00Z", &axis(0), "model");
+        insert_atom(&v, "b", "2026-01-02T00:00:00Z", &axis(1), "model");
+        inference::assign(&v.conn, "a", &axis(0), "A", "model").unwrap();
+        inference::assign(&v.conn, "b", &axis(1), "B", "model").unwrap();
+        v.conn
+            .execute_batch(
+                "DROP TRIGGER topic_invalidate;
+CREATE TRIGGER topic_invalidate AFTER DELETE ON atoms BEGIN DELETE FROM topics; END;
+PRAGMA user_version=1;",
+            )
+            .unwrap();
+        drop(v);
+        let upgraded = Vault::open(&dir.path().join("vault.sqlite")).unwrap();
+        let version: i64 = upgraded
+            .conn
+            .query_row("PRAGMA user_version", [], |r| r.get(0))
+            .unwrap();
+        assert_eq!(version, 3);
+        upgraded
+            .conn
+            .execute("DELETE FROM atoms WHERE id='a'", [])
+            .unwrap();
+        let labels: Vec<String> = upgraded
+            .conn
+            .prepare("SELECT label FROM topics ORDER BY label")
+            .unwrap()
+            .query_map([], |r| r.get(0))
+            .unwrap()
+            .collect::<std::result::Result<_, _>>()
+            .unwrap();
+        assert_eq!(labels, vec!["Title b"]);
+    }
+
+    #[test]
+    fn v2_vault_adds_topic_skip_tracking_without_losing_atoms() {
+        let (dir, v) = vault();
+        insert_atom(&v, "a", "2026-01-01T00:00:00Z", &axis(0), "model");
+        v.conn.execute_batch("DROP TRIGGER topic_deleted_reconsider_skips; DROP TABLE topic_skips; PRAGMA user_version=2;").unwrap();
+        drop(v);
+        let upgraded = Vault::open(&dir.path().join("vault.sqlite")).unwrap();
+        let version: i64 = upgraded
+            .conn
+            .query_row("PRAGMA user_version", [], |r| r.get(0))
+            .unwrap();
+        let atoms: i64 = upgraded
+            .conn
+            .query_row("SELECT count(*) FROM atoms", [], |r| r.get(0))
+            .unwrap();
+        assert_eq!(version, 3);
+        assert_eq!(atoms, 1);
+        upgraded
+            .conn
+            .execute("INSERT INTO topic_skips VALUES('a','model')", [])
+            .unwrap();
+    }
+
+    #[test]
+    fn topic_label_follows_current_representative() {
+        let (_dir, v) = vault();
+        let first = axis(0);
+        let mut later = vec![0.0; 256];
+        later[0] = 0.8;
+        later[1] = 0.6;
+        for atom in ["a", "b", "c"] {
+            let vector = if atom == "a" { &first } else { &later };
+            insert_atom(&v, atom, "2026-01-01T00:00:00Z", vector, "model");
+            inference::assign(&v.conn, atom, vector, &format!("Title {atom}"), "model").unwrap();
+        }
+        let label: String = v
+            .conn
+            .query_row("SELECT label FROM topics", [], |r| r.get(0))
+            .unwrap();
+        assert_eq!(label, "Title b");
+    }
+
+    #[test]
+    fn topic_capacity_skip_does_not_leave_permanent_pending_work() {
+        let (_dir, v) = vault();
+        for index in 0..=algorithm::MAX_TOPICS {
+            let atom = format!("atom-{index:03}");
+            let vector = axis(index);
+            insert_atom(&v, &atom, "2026-01-01T00:00:00Z", &vector, "model");
+            inference::assign(&v.conn, &atom, &vector, &atom, "model").unwrap();
+        }
+        assert_eq!(v.pending_atoms_for_model(Some("model")).unwrap(), 0);
+        let skipped: i64 = v
+            .conn
+            .query_row("SELECT count(*) FROM topic_skips", [], |r| r.get(0))
+            .unwrap();
+        assert_eq!(skipped, 1);
+        v.conn
+            .execute("DELETE FROM atoms WHERE id='atom-000'", [])
+            .unwrap();
+        assert_eq!(v.pending_atoms_for_model(Some("model")).unwrap(), 1);
     }
 }

@@ -358,7 +358,9 @@ pub fn setup(root: &Path, s: Setup) -> Result<Value> {
     let manifest = register_host(root, &c, &host)?;
     let owned = json!({"path":manifest,"sha256":hash(&fs::read(&manifest)?),"browser":c.browser});
     atomic(
-        &root.join("receipts").join(format!("native-{}.json", c.browser)),
+        &root
+            .join("receipts")
+            .join(format!("native-{}.json", c.browser)),
         &serde_json::to_vec_pretty(&owned)?,
     )?;
     r.connections.retain(|x| x.source_id != c.source_id);
@@ -421,7 +423,10 @@ fn register_host(root: &Path, c: &Connection, host: &Path) -> Result<PathBuf> {
     }
     if path.exists() {
         if fs::symlink_metadata(&path)?.file_type().is_symlink() {
-            return Err(Error("ACCESS_DENIED", "Refusing a symlink native registration.".into()));
+            return Err(Error(
+                "ACCESS_DENIED",
+                "Refusing a symlink native registration.".into(),
+            ));
         }
         let v: Value = serde_json::from_slice(&fs::read(&path)?)?;
         let previous_owned = owned_registration(root, &path, &c.browser);
@@ -469,8 +474,7 @@ fn owned_registration(root: &Path, path: &Path, browser: &str) -> bool {
         .and_then(|bytes| serde_json::from_slice::<Value>(&bytes).ok());
     let bytes = fs::read(path).ok();
     receipt.zip(bytes).is_some_and(|(receipt, bytes)| {
-        receipt["path"] == json!(path)
-            && receipt["sha256"].as_str() == Some(hash(&bytes).as_str())
+        receipt["path"] == json!(path) && receipt["sha256"].as_str() == Some(hash(&bytes).as_str())
     })
 }
 #[cfg(test)]
@@ -485,9 +489,17 @@ mod registration_tests {
         fs::create_dir_all(root.join("receipts")).unwrap();
         fs::write(&path, br#"{"name":"com.serein.context","path":"old-host"}"#).unwrap();
         let receipt = json!({"path":path,"sha256":hash(&fs::read(&path).unwrap())});
-        fs::write(root.join("receipts/native-firefox.json"), serde_json::to_vec(&receipt).unwrap()).unwrap();
+        fs::write(
+            root.join("receipts/native-firefox.json"),
+            serde_json::to_vec(&receipt).unwrap(),
+        )
+        .unwrap();
         assert!(owned_registration(&root, &path, "firefox"));
-        fs::write(&path, br#"{"name":"com.serein.context","path":"user-host"}"#).unwrap();
+        fs::write(
+            &path,
+            br#"{"name":"com.serein.context","path":"user-host"}"#,
+        )
+        .unwrap();
         assert!(!owned_registration(&root, &path, "firefox"));
     }
 }

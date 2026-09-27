@@ -1,0 +1,58 @@
+{
+  "topic": "Comparing public guidance and options for a home-office chair and workstation",
+  "seedFingerprint": "a0bc9607ddce3923",
+  "searches": [
+    {
+      "name": "Amazon search",
+      "url": "https://www.amazon.com/s?k=ergonomic+office+chair",
+      "host": "www.amazon.com",
+      "queryParam": "k",
+      "query": "ergonomic office chair"
+    },
+    {
+      "name": "Google Search",
+      "url": "https://www.google.com/search?q=ergonomic+home+office+chair+workstation+setup",
+      "host": "www.google.com",
+      "queryParam": "q",
+      "query": "ergonomic home office chair workstation setup"
+    }
+  ],
+  "pages": [
+    {
+      "name": "HSE workstation checklist",
+      "url": "https://www.hse.gov.uk/pubns/ck1.htm",
+      "host": "www.hse.gov.uk",
+      "titleContains": "Display screen equipment (DSE) workstation checklist"
+    },
+    {
+      "name": "OSHA computer-workstation overview",
+      "url": "https://www.osha.gov/computer-workstations",
+      "host": "www.osha.gov",
+      "titleContains": "Computer Workstations"
+    },
+    {
+      "name": "Cornell workstation guide",
+      "url": "https://ergo.human.cornell.edu/ergoguide.html",
+      "host": "ergo.human.cornell.edu",
+      "titleContains": "Computer Workstation Ergonomics Guidelines"
+    },
+    {
+      "name": "CCOHS ergonomic-chair guide",
+      "url": "https://www.ccohs.ca/oshanswers/ergonomics/office/chair.html",
+      "host": "www.ccohs.ca",
+      "titleContains": "Ergonomic Chair"
+    },
+    {
+      "name": "UCLA workstation setup guide",
+      "url": "https://ergonomics.ucla.edu/office-ergonomics/4-steps-set-your-workstation",
+      "host": "ergonomics.ucla.edu",
+      "titleContains": "4 Steps to Set Up Your Workstation"
+    },
+    {
+      "name": "Reddit office-chair discussion",
+      "url": "https://www.reddit.com/r/OfficeChairs/comments/1oasp4s/",
+      "host": "www.reddit.com",
+      "titleContains": "Excel sheet of chairs"
+    }
+  ]
+}

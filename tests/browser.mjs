@@ -25,7 +25,15 @@ try{
  await page.screenshot({animations:'disabled',path:path.join(evidence,'onboarding-light.png'),fullPage:true});
  // Exercise consent, persisted policy and private session via real extension messaging.
  const send=msg=>page.evaluate(msg=>chrome.runtime.sendMessage(msg),msg);
- const setTheme=async theme=>{if(await page.evaluate(()=>document.documentElement.dataset.theme)!==theme)await page.getByRole('button',{name:'Toggle color theme'}).click();await page.waitForFunction(t=>document.documentElement.dataset.theme===t,theme);};
+ const setTheme=async theme=>{
+  for(let attempt=0;attempt<4;attempt++){
+   await page.waitForTimeout(100);
+   if(await page.evaluate(()=>document.documentElement.dataset.theme)===theme)return;
+   await page.getByRole('button',{name:'Toggle color theme'}).click();
+   await page.waitForTimeout(100);
+  }
+  assert.equal(await page.evaluate(()=>document.documentElement.dataset.theme),theme);
+ };
  const state=await send({type:'state'});assert.equal(state.state.policy.consent,false);assert.equal(state.queued,0);
  await send({type:'policy',patch:{consent:true,recall_enabled:true}});
  await send({type:'pause',paused:true});assert.equal((await send({type:'state'})).state.policy.paused,true);

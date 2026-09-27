@@ -16,7 +16,7 @@ from datetime import datetime, timezone
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 OUT = ROOT / "release"
-VERSION = os.environ.get("SEREIN_VERSION", "0.1.0")
+VERSION = os.environ.get("SEREIN_VERSION", "0.1.1")
 if not re.fullmatch(r"\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?", VERSION):
     raise SystemExit("SEREIN_VERSION must be a simple semantic version.")
 AUDIT_PATH = ROOT / "docs/publication-audit.json"
@@ -32,7 +32,6 @@ SOURCE_ALLOWLIST = [
     "package.json",
     "pnpm-lock.yaml",
     "pnpm-workspace.yaml",
-    "algorithm.toml",
     "crates",
     "contracts",
     "fixtures",

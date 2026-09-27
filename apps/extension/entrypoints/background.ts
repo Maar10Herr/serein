@@ -4,6 +4,7 @@ import * as db from "../lib/db";
 import { foregroundDelta, shouldRetain } from "../lib/attention";
 import type { Policy, State, Ticket, Visit } from "../lib/types";
 const host = "com.serein.context";
+class NativeRemedyError extends Error {}
 let chain: Promise<unknown> = Promise.resolve();
 const serial = <T>(fn: () => Promise<T>): Promise<T> => {
   const p = chain.then(fn, fn);
@@ -38,7 +39,7 @@ async function flush(force = false) {
     for (const c of controls) {
       const r = await native(s, c.op, c.payload, c.epoch);
       if (r.status === "error")
-        throw new Error(r.error?.remedy || "Policy update failed");
+        throw new NativeRemedyError(r.error?.remedy || "Policy update failed");
       await db.removeControl(c.id);
     }
     const items = await db.pending();
@@ -62,7 +63,7 @@ async function flush(force = false) {
     if (batch.length) {
       const r = await native(s, "ingest", { events: batch });
       if (r.status === "error")
-        throw new Error(r.error?.remedy || "Save failed");
+        throw new NativeRemedyError(r.error?.remedy || "Save failed");
       await db.removeEvents([
         ...(r.acknowledged_ids || []),
         ...(r.duplicate_ids || []),
@@ -77,8 +78,13 @@ async function flush(force = false) {
     await db.saveState(s);
     if ((await db.pending()).length)
       await browser.alarms.create("batch", { when: Date.now() + 1000 });
-  } catch {
-    s.lastError = "Finish local setup";
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "";
+    s.lastError = /native messaging host|native host|not found|forbidden/i.test(message)
+      ? "Finish local setup"
+      : error instanceof NativeRemedyError
+        ? message
+        : "The local helper failed. Try again.";
     s.retry = Math.min(s.retry + 1, 8);
     s.retryAt = Date.now() + Math.min(120_000, 1000 * 2 ** (s.retry - 1)) * (0.9 + Math.random() * 0.2);
     await db.saveState(s);

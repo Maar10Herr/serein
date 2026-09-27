@@ -38,9 +38,10 @@ function App() {
           setSite(u.hostname);
       } catch {}
     });
-    browser.storage.local.get(["theme", "locale"]).then((x) => {
+    browser.storage.local.get(["theme", "themeMode", "locale"]).then((x) => {
       if (typeof x.locale === "string") setLocale(x.locale as Locale);
-      if (typeof x.theme === "string")
+      if ((x.themeMode === "manual" && (x.theme === "light" || x.theme === "dark")) ||
+          (x.themeMode === undefined && x.theme === "dark"))
         document.documentElement.dataset.theme = x.theme;
     });
   }, []);

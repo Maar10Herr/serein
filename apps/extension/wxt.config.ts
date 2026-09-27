@@ -21,7 +21,7 @@ export default defineConfig({
   manifest: ({ browser }) => ({
     name: "Serein",
     description: "Your context. Only when it helps.",
-    version: "0.1.0",
+    version: "0.1.1",
     permissions: ["tabs", "storage", "alarms", "idle", "nativeMessaging"],
     ...(browser === "firefox"
       ? {

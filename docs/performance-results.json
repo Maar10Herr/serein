@@ -7,15 +7,15 @@
   "cache_state": "warm; no forced OS cache eviction",
   "ingest_32": {
     "samples": 25,
-    "median_ms": 83.15641712397337,
-    "p95_ms": 86.4809169434011
+    "median_ms": 85.93262499198318,
+    "p95_ms": 88.24741584248841
   },
   "indexed_recall": {
     "samples": 25,
-    "median_ms": 248.5694580245763,
-    "p95_ms": 278.4312500152737
+    "median_ms": 164.51237513683736,
+    "p95_ms": 200.111584039405
   },
-  "peak_rss_bytes_child_processes_during_harness": 106725376,
+  "peak_rss_bytes_child_processes_during_harness": 93798400,
   "rss_scope": "Maximum of sequential child processes spawned by this harness, including recall; may exceed the recall process peak.",
   "reference_machine": "This host is not the specified dual-core/4GiB reference laptop.",
   "not_measured": [

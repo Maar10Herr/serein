@@ -4,12 +4,12 @@ This release supports a Mac with Apple silicon. Install the browser extension an
 
 ## 1. Install the extension
 
-Download one extension from [v0.1.0](https://github.com/Maar10Herr/serein/releases/tag/v0.1.0):
+Download one extension from [v0.1.1](https://github.com/Maar10Herr/serein/releases/tag/v0.1.1):
 
 | Browser | Download | Load it |
 | --- | --- | --- |
-| Chrome | [Extension ZIP](https://github.com/Maar10Herr/serein/releases/download/v0.1.0/serein-chrome-0.1.0-unsigned.zip) | Extract it. Open `chrome://extensions`, enable **Developer mode**, click **Load unpacked**, and select the folder containing `manifest.json`. |
-| Firefox | [Extension ZIP](https://github.com/Maar10Herr/serein/releases/download/v0.1.0/serein-firefox-0.1.0-unsigned.zip) | Extract it. Open `about:debugging#/runtime/this-firefox`, click **Load Temporary Add-on**, and select `manifest.json`. |
+| Chrome | [Extension ZIP](https://github.com/Maar10Herr/serein/releases/download/v0.1.1/serein-chrome-0.1.1-unsigned.zip) | Extract it. Open `chrome://extensions`, enable **Developer mode**, click **Load unpacked**, and select the folder containing `manifest.json`. |
+| Firefox | [Extension ZIP](https://github.com/Maar10Herr/serein/releases/download/v0.1.1/serein-firefox-0.1.1-unsigned.zip) | Extract it. Open `about:debugging#/runtime/this-firefox`, click **Load Temporary Add-on**, and select `manifest.json`. |
 
 These ZIPs are unsigned. Firefox removes temporary add-ons when it restarts; load the extension again after a restart. Permanent Firefox installation requires a signed package, which this release does not provide. The macOS helper is also unsigned and not notarized.
 
@@ -31,4 +31,4 @@ The ticket expires after 15 minutes. If linking takes longer, copy a new instruc
 
 The database is stored in your user application-data directory, outside the skill folder, so updating the skill does not replace your saved context. The helper starts for a browser batch or skill recall and exits after its reply.
 
-If macOS blocks an unsigned binary, inspect the [source and checksums](https://github.com/Maar10Herr/serein/releases/tag/v0.1.0) before allowing it to run, or [build from source](DEVELOPMENT.md). The [test report](TEST_REPORT.md) distinguishes installed integrations from integrations executed inside real assistants.
+If macOS blocks an unsigned binary, inspect the [source and checksums](https://github.com/Maar10Herr/serein/releases/tag/v0.1.1) before allowing it to run, or [build from source](DEVELOPMENT.md). The [test report](TEST_REPORT.md) distinguishes installed integrations from integrations executed inside real assistants.

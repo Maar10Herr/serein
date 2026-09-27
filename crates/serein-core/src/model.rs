@@ -1,4 +1,5 @@
 //! Immutable model pack. Missing packs explicitly select lexical fallback.
+use crate::algorithm;
 use crate::*;
 use memmap2::Mmap;
 use serde::Deserialize;
@@ -21,11 +22,23 @@ pub struct Encoder {
     tokenizer: tokenizers::Tokenizer,
     pub manifest: Manifest,
 }
+/// Read the selected model generation without loading its weights.
+pub fn current_hash(path: &Path) -> Option<String> {
+    let manifest: Manifest =
+        serde_json::from_slice(&std::fs::read(path.join("manifest.json")).ok()?).ok()?;
+    (manifest.format == 1
+        && manifest.dimensions == algorithm::DIMENSIONS
+        && manifest.rows <= 200000)
+        .then_some(manifest.model_hash)
+}
 impl Encoder {
     pub fn open(path: &Path) -> Result<Self> {
         let manifest: Manifest =
             serde_json::from_slice(&std::fs::read(path.join("manifest.json"))?)?;
-        if manifest.format != 1 || manifest.dimensions != 256 || manifest.rows > 200000 {
+        if manifest.format != 1
+            || manifest.dimensions != algorithm::DIMENSIONS
+            || manifest.rows > 200000
+        {
             return Err(Error("MODEL_INVALID", "Unsupported model pack.".into()));
         }
         let wf = File::open(path.join("weights.i8"))?;
@@ -33,7 +46,7 @@ impl Encoder {
         let weights = unsafe { Mmap::map(&wf)? };
         let scales = unsafe { Mmap::map(&sf)? };
         let tokens = std::fs::read(path.join("tokenizer.json"))?;
-        if weights.len() != manifest.rows * 256
+        if weights.len() != manifest.rows * algorithm::DIMENSIONS
             || scales.len() != manifest.rows * 4
             || hash(&weights) != manifest.weights_sha256
             || hash(&scales) != manifest.scales_sha256
@@ -61,7 +74,7 @@ impl Encoder {
     }
     pub fn encode(&self, text: &str) -> Option<Vec<f32>> {
         let encoding = self.tokenizer.encode(text, false).ok()?;
-        let mut v = vec![0f32; 256];
+        let mut v = vec![0f32; algorithm::DIMENSIONS];
         for &i in encoding.get_ids().iter().take(1024) {
             if self.manifest.special_ids.contains(&i) {
                 continue;
@@ -75,7 +88,7 @@ impl Encoder {
                 return None;
             }
             for (j, x) in v.iter_mut().enumerate() {
-                *x += (self.weights[i * 256 + j] as i8) as f32 * scale
+                *x += (self.weights[i * algorithm::DIMENSIONS + j] as i8) as f32 * scale
             }
         }
         normalize(v)

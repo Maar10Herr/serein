@@ -225,7 +225,7 @@ fn topics_bound_memberships_and_invalidate_on_forget() {
         .unwrap();
     assert!(mass <= 1.00001);
     assert_eq!(
-        inference::activity(&v.conn)
+        inference::activity(&v.conn, Some("fixture"))
             .unwrap()
             .as_array()
             .unwrap()
@@ -234,7 +234,7 @@ fn topics_bound_memberships_and_invalidate_on_forget() {
     );
     v.forget(&s, Some(&e.site_key), None, 2).unwrap();
     assert_eq!(
-        inference::activity(&v.conn)
+        inference::activity(&v.conn, Some("fixture"))
             .unwrap()
             .as_array()
             .unwrap()
@@ -259,7 +259,9 @@ fn concurrent_ingest_and_recalls_are_bounded() {
                 if i == 0 {
                     vault.ingest(&source, 1, vec![event()]).unwrap();
                 } else {
-                    let result = vault.recall(&request("desk lamp"), &source, &missing).unwrap();
+                    let result = vault
+                        .recall(&request("desk lamp"), &source, &missing)
+                        .unwrap();
                     assert!(!result["context"].as_array().unwrap().is_empty());
                 }
             })

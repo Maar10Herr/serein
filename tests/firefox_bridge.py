@@ -14,7 +14,7 @@ else:
 with tempfile.TemporaryDirectory(prefix='serein-firefox-',dir=str(pathlib.Path(tempfile.gettempdir()).resolve()),ignore_cleanup_errors=True) as tmp:
  p=pathlib.Path(tmp);profile=p/'profile';profile.mkdir();home=p/'home';home.mkdir();extension_id='serein-context@local.serein';extension_uuid=str(uuid.uuid4())
  port_socket=socket.socket();port_socket.bind(('127.0.0.1',0));port=port_socket.getsockname()[1];port_socket.close()
- prefs={'marionette.port':port,'marionette.enabled':True,'extensions.webextensions.uuids':json.dumps({extension_id:extension_uuid}),'browser.shell.checkDefaultBrowser':False,'browser.startup.homepage_override.mstone':'ignore','datareporting.policy.dataSubmissionEnabled':False}
+ prefs={'marionette.port':port,'marionette.enabled':True,'extensions.webextensions.uuids':json.dumps({extension_id:extension_uuid}),'browser.shell.checkDefaultBrowser':False,'browser.startup.homepage_override.mstone':'ignore','datareporting.policy.dataSubmissionEnabled':False,'ui.systemUsesDarkTheme':1}
  (profile/'user.js').write_text('\n'.join('user_pref('+json.dumps(k)+','+json.dumps(v)+');' for k,v in prefs.items()))
  env={**os.environ,'SEREIN_INSTALL_HOME':str(home),'SEREIN_DATA_DIR':str(p/'data'),'MOZ_HEADLESS':'1','MOZ_CRASHREPORTER_DISABLE':'1'}
  log=open(p/'firefox.log','wb');process=subprocess.Popen([firefox_binary,'--headless','--remote-allow-system-access','--no-remote','--profile',str(profile),'--marionette'],stdout=log,stderr=log,env=env)
@@ -43,6 +43,10 @@ with tempfile.TemporaryDirectory(prefix='serein-firefox-',dir=str(pathlib.Path(t
   cmd('WebDriver:Navigate',{'url':f'moz-extension://{extension_uuid}/dashboard.html#connections'})
   def script(code,args=[]):return cmd('WebDriver:ExecuteAsyncScript',{'script':code,'args':args,'newSandbox':False,'sandbox':None,'scriptTimeout':15000})['value']
   def send(message):return script('const done=arguments[arguments.length-1]; browser.runtime.sendMessage(arguments[0]).then(done,e=>done({error:e.message}));',[message])
+  initial_theme=script('const done=arguments[arguments.length-1];done({systemDark:matchMedia("(prefers-color-scheme: dark)").matches,override:document.documentElement.getAttribute("data-theme"),background:getComputedStyle(document.documentElement).backgroundColor});')
+  assert initial_theme=={'systemDark':True,'override':None,'background':'rgb(24, 27, 26)'},initial_theme
+  time.sleep(.3)
+  screenshot=cmd('WebDriver:TakeScreenshot',{'id':None,'full':True})['value'];(ROOT/'docs/screenshots/firefox-onboarding-dark.png').write_bytes(base64.b64decode(screenshot))
   state=send({'type':'state'});assert state['state']['policy']['consent']==False,state
   send({'type':'policy','patch':{'consent':True,'recall_enabled':True}})
   ticket=send({'type':'ticket','adapters':['generic'],'label':'Synthetic Firefox fixture'})
@@ -64,8 +68,9 @@ with tempfile.TemporaryDirectory(prefix='serein-firefox-',dir=str(pathlib.Path(t
   send({'type':'pause','paused':True});cmd('WebDriver:Refresh');assert send({'type':'state'})['state']['policy']['paused']
   appearance=script('document.documentElement.dataset.theme="light";const done=arguments[arguments.length-1];const deadline=Date.now()+3000;function check(){const card=document.body;const style=getComputedStyle(card);const result={background:style.backgroundColor,color:style.color};if(result.background==="rgb(247, 246, 242)"||Date.now()>deadline)done(result);else setTimeout(check,100)}check();')
   assert appearance['background']=='rgb(247, 246, 242)',appearance
+  time.sleep(.3)
   screenshot=cmd('WebDriver:TakeScreenshot',{'id':None,'full':True})['value'];(ROOT/'docs/screenshots/firefox-onboarding.png').write_bytes(base64.b64decode(screenshot))
-  report={'browser':session.get('capabilities',{}).get('browserVersion'),'nativeMessaging':'PASS','checks':['temporary unsigned installation','consent off by default','actual hello pairing','ingest ACK','duplicate ACK','exclude and forget','persistent pause','screenshot'],'permanent_installation':'requires Mozilla signing'};(ROOT/'docs/firefox-test-results.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
+  report={'browser':session.get('capabilities',{}).get('browserVersion'),'nativeMessaging':'PASS','checks':['temporary unsigned installation','consent off by default','actual hello pairing','ingest ACK','duplicate ACK','exclude and forget','persistent pause','system dark theme default','screenshot'],'permanent_installation':'requires Mozilla signing'};(ROOT/'docs/firefox-test-results.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
  finally:
   if sock:
    try:cmd('Marionette:Quit',{'flags':['eForceQuit']})

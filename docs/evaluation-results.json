@@ -32,7 +32,7 @@
         {
           "case_id": "en-coffee",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.579917,
+          "elapsed_ms": 0.7086250000000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -51,7 +51,7 @@
         {
           "case_id": "en-lamp",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.32129199999999997,
+          "elapsed_ms": 0.22933299999999998,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -70,7 +70,7 @@
         {
           "case_id": "en-garden",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.330792,
+          "elapsed_ms": 0.236875,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -89,7 +89,7 @@
         {
           "case_id": "en-bike",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.34650000000000003,
+          "elapsed_ms": 0.261458,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -108,7 +108,7 @@
         {
           "case_id": "en-bread",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.365958,
+          "elapsed_ms": 0.213959,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -127,7 +127,7 @@
         {
           "case_id": "en-unit",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.342291,
+          "elapsed_ms": 0.26154200000000005,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-unit-o1"
@@ -148,7 +148,7 @@
         {
           "case_id": "en-gift",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.312417,
+          "elapsed_ms": 0.231208,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-gift-o1"
@@ -169,7 +169,7 @@
         {
           "case_id": "en-criticism",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.302125,
+          "elapsed_ms": 0.376125,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-criticism-o1"
@@ -190,7 +190,7 @@
         {
           "case_id": "en-negation",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.29341700000000004,
+          "elapsed_ms": 0.287667,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-negation-o1"
@@ -211,7 +211,7 @@
         {
           "case_id": "en-nomatch1",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.22924999999999998,
+          "elapsed_ms": 0.196959,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -228,7 +228,7 @@
         {
           "case_id": "en-repeat",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.340333,
+          "elapsed_ms": 0.31,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-repeat-o1",
@@ -253,7 +253,7 @@
         {
           "case_id": "en-work",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.28650000000000003,
+          "elapsed_ms": 0.23566700000000002,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-work-o1"
@@ -283,7 +283,7 @@
         {
           "case_id": "en-privatesession",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.229542,
+          "elapsed_ms": 0.142333,
           "evaluation_status": "native_paused_session_control",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -300,7 +300,7 @@
         {
           "case_id": "en-nomatch2",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.261625,
+          "elapsed_ms": 0.14675,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -317,7 +317,7 @@
         {
           "case_id": "de-coffee",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.320041,
+          "elapsed_ms": 0.233125,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -336,7 +336,7 @@
         {
           "case_id": "de-lamp",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.28983299999999995,
+          "elapsed_ms": 0.14200000000000002,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -353,7 +353,7 @@
         {
           "case_id": "de-garden",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.290458,
+          "elapsed_ms": 0.208875,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -372,7 +372,7 @@
         {
           "case_id": "de-bike",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.325125,
+          "elapsed_ms": 0.261291,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -391,7 +391,7 @@
         {
           "case_id": "de-bread",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.265792,
+          "elapsed_ms": 0.18120899999999998,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -410,7 +410,7 @@
         {
           "case_id": "de-unit",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.301916,
+          "elapsed_ms": 0.232833,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-unit-o1"
@@ -431,7 +431,7 @@
         {
           "case_id": "de-gift",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.303458,
+          "elapsed_ms": 0.22020800000000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-gift-o1"
@@ -452,7 +452,7 @@
         {
           "case_id": "de-criticism",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.321333,
+          "elapsed_ms": 0.23049999999999998,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-criticism-o1"
@@ -473,7 +473,7 @@
         {
           "case_id": "de-negation",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.31925,
+          "elapsed_ms": 0.23149999999999998,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-negation-o1"
@@ -494,7 +494,7 @@
         {
           "case_id": "de-nomatch1",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.23204200000000003,
+          "elapsed_ms": 0.138125,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -511,7 +511,7 @@
         {
           "case_id": "de-repeat",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.305084,
+          "elapsed_ms": 0.224083,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-repeat-o1",
@@ -536,7 +536,7 @@
         {
           "case_id": "de-work",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.274292,
+          "elapsed_ms": 0.207417,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-work-o1"
@@ -566,7 +566,7 @@
         {
           "case_id": "de-privatesession",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.275417,
+          "elapsed_ms": 0.164125,
           "evaluation_status": "native_paused_session_control",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -583,7 +583,7 @@
         {
           "case_id": "de-nomatch2",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.271458,
+          "elapsed_ms": 0.15320899999999998,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -600,7 +600,7 @@
         {
           "case_id": "nl-coffee",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.294625,
+          "elapsed_ms": 0.22566599999999998,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -619,7 +619,7 @@
         {
           "case_id": "nl-lamp",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.27125,
+          "elapsed_ms": 0.14775000000000002,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -636,7 +636,7 @@
         {
           "case_id": "nl-garden",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.287917,
+          "elapsed_ms": 0.148625,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -653,7 +653,7 @@
         {
           "case_id": "nl-bike",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.306792,
+          "elapsed_ms": 0.225042,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -672,7 +672,7 @@
         {
           "case_id": "nl-bread",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.272458,
+          "elapsed_ms": 0.253708,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -691,7 +691,7 @@
         {
           "case_id": "nl-unit",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.308792,
+          "elapsed_ms": 0.249583,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-unit-o1"
@@ -712,7 +712,7 @@
         {
           "case_id": "nl-gift",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.28350000000000003,
+          "elapsed_ms": 0.203708,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-gift-o1"
@@ -733,7 +733,7 @@
         {
           "case_id": "nl-criticism",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.279667,
+          "elapsed_ms": 0.190583,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-criticism-o1"
@@ -754,7 +754,7 @@
         {
           "case_id": "nl-negation",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.317167,
+          "elapsed_ms": 0.241875,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-negation-o1"
@@ -775,7 +775,7 @@
         {
           "case_id": "nl-nomatch1",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.23,
+          "elapsed_ms": 0.142292,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -792,7 +792,7 @@
         {
           "case_id": "nl-repeat",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.42012499999999997,
+          "elapsed_ms": 0.217084,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-repeat-o1",
@@ -817,7 +817,7 @@
         {
           "case_id": "nl-work",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.321792,
+          "elapsed_ms": 0.18895800000000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-work-o1"
@@ -847,7 +847,7 @@
         {
           "case_id": "nl-privatesession",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.308417,
+          "elapsed_ms": 0.158458,
           "evaluation_status": "native_paused_session_control",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -864,7 +864,7 @@
         {
           "case_id": "nl-nomatch2",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.275167,
+          "elapsed_ms": 0.132125,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -881,7 +881,7 @@
         {
           "case_id": "fr-coffee",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.369458,
+          "elapsed_ms": 0.25,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -900,7 +900,7 @@
         {
           "case_id": "fr-lamp",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.278792,
+          "elapsed_ms": 0.148334,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -917,7 +917,7 @@
         {
           "case_id": "fr-garden",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.314583,
+          "elapsed_ms": 0.23625,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -936,7 +936,7 @@
         {
           "case_id": "fr-bike",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.338458,
+          "elapsed_ms": 0.31116699999999997,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -955,7 +955,7 @@
         {
           "case_id": "fr-bread",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.285166,
+          "elapsed_ms": 0.28025,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -974,7 +974,7 @@
         {
           "case_id": "fr-unit",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.33337500000000003,
+          "elapsed_ms": 0.281542,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-unit-o1"
@@ -995,7 +995,7 @@
         {
           "case_id": "fr-gift",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.35575,
+          "elapsed_ms": 0.233458,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-gift-o1"
@@ -1016,7 +1016,7 @@
         {
           "case_id": "fr-criticism",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.285042,
+          "elapsed_ms": 0.220042,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-criticism-o1"
@@ -1037,7 +1037,7 @@
         {
           "case_id": "fr-negation",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.281,
+          "elapsed_ms": 0.212792,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-negation-o1"
@@ -1058,7 +1058,7 @@
         {
           "case_id": "fr-nomatch1",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.228375,
+          "elapsed_ms": 0.15045799999999998,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1075,7 +1075,7 @@
         {
           "case_id": "fr-repeat",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.308666,
+          "elapsed_ms": 0.23458400000000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-repeat-o1",
@@ -1100,7 +1100,7 @@
         {
           "case_id": "fr-work",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.288042,
+          "elapsed_ms": 0.22933299999999998,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-work-o1"
@@ -1130,7 +1130,7 @@
         {
           "case_id": "fr-privatesession",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.268959,
+          "elapsed_ms": 0.14200000000000002,
           "evaluation_status": "native_paused_session_control",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1147,7 +1147,7 @@
         {
           "case_id": "fr-nomatch2",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.256583,
+          "elapsed_ms": 0.146584,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1164,7 +1164,7 @@
         {
           "case_id": "ja-coffee",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.250083,
+          "elapsed_ms": 0.147791,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1181,7 +1181,7 @@
         {
           "case_id": "ja-lamp",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.239584,
+          "elapsed_ms": 0.129625,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1198,7 +1198,7 @@
         {
           "case_id": "ja-garden",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.262208,
+          "elapsed_ms": 0.13975,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1215,7 +1215,7 @@
         {
           "case_id": "ja-bike",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.266833,
+          "elapsed_ms": 0.143166,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1232,7 +1232,7 @@
         {
           "case_id": "ja-bread",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.227625,
+          "elapsed_ms": 0.124208,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1249,7 +1249,7 @@
         {
           "case_id": "ja-unit",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.261917,
+          "elapsed_ms": 0.14075000000000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-unit-o1"
@@ -1268,7 +1268,7 @@
         {
           "case_id": "ja-gift",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.24633400000000003,
+          "elapsed_ms": 0.129542,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-gift-o1"
@@ -1287,7 +1287,7 @@
         {
           "case_id": "ja-criticism",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.28016599999999997,
+          "elapsed_ms": 0.774208,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-criticism-o1"
@@ -1308,7 +1308,7 @@
         {
           "case_id": "ja-negation",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.24504099999999998,
+          "elapsed_ms": 0.16124999999999998,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-negation-o1"
@@ -1327,7 +1327,7 @@
         {
           "case_id": "ja-nomatch1",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.45016700000000004,
+          "elapsed_ms": 0.13345800000000002,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1344,7 +1344,7 @@
         {
           "case_id": "ja-repeat",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.34808300000000003,
+          "elapsed_ms": 0.135417,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-repeat-o1",
@@ -1365,7 +1365,7 @@
         {
           "case_id": "ja-work",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.25179100000000004,
+          "elapsed_ms": 0.129416,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-work-o1"
@@ -1393,7 +1393,7 @@
         {
           "case_id": "ja-privatesession",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.23458299999999999,
+          "elapsed_ms": 0.12945900000000002,
           "evaluation_status": "native_paused_session_control",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1410,7 +1410,7 @@
         {
           "case_id": "ja-nomatch2",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.23374999999999999,
+          "elapsed_ms": 0.129291,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1427,7 +1427,7 @@
         {
           "case_id": "zh-coffee",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.239709,
+          "elapsed_ms": 0.136167,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1444,7 +1444,7 @@
         {
           "case_id": "zh-lamp",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.258,
+          "elapsed_ms": 0.139834,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1461,7 +1461,7 @@
         {
           "case_id": "zh-garden",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.264708,
+          "elapsed_ms": 0.14825,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1478,7 +1478,7 @@
         {
           "case_id": "zh-bike",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.25033299999999997,
+          "elapsed_ms": 0.142375,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1495,7 +1495,7 @@
         {
           "case_id": "zh-bread",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.22975,
+          "elapsed_ms": 0.135875,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1512,7 +1512,7 @@
         {
           "case_id": "zh-unit",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.262334,
+          "elapsed_ms": 0.142208,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-unit-o1"
@@ -1531,7 +1531,7 @@
         {
           "case_id": "zh-gift",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.225166,
+          "elapsed_ms": 0.136875,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-gift-o1"
@@ -1550,7 +1550,7 @@
         {
           "case_id": "zh-criticism",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.293917,
+          "elapsed_ms": 0.206125,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-criticism-o1"
@@ -1571,7 +1571,7 @@
         {
           "case_id": "zh-negation",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.27620900000000004,
+          "elapsed_ms": 0.14200000000000002,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-negation-o1"
@@ -1590,7 +1590,7 @@
         {
           "case_id": "zh-nomatch1",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.235375,
+          "elapsed_ms": 0.143125,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1607,7 +1607,7 @@
         {
           "case_id": "zh-repeat",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.26483300000000004,
+          "elapsed_ms": 0.148791,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-repeat-o1",
@@ -1628,7 +1628,7 @@
         {
           "case_id": "zh-work",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.214458,
+          "elapsed_ms": 0.15329199999999998,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-work-o1"
@@ -1656,7 +1656,7 @@
         {
           "case_id": "zh-privatesession",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.207042,
+          "elapsed_ms": 0.138458,
           "evaluation_status": "native_paused_session_control",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1673,7 +1673,7 @@
         {
           "case_id": "zh-nomatch2",
           "duplicate_return_ids": [],
-          "elapsed_ms": 0.206708,
+          "elapsed_ms": 0.138792,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "lexical",
@@ -1698,8 +1698,8 @@
       },
       "hybrid_index_mode_case_count": 0,
       "latency_ms": {
-        "median": 0.280583,
-        "p95": 0.365958
+        "median": 0.1850835,
+        "p95": 0.31
       },
       "mode": "lexical_missing_pack",
       "model_path": "models/pack",
@@ -1726,7 +1726,7 @@
         {
           "case_id": "en-coffee",
           "duplicate_return_ids": [],
-          "elapsed_ms": 289.749792,
+          "elapsed_ms": 202.26412499999998,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-coffee-o1"
@@ -1735,7 +1735,7 @@
           "kind": "semantic_paraphrase",
           "language": "en",
           "max_bytes": 4096,
-          "packet_bytes": 595,
+          "packet_bytes": 596,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -1747,73 +1747,10 @@
         {
           "case_id": "en-lamp",
           "duplicate_return_ids": [],
-          "elapsed_ms": 230.76829099999998,
+          "elapsed_ms": 119.72687499999999,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-lamp-o1"
-          ],
-          "index_mode": "hybrid",
-          "kind": "semantic_paraphrase",
-          "language": "en",
-          "max_bytes": 4096,
-          "packet_bytes": 584,
-          "privacy_trigger": null,
-          "quality_class": "exact_match",
-          "response_status": "ok",
-          "returned_atom_count": 1,
-          "returned_observation_ids": [
-            "en-lamp-o1"
-          ]
-        },
-        {
-          "case_id": "en-garden",
-          "duplicate_return_ids": [],
-          "elapsed_ms": 229.362834,
-          "evaluation_status": "evaluated",
-          "expected_observation_ids": [
-            "en-garden-o1"
-          ],
-          "index_mode": "hybrid",
-          "kind": "semantic_paraphrase",
-          "language": "en",
-          "max_bytes": 4096,
-          "packet_bytes": 604,
-          "privacy_trigger": null,
-          "quality_class": "exact_match",
-          "response_status": "ok",
-          "returned_atom_count": 1,
-          "returned_observation_ids": [
-            "en-garden-o1"
-          ]
-        },
-        {
-          "case_id": "en-bike",
-          "duplicate_return_ids": [],
-          "elapsed_ms": 300.238458,
-          "evaluation_status": "evaluated",
-          "expected_observation_ids": [
-            "en-bike-o1"
-          ],
-          "index_mode": "hybrid",
-          "kind": "semantic_paraphrase",
-          "language": "en",
-          "max_bytes": 4096,
-          "packet_bytes": 602,
-          "privacy_trigger": null,
-          "quality_class": "exact_match",
-          "response_status": "ok",
-          "returned_atom_count": 1,
-          "returned_observation_ids": [
-            "en-bike-o1"
-          ]
-        },
-        {
-          "case_id": "en-bread",
-          "duplicate_return_ids": [],
-          "elapsed_ms": 230.551542,
-          "evaluation_status": "evaluated",
-          "expected_observation_ids": [
-            "en-bread-o1"
           ],
           "index_mode": "hybrid",
           "kind": "semantic_paraphrase",
@@ -1825,13 +1762,76 @@
           "response_status": "ok",
           "returned_atom_count": 1,
           "returned_observation_ids": [
+            "en-lamp-o1"
+          ]
+        },
+        {
+          "case_id": "en-garden",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 115.1915,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "en-garden-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 605,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "en-garden-o1"
+          ]
+        },
+        {
+          "case_id": "en-bike",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 117.73075,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "en-bike-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 603,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "en-bike-o1"
+          ]
+        },
+        {
+          "case_id": "en-bread",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 123.717958,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "en-bread-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "en",
+          "max_bytes": 4096,
+          "packet_bytes": 586,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
             "en-bread-o1"
           ]
         },
         {
           "case_id": "en-unit",
           "duplicate_return_ids": [],
-          "elapsed_ms": 232.022375,
+          "elapsed_ms": 113.24012499999999,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-unit-o1"
@@ -1840,7 +1840,7 @@
           "kind": "exact_unit",
           "language": "en",
           "max_bytes": 4096,
-          "packet_bytes": 593,
+          "packet_bytes": 594,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -1852,7 +1852,7 @@
         {
           "case_id": "en-gift",
           "duplicate_return_ids": [],
-          "elapsed_ms": 229.223708,
+          "elapsed_ms": 109.913208,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-gift-o1"
@@ -1861,7 +1861,7 @@
           "kind": "gift_research",
           "language": "en",
           "max_bytes": 4096,
-          "packet_bytes": 609,
+          "packet_bytes": 610,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -1873,7 +1873,7 @@
         {
           "case_id": "en-criticism",
           "duplicate_return_ids": [],
-          "elapsed_ms": 231.3545,
+          "elapsed_ms": 110.531167,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-criticism-o1"
@@ -1882,7 +1882,7 @@
           "kind": "criticism",
           "language": "en",
           "max_bytes": 4096,
-          "packet_bytes": 613,
+          "packet_bytes": 614,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -1894,7 +1894,7 @@
         {
           "case_id": "en-negation",
           "duplicate_return_ids": [],
-          "elapsed_ms": 232.808833,
+          "elapsed_ms": 119.20262500000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-negation-o1"
@@ -1903,7 +1903,7 @@
           "kind": "negation",
           "language": "en",
           "max_bytes": 4096,
-          "packet_bytes": 600,
+          "packet_bytes": 601,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -1915,14 +1915,14 @@
         {
           "case_id": "en-nomatch1",
           "duplicate_return_ids": [],
-          "elapsed_ms": 231.56337499999998,
+          "elapsed_ms": 120.453125,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
           "kind": "no_match",
           "language": "en",
           "max_bytes": 4096,
-          "packet_bytes": 245,
+          "packet_bytes": 246,
           "privacy_trigger": null,
           "quality_class": "correct_empty",
           "response_status": "empty",
@@ -1932,7 +1932,7 @@
         {
           "case_id": "en-repeat",
           "duplicate_return_ids": [],
-          "elapsed_ms": 231.410542,
+          "elapsed_ms": 113.374166,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-repeat-o1",
@@ -1943,7 +1943,7 @@
           "kind": "repeated_source",
           "language": "en",
           "max_bytes": 4096,
-          "packet_bytes": 936,
+          "packet_bytes": 937,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -1957,7 +1957,7 @@
         {
           "case_id": "en-work",
           "duplicate_return_ids": [],
-          "elapsed_ms": 230.7165,
+          "elapsed_ms": 120.786167,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "en-work-o1"
@@ -1966,7 +1966,7 @@
           "kind": "work_context",
           "language": "en",
           "max_bytes": 4096,
-          "packet_bytes": 610,
+          "packet_bytes": 611,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -1987,14 +1987,14 @@
         {
           "case_id": "en-privatesession",
           "duplicate_return_ids": [],
-          "elapsed_ms": 230.46587499999998,
+          "elapsed_ms": 113.099916,
           "evaluation_status": "native_paused_session_control",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
           "kind": "privacy_private_session",
           "language": "en",
           "max_bytes": 4096,
-          "packet_bytes": 245,
+          "packet_bytes": 246,
           "privacy_trigger": "private_session",
           "quality_class": "correct_empty",
           "response_status": "empty",
@@ -2004,14 +2004,14 @@
         {
           "case_id": "en-nomatch2",
           "duplicate_return_ids": [],
-          "elapsed_ms": 227.758042,
+          "elapsed_ms": 117.9725,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
           "kind": "no_match",
           "language": "en",
           "max_bytes": 4096,
-          "packet_bytes": 245,
+          "packet_bytes": 246,
           "privacy_trigger": null,
           "quality_class": "correct_empty",
           "response_status": "empty",
@@ -2021,7 +2021,7 @@
         {
           "case_id": "de-coffee",
           "duplicate_return_ids": [],
-          "elapsed_ms": 230.399,
+          "elapsed_ms": 118.601209,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-coffee-o1"
@@ -2030,7 +2030,7 @@
           "kind": "semantic_paraphrase",
           "language": "de",
           "max_bytes": 4096,
-          "packet_bytes": 604,
+          "packet_bytes": 605,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -2042,7 +2042,7 @@
         {
           "case_id": "de-lamp",
           "duplicate_return_ids": [],
-          "elapsed_ms": 227.619875,
+          "elapsed_ms": 113.615792,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-lamp-o1"
@@ -2051,7 +2051,7 @@
           "kind": "semantic_paraphrase",
           "language": "de",
           "max_bytes": 4096,
-          "packet_bytes": 245,
+          "packet_bytes": 246,
           "privacy_trigger": null,
           "quality_class": "miss",
           "response_status": "empty",
@@ -2061,31 +2061,10 @@
         {
           "case_id": "de-garden",
           "duplicate_return_ids": [],
-          "elapsed_ms": 227.825333,
+          "elapsed_ms": 115.154083,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-garden-o1"
-          ],
-          "index_mode": "hybrid",
-          "kind": "semantic_paraphrase",
-          "language": "de",
-          "max_bytes": 4096,
-          "packet_bytes": 612,
-          "privacy_trigger": null,
-          "quality_class": "exact_match",
-          "response_status": "ok",
-          "returned_atom_count": 1,
-          "returned_observation_ids": [
-            "de-garden-o1"
-          ]
-        },
-        {
-          "case_id": "de-bike",
-          "duplicate_return_ids": [],
-          "elapsed_ms": 229.531959,
-          "evaluation_status": "evaluated",
-          "expected_observation_ids": [
-            "de-bike-o1"
           ],
           "index_mode": "hybrid",
           "kind": "semantic_paraphrase",
@@ -2097,13 +2076,34 @@
           "response_status": "ok",
           "returned_atom_count": 1,
           "returned_observation_ids": [
+            "de-garden-o1"
+          ]
+        },
+        {
+          "case_id": "de-bike",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 112.74733400000001,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "de-bike-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "de",
+          "max_bytes": 4096,
+          "packet_bytes": 614,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
             "de-bike-o1"
           ]
         },
         {
           "case_id": "de-bread",
           "duplicate_return_ids": [],
-          "elapsed_ms": 232.085667,
+          "elapsed_ms": 111.806667,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-bread-o1"
@@ -2112,7 +2112,7 @@
           "kind": "semantic_paraphrase",
           "language": "de",
           "max_bytes": 4096,
-          "packet_bytes": 596,
+          "packet_bytes": 597,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -2124,7 +2124,7 @@
         {
           "case_id": "de-unit",
           "duplicate_return_ids": [],
-          "elapsed_ms": 228.21883400000002,
+          "elapsed_ms": 110.360125,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-unit-o1"
@@ -2133,7 +2133,7 @@
           "kind": "exact_unit",
           "language": "de",
           "max_bytes": 4096,
-          "packet_bytes": 592,
+          "packet_bytes": 593,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -2145,7 +2145,7 @@
         {
           "case_id": "de-gift",
           "duplicate_return_ids": [],
-          "elapsed_ms": 228.86999999999998,
+          "elapsed_ms": 116.96883399999999,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-gift-o1"
@@ -2154,7 +2154,7 @@
           "kind": "gift_research",
           "language": "de",
           "max_bytes": 4096,
-          "packet_bytes": 612,
+          "packet_bytes": 613,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -2166,7 +2166,7 @@
         {
           "case_id": "de-criticism",
           "duplicate_return_ids": [],
-          "elapsed_ms": 230.377666,
+          "elapsed_ms": 120.77579200000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-criticism-o1"
@@ -2175,7 +2175,7 @@
           "kind": "criticism",
           "language": "de",
           "max_bytes": 4096,
-          "packet_bytes": 616,
+          "packet_bytes": 617,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -2187,7 +2187,7 @@
         {
           "case_id": "de-negation",
           "duplicate_return_ids": [],
-          "elapsed_ms": 230.03037500000002,
+          "elapsed_ms": 111.744916,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-negation-o1"
@@ -2196,7 +2196,7 @@
           "kind": "negation",
           "language": "de",
           "max_bytes": 4096,
-          "packet_bytes": 618,
+          "packet_bytes": 619,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -2208,14 +2208,14 @@
         {
           "case_id": "de-nomatch1",
           "duplicate_return_ids": [],
-          "elapsed_ms": 229.469292,
+          "elapsed_ms": 109.79887500000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
           "kind": "no_match",
           "language": "de",
           "max_bytes": 4096,
-          "packet_bytes": 245,
+          "packet_bytes": 246,
           "privacy_trigger": null,
           "quality_class": "correct_empty",
           "response_status": "empty",
@@ -2225,7 +2225,7 @@
         {
           "case_id": "de-repeat",
           "duplicate_return_ids": [],
-          "elapsed_ms": 229.57575,
+          "elapsed_ms": 113.675583,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-repeat-o1",
@@ -2236,7 +2236,7 @@
           "kind": "repeated_source",
           "language": "de",
           "max_bytes": 4096,
-          "packet_bytes": 946,
+          "packet_bytes": 947,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -2250,7 +2250,7 @@
         {
           "case_id": "de-work",
           "duplicate_return_ids": [],
-          "elapsed_ms": 229.160041,
+          "elapsed_ms": 110.370625,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "de-work-o1"
@@ -2259,7 +2259,7 @@
           "kind": "work_context",
           "language": "de",
           "max_bytes": 4096,
-          "packet_bytes": 613,
+          "packet_bytes": 614,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -2280,14 +2280,14 @@
         {
           "case_id": "de-privatesession",
           "duplicate_return_ids": [],
-          "elapsed_ms": 228.298167,
+          "elapsed_ms": 111.427125,
           "evaluation_status": "native_paused_session_control",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
           "kind": "privacy_private_session",
           "language": "de",
           "max_bytes": 4096,
-          "packet_bytes": 245,
+          "packet_bytes": 246,
           "privacy_trigger": "private_session",
           "quality_class": "correct_empty",
           "response_status": "empty",
@@ -2297,14 +2297,14 @@
         {
           "case_id": "de-nomatch2",
           "duplicate_return_ids": [],
-          "elapsed_ms": 232.913667,
+          "elapsed_ms": 110.572459,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
           "kind": "no_match",
           "language": "de",
           "max_bytes": 4096,
-          "packet_bytes": 245,
+          "packet_bytes": 246,
           "privacy_trigger": null,
           "quality_class": "correct_empty",
           "response_status": "empty",
@@ -2314,7 +2314,7 @@
         {
           "case_id": "nl-coffee",
           "duplicate_return_ids": [],
-          "elapsed_ms": 232.36325,
+          "elapsed_ms": 116.104584,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-coffee-o1"
@@ -2323,7 +2323,7 @@
           "kind": "semantic_paraphrase",
           "language": "nl",
           "max_bytes": 4096,
-          "packet_bytes": 609,
+          "packet_bytes": 610,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -2335,7 +2335,7 @@
         {
           "case_id": "nl-lamp",
           "duplicate_return_ids": [],
-          "elapsed_ms": 229.827167,
+          "elapsed_ms": 114.681333,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-lamp-o1"
@@ -2344,7 +2344,7 @@
           "kind": "semantic_paraphrase",
           "language": "nl",
           "max_bytes": 4096,
-          "packet_bytes": 245,
+          "packet_bytes": 246,
           "privacy_trigger": null,
           "quality_class": "miss",
           "response_status": "empty",
@@ -2354,7 +2354,7 @@
         {
           "case_id": "nl-garden",
           "duplicate_return_ids": [],
-          "elapsed_ms": 228.720208,
+          "elapsed_ms": 110.345084,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-garden-o1"
@@ -2363,7 +2363,7 @@
           "kind": "semantic_paraphrase",
           "language": "nl",
           "max_bytes": 4096,
-          "packet_bytes": 245,
+          "packet_bytes": 246,
           "privacy_trigger": null,
           "quality_class": "miss",
           "response_status": "empty",
@@ -2373,7 +2373,7 @@
         {
           "case_id": "nl-bike",
           "duplicate_return_ids": [],
-          "elapsed_ms": 232.24941700000002,
+          "elapsed_ms": 111.48983299999999,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-bike-o1"
@@ -2382,7 +2382,7 @@
           "kind": "semantic_paraphrase",
           "language": "nl",
           "max_bytes": 4096,
-          "packet_bytes": 601,
+          "packet_bytes": 602,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -2394,7 +2394,7 @@
         {
           "case_id": "nl-bread",
           "duplicate_return_ids": [],
-          "elapsed_ms": 227.94845899999999,
+          "elapsed_ms": 116.002416,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-bread-o1"
@@ -2403,7 +2403,7 @@
           "kind": "semantic_paraphrase",
           "language": "nl",
           "max_bytes": 4096,
-          "packet_bytes": 586,
+          "packet_bytes": 587,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -2415,7 +2415,7 @@
         {
           "case_id": "nl-unit",
           "duplicate_return_ids": [],
-          "elapsed_ms": 227.50675,
+          "elapsed_ms": 115.208375,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-unit-o1"
@@ -2424,7 +2424,7 @@
           "kind": "exact_unit",
           "language": "nl",
           "max_bytes": 4096,
-          "packet_bytes": 591,
+          "packet_bytes": 592,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -2436,7 +2436,7 @@
         {
           "case_id": "nl-gift",
           "duplicate_return_ids": [],
-          "elapsed_ms": 230.176333,
+          "elapsed_ms": 110.427667,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-gift-o1"
@@ -2445,7 +2445,7 @@
           "kind": "gift_research",
           "language": "nl",
           "max_bytes": 4096,
-          "packet_bytes": 615,
+          "packet_bytes": 616,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -2457,7 +2457,7 @@
         {
           "case_id": "nl-criticism",
           "duplicate_return_ids": [],
-          "elapsed_ms": 229.935458,
+          "elapsed_ms": 110.34349999999999,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-criticism-o1"
@@ -2466,7 +2466,7 @@
           "kind": "criticism",
           "language": "nl",
           "max_bytes": 4096,
-          "packet_bytes": 603,
+          "packet_bytes": 604,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -2478,7 +2478,7 @@
         {
           "case_id": "nl-negation",
           "duplicate_return_ids": [],
-          "elapsed_ms": 234.634333,
+          "elapsed_ms": 110.23670800000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-negation-o1"
@@ -2487,7 +2487,7 @@
           "kind": "negation",
           "language": "nl",
           "max_bytes": 4096,
-          "packet_bytes": 619,
+          "packet_bytes": 620,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -2499,14 +2499,14 @@
         {
           "case_id": "nl-nomatch1",
           "duplicate_return_ids": [],
-          "elapsed_ms": 227.678791,
+          "elapsed_ms": 111.518,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
           "kind": "no_match",
           "language": "nl",
           "max_bytes": 4096,
-          "packet_bytes": 245,
+          "packet_bytes": 246,
           "privacy_trigger": null,
           "quality_class": "correct_empty",
           "response_status": "empty",
@@ -2516,7 +2516,7 @@
         {
           "case_id": "nl-repeat",
           "duplicate_return_ids": [],
-          "elapsed_ms": 228.58100000000002,
+          "elapsed_ms": 118.502083,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-repeat-o1",
@@ -2527,7 +2527,7 @@
           "kind": "repeated_source",
           "language": "nl",
           "max_bytes": 4096,
-          "packet_bytes": 946,
+          "packet_bytes": 947,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -2541,7 +2541,7 @@
         {
           "case_id": "nl-work",
           "duplicate_return_ids": [],
-          "elapsed_ms": 229.34574999999998,
+          "elapsed_ms": 114.2085,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "nl-work-o1"
@@ -2550,7 +2550,7 @@
           "kind": "work_context",
           "language": "nl",
           "max_bytes": 4096,
-          "packet_bytes": 612,
+          "packet_bytes": 613,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -2571,14 +2571,14 @@
         {
           "case_id": "nl-privatesession",
           "duplicate_return_ids": [],
-          "elapsed_ms": 228.868708,
+          "elapsed_ms": 110.5235,
           "evaluation_status": "native_paused_session_control",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
           "kind": "privacy_private_session",
           "language": "nl",
           "max_bytes": 4096,
-          "packet_bytes": 245,
+          "packet_bytes": 246,
           "privacy_trigger": "private_session",
           "quality_class": "correct_empty",
           "response_status": "empty",
@@ -2588,14 +2588,14 @@
         {
           "case_id": "nl-nomatch2",
           "duplicate_return_ids": [],
-          "elapsed_ms": 230.27900000000002,
+          "elapsed_ms": 111.32050000000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
           "kind": "no_match",
           "language": "nl",
           "max_bytes": 4096,
-          "packet_bytes": 245,
+          "packet_bytes": 246,
           "privacy_trigger": null,
           "quality_class": "correct_empty",
           "response_status": "empty",
@@ -2605,71 +2605,10 @@
         {
           "case_id": "fr-coffee",
           "duplicate_return_ids": [],
-          "elapsed_ms": 230.826708,
+          "elapsed_ms": 112.80995800000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-coffee-o1"
-          ],
-          "index_mode": "hybrid",
-          "kind": "semantic_paraphrase",
-          "language": "fr",
-          "max_bytes": 4096,
-          "packet_bytes": 604,
-          "privacy_trigger": null,
-          "quality_class": "exact_match",
-          "response_status": "ok",
-          "returned_atom_count": 1,
-          "returned_observation_ids": [
-            "fr-coffee-o1"
-          ]
-        },
-        {
-          "case_id": "fr-lamp",
-          "duplicate_return_ids": [],
-          "elapsed_ms": 231.96975,
-          "evaluation_status": "evaluated",
-          "expected_observation_ids": [
-            "fr-lamp-o1"
-          ],
-          "index_mode": "hybrid",
-          "kind": "semantic_paraphrase",
-          "language": "fr",
-          "max_bytes": 4096,
-          "packet_bytes": 245,
-          "privacy_trigger": null,
-          "quality_class": "miss",
-          "response_status": "empty",
-          "returned_atom_count": 0,
-          "returned_observation_ids": []
-        },
-        {
-          "case_id": "fr-garden",
-          "duplicate_return_ids": [],
-          "elapsed_ms": 229.889083,
-          "evaluation_status": "evaluated",
-          "expected_observation_ids": [
-            "fr-garden-o1"
-          ],
-          "index_mode": "hybrid",
-          "kind": "semantic_paraphrase",
-          "language": "fr",
-          "max_bytes": 4096,
-          "packet_bytes": 602,
-          "privacy_trigger": null,
-          "quality_class": "exact_match",
-          "response_status": "ok",
-          "returned_atom_count": 1,
-          "returned_observation_ids": [
-            "fr-garden-o1"
-          ]
-        },
-        {
-          "case_id": "fr-bike",
-          "duplicate_return_ids": [],
-          "elapsed_ms": 232.356958,
-          "evaluation_status": "evaluated",
-          "expected_observation_ids": [
-            "fr-bike-o1"
           ],
           "index_mode": "hybrid",
           "kind": "semantic_paraphrase",
@@ -2681,13 +2620,74 @@
           "response_status": "ok",
           "returned_atom_count": 1,
           "returned_observation_ids": [
+            "fr-coffee-o1"
+          ]
+        },
+        {
+          "case_id": "fr-lamp",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 114.022583,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "fr-lamp-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 246,
+          "privacy_trigger": null,
+          "quality_class": "miss",
+          "response_status": "empty",
+          "returned_atom_count": 0,
+          "returned_observation_ids": []
+        },
+        {
+          "case_id": "fr-garden",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 113.297875,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "fr-garden-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 603,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
+            "fr-garden-o1"
+          ]
+        },
+        {
+          "case_id": "fr-bike",
+          "duplicate_return_ids": [],
+          "elapsed_ms": 117.855167,
+          "evaluation_status": "evaluated",
+          "expected_observation_ids": [
+            "fr-bike-o1"
+          ],
+          "index_mode": "hybrid",
+          "kind": "semantic_paraphrase",
+          "language": "fr",
+          "max_bytes": 4096,
+          "packet_bytes": 606,
+          "privacy_trigger": null,
+          "quality_class": "exact_match",
+          "response_status": "ok",
+          "returned_atom_count": 1,
+          "returned_observation_ids": [
             "fr-bike-o1"
           ]
         },
         {
           "case_id": "fr-bread",
           "duplicate_return_ids": [],
-          "elapsed_ms": 230.875041,
+          "elapsed_ms": 113.679042,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-bread-o1"
@@ -2696,7 +2696,7 @@
           "kind": "semantic_paraphrase",
           "language": "fr",
           "max_bytes": 4096,
-          "packet_bytes": 583,
+          "packet_bytes": 584,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -2708,7 +2708,7 @@
         {
           "case_id": "fr-unit",
           "duplicate_return_ids": [],
-          "elapsed_ms": 232.413417,
+          "elapsed_ms": 111.899959,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-unit-o1"
@@ -2717,7 +2717,7 @@
           "kind": "exact_unit",
           "language": "fr",
           "max_bytes": 4096,
-          "packet_bytes": 598,
+          "packet_bytes": 599,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -2729,7 +2729,7 @@
         {
           "case_id": "fr-gift",
           "duplicate_return_ids": [],
-          "elapsed_ms": 232.15366600000002,
+          "elapsed_ms": 116.014417,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-gift-o1"
@@ -2738,7 +2738,7 @@
           "kind": "gift_research",
           "language": "fr",
           "max_bytes": 4096,
-          "packet_bytes": 615,
+          "packet_bytes": 616,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -2750,7 +2750,7 @@
         {
           "case_id": "fr-criticism",
           "duplicate_return_ids": [],
-          "elapsed_ms": 229.712083,
+          "elapsed_ms": 117.568875,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-criticism-o1"
@@ -2759,7 +2759,7 @@
           "kind": "criticism",
           "language": "fr",
           "max_bytes": 4096,
-          "packet_bytes": 604,
+          "packet_bytes": 605,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -2771,7 +2771,7 @@
         {
           "case_id": "fr-negation",
           "duplicate_return_ids": [],
-          "elapsed_ms": 227.468625,
+          "elapsed_ms": 115.490083,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-negation-o1"
@@ -2780,7 +2780,7 @@
           "kind": "negation",
           "language": "fr",
           "max_bytes": 4096,
-          "packet_bytes": 612,
+          "packet_bytes": 613,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -2792,14 +2792,14 @@
         {
           "case_id": "fr-nomatch1",
           "duplicate_return_ids": [],
-          "elapsed_ms": 229.919542,
+          "elapsed_ms": 118.012792,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
           "kind": "no_match",
           "language": "fr",
           "max_bytes": 4096,
-          "packet_bytes": 245,
+          "packet_bytes": 246,
           "privacy_trigger": null,
           "quality_class": "correct_empty",
           "response_status": "empty",
@@ -2809,7 +2809,7 @@
         {
           "case_id": "fr-repeat",
           "duplicate_return_ids": [],
-          "elapsed_ms": 230.078791,
+          "elapsed_ms": 116.125167,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-repeat-o1",
@@ -2820,7 +2820,7 @@
           "kind": "repeated_source",
           "language": "fr",
           "max_bytes": 4096,
-          "packet_bytes": 978,
+          "packet_bytes": 979,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -2834,7 +2834,7 @@
         {
           "case_id": "fr-work",
           "duplicate_return_ids": [],
-          "elapsed_ms": 228.990792,
+          "elapsed_ms": 130.69787499999998,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "fr-work-o1"
@@ -2843,7 +2843,7 @@
           "kind": "work_context",
           "language": "fr",
           "max_bytes": 4096,
-          "packet_bytes": 616,
+          "packet_bytes": 617,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -2864,14 +2864,14 @@
         {
           "case_id": "fr-privatesession",
           "duplicate_return_ids": [],
-          "elapsed_ms": 229.86124999999998,
+          "elapsed_ms": 123.983209,
           "evaluation_status": "native_paused_session_control",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
           "kind": "privacy_private_session",
           "language": "fr",
           "max_bytes": 4096,
-          "packet_bytes": 245,
+          "packet_bytes": 246,
           "privacy_trigger": "private_session",
           "quality_class": "correct_empty",
           "response_status": "empty",
@@ -2881,14 +2881,14 @@
         {
           "case_id": "fr-nomatch2",
           "duplicate_return_ids": [],
-          "elapsed_ms": 227.637917,
+          "elapsed_ms": 120.08966699999999,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
           "kind": "no_match",
           "language": "fr",
           "max_bytes": 4096,
-          "packet_bytes": 245,
+          "packet_bytes": 246,
           "privacy_trigger": null,
           "quality_class": "correct_empty",
           "response_status": "empty",
@@ -2898,7 +2898,7 @@
         {
           "case_id": "ja-coffee",
           "duplicate_return_ids": [],
-          "elapsed_ms": 227.892708,
+          "elapsed_ms": 120.28245899999999,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-coffee-o1"
@@ -2907,7 +2907,7 @@
           "kind": "semantic_paraphrase",
           "language": "ja",
           "max_bytes": 4096,
-          "packet_bytes": 617,
+          "packet_bytes": 618,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -2919,7 +2919,7 @@
         {
           "case_id": "ja-lamp",
           "duplicate_return_ids": [],
-          "elapsed_ms": 231.742875,
+          "elapsed_ms": 120.0185,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-lamp-o1"
@@ -2928,7 +2928,7 @@
           "kind": "semantic_paraphrase",
           "language": "ja",
           "max_bytes": 4096,
-          "packet_bytes": 245,
+          "packet_bytes": 246,
           "privacy_trigger": null,
           "quality_class": "miss",
           "response_status": "empty",
@@ -2938,7 +2938,7 @@
         {
           "case_id": "ja-garden",
           "duplicate_return_ids": [],
-          "elapsed_ms": 230.958541,
+          "elapsed_ms": 168.495416,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-garden-o1"
@@ -2947,7 +2947,7 @@
           "kind": "semantic_paraphrase",
           "language": "ja",
           "max_bytes": 4096,
-          "packet_bytes": 245,
+          "packet_bytes": 246,
           "privacy_trigger": null,
           "quality_class": "miss",
           "response_status": "empty",
@@ -2957,7 +2957,7 @@
         {
           "case_id": "ja-bike",
           "duplicate_return_ids": [],
-          "elapsed_ms": 229.64425,
+          "elapsed_ms": 120.646917,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-bike-o1"
@@ -2966,7 +2966,7 @@
           "kind": "semantic_paraphrase",
           "language": "ja",
           "max_bytes": 4096,
-          "packet_bytes": 607,
+          "packet_bytes": 608,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -2978,7 +2978,7 @@
         {
           "case_id": "ja-bread",
           "duplicate_return_ids": [],
-          "elapsed_ms": 229.719,
+          "elapsed_ms": 119.39058299999999,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-bread-o1"
@@ -2987,7 +2987,7 @@
           "kind": "semantic_paraphrase",
           "language": "ja",
           "max_bytes": 4096,
-          "packet_bytes": 245,
+          "packet_bytes": 246,
           "privacy_trigger": null,
           "quality_class": "miss",
           "response_status": "empty",
@@ -2997,7 +2997,7 @@
         {
           "case_id": "ja-unit",
           "duplicate_return_ids": [],
-          "elapsed_ms": 233.368916,
+          "elapsed_ms": 122.48037500000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-unit-o1"
@@ -3006,7 +3006,7 @@
           "kind": "exact_unit",
           "language": "ja",
           "max_bytes": 4096,
-          "packet_bytes": 595,
+          "packet_bytes": 596,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -3018,7 +3018,7 @@
         {
           "case_id": "ja-gift",
           "duplicate_return_ids": [],
-          "elapsed_ms": 260.345875,
+          "elapsed_ms": 120.50166700000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-gift-o1"
@@ -3027,7 +3027,7 @@
           "kind": "gift_research",
           "language": "ja",
           "max_bytes": 4096,
-          "packet_bytes": 607,
+          "packet_bytes": 608,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -3039,7 +3039,7 @@
         {
           "case_id": "ja-criticism",
           "duplicate_return_ids": [],
-          "elapsed_ms": 232.73962500000002,
+          "elapsed_ms": 117.116792,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-criticism-o1"
@@ -3048,7 +3048,7 @@
           "kind": "criticism",
           "language": "ja",
           "max_bytes": 4096,
-          "packet_bytes": 613,
+          "packet_bytes": 614,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -3060,7 +3060,7 @@
         {
           "case_id": "ja-negation",
           "duplicate_return_ids": [],
-          "elapsed_ms": 227.158041,
+          "elapsed_ms": 127.560875,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-negation-o1"
@@ -3069,7 +3069,7 @@
           "kind": "negation",
           "language": "ja",
           "max_bytes": 4096,
-          "packet_bytes": 608,
+          "packet_bytes": 609,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -3081,14 +3081,14 @@
         {
           "case_id": "ja-nomatch1",
           "duplicate_return_ids": [],
-          "elapsed_ms": 227.089583,
+          "elapsed_ms": 120.550125,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
           "kind": "no_match",
           "language": "ja",
           "max_bytes": 4096,
-          "packet_bytes": 245,
+          "packet_bytes": 246,
           "privacy_trigger": null,
           "quality_class": "correct_empty",
           "response_status": "empty",
@@ -3098,7 +3098,7 @@
         {
           "case_id": "ja-repeat",
           "duplicate_return_ids": [],
-          "elapsed_ms": 231.213292,
+          "elapsed_ms": 120.48625,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-repeat-o1",
@@ -3109,7 +3109,7 @@
           "kind": "repeated_source",
           "language": "ja",
           "max_bytes": 4096,
-          "packet_bytes": 603,
+          "packet_bytes": 604,
           "privacy_trigger": null,
           "quality_class": "partial_or_extra",
           "response_status": "ok",
@@ -3122,7 +3122,7 @@
         {
           "case_id": "ja-work",
           "duplicate_return_ids": [],
-          "elapsed_ms": 230.01725000000002,
+          "elapsed_ms": 118.68624999999999,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "ja-work-o1"
@@ -3131,7 +3131,7 @@
           "kind": "work_context",
           "language": "ja",
           "max_bytes": 4096,
-          "packet_bytes": 623,
+          "packet_bytes": 624,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -3152,14 +3152,14 @@
         {
           "case_id": "ja-privatesession",
           "duplicate_return_ids": [],
-          "elapsed_ms": 229.684417,
+          "elapsed_ms": 117.380125,
           "evaluation_status": "native_paused_session_control",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
           "kind": "privacy_private_session",
           "language": "ja",
           "max_bytes": 4096,
-          "packet_bytes": 245,
+          "packet_bytes": 246,
           "privacy_trigger": "private_session",
           "quality_class": "correct_empty",
           "response_status": "empty",
@@ -3169,14 +3169,14 @@
         {
           "case_id": "ja-nomatch2",
           "duplicate_return_ids": [],
-          "elapsed_ms": 235.163,
+          "elapsed_ms": 114.78812500000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
           "kind": "no_match",
           "language": "ja",
           "max_bytes": 4096,
-          "packet_bytes": 245,
+          "packet_bytes": 246,
           "privacy_trigger": null,
           "quality_class": "correct_empty",
           "response_status": "empty",
@@ -3186,7 +3186,7 @@
         {
           "case_id": "zh-coffee",
           "duplicate_return_ids": [],
-          "elapsed_ms": 231.029875,
+          "elapsed_ms": 110.4085,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-coffee-o1"
@@ -3195,7 +3195,7 @@
           "kind": "semantic_paraphrase",
           "language": "zh",
           "max_bytes": 4096,
-          "packet_bytes": 604,
+          "packet_bytes": 605,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -3207,7 +3207,7 @@
         {
           "case_id": "zh-lamp",
           "duplicate_return_ids": [],
-          "elapsed_ms": 230.541417,
+          "elapsed_ms": 112.044333,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-lamp-o1"
@@ -3216,7 +3216,7 @@
           "kind": "semantic_paraphrase",
           "language": "zh",
           "max_bytes": 4096,
-          "packet_bytes": 245,
+          "packet_bytes": 246,
           "privacy_trigger": null,
           "quality_class": "miss",
           "response_status": "empty",
@@ -3226,7 +3226,7 @@
         {
           "case_id": "zh-garden",
           "duplicate_return_ids": [],
-          "elapsed_ms": 229.605708,
+          "elapsed_ms": 119.007042,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-garden-o1"
@@ -3235,7 +3235,7 @@
           "kind": "semantic_paraphrase",
           "language": "zh",
           "max_bytes": 4096,
-          "packet_bytes": 245,
+          "packet_bytes": 246,
           "privacy_trigger": null,
           "quality_class": "miss",
           "response_status": "empty",
@@ -3245,7 +3245,7 @@
         {
           "case_id": "zh-bike",
           "duplicate_return_ids": [],
-          "elapsed_ms": 232.88875000000002,
+          "elapsed_ms": 116.845084,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-bike-o1"
@@ -3254,7 +3254,7 @@
           "kind": "semantic_paraphrase",
           "language": "zh",
           "max_bytes": 4096,
-          "packet_bytes": 598,
+          "packet_bytes": 599,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -3266,7 +3266,7 @@
         {
           "case_id": "zh-bread",
           "duplicate_return_ids": [],
-          "elapsed_ms": 231.312208,
+          "elapsed_ms": 111.6865,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-bread-o1"
@@ -3275,7 +3275,7 @@
           "kind": "semantic_paraphrase",
           "language": "zh",
           "max_bytes": 4096,
-          "packet_bytes": 245,
+          "packet_bytes": 246,
           "privacy_trigger": null,
           "quality_class": "miss",
           "response_status": "empty",
@@ -3285,7 +3285,7 @@
         {
           "case_id": "zh-unit",
           "duplicate_return_ids": [],
-          "elapsed_ms": 231.679041,
+          "elapsed_ms": 111.65174999999999,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-unit-o1"
@@ -3294,7 +3294,7 @@
           "kind": "exact_unit",
           "language": "zh",
           "max_bytes": 4096,
-          "packet_bytes": 595,
+          "packet_bytes": 596,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -3306,7 +3306,7 @@
         {
           "case_id": "zh-gift",
           "duplicate_return_ids": [],
-          "elapsed_ms": 232.069084,
+          "elapsed_ms": 118.55212499999999,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-gift-o1"
@@ -3315,7 +3315,7 @@
           "kind": "gift_research",
           "language": "zh",
           "max_bytes": 4096,
-          "packet_bytes": 598,
+          "packet_bytes": 599,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -3327,7 +3327,7 @@
         {
           "case_id": "zh-criticism",
           "duplicate_return_ids": [],
-          "elapsed_ms": 228.809333,
+          "elapsed_ms": 119.896417,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-criticism-o1"
@@ -3336,7 +3336,7 @@
           "kind": "criticism",
           "language": "zh",
           "max_bytes": 4096,
-          "packet_bytes": 611,
+          "packet_bytes": 612,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -3348,7 +3348,7 @@
         {
           "case_id": "zh-negation",
           "duplicate_return_ids": [],
-          "elapsed_ms": 233.416083,
+          "elapsed_ms": 120.58891700000001,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-negation-o1"
@@ -3357,7 +3357,7 @@
           "kind": "negation",
           "language": "zh",
           "max_bytes": 4096,
-          "packet_bytes": 598,
+          "packet_bytes": 599,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -3369,14 +3369,14 @@
         {
           "case_id": "zh-nomatch1",
           "duplicate_return_ids": [],
-          "elapsed_ms": 232.548542,
+          "elapsed_ms": 115.19987499999999,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
           "kind": "no_match",
           "language": "zh",
           "max_bytes": 4096,
-          "packet_bytes": 245,
+          "packet_bytes": 246,
           "privacy_trigger": null,
           "quality_class": "correct_empty",
           "response_status": "empty",
@@ -3386,7 +3386,7 @@
         {
           "case_id": "zh-repeat",
           "duplicate_return_ids": [],
-          "elapsed_ms": 231.504375,
+          "elapsed_ms": 113.259541,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-repeat-o1",
@@ -3397,7 +3397,7 @@
           "kind": "repeated_source",
           "language": "zh",
           "max_bytes": 4096,
-          "packet_bytes": 936,
+          "packet_bytes": 937,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -3411,7 +3411,7 @@
         {
           "case_id": "zh-work",
           "duplicate_return_ids": [],
-          "elapsed_ms": 229.854334,
+          "elapsed_ms": 111.749125,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [
             "zh-work-o1"
@@ -3420,7 +3420,7 @@
           "kind": "work_context",
           "language": "zh",
           "max_bytes": 4096,
-          "packet_bytes": 608,
+          "packet_bytes": 609,
           "privacy_trigger": null,
           "quality_class": "exact_match",
           "response_status": "ok",
@@ -3441,14 +3441,14 @@
         {
           "case_id": "zh-privatesession",
           "duplicate_return_ids": [],
-          "elapsed_ms": 229.735083,
+          "elapsed_ms": 118.900458,
           "evaluation_status": "native_paused_session_control",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
           "kind": "privacy_private_session",
           "language": "zh",
           "max_bytes": 4096,
-          "packet_bytes": 245,
+          "packet_bytes": 246,
           "privacy_trigger": "private_session",
           "quality_class": "correct_empty",
           "response_status": "empty",
@@ -3458,14 +3458,14 @@
         {
           "case_id": "zh-nomatch2",
           "duplicate_return_ids": [],
-          "elapsed_ms": 231.2915,
+          "elapsed_ms": 117.70925,
           "evaluation_status": "evaluated",
           "expected_observation_ids": [],
           "index_mode": "hybrid",
           "kind": "no_match",
           "language": "zh",
           "max_bytes": 4096,
-          "packet_bytes": 245,
+          "packet_bytes": 246,
           "privacy_trigger": null,
           "quality_class": "correct_empty",
           "response_status": "empty",
@@ -3483,8 +3483,8 @@
       },
       "hybrid_index_mode_case_count": 84,
       "latency_ms": {
-        "median": 230.2276665,
-        "p95": 234.634333
+        "median": 115.7462495,
+        "p95": 123.983209
       },
       "mode": "semantic_pack",
       "model_path": "models/pack",

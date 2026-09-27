@@ -82,7 +82,7 @@ function Setting({
 function App() {
   const [section, setSection] = useState(location.hash.slice(1) || "context");
   const [locale, setLocale] = useState<Locale>("en");
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState<"system" | "light" | "dark">("system");
   const [prefsLoaded, setPrefsLoaded] = useState(false);
   const [s, setS] = useState<State>();
   const [data, setData] = useState<any>({ cards: [] });
@@ -131,10 +131,15 @@ function App() {
   useEffect(() => {
     load().catch((e) => setError(e.message));
     browser.storage.local
-      .get(["locale", "theme"])
+      .get(["locale", "theme", "themeMode"])
       .then((v) => {
         if (typeof v.locale === "string") setLocale(v.locale as Locale);
-        if (typeof v.theme === "string") setTheme(v.theme);
+        // Older builds saved "light" automatically. Only an explicit new
+        // preference, or the old non-default dark choice, is an override.
+        if (v.themeMode === "manual" && (v.theme === "light" || v.theme === "dark"))
+          setTheme(v.theme);
+        else if (v.themeMode === undefined && v.theme === "dark")
+          setTheme("dark");
       })
       .catch(() => {})
       .finally(() => setPrefsLoaded(true));
@@ -146,8 +151,9 @@ function App() {
   }, [s?.ticket?.nonce, s?.paired]);
   useEffect(() => {
     document.documentElement.lang = locale;
-    document.documentElement.dataset.theme = theme;
-    if (prefsLoaded) void browser.storage.local.set({ locale, theme });
+    if (theme === "system") document.documentElement.removeAttribute("data-theme");
+    else document.documentElement.dataset.theme = theme;
+    if (prefsLoaded) void browser.storage.local.set({ locale });
   }, [locale, theme, prefsLoaded]);
   useEffect(() => {
     const syncSection = () => setSection(location.hash.slice(1) || "context");
@@ -271,7 +277,14 @@ function App() {
               class="ghost"
               aria-label={tr("dashboard.themeToggle")}
               disabled={!prefsLoaded}
-              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+              onClick={() => {
+                const isDark = theme === "system"
+                  ? window.matchMedia("(prefers-color-scheme: dark)").matches
+                  : theme === "dark";
+                const next = isDark ? "light" : "dark";
+                setTheme(next);
+                void browser.storage.local.set({ theme: next, themeMode: "manual" });
+              }}
             >
               <Icon name="sun" size={18} />
             </button>

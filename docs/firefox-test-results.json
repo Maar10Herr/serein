@@ -9,6 +9,7 @@
     "duplicate ACK",
     "exclude and forget",
     "persistent pause",
+    "system dark theme default",
     "screenshot"
   ],
   "permanent_installation": "requires Mozilla signing"
