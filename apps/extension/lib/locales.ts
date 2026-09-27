@@ -1154,7 +1154,7 @@ const uiEn = {
   "about.quieterContext": "A quieter kind of context.",
   "about.description":
     "Serein remembers the useful pieces, so you can pick up where you left off.",
-  "about.developmentVersion": "0.1.0-beta.2 · development",
+  "about.developmentVersion": "0.1.0-beta.3 · development",
   "about.filesAtRest": "Files at rest. Programs on demand.",
   "about.filesDescription":
     "Serein uses your browser’s tab metadata, a short-lived native helper, and a local SQLite vault. There is no resident Serein service, cloud sync, or telemetry.",
@@ -1193,7 +1193,7 @@ const uiEn = {
   "modal.forgetObservation": "Forget observation",
   "modal.savedEvidenceRemoved": "Saved evidence removed.",
   "setup.assistantInstructions":
-    "{skillStep}\n\nSet up my local Serein browser helper. Use the two locally built executables serein and serein-host from the same directory. Run serein setup --request-stdin --json with this JSON as stdin, without shell interpolation, after reviewing the local setup. Then ask me to click Verify connection in the extension.\n\n{ticket}",
+    "{skillStep}\n\nSet up my local Serein browser helper. I have an extracted or built Serein runtime. Keep the serein and serein-host executables in the same folder; ask me for that folder's path if needed. After reviewing the local setup, pass the included JSON to serein setup --request-stdin --json via stdin, without shell interpolation. Then ask me to click Verify connection in the extension.\n\n{ticket}",
   "setup.skillStepEnabled":
     "The user explicitly enabled GitHub skill installation in this setup ticket. Let serein setup run the configured Skills CLI installer for the selected named assistants, then link their installed skill to the local browser helper. Do not copy or create skill files manually.",
   "setup.skillStepManual":
@@ -1364,7 +1364,7 @@ const uiDe = {
   "about.quieterContext": "Eine ruhigere Art von Kontext.",
   "about.description":
     "Serein merkt sich Nützliches, damit du dort weitermachen kannst, wo du aufgehört hast.",
-  "about.developmentVersion": "0.1.0-beta.2 · Entwicklung",
+  "about.developmentVersion": "0.1.0-beta.3 · Entwicklung",
   "about.filesAtRest": "Dateien ruhen. Programme starten bei Bedarf.",
   "about.filesDescription":
     "Serein nutzt Tab-Metadaten deines Browsers, einen kurzlebigen nativen Helfer und einen lokalen SQLite-Tresor. Es gibt keinen dauerhaften Serein-Dienst, keine Cloud-Synchronisierung und keine Telemetrie.",
@@ -1405,7 +1405,7 @@ const uiDe = {
   "modal.forgetObservation": "Beobachtung vergessen",
   "modal.savedEvidenceRemoved": "Gespeicherte Belege entfernt.",
   "setup.assistantInstructions":
-    "{skillStep}\n\nRichte meinen lokalen Serein-Browserhelfer ein. Verwende die beiden lokal gebauten Programme serein und serein-host aus demselben Verzeichnis. Führe serein setup --request-stdin --json mit diesem JSON als Standardeingabe aus, ohne Shell-Interpolation und erst nach Prüfung der lokalen Einrichtung. Bitte mich anschließend, in der Erweiterung auf Verbindung verifizieren zu klicken.\n\n{ticket}",
+    "{skillStep}\n\nRichte meinen lokalen Serein-Browserhelfer ein. Ich habe eine entpackte oder gebaute Serein-Laufzeitumgebung. Lege die ausführbaren Dateien serein und serein-host in denselben Ordner. Falls du den Pfad benötigst, frage mich danach. Prüfe die lokale Einrichtung und übergib das enthaltene JSON über die Standardeingabe an serein setup --request-stdin --json, ohne Shell-Interpolation. Bitte mich anschließend, in der Erweiterung auf Verbindung verifizieren zu klicken.\n\n{ticket}",
   "setup.skillStepEnabled":
     "Der Nutzer hat die Installation des GitHub-Skills in diesem Einrichtungsticket ausdrücklich aktiviert. Lass serein setup den konfigurierten Skills-CLI-Installer für die ausgewählten benannten Assistenten ausführen und verknüpfe danach deren installierten Skill mit dem lokalen Browserhelfer. Skill-Dateien nicht manuell kopieren oder erstellen.",
   "setup.skillStepManual":
@@ -1576,7 +1576,7 @@ const uiNl = {
   "about.quieterContext": "Een rustigere vorm van context.",
   "about.description":
     "Serein onthoudt de nuttige onderdelen, zodat je verder kunt waar je gebleven was.",
-  "about.developmentVersion": "0.1.0-beta.2 · ontwikkeling",
+  "about.developmentVersion": "0.1.0-beta.3 · ontwikkeling",
   "about.filesAtRest": "Bestanden in rust. Programma's op aanvraag.",
   "about.filesDescription":
     "Serein gebruikt tabmetadata van je browser, een kortstondige native hulp en een lokale SQLite-kluis. Er is geen blijvende Serein-dienst, cloudsynchronisatie of telemetrie.",
@@ -1616,7 +1616,7 @@ const uiNl = {
   "modal.forgetObservation": "Waarneming vergeten",
   "modal.savedEvidenceRemoved": "Opgeslagen bewijs verwijderd.",
   "setup.assistantInstructions":
-    "{skillStep}\n\nRicht mijn lokale Serein-browserhulp in. Gebruik de twee lokaal gebouwde uitvoerbare bestanden serein en serein-host uit dezelfde map. Voer serein setup --request-stdin --json uit met deze JSON als standaardinvoer, zonder shellinterpolatie en pas nadat je de lokale installatie hebt beoordeeld. Vraag me daarna om in de extensie op Verbinding verifiëren te klikken.\n\n{ticket}",
+    "{skillStep}\n\nRicht mijn lokale Serein-browserhulp in. Ik heb een uitgepakte of gebouwde Serein-runtime. Houd de uitvoerbare bestanden serein en serein-host in dezelfde map; vraag me om het pad naar die map als je dat nodig hebt. Beoordeel de lokale configuratie en geef de meegeleverde JSON via stdin door aan serein setup --request-stdin --json, zonder shellinterpolatie. Vraag me daarna om in de extensie op Verbinding verifiëren te klikken.\n\n{ticket}",
   "setup.skillStepEnabled":
     "De gebruiker heeft de installatie van de GitHub-skill in dit installatieticket uitdrukkelijk ingeschakeld. Laat serein setup de ingestelde Skills CLI-installer uitvoeren voor de geselecteerde benoemde assistenten en koppel daarna hun geïnstalleerde skill aan de lokale browserhulp. Kopieer of maak geen skillbestanden handmatig.",
   "setup.skillStepManual":
@@ -1747,7 +1747,7 @@ const uiZhCN = {
   "storage.deletionLimit": "逻辑删除无法清除 SSD 残留、备份或已发送给助手模型提供商的上下文。达到存储上限后，已丢弃 {count} 个排队事件。",
   "about.quieterContext": "更安静、更从容的上下文。",
   "about.description": "Serein 会记住有用的信息，让你轻松接续之前的工作。",
-  "about.developmentVersion": "0.1.0-beta.2 · 开发版",
+  "about.developmentVersion": "0.1.0-beta.3 · 开发版",
   "about.filesAtRest": "文件静态存储，程序按需运行。",
   "about.filesDescription": "Serein 使用浏览器标签页元数据、短时运行的本地助手程序和本地 SQLite 数据库。没有常驻服务、云同步或遥测。",
   "about.evidenceTitle": "先看证据，再作判断。",
@@ -1777,7 +1777,7 @@ const uiZhCN = {
   "modal.eraseAndPause": "删除并暂停",
   "modal.forgetObservation": "忘记记录",
   "modal.savedEvidenceRemoved": "已保存的证据已删除。",
-  "setup.assistantInstructions": "{skillStep}\n\n设置我的 Serein 本地浏览器助手程序。请使用同一目录中的两个本地可执行文件 serein 和 serein-host。检查本地设置后，通过标准输入提供此 JSON 并运行 serein setup --request-stdin --json；不要使用 shell 字符串插值。然后请提醒我在扩展中点击“验证连接”。\n\n{ticket}",
+  "setup.assistantInstructions": "{skillStep}\n\n设置我的 Serein 本地浏览器助手程序。我有一个已解压或自行构建的 Serein 运行时。请将 serein 和 serein-host 可执行文件放在同一文件夹中；如需该文件夹的路径，请向我询问。检查本地设置后，将随附的 JSON 通过标准输入传给 serein setup --request-stdin --json，不要使用 shell 字符串插值。然后请提醒我在扩展中点击“验证连接”。\n\n{ticket}",
   "setup.skillStepEnabled": "用户已在此设置请求中明确启用 GitHub 技能安装。让 serein setup 为所选的具名助手运行已配置的 Skills CLI 安装程序，然后将已安装的技能关联到本地浏览器助手程序。不要手动复制或创建技能文件。",
   "setup.skillStepManual": "将技能安装与浏览器助手程序设置分开。如有需要，请使用“连接”中显示的 Skills CLI 命令安装 GitHub 技能；不要手动将文件复制到技能目录。",
   "setup.skillStepUnconfigured": "此扩展构建未配置 GitHub 技能代码库。仅设置本地浏览器助手程序；不要猜测代码库网址，也不要手动复制技能文件。",
@@ -1904,7 +1904,7 @@ const uiJa = {
   "storage.deletionLimit": "論理削除では SSD の残存データ、バックアップ、モデル提供元に送信済みのコンテキストは削除できません。ストレージ上限により、キュー内のイベント {count} 件を破棄しました。",
   "about.quieterContext": "控えめなコンテキスト。",
   "about.description": "Serein が役立つ情報を覚えておくので、前回の続きから始められます。",
-  "about.developmentVersion": "0.1.0-beta.2 · 開発版",
+  "about.developmentVersion": "0.1.0-beta.3 · 開発版",
   "about.filesAtRest": "ファイルは保管し、プログラムは必要なときだけ実行。",
   "about.filesDescription": "Serein はブラウザーのタブメタデータ、短時間だけ動作するネイティブヘルパー、ローカル SQLite 保管庫を使用します。常駐サービス、クラウド同期、テレメトリーはありません。",
   "about.evidenceTitle": "思い込みより証拠を。",
@@ -1934,7 +1934,7 @@ const uiJa = {
   "modal.eraseAndPause": "削除して一時停止",
   "modal.forgetObservation": "記録を削除",
   "modal.savedEvidenceRemoved": "保存済みの証拠を削除しました。",
-  "setup.assistantInstructions": "{skillStep}\n\nSerein のローカルブラウザーヘルパーをセットアップします。同じディレクトリにあるローカルビルド済み実行ファイル serein と serein-host を使用してください。ローカルセットアップを確認したうえで、シェル補間をせず、この JSON を標準入力として serein setup --request-stdin --json を実行してください。その後、拡張機能で「接続を確認」をクリックするよう案内してください。\n\n{ticket}",
+  "setup.assistantInstructions": "{skillStep}\n\nSerein のローカルブラウザーヘルパーをセットアップします。展開済みまたはビルド済みの Serein ランタイムがあります。実行ファイル serein と serein-host は同じフォルダーに置いてください。フォルダーのパスが必要な場合は、私に尋ねてください。ローカルセットアップを確認したうえで、含まれている JSON を標準入力経由で serein setup --request-stdin --json に渡してください。シェル補間は使わないでください。その後、拡張機能で「接続を確認」をクリックするよう案内してください。\n\n{ticket}",
   "setup.skillStepEnabled": "ユーザーはこのセットアップ依頼で GitHub スキルのインストールを明示的に有効にしました。serein setup に設定済みの Skills CLI インストーラーを実行させ、選択した名前付きアシスタントにスキルをインストールしてから、ローカルブラウザーヘルパーと連携させてください。スキルファイルを手動でコピーまたは作成しないでください。",
   "setup.skillStepManual": "スキルのインストールとブラウザーヘルパーのセットアップは分けてください。必要に応じて「接続」に表示された Skills CLI コマンドを使って GitHub スキルをインストールしてください。スキルディレクトリにファイルを手動でコピーしないでください。",
   "setup.skillStepUnconfigured": "この拡張機能のビルドには GitHub スキルリポジトリが設定されていません。ローカルブラウザーヘルパーだけをセットアップしてください。リポジトリ URL を推測したり、スキルファイルを手動でコピーしたりしないでください。",
@@ -2061,7 +2061,7 @@ const uiEs = {
   "storage.deletionLimit": "La eliminación lógica no puede borrar restos de SSD, copias de seguridad ni el contexto ya enviado al proveedor del modelo de un asistente. Se descartaron {count} eventos en cola al alcanzar el límite de almacenamiento.",
   "about.quieterContext": "Un contexto más discreto.",
   "about.description": "Serein recuerda lo útil para que puedas retomar lo que estabas haciendo.",
-  "about.developmentVersion": "0.1.0-beta.2 · desarrollo",
+  "about.developmentVersion": "0.1.0-beta.3 · desarrollo",
   "about.filesAtRest": "Archivos almacenados. Programas bajo demanda.",
   "about.filesDescription": "Serein usa metadatos de las pestañas del navegador, un asistente nativo de corta duración y un almacén SQLite local. No hay ningún servicio permanente de Serein, sincronización en la nube ni telemetría.",
   "about.evidenceTitle": "Evidencias antes que suposiciones.",
@@ -2091,7 +2091,7 @@ const uiEs = {
   "modal.eraseAndPause": "Borrar y pausar",
   "modal.forgetObservation": "Olvidar registro",
   "modal.savedEvidenceRemoved": "Se han eliminado las evidencias guardadas.",
-  "setup.assistantInstructions": "{skillStep}\n\nConfigura el asistente local del navegador Serein. Usa los dos ejecutables compilados localmente, serein y serein-host, que están en el mismo directorio. Tras revisar la configuración local, ejecuta serein setup --request-stdin --json con este JSON como entrada estándar y sin interpolación de shell. Después, pídeme que haga clic en «Verificar conexión» en la extensión.\n\n{ticket}",
+  "setup.assistantInstructions": "{skillStep}\n\nConfigura el asistente local del navegador Serein. Tengo un runtime de Serein extraído o compilado. Mantén los ejecutables serein y serein-host en la misma carpeta; si necesitas la ruta de esa carpeta, pídemela. Revisa la configuración local y pasa el JSON incluido a serein setup --request-stdin --json por la entrada estándar, sin interpolación de shell. Después, pídeme que haga clic en «Verificar conexión» en la extensión.\n\n{ticket}",
   "setup.skillStepEnabled": "El usuario ha habilitado expresamente la instalación de la skill de GitHub en este ticket de configuración. Deja que serein setup ejecute el instalador de Skills CLI configurado para los asistentes con nombre seleccionados y, después, vincula la skill instalada al asistente local del navegador. No copies ni crees archivos de skills manualmente.",
   "setup.skillStepManual": "Mantén la instalación de la skill separada de la configuración del asistente del navegador. Si se solicita, usa el comando de Skills CLI que aparece en Conexiones para instalar la skill de GitHub. No copies archivos manualmente a un directorio de skills.",
   "setup.skillStepUnconfigured": "Esta compilación de la extensión no tiene configurado un repositorio de skills de GitHub. Configura únicamente el asistente local del navegador; no inventes una URL de repositorio ni copies archivos de skills manualmente.",

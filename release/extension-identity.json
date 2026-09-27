@@ -2,5 +2,5 @@
   "chrome_public_key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAu5vxyaU8BksD22+1DpLBeH4bJ5XQCNBFAENf9nMa4YqLwELSRTFOX7R1/NluKKLugN1X50ZMJ3cl1cKUtsJzRHKRAECUFWAOafO5w6qxY6CkFDJcf1QBZcl8jODh2EWSQuqCHrqOqFEr0FeZ+n/A2OZ77kdoMhubcj57p/vxl+/0FoNrQzfMhyxp1OP6BkEA3pcxovmj0ADMh0EhxHU2wodx4/yctN0UAYuiw13vZgGHNuUXLhoHwlpSa71s4PIUlIbKGguOl905RlD1wY5s1p1Gs4UC0HNTK7If77nn5YA1ml4gRufXYCfZ+VQK1PHnoo4Ikwo0tRX3+WIwUoDe3QIDAQAB",
   "chrome_extension_id": "leakblpkjoielijhdnbkcafdgmfbpbib",
   "firefox_extension_id": "serein-context@local.serein",
-  "version": "0.1.0-beta.2"
+  "version": "0.1.0-beta.3"
 }

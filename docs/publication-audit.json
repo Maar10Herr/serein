@@ -1,6 +1,6 @@
 {
   "report_version": 1,
-  "generated_at_utc": "2026-09-27T14:13:31+00:00",
+  "generated_at_utc": "2026-09-27T14:34:07+00:00",
   "scope": "Source archive allowlist, browser extension bundles, native archive, and skill archive.",
   "source_allowlist": [
     ".github/RELEASE_NOTES.md",
@@ -29,23 +29,23 @@
     "models/manifest.json",
     "models/pack"
   ],
-  "source_file_count_scanned": 365,
+  "source_file_count_scanned": 367,
   "excluded_source_file_counts": {
     "generated_or_sensitive_name": 82
   },
   "generated_archives": {
-    "serein-chrome-0.1.0-beta.2-unsigned.zip": 14,
-    "serein-firefox-0.1.0-beta.2-unsigned.zip": 14,
-    "serein-macos-arm64-0.1.0-beta.2-unsigned.tar.gz": 255,
-    "serein-skills-0.1.0-beta.2.zip": 5,
-    "serein-source-0.1.0-beta.2.tar.gz": 365
+    "serein-chrome-0.1.0-beta.3-unsigned.zip": 14,
+    "serein-firefox-0.1.0-beta.3-unsigned.zip": 14,
+    "serein-macos-arm64-0.1.0-beta.3-unsigned.tar.gz": 255,
+    "serein-skills-0.1.0-beta.3.zip": 5,
+    "serein-source-0.1.0-beta.3.tar.gz": 367
   },
   "excluded_archive_member_counts": {
-    "serein-chrome-0.1.0-beta.2-unsigned.zip": 0,
-    "serein-firefox-0.1.0-beta.2-unsigned.zip": 0,
-    "serein-macos-arm64-0.1.0-beta.2-unsigned.tar.gz": 0,
-    "serein-skills-0.1.0-beta.2.zip": 0,
-    "serein-source-0.1.0-beta.2.tar.gz": 0
+    "serein-chrome-0.1.0-beta.3-unsigned.zip": 0,
+    "serein-firefox-0.1.0-beta.3-unsigned.zip": 0,
+    "serein-macos-arm64-0.1.0-beta.3-unsigned.tar.gz": 0,
+    "serein-skills-0.1.0-beta.3.zip": 0,
+    "serein-source-0.1.0-beta.3.tar.gz": 0
   },
   "automated_checks": {
     "private_key_marker": "passed",
