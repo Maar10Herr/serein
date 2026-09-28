@@ -1,0 +1,995 @@
+{
+  "fixture_id": "serein-calibration-dev-relevance-noise-v1",
+  "synthetic_notice": "All evidence records and query scenarios in this file are constructed synthetic development data. They do not represent actual user browsing, browser history, private accounts, or observed personal preferences. Public URLs below are reference sources for page titles and hostnames only. They are deliberately kept outside evidence records; evidence records contain hostnames and titles, never raw URL paths.",
+  "seed_sha256_prefix": "5b2088741bc176c9",
+  "purpose": [
+    "development relevance calibration",
+    "abstention and expected-empty query calibration",
+    "dashboard prominence/noise review"
+  ],
+  "limits": [
+    "small hand-curated fixture; not a user study or held-out evaluation",
+    "labels are conservative and based only on synthetic evidence titles, hostnames, query terms, and session metadata",
+    "public source URLs verify labels/titles/hostnames only; no page body content is included",
+    "not suitable for claims about production quality or real-user behavior"
+  ],
+  "source_urls": [
+    {
+      "title": "Aeron Chair",
+      "url": "https://store.hermanmiller.com/office-chairs-aeron/aeron-chair/100103200.html?lang=en_US",
+      "supports": "public title and hostname only"
+    },
+    {
+      "title": "The Kinematics of Sitting",
+      "url": "https://www.hermanmiller.com/research/categories/white-papers/the-kinematics-of-sitting/",
+      "supports": "public title and hostname only"
+    },
+    {
+      "title": "Background scripts - Mozilla | MDN",
+      "url": "https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Background_scripts",
+      "supports": "public title and hostname only"
+    },
+    {
+      "title": "runtime.sendMessage() - Mozilla | MDN",
+      "url": "https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime/sendMessage",
+      "supports": "public title and hostname only"
+    },
+    {
+      "title": "Native messaging - Mozilla | MDN",
+      "url": "https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Native_messaging",
+      "supports": "public title and hostname only"
+    },
+    {
+      "title": "Heat Pump Water Heaters | ENERGY STAR",
+      "url": "https://www.energystar.gov/products/heat_pump_water_heaters",
+      "supports": "public title and hostname only"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "ev001",
+      "title": "Aeron Chair",
+      "hostname": "store.hermanmiller.com",
+      "kind": "page",
+      "dwell_seconds": 1042,
+      "session_id": "chair-a",
+      "observed_at": "2026-09-02T09:30:00Z"
+    },
+    {
+      "id": "ev002",
+      "title": "Aeron Chair product sheet",
+      "hostname": "hermanmiller.com",
+      "kind": "page",
+      "dwell_seconds": 732,
+      "session_id": "chair-a",
+      "observed_at": "2026-09-03T10:30:00Z"
+    },
+    {
+      "id": "ev003",
+      "title": "The Kinematics of Sitting",
+      "hostname": "hermanmiller.com",
+      "kind": "page",
+      "dwell_seconds": 518,
+      "session_id": "chair-a",
+      "observed_at": "2026-09-04T11:30:00Z"
+    },
+    {
+      "id": "ev004",
+      "title": "Steelcase Leap Chair",
+      "hostname": "steelcase.com",
+      "kind": "page",
+      "dwell_seconds": 911,
+      "session_id": "chair-a",
+      "observed_at": "2026-09-05T12:30:00Z"
+    },
+    {
+      "id": "ev005",
+      "title": "Gesture Chair",
+      "hostname": "steelcase.com",
+      "kind": "page",
+      "dwell_seconds": 641,
+      "session_id": "chair-a",
+      "observed_at": "2026-09-06T13:30:00Z"
+    },
+    {
+      "id": "ev006",
+      "title": "Best office chairs for home offices",
+      "hostname": "nytimes.com",
+      "kind": "page",
+      "dwell_seconds": 46,
+      "session_id": "chair-a",
+      "observed_at": "2026-09-07T14:30:00Z"
+    },
+    {
+      "id": "ev007",
+      "title": "Aeron Chair",
+      "hostname": "store.hermanmiller.com",
+      "kind": "page",
+      "dwell_seconds": 689,
+      "session_id": "chair-b",
+      "observed_at": "2026-09-08T15:30:00Z"
+    },
+    {
+      "id": "ev008",
+      "title": "Leap Chair | Ergonomic Office Chair",
+      "hostname": "steelcase.com",
+      "kind": "page",
+      "dwell_seconds": 75,
+      "session_id": "chair-b",
+      "observed_at": "2026-09-09T16:30:00Z"
+    },
+    {
+      "id": "ev009",
+      "title": "office chair for short people",
+      "hostname": "google.com",
+      "kind": "search",
+      "dwell_seconds": 21,
+      "session_id": "chair-a",
+      "observed_at": "2026-09-10T17:30:00Z"
+    },
+    {
+      "id": "ev010",
+      "title": "desk chair lumbar support comparison",
+      "hostname": "google.com",
+      "kind": "search",
+      "dwell_seconds": 34,
+      "session_id": "chair-b",
+      "observed_at": "2026-09-11T08:30:00Z"
+    },
+    {
+      "id": "ev011",
+      "title": "Heat Pump Water Heater Guide",
+      "hostname": "energystar.gov",
+      "kind": "page",
+      "dwell_seconds": 804,
+      "session_id": "water-a",
+      "observed_at": "2026-09-12T09:30:00Z"
+    },
+    {
+      "id": "ev012",
+      "title": "Heat Pump Water Heaters",
+      "hostname": "energy.gov",
+      "kind": "page",
+      "dwell_seconds": 663,
+      "session_id": "water-a",
+      "observed_at": "2026-09-13T10:30:00Z"
+    },
+    {
+      "id": "ev013",
+      "title": "Heat Pump Water Heater Guide",
+      "hostname": "energystar.gov",
+      "kind": "page",
+      "dwell_seconds": 377,
+      "session_id": "water-b",
+      "observed_at": "2026-09-14T11:30:00Z"
+    },
+    {
+      "id": "ev014",
+      "title": "Heat Pump Water Heater Buyer’s Guide",
+      "hostname": "consumerreports.org",
+      "kind": "page",
+      "dwell_seconds": 591,
+      "session_id": "water-a",
+      "observed_at": "2026-09-15T12:30:00Z"
+    },
+    {
+      "id": "ev015",
+      "title": "heat pump water heater noise in garage",
+      "hostname": "google.com",
+      "kind": "search",
+      "dwell_seconds": 29,
+      "session_id": "water-a",
+      "observed_at": "2026-09-16T13:30:00Z"
+    },
+    {
+      "id": "ev016",
+      "title": "Heat Pump Water Heater",
+      "hostname": "lowes.com",
+      "kind": "page",
+      "dwell_seconds": 8,
+      "session_id": "water-b",
+      "observed_at": "2026-09-17T14:30:00Z"
+    },
+    {
+      "id": "ev017",
+      "title": "Heat Pump Water Heater: federal tax credits",
+      "hostname": "energystar.gov",
+      "kind": "page",
+      "dwell_seconds": 309,
+      "session_id": "water-b",
+      "observed_at": "2026-09-18T15:30:00Z"
+    },
+    {
+      "id": "ev018",
+      "title": "Water heater sizing calculator",
+      "hostname": "energy.gov",
+      "kind": "page",
+      "dwell_seconds": 20,
+      "session_id": "water-a",
+      "observed_at": "2026-09-19T16:30:00Z"
+    },
+    {
+      "id": "ev019",
+      "title": "Background scripts - Mozilla | MDN",
+      "hostname": "developer.mozilla.org",
+      "kind": "page",
+      "dwell_seconds": 642,
+      "session_id": "firefox-a",
+      "observed_at": "2026-09-20T17:30:00Z"
+    },
+    {
+      "id": "ev020",
+      "title": "runtime.sendMessage() - Mozilla | MDN",
+      "hostname": "developer.mozilla.org",
+      "kind": "page",
+      "dwell_seconds": 401,
+      "session_id": "firefox-a",
+      "observed_at": "2026-09-01T08:30:00Z"
+    },
+    {
+      "id": "ev021",
+      "title": "background - Mozilla | MDN",
+      "hostname": "developer.mozilla.org",
+      "kind": "page",
+      "dwell_seconds": 519,
+      "session_id": "firefox-a",
+      "observed_at": "2026-09-02T09:30:00Z"
+    },
+    {
+      "id": "ev022",
+      "title": "Native messaging - Mozilla | MDN",
+      "hostname": "developer.mozilla.org",
+      "kind": "page",
+      "dwell_seconds": 888,
+      "session_id": "firefox-a",
+      "observed_at": "2026-09-03T10:30:00Z"
+    },
+    {
+      "id": "ev023",
+      "title": "Native messaging - Mozilla | MDN",
+      "hostname": "developer.mozilla.org",
+      "kind": "page",
+      "dwell_seconds": 246,
+      "session_id": "firefox-b",
+      "observed_at": "2026-09-04T11:30:00Z"
+    },
+    {
+      "id": "ev024",
+      "title": "WebExtensions in Firefox",
+      "hostname": "mozilla.org",
+      "kind": "page",
+      "dwell_seconds": 331,
+      "session_id": "firefox-b",
+      "observed_at": "2026-09-05T12:30:00Z"
+    },
+    {
+      "id": "ev025",
+      "title": "Firefox Add-ons",
+      "hostname": "addons.mozilla.org",
+      "kind": "page",
+      "dwell_seconds": 7,
+      "session_id": "firefox-a",
+      "observed_at": "2026-09-06T13:30:00Z"
+    },
+    {
+      "id": "ev026",
+      "title": "Home / X",
+      "hostname": "x.com",
+      "kind": "page",
+      "dwell_seconds": 12,
+      "session_id": "noise-a",
+      "observed_at": "2026-09-07T14:30:00Z"
+    },
+    {
+      "id": "ev027",
+      "title": "Home / X",
+      "hostname": "x.com",
+      "kind": "page",
+      "dwell_seconds": 9,
+      "session_id": "noise-b",
+      "observed_at": "2026-09-08T15:30:00Z"
+    },
+    {
+      "id": "ev028",
+      "title": "YouTube",
+      "hostname": "youtube.com",
+      "kind": "page",
+      "dwell_seconds": 5,
+      "session_id": "noise-a",
+      "observed_at": "2026-09-09T16:30:00Z"
+    },
+    {
+      "id": "ev029",
+      "title": "The Plane That’s 38% Nose - YouTube",
+      "hostname": "youtube.com",
+      "kind": "page",
+      "dwell_seconds": 438,
+      "session_id": "noise-a",
+      "observed_at": "2026-09-10T17:30:00Z"
+    },
+    {
+      "id": "ev030",
+      "title": "Google",
+      "hostname": "google.com",
+      "kind": "page",
+      "dwell_seconds": 3,
+      "session_id": "noise-a",
+      "observed_at": "2026-09-11T08:30:00Z"
+    },
+    {
+      "id": "ev031",
+      "title": "New Tab",
+      "hostname": "",
+      "kind": "page",
+      "dwell_seconds": 0,
+      "session_id": "noise-a",
+      "observed_at": "2026-09-12T09:30:00Z"
+    },
+    {
+      "id": "ev032",
+      "title": "Inbox (3) - Gmail",
+      "hostname": "mail.google.com",
+      "kind": "page",
+      "dwell_seconds": 14,
+      "session_id": "noise-a",
+      "observed_at": "2026-09-13T10:30:00Z"
+    },
+    {
+      "id": "ev033",
+      "title": "AMEX Platinum | Vielfliegertreff",
+      "hostname": "vielfliegertreff.de",
+      "kind": "page",
+      "dwell_seconds": 481,
+      "session_id": "incidental-a",
+      "observed_at": "2026-09-14T11:30:00Z"
+    },
+    {
+      "id": "ev034",
+      "title": "Single post about a concert",
+      "hostname": "x.com",
+      "kind": "page",
+      "dwell_seconds": 19,
+      "session_id": "noise-b",
+      "observed_at": "2026-09-15T12:30:00Z"
+    },
+    {
+      "id": "ev035",
+      "title": "Home - Reddit",
+      "hostname": "reddit.com",
+      "kind": "page",
+      "dwell_seconds": 11,
+      "session_id": "noise-a",
+      "observed_at": "2026-09-16T13:30:00Z"
+    },
+    {
+      "id": "ev036",
+      "title": "r/MechanicalKeyboards - Reddit",
+      "hostname": "reddit.com",
+      "kind": "page",
+      "dwell_seconds": 344,
+      "session_id": "incidental-b",
+      "observed_at": "2026-09-17T14:30:00Z"
+    },
+    {
+      "id": "ev037",
+      "title": "Mechanical keyboard switch comparison",
+      "hostname": "rtings.com",
+      "kind": "page",
+      "dwell_seconds": 292,
+      "session_id": "incidental-b",
+      "observed_at": "2026-09-18T15:30:00Z"
+    },
+    {
+      "id": "ev038",
+      "title": "Weather",
+      "hostname": "weather.com",
+      "kind": "page",
+      "dwell_seconds": 6,
+      "session_id": "noise-b",
+      "observed_at": "2026-09-19T16:30:00Z"
+    },
+    {
+      "id": "ev039",
+      "title": "Recipe: tomato soup",
+      "hostname": "allrecipes.com",
+      "kind": "page",
+      "dwell_seconds": 262,
+      "session_id": "incidental-c",
+      "observed_at": "2026-09-20T17:30:00Z"
+    },
+    {
+      "id": "ev040",
+      "title": "Calendar - Google Calendar",
+      "hostname": "calendar.google.com",
+      "kind": "page",
+      "dwell_seconds": 17,
+      "session_id": "noise-b",
+      "observed_at": "2026-09-01T08:30:00Z"
+    },
+    {
+      "id": "ev041",
+      "title": "Herman Miller",
+      "hostname": "hermanmiller.com",
+      "kind": "page",
+      "dwell_seconds": 10,
+      "session_id": "noise-b",
+      "observed_at": "2026-09-02T09:30:00Z"
+    },
+    {
+      "id": "ev042",
+      "title": "heat pump water heater",
+      "hostname": "google.com",
+      "kind": "search",
+      "dwell_seconds": 4,
+      "session_id": "noise-b",
+      "observed_at": "2026-09-03T10:30:00Z"
+    },
+    {
+      "id": "ev043",
+      "title": "Steelcase Leap Chair",
+      "hostname": "steelcase.com",
+      "kind": "page",
+      "dwell_seconds": 16,
+      "session_id": "chair-c",
+      "observed_at": "2026-09-04T11:30:00Z"
+    },
+    {
+      "id": "ev044",
+      "title": "Firefox support",
+      "hostname": "support.mozilla.org",
+      "kind": "page",
+      "dwell_seconds": 23,
+      "session_id": "incidental-d",
+      "observed_at": "2026-09-05T12:30:00Z"
+    },
+    {
+      "id": "ev045",
+      "title": "office",
+      "hostname": "google.com",
+      "kind": "search",
+      "dwell_seconds": 2,
+      "session_id": "noise-c",
+      "observed_at": "2026-09-06T13:30:00Z"
+    },
+    {
+      "id": "ev046",
+      "title": "YouTube",
+      "hostname": "youtube.com",
+      "kind": "page",
+      "dwell_seconds": 4,
+      "session_id": "noise-c",
+      "observed_at": "2026-09-07T14:30:00Z"
+    }
+  ],
+  "queries": [
+    {
+      "id": "q001",
+      "text": "Which ergonomic chair did I look at from Herman Miller?",
+      "facets": [
+        "ergonomic chair",
+        "Herman Miller"
+      ],
+      "expected_ids": [
+        "ev001",
+        "ev002",
+        "ev007"
+      ],
+      "label_note": "specific product and maker",
+      "expected_empty": false
+    },
+    {
+      "id": "q002",
+      "text": "What was the Herman Miller chair called?",
+      "facets": [
+        "Herman Miller chair"
+      ],
+      "expected_ids": [
+        "ev001",
+        "ev002",
+        "ev007"
+      ],
+      "label_note": "specific maker and product",
+      "expected_empty": false
+    },
+    {
+      "id": "q003",
+      "text": "What did I read about Aeron ergonomics?",
+      "facets": [
+        "Aeron ergonomics"
+      ],
+      "expected_ids": [
+        "ev002",
+        "ev003"
+      ],
+      "label_note": "specific product plus topic",
+      "expected_empty": false
+    },
+    {
+      "id": "q004",
+      "text": "Compare the Aeron and Leap chairs I researched",
+      "facets": [
+        "Aeron",
+        "Leap chair"
+      ],
+      "expected_ids": [
+        "ev001",
+        "ev004",
+        "ev007",
+        "ev008"
+      ],
+      "label_note": "both named products",
+      "expected_empty": false
+    },
+    {
+      "id": "q005",
+      "text": "Which chair did I revisit in another session?",
+      "facets": [
+        "chair revisit"
+      ],
+      "expected_ids": [
+        "ev001",
+        "ev007"
+      ],
+      "label_note": "repeated across sessions",
+      "expected_empty": false
+    },
+    {
+      "id": "q006",
+      "text": "What chair might suit a short person?",
+      "facets": [
+        "chair short people"
+      ],
+      "expected_ids": [
+        "ev009"
+      ],
+      "label_note": "query is the direct evidence",
+      "expected_empty": false
+    },
+    {
+      "id": "q007",
+      "text": "What chair has lumbar support?",
+      "facets": [
+        "chair lumbar support"
+      ],
+      "expected_ids": [
+        "ev010"
+      ],
+      "label_note": "query is the direct evidence",
+      "expected_empty": false
+    },
+    {
+      "id": "q008",
+      "text": "Did I research an ergonomic chair from IKEA?",
+      "facets": [
+        "IKEA ergonomic chair"
+      ],
+      "expected_ids": [],
+      "label_note": "no matching maker or evidence",
+      "expected_empty": true
+    },
+    {
+      "id": "q009",
+      "text": "What was the exact price of the Aeron chair?",
+      "facets": [
+        "Aeron exact price"
+      ],
+      "expected_ids": [],
+      "label_note": "price is not present in titles or evidence",
+      "expected_empty": true
+    },
+    {
+      "id": "q010",
+      "text": "What desk height did I decide on?",
+      "facets": [
+        "desk height"
+      ],
+      "expected_ids": [],
+      "label_note": "no desk-height evidence",
+      "expected_empty": true
+    },
+    {
+      "id": "q011",
+      "text": "What was the water heater type I researched?",
+      "facets": [
+        "water heater type"
+      ],
+      "expected_ids": [
+        "ev011",
+        "ev012",
+        "ev013",
+        "ev014",
+        "ev015",
+        "ev017"
+      ],
+      "label_note": "specific water-heater research",
+      "expected_empty": false
+    },
+    {
+      "id": "q012",
+      "text": "Where did I read about heat pump water heaters?",
+      "facets": [
+        "heat pump water heater"
+      ],
+      "expected_ids": [
+        "ev011",
+        "ev012",
+        "ev013",
+        "ev014",
+        "ev017"
+      ],
+      "label_note": "direct topic pages only",
+      "expected_empty": false
+    },
+    {
+      "id": "q013",
+      "text": "What did I look up about heat-pump water-heater noise?",
+      "facets": [
+        "heat pump heater noise"
+      ],
+      "expected_ids": [
+        "ev015"
+      ],
+      "label_note": "specific search query",
+      "expected_empty": false
+    },
+    {
+      "id": "q014",
+      "text": "Did I check ENERGY STAR guidance for this?",
+      "facets": [
+        "ENERGY STAR water heater"
+      ],
+      "expected_ids": [
+        "ev011",
+        "ev013",
+        "ev017"
+      ],
+      "label_note": "specific organization and topic",
+      "expected_empty": false
+    },
+    {
+      "id": "q015",
+      "text": "What was the heat pump water heater tax credit page?",
+      "facets": [
+        "water heater tax credit"
+      ],
+      "expected_ids": [
+        "ev017"
+      ],
+      "label_note": "exact subject page",
+      "expected_empty": false
+    },
+    {
+      "id": "q016",
+      "text": "Which water heater model did I choose?",
+      "facets": [
+        "water heater model choice"
+      ],
+      "expected_ids": [],
+      "label_note": "no choice or model decision evidence",
+      "expected_empty": true
+    },
+    {
+      "id": "q017",
+      "text": "What was my home electricity rate?",
+      "facets": [
+        "electricity rate"
+      ],
+      "expected_ids": [],
+      "label_note": "no electricity-rate evidence",
+      "expected_empty": true
+    },
+    {
+      "id": "q018",
+      "text": "Did I research a tankless gas heater?",
+      "facets": [
+        "tankless gas heater"
+      ],
+      "expected_ids": [],
+      "label_note": "different product with no evidence",
+      "expected_empty": true
+    },
+    {
+      "id": "q019",
+      "text": "How does Firefox handle extension background scripts?",
+      "facets": [
+        "Firefox background scripts"
+      ],
+      "expected_ids": [
+        "ev019",
+        "ev021"
+      ],
+      "label_note": "direct technical docs",
+      "expected_empty": false
+    },
+    {
+      "id": "q020",
+      "text": "What did I read about native messaging in Firefox?",
+      "facets": [
+        "Firefox native messaging"
+      ],
+      "expected_ids": [
+        "ev022",
+        "ev023"
+      ],
+      "label_note": "direct native messaging docs",
+      "expected_empty": false
+    },
+    {
+      "id": "q021",
+      "text": "Which page covered extension messages?",
+      "facets": [
+        "WebExtension message API"
+      ],
+      "expected_ids": [
+        "ev020"
+      ],
+      "label_note": "direct API documentation",
+      "expected_empty": false
+    },
+    {
+      "id": "q022",
+      "text": "Was I looking into Firefox or Chrome extension behavior?",
+      "facets": [
+        "Firefox extension behavior"
+      ],
+      "expected_ids": [
+        "ev019",
+        "ev020",
+        "ev021",
+        "ev022",
+        "ev023",
+        "ev024"
+      ],
+      "label_note": "Firefox-specific sources",
+      "expected_empty": false
+    },
+    {
+      "id": "q023",
+      "text": "What Firefox extension store did I visit?",
+      "facets": [
+        "Firefox add-ons store"
+      ],
+      "expected_ids": [
+        "ev025"
+      ],
+      "label_note": "direct store page, low dwell still relevant to exact ask",
+      "expected_empty": false
+    },
+    {
+      "id": "q024",
+      "text": "Did I read about native messaging for a browser extension?",
+      "facets": [
+        "extension native messaging"
+      ],
+      "expected_ids": [
+        "ev022",
+        "ev023"
+      ],
+      "label_note": "specific mechanism docs",
+      "expected_empty": false
+    },
+    {
+      "id": "q025",
+      "text": "What did I decide about service worker architecture?",
+      "facets": [
+        "service worker architecture decision"
+      ],
+      "expected_ids": [],
+      "label_note": "docs visited, no stated decision",
+      "expected_empty": true
+    },
+    {
+      "id": "q026",
+      "text": "Which browser extension bug happened to me?",
+      "facets": [
+        "personal Firefox bug"
+      ],
+      "expected_ids": [],
+      "label_note": "no personal incident evidence; fixture is not user history",
+      "expected_empty": true
+    },
+    {
+      "id": "q027",
+      "text": "What did I watch on YouTube about airplane design?",
+      "facets": [
+        "airplane design YouTube"
+      ],
+      "expected_ids": [
+        "ev029"
+      ],
+      "label_note": "specific informational title, despite being incidental",
+      "expected_empty": false
+    },
+    {
+      "id": "q028",
+      "text": "What was the title of the airplane video?",
+      "facets": [
+        "airplane YouTube title"
+      ],
+      "expected_ids": [
+        "ev029"
+      ],
+      "label_note": "specific video title",
+      "expected_empty": false
+    },
+    {
+      "id": "q029",
+      "text": "What was in my X feed?",
+      "facets": [
+        "X feed contents"
+      ],
+      "expected_ids": [],
+      "label_note": "generic feed title has no feed contents",
+      "expected_empty": true
+    },
+    {
+      "id": "q030",
+      "text": "What did I see on X?",
+      "facets": [
+        "X social page"
+      ],
+      "expected_ids": [],
+      "label_note": "generic home and single-post placeholder are insufficient",
+      "expected_empty": true
+    },
+    {
+      "id": "q031",
+      "text": "What did I research about travel credit cards?",
+      "facets": [
+        "travel credit card"
+      ],
+      "expected_ids": [
+        "ev033"
+      ],
+      "label_note": "specific title matches topic",
+      "expected_empty": false
+    },
+    {
+      "id": "q032",
+      "text": "What mechanical keyboard switches did I compare?",
+      "facets": [
+        "mechanical keyboard switch"
+      ],
+      "expected_ids": [
+        "ev036",
+        "ev037"
+      ],
+      "label_note": "two specific related pages",
+      "expected_empty": false
+    },
+    {
+      "id": "q033",
+      "text": "What soup recipe did I open?",
+      "facets": [
+        "tomato soup recipe"
+      ],
+      "expected_ids": [
+        "ev039"
+      ],
+      "label_note": "specific recipe title",
+      "expected_empty": false
+    },
+    {
+      "id": "q034",
+      "text": "What is the weather today?",
+      "facets": [
+        "weather today"
+      ],
+      "expected_ids": [],
+      "label_note": "no forecast facts; generic page only",
+      "expected_empty": true
+    },
+    {
+      "id": "q035",
+      "text": "Which work email did I read?",
+      "facets": [
+        "work email"
+      ],
+      "expected_ids": [],
+      "label_note": "no message content and generic inbox title",
+      "expected_empty": true
+    },
+    {
+      "id": "q036",
+      "text": "Did I browse a generic homepage or feed?",
+      "facets": [
+        "homepage feed"
+      ],
+      "expected_ids": [],
+      "label_note": "should not become a prominent semantic memory",
+      "expected_empty": true
+    },
+    {
+      "id": "q037",
+      "text": "What did I research about office ergonomics?",
+      "facets": [
+        "office ergonomics"
+      ],
+      "expected_ids": [
+        "ev001",
+        "ev002",
+        "ev003",
+        "ev004",
+        "ev005",
+        "ev007",
+        "ev008"
+      ],
+      "label_note": "only direct chair ergonomics material",
+      "expected_empty": false
+    },
+    {
+      "id": "q038",
+      "text": "What was the exact chair model I chose for my office?",
+      "facets": [
+        "chair model chosen"
+      ],
+      "expected_ids": [],
+      "label_note": "research/comparison is not a confirmed choice",
+      "expected_empty": true
+    },
+    {
+      "id": "q039",
+      "text": "What topic did I repeatedly research over multiple sessions?",
+      "facets": [
+        "repeated research sessions"
+      ],
+      "expected_ids": [
+        "ev001",
+        "ev007",
+        "ev011",
+        "ev013",
+        "ev022",
+        "ev023"
+      ],
+      "label_note": "only explicit repeated page subjects",
+      "expected_empty": false
+    },
+    {
+      "id": "q040",
+      "text": "What were my saved preferences?",
+      "facets": [
+        "personal preferences"
+      ],
+      "expected_ids": [],
+      "label_note": "no confirmed preference evidence",
+      "expected_empty": true
+    }
+  ],
+  "dashboard_noise_cases": {
+    "likely_deemphasize": [
+      "ev026",
+      "ev027",
+      "ev028",
+      "ev030",
+      "ev031",
+      "ev032",
+      "ev035",
+      "ev038",
+      "ev040",
+      "ev041",
+      "ev045",
+      "ev046"
+    ],
+    "specific_content_may_surface_if_contextual": [
+      "ev029",
+      "ev033",
+      "ev036",
+      "ev037",
+      "ev039"
+    ],
+    "repeated_session_evidence": [
+      "ev001",
+      "ev007",
+      "ev011",
+      "ev013",
+      "ev022",
+      "ev023"
+    ],
+    "short_dwell_but_query_is_direct_evidence": [
+      "ev009",
+      "ev010",
+      "ev015"
+    ],
+    "notes": "These tags are development review labels, not algorithm outputs or ground-truth user importance. Dashboard decisions should stay explainable and conservative."
+  }
+}

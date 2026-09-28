@@ -12,8 +12,8 @@
     "host exits within 2s"
   ],
   "status_latency_ms": {
-    "median": 3.441270557232201,
-    "p95": 3.6219588946551085
+    "median": 4.836666397750378,
+    "p95": 5.162250017747283
   },
   "browser_invocation": "not tested: native process harness only",
   "semantic_model": "installed model pack"

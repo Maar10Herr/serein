@@ -1,0 +1,148 @@
+{
+  "report_version": 1,
+  "release": "0.1.3",
+  "method": "Constructed synthetic evidence and hand-curated labels only. Development fixtures shaped the rules. The earlier relevance holdout is a historical checkpoint from before the final retrieval change; the separate v2 holdout was scored once after that change was frozen. Dashboard labels were held out from display tuning. These values do not estimate real-user accuracy.",
+  "retrieval": {
+    "development_relevance": {
+      "fixture_id": "serein-calibration-dev-relevance-noise-v1",
+      "split": "development",
+      "synthetic_only": true,
+      "evaluated_queries": 40,
+      "non_empty_queries": 25,
+      "expected_empty_queries": 15,
+      "recall_at_6_macro_non_empty": 0.6086666666666666,
+      "precision_at_6_macro_non_empty": 0.1666666666666666,
+      "mrr_macro_non_empty": 0.6233333333333333,
+      "ndcg_at_6_macro_non_empty": 0.5697853029231567,
+      "expected_empty_specificity": 1.0,
+      "expected_empty_true_negatives": 15,
+      "expected_empty_false_positive_count": 0,
+      "invariant_failure_count": 0,
+      "model_pack_available": true
+    },
+    "development_multilingual": {
+      "fixture_id": "serein-calibration-dev-multilingual-v1",
+      "split": "development",
+      "synthetic_only": true,
+      "evaluated_queries": 48,
+      "non_empty_queries": 24,
+      "expected_empty_queries": 24,
+      "recall_at_6_macro_non_empty": 0.7701388888888889,
+      "precision_at_6_macro_non_empty": 0.2222222222222222,
+      "mrr_macro_non_empty": 0.8888888888888888,
+      "ndcg_at_6_macro_non_empty": 0.7923737902842011,
+      "expected_empty_specificity": 1.0,
+      "expected_empty_true_negatives": 24,
+      "expected_empty_false_positive_count": 0,
+      "invariant_failure_count": 0,
+      "model_pack_available": true
+    },
+    "previous_holdout_checkpoint": {
+      "fixture_id": "calibration_holdout_relevance_noise_v1",
+      "split": "historical held-out checkpoint before final retrieval change",
+      "synthetic_only": true,
+      "evaluated_queries": 35,
+      "non_empty_queries": 24,
+      "expected_empty_queries": 11,
+      "recall_at_6_macro_non_empty": 0.6722222222222222,
+      "precision_at_6_macro_non_empty": 0.1875,
+      "mrr_macro_non_empty": 0.7916666666666666,
+      "ndcg_at_6_macro_non_empty": 0.6795325394075443,
+      "expected_empty_specificity": 0.8181818181818182,
+      "expected_empty_true_negatives": 9,
+      "expected_empty_false_positive_count": 2,
+      "invariant_failure_count": 0,
+      "model_pack_available": true
+    },
+    "final_holdout_v2": {
+      "fixture_id": "calibration_holdout_v2_relevance",
+      "split": "final held-out evaluation",
+      "synthetic_only": true,
+      "evidence_count": 40,
+      "evaluated_queries": 35,
+      "non_empty_queries": 23,
+      "expected_empty_queries": 12,
+      "recall_at_6_macro_non_empty": 0.6521739130434783,
+      "precision_at_6_macro_non_empty": 0.13768115942028983,
+      "mrr_macro_non_empty": 0.6739130434782609,
+      "ndcg_at_6_macro_non_empty": 0.6486835125716603,
+      "expected_empty_specificity": 1.0,
+      "expected_empty_true_negatives": 12,
+      "expected_empty_false_positive_count": 0,
+      "invariant_failure_count": 0,
+      "model_pack_available": true,
+      "provenance": {
+        "seed_fingerprint_sha256": "b57a21282376b4563d0c000ff93ba7490e77f3f7561d67be17b7bd307cf16fce",
+        "public_page_metadata_verified_count": 5,
+        "source_error_page_count": 4,
+        "source_challenge_page_count": 1,
+        "labels": "hand-curated synthetic"
+      }
+    },
+    "fixed_six_language_development_suite": {
+      "fixture": "fixtures/retrieval_privacy_cases.json",
+      "relevant_return_count": 60,
+      "expected_observation_count": 78,
+      "semantic_paraphrase_cases_with_relevant_return": 15,
+      "explicit_no_match_cases_with_results": 0,
+      "synthetic_only": true
+    }
+  },
+  "dashboard_prominence": {
+    "development": {
+      "fixture_id": "serein-calibration-dev-dashboard-labels-v1",
+      "evaluated": 94,
+      "true_positive": 36,
+      "false_positive": 2,
+      "true_negative": 33,
+      "false_negative": 23,
+      "precision": 0.9473684210526315,
+      "recall": 0.6101694915254238,
+      "specificity": 0.9428571428571428,
+      "synthetic_only": true
+    },
+    "held_out": {
+      "fixture_id": "calibration_holdout_dashboard_noise_v1",
+      "evaluated": 42,
+      "true_positive": 24,
+      "false_positive": 1,
+      "true_negative": 12,
+      "false_negative": 5,
+      "precision": 0.96,
+      "recall": 0.8275862068965517,
+      "specificity": 0.9230769230769231,
+      "synthetic_only": true
+    }
+  },
+  "browser_metadata_scenarios": {
+    "fixture_files": [
+      "tests/fixtures/calibration_seeded_chrome_a.json",
+      "tests/fixtures/calibration_seeded_chrome_b.json",
+      "tests/fixtures/calibration_seeded_chrome_c.json"
+    ],
+    "unique_seed_fingerprints": 3,
+    "used_as_relevance_labels": false
+  },
+  "lexical_fallback_development": {
+    "relevance": {
+      "fixture_id": "serein-calibration-dev-relevance-noise-v1",
+      "synthetic_only": true,
+      "model_pack_available": false,
+      "recall_at_6_macro_non_empty": 0.5086666666666666,
+      "precision_at_6_macro_non_empty": 0.1466666666666666,
+      "mrr_macro_non_empty": 0.5433333333333333,
+      "ndcg_at_6_macro_non_empty": 0.4837279020308103,
+      "expected_empty_specificity": 1.0
+    },
+    "multilingual": {
+      "fixture_id": "serein-calibration-dev-multilingual-v1",
+      "synthetic_only": true,
+      "model_pack_available": false,
+      "recall_at_6_macro_non_empty": 0.3819444444444444,
+      "precision_at_6_macro_non_empty": 0.08333333333333333,
+      "mrr_macro_non_empty": 0.5,
+      "ndcg_at_6_macro_non_empty": 0.40741662626424535,
+      "expected_empty_specificity": 1.0
+    }
+  }
+}

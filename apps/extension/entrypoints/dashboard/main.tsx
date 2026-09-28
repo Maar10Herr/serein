@@ -7,7 +7,7 @@ import { Icon } from "../../lib/Icon";
 import { Modal } from "../../lib/Modal";
 import { t, type Locale, type MessageKey } from "../../lib/locales";
 import { validSite } from "../../lib/policy";
-import type { State } from "../../lib/types";
+import type { DashboardCard, DashboardMemory, DashboardResponse, State } from "../../lib/types";
 import "../../lib/styles.css";
 const assistants = [
   ["claude-code", "connections.claudeCode", "C"],
@@ -79,13 +79,23 @@ function Setting({
     </div>
   );
 }
+function formatShortDate(value: string | undefined, locale: Locale) {
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  return new Intl.DateTimeFormat(locale, {
+    month: "short",
+    day: "numeric",
+  }).format(date);
+}
+
 function App() {
   const [section, setSection] = useState(location.hash.slice(1) || "context");
   const [locale, setLocale] = useState<Locale>("en");
   const [theme, setTheme] = useState<"system" | "light" | "dark">("system");
   const [prefsLoaded, setPrefsLoaded] = useState(false);
   const [s, setS] = useState<State>();
-  const [data, setData] = useState<any>({ cards: [] });
+  const [data, setData] = useState<DashboardResponse>({ cards: [], memories: [], topics: [] });
   const [dashboardLoaded, setDashboardLoaded] = useState(false);
   const [queue, setQueue] = useState(0);
   const [pending, setPending] = useState(0);
@@ -127,12 +137,12 @@ function App() {
         setDashboardLoaded(true);
       } catch (e) {
         setDashboardLoaded(false);
-        setData({ cards: [] });
+        setData({ cards: [], memories: [], topics: [] });
         setError((e as Error).message);
       }
     } else {
       setDashboardLoaded(false);
-      setData({ cards: [] });
+      setData({ cards: [], memories: [], topics: [] });
     }
   }
   useEffect(() => {
@@ -143,7 +153,10 @@ function App() {
         if (typeof v.locale === "string") setLocale(v.locale as Locale);
         // Older builds saved "light" automatically. Only an explicit new
         // preference, or the old non-default dark choice, is an override.
-        if (v.themeMode === "manual" && (v.theme === "light" || v.theme === "dark"))
+        if (
+          v.themeMode === "manual" &&
+          (v.theme === "light" || v.theme === "dark")
+        )
           setTheme(v.theme);
         else if (v.themeMode === undefined && v.theme === "dark")
           setTheme("dark");
@@ -158,7 +171,8 @@ function App() {
   }, [s?.ticket?.nonce, s?.paired]);
   useEffect(() => {
     document.documentElement.lang = locale;
-    if (theme === "system") document.documentElement.removeAttribute("data-theme");
+    if (theme === "system")
+      document.documentElement.removeAttribute("data-theme");
     else document.documentElement.dataset.theme = theme;
     if (prefsLoaded) void browser.storage.local.set({ locale });
   }, [locale, theme, prefsLoaded]);
@@ -221,17 +235,142 @@ function App() {
   async function copySkillInstallCommand() {
     if (!skillRepository) return;
     try {
-      await navigator.clipboard.writeText(tr("connections.skillInstallPrompt", { repository: skillRepository }));
+      await navigator.clipboard.writeText(
+        tr("connections.skillInstallPrompt", { repository: skillRepository }),
+      );
       setError("");
       setNotice(tr("connections.skillCommandCopied"));
     } catch (e) {
       setError((e as Error).message || tr("errors.generic"));
     }
   }
-  const cards = (dashboardLoaded ? data.cards || [] : []).filter(
-    (c: any) =>
-      (filter === "all" || c.state === filter) &&
-      c.text.toLowerCase().includes(search.toLowerCase()),
+  const query = search.trim().toLowerCase();
+  const matchesCard = (card: any) =>
+    (filter === "all" || card.state === filter) &&
+    (!query ||
+      `${card.text || ""} ${card.site || ""}`.toLowerCase().includes(query));
+  const allCards: DashboardCard[] = dashboardLoaded ? data.cards || [] : [];
+  const cards = allCards.filter(matchesCard);
+  const sourceMemories: DashboardMemory[] = dashboardLoaded ? data.memories || [] : [];
+  const memoryEvidenceIds = new Set(
+    sourceMemories.flatMap((memory) =>
+      (Array.isArray(memory.items) ? memory.items : [])
+        .map((card: any) => card.id)
+        .filter(Boolean),
+    ),
+  );
+  const memories = sourceMemories.flatMap((memory) => {
+    const label = typeof memory.label === "string" ? memory.label : "";
+    const items: any[] = Array.isArray(memory.items) ? memory.items : [];
+    const filteredItems = items.filter(
+      (card) => filter === "all" || card.state === filter,
+    );
+    const labelMatches = Boolean(query && label.toLowerCase().includes(query));
+    const matchingItems = filteredItems.filter(
+      (card) =>
+        !query ||
+        `${card.text || ""} ${card.site || ""}`.toLowerCase().includes(query),
+    );
+    if (
+      !filteredItems.length ||
+      (query && !labelMatches && !matchingItems.length)
+    )
+      return [];
+    return [
+      {
+        ...memory,
+        label,
+        items: query && !labelMatches ? matchingItems : filteredItems,
+      },
+    ];
+  });
+  const prominentEvidence = cards
+    .filter((card: any) => {
+      if (memoryEvidenceIds.has(card.id)) return false;
+      if (typeof card.prominent === "boolean") return card.prominent;
+      // Older helpers have no prominence signal. Keep their observations
+      // available in activity without implying that they are research.
+      return false;
+    })
+    .slice(0, 6);
+  const renderActions = (card: any) => (
+    <div class="row evidence-actions">
+      <button onClick={() => setModal({ kind: "why", card })}>
+        {tr("context.why")}
+      </button>
+      <button onClick={() => setModal({ kind: "correct", card })}>
+        {tr("context.correct")}
+      </button>
+      <button onClick={() => setModal({ kind: "forget", card })}>
+        {tr("context.forget")}
+      </button>
+    </div>
+  );
+  const renderMemoryEvidence = (card: any) => (
+    <li class="memory-evidence" key={card.id}>
+      <div class="memory-evidence-copy">
+        <strong>{card.text}</strong>
+        <p class="small">
+          {card.site}
+          {formatShortDate(card.last_seen, locale)
+            ? ` · ${formatShortDate(card.last_seen, locale)}`
+            : ""}
+        </p>
+      </div>
+      {renderActions(card)}
+    </li>
+  );
+  const renderObservationCard = (card: any) => (
+    <article class="card context-card evidence-card" key={card.id}>
+      <div class="row between">
+        <span class="badge">
+          {card.state === "confirmed" ? (
+            <Icon name="check" size={13} />
+          ) : (
+            <span class="dot" />
+          )}
+          {tr(("context." + card.state) as MessageKey)}
+        </span>
+        <span class="small">{formatShortDate(card.last_seen, locale)}</span>
+      </div>
+      <h3>{card.text}</h3>
+      <div class="row">
+        <span class="initial">
+          {String(card.site || "?")
+            .slice(0, 2)
+            .toUpperCase()}
+        </span>
+        <div class="small">
+          {card.site}
+          <br />
+          {tr(
+            card.sessions === 1
+              ? "context.sessionSingular"
+              : "context.sessionsPlural",
+            { count: card.sessions || 0 },
+          )}{" "}
+          ·{" "}
+          {tr(
+            card.sites === 1 ? "context.siteSingular" : "context.sitesPlural",
+            { count: card.sites || 0 },
+          )}
+        </div>
+      </div>
+      {card.corrections?.length > 0 && (
+        <p class="small">
+          {card.corrections
+            .map((x: any) =>
+              correctionLabels[x.action]
+                ? tr(correctionLabels[x.action])
+                : x.action.replaceAll("_", " "),
+            )
+            .join(" · ")}
+        </p>
+      )}
+      <footer>
+        {renderActions(card)}
+      </footer>
+    </article>
   );
   return (
     <div class="shell">
@@ -285,12 +424,16 @@ function App() {
               aria-label={tr("dashboard.themeToggle")}
               disabled={!prefsLoaded}
               onClick={() => {
-                const isDark = theme === "system"
-                  ? window.matchMedia("(prefers-color-scheme: dark)").matches
-                  : theme === "dark";
+                const isDark =
+                  theme === "system"
+                    ? window.matchMedia("(prefers-color-scheme: dark)").matches
+                    : theme === "dark";
                 const next = isDark ? "light" : "dark";
                 setTheme(next);
-                void browser.storage.local.set({ theme: next, themeMode: "manual" });
+                void browser.storage.local.set({
+                  theme: next,
+                  themeMode: "manual",
+                });
               }}
             >
               <Icon name="sun" size={18} />
@@ -348,103 +491,119 @@ function App() {
                 />
               </label>
             </div>
-            {cards.length ? (
-              <div class="context-grid">
-                {cards.map((card: any) => (
-                  <article class="card context-card">
-                    <div class="row between">
-                      <span class="badge">
-                        {card.state === "confirmed" ? (
-                          <Icon name="check" size={13} />
-                        ) : (
-                          <span class="dot" />
-                        )}
-                        {tr(("context." + card.state) as MessageKey)}
-                      </span>
-                      <span class="small">
-                        {new Date(card.last_seen).toLocaleDateString(locale, {
-                          month: "short",
-                          day: "numeric",
+            <section
+              class="research-section"
+              aria-labelledby="research-heading"
+            >
+              <div class="section-heading">
+                <h2 id="research-heading">{tr("context.researchMemories")}</h2>
+                <p>{tr("context.memoriesDescription")}</p>
+              </div>
+              {memories.length ? (
+                <div class="memory-grid">
+                  {memories.map((memory: any) => (
+                    <article class="card memory-card" key={memory.id}>
+                      <div class="row between">
+                        <span class="badge">
+                          <Icon name="search" size={13} />
+                          {tr("context.suggestedProject")}
+                        </span>
+                        <time class="small" dateTime={memory.last_seen}>
+                          {formatShortDate(memory.last_seen, locale)}
+                        </time>
+                      </div>
+                      <h3>{memory.label}</h3>
+                      <p class="memory-meta">
+                        {tr("context.evidenceCount", {
+                          count: memory.evidence_count ?? memory.items.length,
+                          sessions: memory.sessions || 0,
+                          sites: memory.sites || 0,
                         })}
-                      </span>
-                    </div>
-                    <h3>{card.text}</h3>
-                    <div class="row">
-                      <span class="initial">
-                        {card.site.slice(0, 2).toUpperCase()}
-                      </span>
-                      <div class="small">
-                        {card.site}
-                        <br />
-                        {tr(
-                          card.sessions === 1
-                            ? "context.sessionSingular"
-                            : "context.sessionsPlural",
-                          { count: card.sessions },
-                        )}{" "}
-                        ·{" "}
-                        {tr(
-                          card.sites === 1
-                            ? "context.siteSingular"
-                            : "context.sitesPlural",
-                          { count: card.sites },
-                        )}
-                      </div>
-                    </div>
-                    {card.corrections?.length > 0 && (
-                      <p class="small">
-                        {card.corrections
-                          .map((x: any) =>
-                            correctionLabels[x.action]
-                              ? tr(correctionLabels[x.action])
-                              : x.action.replaceAll("_", " "),
-                          )
-                          .join(" · ")}
                       </p>
-                    )}
-                    <footer>
-                      <span class="small">{tr("context.sourceBacked")}</span>
-                      <div class="row" style={{ gap: 2 }}>
-                        <button onClick={() => setModal({ kind: "why", card })}>
-                          {tr("context.why")}
-                        </button>
-                        <button
-                          onClick={() => setModal({ kind: "correct", card })}
-                        >
-                          {tr("context.correct")}
-                        </button>
-                        <button
-                          onClick={() => setModal({ kind: "forget", card })}
-                        >
-                          {tr("context.forget")}
-                        </button>
-                      </div>
-                    </footer>
-                  </article>
-                ))}
-              </div>
-            ) : (
-              <div class="card empty">
-                <div class="symbol">
-                  <Icon name="mark" size={42} />
+                      <details class="memory-sources">
+                        <summary>
+                          {tr("context.viewEvidence", {
+                            count: memory.items.length,
+                          })}
+                        </summary>
+                        {memory.items.length ? (
+                          <ul class="memory-evidence-list">
+                            {memory.items.map(renderMemoryEvidence)}
+                          </ul>
+                        ) : (
+                          <p class="small">{tr("context.noLinkedEvidence")}</p>
+                        )}
+                      </details>
+                    </article>
+                  ))}
                 </div>
-                <h2>
-                  {search ? tr("context.noMatch") : tr("context.emptyTitle")}
-                </h2>
-                <p>
-                  {s?.paired
-                    ? tr("context.emptyConnected")
-                    : tr("context.emptyDisconnected")}
+              ) : (
+                <p class="notice memory-empty">
+                  {search
+                    ? tr("context.noMatch")
+                    : tr("context.noResearchMemories")}
                 </p>
-                <button
-                  class="primary"
-                  disabled={busy}
-                  onClick={() => (s?.paired ? run(load) : go("connections"))}
-                >
-                  {s?.paired ? tr("context.refresh") : tr("context.connect")}
-                  <Icon name="arrow" size={16} />
-                </button>
+              )}
+            </section>
+
+            <section
+              class="research-section"
+              aria-labelledby="evidence-heading"
+            >
+              <div class="section-heading">
+                <h2 id="evidence-heading">{tr("context.recentEvidence")}</h2>
               </div>
+              {prominentEvidence.length ? (
+                <div class="context-grid">
+                  {prominentEvidence.map(renderObservationCard)}
+                </div>
+              ) : allCards.length === 0 && memories.length === 0 ? (
+                <div class="card empty">
+                  <div class="symbol">
+                    <Icon name="mark" size={42} />
+                  </div>
+                  <h2>
+                    {search ? tr("context.noMatch") : tr("context.emptyTitle")}
+                  </h2>
+                  <p>
+                    {s?.paired
+                      ? tr("context.emptyConnected")
+                      : tr("context.emptyDisconnected")}
+                  </p>
+                  <button
+                    class="primary"
+                    disabled={busy}
+                    onClick={() => (s?.paired ? run(load) : go("connections"))}
+                  >
+                    {s?.paired ? tr("context.refresh") : tr("context.connect")}
+                    <Icon name="arrow" size={16} />
+                  </button>
+                </div>
+              ) : (
+                <p class="small evidence-empty">
+                  {tr("context.noRecentEvidence")}
+                </p>
+              )}
+            </section>
+
+            {allCards.length > 0 && (
+              <section class="research-section raw-activity">
+                <details>
+                  <summary>
+                    {tr("context.rawActivity", { count: cards.length })}
+                  </summary>
+                  <p class="small raw-activity-description">
+                    {tr("context.rawActivityDescription")}
+                  </p>
+                  {cards.length ? (
+                    <div class="context-grid">
+                      {cards.map(renderObservationCard)}
+                    </div>
+                  ) : (
+                    <p class="small">{tr("context.noMatch")}</p>
+                  )}
+                </details>
+              </section>
             )}
             <p class="section-note">
               <Icon name="why" size={16} />
@@ -513,7 +672,9 @@ function App() {
                 </div>
                 <ol class="first-run-steps">
                   <li>
-                    <span class="first-run-number" aria-hidden="true">1</span>
+                    <span class="first-run-number" aria-hidden="true">
+                      1
+                    </span>
                     <div>
                       <h3>{tr("journey.researchTitle")}</h3>
                       <p>
@@ -524,7 +685,9 @@ function App() {
                     </div>
                   </li>
                   <li>
-                    <span class="first-run-number" aria-hidden="true">2</span>
+                    <span class="first-run-number" aria-hidden="true">
+                      2
+                    </span>
                     <div>
                       <h3>{tr("journey.askTitle")}</h3>
                       <p>{tr("journey.askDetail")}</p>
@@ -537,7 +700,9 @@ function App() {
                     </div>
                   </li>
                 </ol>
-                {(!s.policy.consent || s.policy.paused || !s.policy.recall_enabled) && (
+                {(!s.policy.consent ||
+                  s.policy.paused ||
+                  !s.policy.recall_enabled) && (
                   <div>
                     <button class="ghost" onClick={() => go("privacy")}>
                       {tr("journey.reviewPrivacy")}
@@ -594,120 +759,124 @@ function App() {
                   ? tr("connections.linkAnother")
                   : tr("connections.setupSteps")}
               </summary>
-            <div class="step">
-              <span class="step-number">1</span>
-              <h3>{tr("connections.chooseAssistants")}</h3>
-            </div>
-            <div class="connections">
-              {assistants.map(([id, name, initial]) => (
-                <button
-                  class={
-                    "assistant " + (selected.includes(id) ? "selected" : "")
-                  }
-                  aria-pressed={selected.includes(id)}
-                  onClick={() => {
-                    setSelected(
-                      selected.includes(id)
-                        ? selected.filter((x) => x !== id)
-                        : [...selected, id],
-                    );
-                  }}
-                >
-                  <div class="row between" style={{ width: "100%" }}>
-                    <span class="monogram">{initial}</span>
-                    {selected.includes(id) && <Icon name="check" size={16} />}
-                  </div>
-                  <strong>{tr(name)}</strong>
-                  <small>
-                    {s?.lastStatus?.adapters?.some(
-                      (adapter: any) =>
-                        adapter?.id === id && adapter.installed === true,
-                    )
-                      ? tr("connections.executionNotTested")
-                      : tr("connections.localExecutionRequired")}
-                  </small>
-                </button>
-              ))}
-            </div>
-            <p class="small" style={{ marginTop: 12 }}>
-              {tr("connections.remoteLimit")}
-            </p>
-            <div class="step">
-              <span class="step-number">2</span>
-              <h3>{tr("connections.installSkill")}</h3>
-            </div>
-            <div class="card">
-              <p>{tr("connections.skillInstallDetails")}</p>
-              {skillRepository ? (
-                <div class="stack" style={{ gap: 12, marginTop: 16 }}>
-                  <a
-                    class="skill-source"
-                    href={skillRepository}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {skillRepository}
-                  </a>
-                  <small>{tr("connections.skillGlobalNote")}</small>
-                  <div>
-                    <button
-                      class="primary"
-                      onClick={() => void copySkillInstallCommand()}
-                    >
-                      <Icon name="copy" size={16} />
-                      {tr("connections.copySkillCommand")}
-                    </button>
-                  </div>
-                  {skillInstallCommand && (
-                    <details>
-                      <summary class="small">Skills CLI</summary>
-                      <code class="path skill-command">{skillInstallCommand}</code>
-                    </details>
-                  )}
-                </div>
-              ) : (
-                <p class="notice" style={{ marginTop: 16 }}>
-                  {tr("connections.skillSourceUnconfigured")}
-                </p>
-              )}
-            </div>
-            <div class="step">
-              <span class="step-number">3</span>
-              <h3>{tr("connections.connectLocally")}</h3>
-            </div>
-            <div class="card">
-              <h3>
-                {s?.paired
-                  ? tr("connections.connectedBrowser")
-                  : tr("connections.helperTitle")}
-              </h3>
-              <p style={{ marginTop: 8 }}>{tr("connections.helperDetails")}</p>
-              <div class="form-actions">
-                <button
-                  class="primary"
-                  disabled={
-                    busy ||
-                    (!s?.paired && (!consent || !disclosure)) ||
-                    !selected.length
-                  }
-                  onClick={() => run(copySetup)}
-                >
-                  <Icon name="copy" size={16} />
-                  {tr("setup.copyInstructions")}
-                </button>
+              <div class="step">
+                <span class="step-number">1</span>
+                <h3>{tr("connections.chooseAssistants")}</h3>
               </div>
-              {setupText && (
-                <details style={{ marginTop: 16 }}>
-                  <summary class="small">
-                    {tr("connections.reviewInstructions")}
-                  </summary>
-                  <textarea rows={10} readOnly value={setupText} />
-                </details>
-              )}
-              <small style={{ display: "block", marginTop: 16 }}>
-                {tr("connections.helperSeparateFromSkill")}
-              </small>
-            </div>
+              <div class="connections">
+                {assistants.map(([id, name, initial]) => (
+                  <button
+                    class={
+                      "assistant " + (selected.includes(id) ? "selected" : "")
+                    }
+                    aria-pressed={selected.includes(id)}
+                    onClick={() => {
+                      setSelected(
+                        selected.includes(id)
+                          ? selected.filter((x) => x !== id)
+                          : [...selected, id],
+                      );
+                    }}
+                  >
+                    <div class="row between" style={{ width: "100%" }}>
+                      <span class="monogram">{initial}</span>
+                      {selected.includes(id) && <Icon name="check" size={16} />}
+                    </div>
+                    <strong>{tr(name)}</strong>
+                    <small>
+                      {s?.lastStatus?.adapters?.some(
+                        (adapter: any) =>
+                          adapter?.id === id && adapter.installed === true,
+                      )
+                        ? tr("connections.executionNotTested")
+                        : tr("connections.localExecutionRequired")}
+                    </small>
+                  </button>
+                ))}
+              </div>
+              <p class="small" style={{ marginTop: 12 }}>
+                {tr("connections.remoteLimit")}
+              </p>
+              <div class="step">
+                <span class="step-number">2</span>
+                <h3>{tr("connections.installSkill")}</h3>
+              </div>
+              <div class="card">
+                <p>{tr("connections.skillInstallDetails")}</p>
+                {skillRepository ? (
+                  <div class="stack" style={{ gap: 12, marginTop: 16 }}>
+                    <a
+                      class="skill-source"
+                      href={skillRepository}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {skillRepository}
+                    </a>
+                    <small>{tr("connections.skillGlobalNote")}</small>
+                    <div>
+                      <button
+                        class="primary"
+                        onClick={() => void copySkillInstallCommand()}
+                      >
+                        <Icon name="copy" size={16} />
+                        {tr("connections.copySkillCommand")}
+                      </button>
+                    </div>
+                    {skillInstallCommand && (
+                      <details>
+                        <summary class="small">Skills CLI</summary>
+                        <code class="path skill-command">
+                          {skillInstallCommand}
+                        </code>
+                      </details>
+                    )}
+                  </div>
+                ) : (
+                  <p class="notice" style={{ marginTop: 16 }}>
+                    {tr("connections.skillSourceUnconfigured")}
+                  </p>
+                )}
+              </div>
+              <div class="step">
+                <span class="step-number">3</span>
+                <h3>{tr("connections.connectLocally")}</h3>
+              </div>
+              <div class="card">
+                <h3>
+                  {s?.paired
+                    ? tr("connections.connectedBrowser")
+                    : tr("connections.helperTitle")}
+                </h3>
+                <p style={{ marginTop: 8 }}>
+                  {tr("connections.helperDetails")}
+                </p>
+                <div class="form-actions">
+                  <button
+                    class="primary"
+                    disabled={
+                      busy ||
+                      (!s?.paired && (!consent || !disclosure)) ||
+                      !selected.length
+                    }
+                    onClick={() => run(copySetup)}
+                  >
+                    <Icon name="copy" size={16} />
+                    {tr("setup.copyInstructions")}
+                  </button>
+                </div>
+                {setupText && (
+                  <details style={{ marginTop: 16 }}>
+                    <summary class="small">
+                      {tr("connections.reviewInstructions")}
+                    </summary>
+                    <textarea rows={10} readOnly value={setupText} />
+                  </details>
+                )}
+                <small style={{ display: "block", marginTop: 16 }}>
+                  {tr("connections.helperSeparateFromSkill")}
+                </small>
+              </div>
             </details>
             {s?.paired && (
               <details class="card" style={{ marginTop: 20 }}>

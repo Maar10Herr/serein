@@ -1,4 +1,5 @@
 pub mod algorithm;
+pub mod importance;
 pub mod inference;
 pub mod install;
 pub mod model;

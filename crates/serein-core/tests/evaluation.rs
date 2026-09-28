@@ -623,6 +623,30 @@ fn evaluation_fixtures_report_quality_and_assert_hard_invariants() {
         "evaluation hard invariants failed; details were written to {}",
         report_path.display()
     );
+    if pack_present {
+        // This fixed illustrative suite is a regression guard, not a field
+        // accuracy estimate. The previous release returned 67 of 78 labeled
+        // observations and relevant evidence for 20 paraphrase cases. Preserve
+        // most of that coverage while still requiring no explicit no-match hit.
+        let quality = &result["modes"]["semantic"]["quality_summary"];
+        assert!(
+            quality["relevant_return_count"].as_u64().unwrap_or(0) >= 60,
+            "semantic retrieval lost most of the fixed fixture coverage; details were written to {}",
+            report_path.display()
+        );
+        assert!(
+            quality["semantic_paraphrase_cases_with_relevant_return"]
+                .as_u64()
+                .unwrap_or(0)
+                >= 15,
+            "semantic paraphrase fixture coverage regressed; details were written to {}",
+            report_path.display()
+        );
+        assert_eq!(
+            quality["no_match_cases_with_results"], 0,
+            "explicit no-match fixture returned context"
+        );
+    }
     eprintln!(
         "evaluation recorded {} fixture cases; semantic pack {}; quality labels remain illustrative",
         fixture.cases.len(),

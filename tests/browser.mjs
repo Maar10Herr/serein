@@ -100,7 +100,13 @@ try{
  const nativeRequest={protocol:1,request_id:crypto.randomUUID(),source_id:ticket.source_id,op:'ingest',capture_epoch:connected.state.policy.capture_epoch,payload:{events:[sample]}};
  const acknowledgement=await page.evaluate(request=>chrome.runtime.sendNativeMessage('com.serein.context',request),nativeRequest);assert.deepEqual(acknowledgement.acknowledged_ids,[sample.event_id]);
  const second=await page.evaluate(request=>chrome.runtime.sendNativeMessage('com.serein.context',request),nativeRequest);assert.deepEqual(second.duplicate_ids,[sample.event_id]);
- await page.reload();await page.getByRole('heading',{name:'Desk lamp research',exact:true}).waitFor();
+ await page.reload();
+ await page.getByRole('heading',{name:'Research memories',exact:true}).waitFor();
+ await page.getByRole('heading',{name:'Recent useful evidence',exact:true}).waitFor();
+ const rawActivity=page.locator('.raw-activity details');await rawActivity.waitFor();
+ assert.equal(await rawActivity.evaluate(node=>node.open),false,'raw activity should start collapsed');
+ await rawActivity.locator('summary').click();
+ await rawActivity.getByRole('heading',{name:'Desk lamp research',exact:true}).waitFor();
  await page.goto(`chrome-extension://${id}/dashboard.html#connections`);
  assert.equal(await page.getByRole('heading',{name:"You're connected",exact:true}).count(),0,'first-run prompt should end after the first saved observation');
  await page.goto(`chrome-extension://${id}/dashboard.html#context`);

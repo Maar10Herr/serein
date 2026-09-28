@@ -59,3 +59,36 @@ export interface Visit {
   lastTick: number;
   epoch: number;
 }
+
+// Wire shape: contracts/dashboard-response.schema.json.
+export interface DashboardCard {
+  id: string;
+  site: string;
+  text: string;
+  state: "observed" | "confirmed";
+  last_seen: string;
+  sessions: number;
+  sites: 1;
+  kind: "visit" | "search";
+  prominent: boolean;
+  corrections: Array<{ action: string; text: string | null }>;
+}
+export interface DashboardMemory {
+  id: string;
+  label: string;
+  last_seen: string;
+  sessions: number;
+  sites: number;
+  evidence_count: number;
+  items: DashboardCard[];
+}
+export interface DashboardResponse {
+  cards: DashboardCard[];
+  memories: DashboardMemory[];
+  topics: unknown[];
+  model_available?: boolean;
+  index_mode?: "hybrid" | "lexical";
+  atoms?: number;
+  database_path?: string;
+  vault_bytes?: number;
+}

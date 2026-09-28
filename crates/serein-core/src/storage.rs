@@ -7,6 +7,14 @@ use std::{
     path::{Path, PathBuf},
     time::{Duration, Instant},
 };
+
+fn memory_suppression_action(correction: &Value) -> bool {
+    matches!(
+        correction["action"].as_str(),
+        Some("do_not_use" | "wrong_topic" | "not_about_me" | "temporary_research")
+    )
+}
+
 pub struct Vault {
     pub conn: Connection,
     pub path: PathBuf,
@@ -474,30 +482,268 @@ ORDER BY a.first_seen,a.id LIMIT ?")?
         Ok(json!({"status":"ok"}))
     }
     pub fn dashboard(&self, source: &str) -> Result<Value> {
+        const DASHBOARD_CARD_LIMIT: i64 = 60;
+        // The vault refuses new atoms at 10,000, so this fixed bound covers
+        // every retained current-model candidate without an unbounded read.
+        const DASHBOARD_RESEARCH_CANDIDATE_LIMIT: i64 = 10_000;
         let mut cards = vec![];
-        let mut stmt=self.conn.prepare("SELECT a.id,a.site,a.title,a.query,a.last_seen,(SELECT count(DISTINCT session) FROM atom_days WHERE atom=a.id) FROM atoms a WHERE source=? AND (last_seen>=strftime('%Y-%m-%dT%H:%M:%SZ','now','-90 days') OR id IN (SELECT atom FROM feedback WHERE action='confirm_constraint')) ORDER BY last_seen DESC LIMIT 60")?;
-        let rows = stmt.query_map([source], |r| {
-            Ok((
-                r.get::<_, String>(0)?,
-                r.get::<_, String>(1)?,
-                r.get::<_, String>(2)?,
-                r.get::<_, Option<String>>(3)?,
-                r.get::<_, String>(4)?,
-                r.get::<_, i64>(5)?,
-            ))
-        })?;
-        for row in rows {
-            let (id, site, title, query, time, sessions) = row?;
-            let corrections = self.corrections(&id)?;
+        let mut stmt=self.conn.prepare("SELECT a.id,a.site,a.title,a.query,a.kind,a.seconds,a.last_seen,(SELECT count(DISTINCT session) FROM atom_days WHERE atom=a.id) FROM atoms a WHERE source=? AND (last_seen>=strftime('%Y-%m-%dT%H:%M:%SZ','now','-90 days') OR id IN (SELECT atom FROM feedback WHERE action='confirm_constraint')) ORDER BY last_seen DESC,a.id LIMIT ?")?;
+        let card_rows = stmt
+            .query_map(params![source, DASHBOARD_CARD_LIMIT], |r| {
+                Ok((
+                    r.get::<_, String>(0)?,
+                    r.get::<_, String>(1)?,
+                    r.get::<_, String>(2)?,
+                    r.get::<_, Option<String>>(3)?,
+                    r.get::<_, String>(4)?,
+                    r.get::<_, i64>(5)?,
+                    r.get::<_, String>(6)?,
+                    r.get::<_, i64>(7)?,
+                ))
+            })?
+            .collect::<std::result::Result<Vec<_>, _>>()?;
+        drop(stmt);
+
+        let model_hash = self.current_model_hash();
+        let candidate_rows = if let Some(model_hash) = model_hash.as_deref() {
+            let mut stmt = self.conn.prepare("SELECT a.id,a.site,a.title,a.query,a.kind,a.seconds,a.last_seen,(SELECT count(DISTINCT session) FROM atom_days WHERE atom=a.id) FROM atoms a WHERE a.source=? AND (a.last_seen>=strftime('%Y-%m-%dT%H:%M:%SZ','now','-90 days') OR a.id IN (SELECT atom FROM feedback WHERE action='confirm_constraint')) AND EXISTS (SELECT 1 FROM atom_topics m JOIN topics t ON t.id=m.topic WHERE m.atom=a.id AND t.model=?) ORDER BY a.last_seen DESC,a.id LIMIT ?")?;
+            let rows = stmt.query_map(
+                params![source, model_hash, DASHBOARD_RESEARCH_CANDIDATE_LIMIT],
+                |r| {
+                    Ok((
+                        r.get::<_, String>(0)?,
+                        r.get::<_, String>(1)?,
+                        r.get::<_, String>(2)?,
+                        r.get::<_, Option<String>>(3)?,
+                        r.get::<_, String>(4)?,
+                        r.get::<_, i64>(5)?,
+                        r.get::<_, String>(6)?,
+                        r.get::<_, i64>(7)?,
+                    ))
+                },
+            )?;
+            let rows = rows.collect::<std::result::Result<Vec<_>, _>>()?;
+            rows
+        } else {
+            Vec::new()
+        };
+
+        let mut groupable_candidates: Vec<_> = candidate_rows
+            .into_iter()
+            .filter(|(_, _, title, query, _, _, _, _)| {
+                importance::groupable(title, query.as_deref())
+            })
+            .collect();
+        let mut correction_ids: Vec<_> = card_rows
+            .iter()
+            .map(|row| row.0.clone())
+            .chain(
+                groupable_candidates
+                    .iter()
+                    .map(|(id, _, _, _, _, _, _, _)| id.clone()),
+            )
+            .collect();
+        correction_ids.sort();
+        correction_ids.dedup();
+        let corrections_by_atom = self.corrections_for_atoms(&correction_ids)?;
+        groupable_candidates.retain(|(id, _, _, _, _, _, _, _)| {
+            !corrections_by_atom
+                .get(id)
+                .is_some_and(|corrections| corrections.iter().any(memory_suppression_action))
+        });
+
+        let mut groupable_ids: Vec<_> = groupable_candidates
+            .iter()
+            .map(|(id, _, _, _, _, _, _, _)| id.clone())
+            .collect();
+        groupable_ids.sort();
+        groupable_ids.dedup();
+        let mut card_by_id = HashMap::new();
+        for (id, site, title, query, kind, seconds, time, sessions) in card_rows {
+            let corrections = corrections_by_atom.get(&id).cloned().unwrap_or_default();
             let confirmed = corrections
                 .iter()
                 .rev()
                 .find(|x| x["action"] == "confirm_constraint");
-            cards.push(json!({"id":id,"site":site,"text":confirmed.map(|x|x["text"].clone()).unwrap_or(json!(query.unwrap_or(title))),"state":if confirmed.is_some(){"confirmed"}else{"observed"},"last_seen":time,"sessions":sessions,"sites":1,"corrections":corrections}));
+            let prominent = importance::prominent(
+                &title,
+                query.as_deref(),
+                seconds,
+                sessions,
+                confirmed.is_some(),
+            );
+            let prominent = prominent && !corrections.iter().any(memory_suppression_action);
+            let card = json!({"id":id,"site":site,"text":confirmed.map(|x|x["text"].clone()).unwrap_or(json!(query.unwrap_or(title))),"state":if confirmed.is_some(){"confirmed"}else{"observed"},"last_seen":time,"sessions":sessions,"sites":1,"kind":kind,"prominent":prominent,"corrections":corrections});
+            card_by_id.insert(id, card.clone());
+            cards.push(card);
         }
         let mut r = self.status(source)?;
+        let topics = inference::activity(&self.conn, model_hash.as_deref())?;
+        let mut membership = HashMap::<String, String>::new();
+        if let Some(model_hash) = model_hash.filter(|_| !groupable_ids.is_empty()) {
+            let placeholders = vec!["?"; groupable_ids.len()].join(",");
+            let sql = format!("SELECT m.atom,m.topic,m.mass FROM atom_topics m JOIN topics t ON t.id=m.topic WHERE t.model=? AND m.atom IN ({placeholders}) ORDER BY m.atom,m.mass DESC,m.topic");
+            let params = std::iter::once(model_hash.as_str())
+                .chain(groupable_ids.iter().map(String::as_str));
+            for row in self
+                .conn
+                .prepare(&sql)?
+                .query_map(rusqlite::params_from_iter(params), |row| {
+                    Ok((row.get::<_, String>(0)?, row.get::<_, String>(1)?))
+                })?
+            {
+                let (atom, topic) = row?;
+                membership.entry(atom).or_insert(topic);
+            }
+        }
+        let candidate_kinds: HashMap<_, _> = groupable_candidates
+            .iter()
+            .map(|(id, _, _, _, kind, _, _, _)| (id.clone(), kind.clone()))
+            .collect();
+        let mut sessions_by_topic = HashMap::<String, HashSet<String>>::new();
+        let mut items_by_topic_session = HashMap::<(String, String), HashSet<String>>::new();
+        let mut searches_by_topic_session = HashMap::<(String, String), HashSet<String>>::new();
+        if !groupable_ids.is_empty() {
+            let placeholders = vec!["?"; groupable_ids.len()].join(",");
+            let sql = format!("SELECT atom,session FROM atom_days WHERE atom IN ({placeholders})");
+            let params = groupable_ids.iter().map(String::as_str);
+            for row in self
+                .conn
+                .prepare(&sql)?
+                .query_map(rusqlite::params_from_iter(params), |row| {
+                    Ok((row.get::<_, String>(0)?, row.get::<_, String>(1)?))
+                })?
+            {
+                let (atom, session) = row?;
+                let Some(topic) = membership.get(&atom) else {
+                    continue;
+                };
+                sessions_by_topic
+                    .entry(topic.clone())
+                    .or_default()
+                    .insert(session.clone());
+                let key = (topic.clone(), session);
+                items_by_topic_session
+                    .entry(key.clone())
+                    .or_default()
+                    .insert(atom.clone());
+                if candidate_kinds
+                    .get(&atom)
+                    .is_some_and(|kind| kind == "search")
+                {
+                    searches_by_topic_session
+                        .entry(key)
+                        .or_default()
+                        .insert(atom);
+                }
+            }
+        }
+        let mut by_topic = HashMap::<String, Vec<Value>>::new();
+        let mut eligible_titles = HashMap::<String, String>::new();
+        for (id, site, title, query, kind, seconds, time, sessions) in groupable_candidates {
+            eligible_titles.insert(id.clone(), title.clone());
+            let card = if let Some(card) = card_by_id.get(&id) {
+                card.clone()
+            } else {
+                let corrections = corrections_by_atom.get(&id).cloned().unwrap_or_default();
+                let confirmed = corrections
+                    .iter()
+                    .rev()
+                    .find(|x| x["action"] == "confirm_constraint");
+                let prominent = importance::prominent(
+                    &title,
+                    query.as_deref(),
+                    seconds,
+                    sessions,
+                    confirmed.is_some(),
+                );
+                json!({"id":id,"site":site,"text":confirmed.map(|x|x["text"].clone()).unwrap_or(json!(query.unwrap_or(title))),"state":if confirmed.is_some(){"confirmed"}else{"observed"},"last_seen":time,"sessions":sessions,"sites":1,"kind":kind,"prominent":prominent,"corrections":corrections})
+            };
+            if let Some(topic) = membership.get(&id) {
+                by_topic.entry(topic.clone()).or_default().push(card);
+            }
+        }
+        let mut memories = Vec::new();
+        if let Some(topic_list) = topics.as_array() {
+            for topic in topic_list {
+                let Some(topic_id) = topic["id"].as_str() else {
+                    continue;
+                };
+                let Some(mut items) = by_topic.remove(topic_id) else {
+                    continue;
+                };
+                if items.len() < 2 {
+                    continue;
+                }
+                let independent_sessions = sessions_by_topic
+                    .get(topic_id)
+                    .is_some_and(|sessions| sessions.len() >= 2);
+                let coherent_search_session = items_by_topic_session.iter().any(
+                    |((candidate_topic, session), session_items)| {
+                        candidate_topic == topic_id
+                            && searches_by_topic_session
+                                .get(&(candidate_topic.clone(), session.clone()))
+                                .is_some_and(|searches| {
+                                    session_items.difference(searches).count() >= 2
+                                })
+                    },
+                );
+                if !independent_sessions && !coherent_search_session {
+                    continue;
+                }
+                let sites: HashSet<_> = items
+                    .iter()
+                    .filter_map(|item| item["site"].as_str())
+                    .map(str::to_owned)
+                    .collect();
+                items.sort_by(|a, b| {
+                    b["last_seen"]
+                        .as_str()
+                        .cmp(&a["last_seen"].as_str())
+                        .then(a["id"].as_str().cmp(&b["id"].as_str()))
+                });
+                let last_seen = items[0]["last_seen"].clone();
+                let evidence_count = items.len();
+                // A topic's stored label may have come from an observation the
+                // user later corrected. Derive display text only from the
+                // still-eligible evidence in this memory.
+                let label = items
+                    .iter()
+                    .filter_map(|item| item["text"].as_str())
+                    .find(|text| importance::groupable(text, None))
+                    .map(str::to_owned)
+                    .or_else(|| {
+                        items
+                            .iter()
+                            .filter_map(|item| item["id"].as_str())
+                            .filter_map(|id| eligible_titles.get(id))
+                            .find(|title| importance::groupable(title, None))
+                            .cloned()
+                    })
+                    .unwrap_or_else(|| "Research".to_owned());
+                let label = label.chars().take(72).collect::<String>();
+                items.truncate(5);
+                memories.push(json!({
+                    "id": topic_id,
+                    "label": label,
+                    "last_seen": last_seen,
+                    "sessions": sessions_by_topic.get(topic_id).map_or(0, HashSet::len),
+                    "sites": sites.len(),
+                    "evidence_count": evidence_count,
+                    "items": items,
+                }));
+            }
+        }
+        memories.sort_by(|a, b| {
+            b["last_seen"]
+                .as_str()
+                .cmp(&a["last_seen"].as_str())
+                .then(a["id"].as_str().cmp(&b["id"].as_str()))
+        });
+        memories.truncate(8);
         r["cards"] = json!(cards);
-        r["topics"] = inference::activity(&self.conn, self.current_model_hash().as_deref())?;
+        r["topics"] = topics;
+        r["memories"] = json!(memories);
         Ok(r)
     }
     fn corrections(&self, id: &str) -> Result<Vec<Value>> {
@@ -508,6 +754,31 @@ ORDER BY a.first_seen,a.id LIMIT ?")?
                 Ok(json!({"action":r.get::<_,String>(0)?,"text":r.get::<_,Option<String>>(1)?}))
             })?
             .collect::<std::result::Result<Vec<_>, _>>()?)
+    }
+    fn corrections_for_atoms(&self, ids: &[String]) -> Result<HashMap<String, Vec<Value>>> {
+        if ids.is_empty() {
+            return Ok(HashMap::new());
+        }
+        let placeholders = vec!["?"; ids.len()].join(",");
+        let sql = format!(
+            "SELECT atom,action,text FROM feedback WHERE atom IN ({placeholders}) ORDER BY atom,time"
+        );
+        let params = ids.iter().map(String::as_str);
+        let mut by_atom = HashMap::<String, Vec<Value>>::new();
+        for row in self
+            .conn
+            .prepare(&sql)?
+            .query_map(rusqlite::params_from_iter(params), |row| {
+                Ok((
+                    row.get::<_, String>(0)?,
+                    json!({"action":row.get::<_,String>(1)?,"text":row.get::<_,Option<String>>(2)?}),
+                ))
+            })?
+        {
+            let (atom, correction) = row?;
+            by_atom.entry(atom).or_default().push(correction);
+        }
+        Ok(by_atom)
     }
     pub fn refresh(&mut self, model_path: &Path, budget: u64) -> Result<Value> {
         let encoder = match model::Encoder::open(model_path) {

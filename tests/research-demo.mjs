@@ -51,6 +51,7 @@ const dataDir = path.join(temp, 'serein-data');
 const installHome = path.join(temp, 'serein-install');
 const extension = path.join(root, 'apps/extension/.output/chrome-mv3');
 const screenshotDir = path.join(root, 'docs/screenshots');
+const resultsPath = path.join(root, 'docs/research-demo-results.json');
 await mkdir(screenshotDir, { recursive: true });
 let context;
 let registeredPath;
@@ -58,6 +59,7 @@ let registeredPath;
 try {
   const browserEnv = {
     ...process.env,
+    HOME: path.join(temp, 'browser-home'),
     SEREIN_DATA_DIR: dataDir,
     SEREIN_INSTALL_HOME: installHome,
   };
@@ -150,6 +152,17 @@ try {
           return false;
         }
       }), target.host, { timeout: 6_000 }).catch(() => {});
+      // Activate only this isolated Chrome for Testing app. Include the same
+      // temporary profile in case Launch Services starts a new app process.
+      const chromeApp = path.resolve(path.dirname(chromeBinary), '../..');
+      execFileSync('open', [
+        '-a', chromeApp, '--args', `--user-data-dir=${temp}`, '--no-first-run', '--disable-sync',
+      ]);
+      await capturePage.bringToFront();
+      await capturePage.waitForTimeout(250);
+      // Keep macOS's real idle state active for this headed test. Chrome still
+      // has to report a focused window and an active idle state below.
+      execFileSync('caffeinate', ['-u', '-t', '2']);
       const foreground = await controlPage.evaluate(async () => ({
         focused: (await chrome.windows.getLastFocused()).focused,
         idle: await chrome.idle.queryState(60),
@@ -246,14 +259,18 @@ try {
     .split('\n').filter(Boolean).length);
   assert.ok(nativeCalls >= 3, `expected native hello, policy, and ingest calls; saw ${nativeCalls}`);
   const dashboard = await send({ type: 'host', op: 'dashboard' });
-  const retainedSites = new Set(dashboard.cards.map(card => card.site));
+  assert.ok(Array.isArray(dashboard.cards), 'native dashboard must return raw observations');
+  assert.ok(Array.isArray(dashboard.memories), 'native dashboard must return research memories');
+  const rawCards = dashboard.cards;
+  const memories = dashboard.memories;
+  const retainedSites = new Set(rawCards.map(card => card.site));
   assert.ok(expectedRetained.length >= 4, `only ${expectedRetained.length} actual public observations were retained`);
   for (const visit of expectedRetained) {
     assert.ok(retainedSites.has(visit.host), `native dashboard lacks captured site ${visit.host}`);
     const expectedText = visit.observedQuery ?? visit.chromeTitle;
     assert.ok(expectedText, `Chrome tabs API did not expose safe display metadata for ${visit.host}`);
     assert.ok(
-      dashboard.cards.some(card => card.site === visit.host && card.text === expectedText),
+      rawCards.some(card => card.site === visit.host && card.text === expectedText),
       `native dashboard lacks actual captured title/query for ${visit.host}`,
     );
   }
@@ -263,17 +280,92 @@ try {
   await controlPage.reload();
   await controlPage.getByRole('heading', { name: 'Your context', exact: true }).waitFor();
   await controlPage.waitForFunction(() => document.documentElement.dataset.theme === 'light');
+  await controlPage.getByRole('heading', { name: 'Research memories', exact: true }).waitFor();
+  await controlPage.getByRole('heading', { name: 'Recent useful evidence', exact: true }).waitFor();
+  await controlPage.locator('.raw-activity details').waitFor();
+
+  // The host response is the source of truth for the complete observation
+  // list. The dashboard presents its inferred groups first, selected useful
+  // evidence next, and keeps every raw observation in a closed disclosure.
+  const memoryCards = controlPage.locator('article.memory-card');
   await controlPage.waitForFunction(expected =>
-    document.querySelectorAll('article.context-card').length === expected,
-  dashboard.cards.length, { timeout: 25_000 });
-  const modelStatusText = dashboard.model_available
-    ? 'Semantic indexing is available.'
-    : 'Lexical index active. A verified semantic model pack is not installed; multilingual semantic recall is not enabled.';
-  await controlPage.getByText(modelStatusText, { exact: true }).waitFor();
-  for (const card of dashboard.cards) {
-    await controlPage.locator('article.context-card')
-      .filter({ hasText: card.text }).first().waitFor();
+    document.querySelectorAll('article.memory-card').length === expected,
+  memories.length, { timeout: 25_000 });
+  assert.deepEqual(await memoryCards.locator('h3').allTextContents(),
+    memories.map(memory => memory.label),
+    'research-memory labels must match the native dashboard response');
+  if (memories.length === 0) {
+    await controlPage.getByText(
+      'Related research will appear here when Serein can group it. Recent evidence and the full activity list stay below.',
+      { exact: true },
+    ).waitFor();
   }
+  const memoryEvidenceIds = new Set(
+    memories.flatMap(memory => (Array.isArray(memory.items) ? memory.items : [])
+      .map(card => card.id).filter(Boolean)),
+  );
+  for (let index = 0; index < memories.length; index++) {
+    const memory = memories[index];
+    const card = memoryCards.nth(index);
+    await card.getByRole('heading', { name: memory.label, exact: true }).waitFor();
+    await card.getByText(`${memory.evidence_count} observations`, { exact: false }).waitFor();
+    const sources = card.locator('details.memory-sources');
+    assert.equal(await sources.evaluate(node => node.open), false,
+      `research evidence for ${memory.label} must be collapsed by default`);
+    await sources.locator('summary').click();
+    const sourceRows = sources.locator('li.memory-evidence');
+    assert.equal(await sourceRows.count(), memory.items.length,
+      `research group ${memory.label} must render its returned evidence`);
+    for (let index = 0; index < memory.items.length; index++) {
+      const row = sourceRows.nth(index);
+      assert.equal(await row.locator('strong').textContent(), memory.items[index].text);
+      assert.ok((await row.locator('p').textContent()).includes(memory.items[index].site));
+    }
+    await sources.locator('summary').click();
+    assert.equal(await sources.evaluate(node => node.open), false,
+      `research evidence for ${memory.label} must close after inspection`);
+  }
+  await controlPage.evaluate(() => window.scrollTo(0, 0));
+
+  const expectedProminent = rawCards.filter(card =>
+    !memoryEvidenceIds.has(card.id) && card.prominent === true,
+  ).slice(0, 6);
+  const recentEvidenceCards = controlPage.locator('[aria-labelledby="evidence-heading"] article.context-card');
+  await controlPage.waitForFunction(expected =>
+    document.querySelectorAll('[aria-labelledby="evidence-heading"] article.context-card').length === expected,
+  expectedProminent.length, { timeout: 25_000 });
+  if (expectedProminent.length === 0) {
+    await controlPage.getByText(
+      'No separate evidence cards to show.',
+      { exact: true },
+    ).waitFor();
+  }
+  for (let index = 0; index < expectedProminent.length; index++) {
+    const card = expectedProminent[index];
+    const row = recentEvidenceCards.nth(index);
+    await row.getByRole('heading', { name: card.text, exact: true }).waitFor();
+    assert.ok((await row.textContent()).includes(card.site),
+      `prominent evidence must retain its native source site ${card.site}`);
+  }
+
+  const rawActivity = controlPage.locator('.raw-activity details');
+  assert.equal(await rawActivity.evaluate(node => node.open), false,
+    'raw activity must be collapsed by default');
+  const rawActivityCards = rawActivity.locator('article.context-card');
+  assert.equal(await rawActivityCards.count(), rawCards.length,
+    'collapsed raw activity must include every host-returned observation');
+  for (let index = 0; index < rawCards.length; index++) {
+    const row = rawActivityCards.nth(index);
+    assert.equal(await row.locator('h3').textContent(), rawCards[index].text,
+      `raw observation ${index} must match the native host response`);
+    assert.equal(await row.isVisible(), false,
+      `raw observation ${index} must remain hidden until activity is expanded`);
+  }
+
+  const modelStatusText = dashboard.model_available
+    ? 'Search ready.'
+    : 'Search works with saved titles and searches. Meaning-based search is unavailable.';
+  await controlPage.getByText(modelStatusText, { exact: true }).waitFor();
   const lightPath = path.join(screenshotDir, 'research-demo-light.png');
   await controlPage.screenshot({ animations: 'disabled', path: lightPath, fullPage: true });
   await controlPage.getByRole('button', { name: 'Toggle color theme' }).click();
@@ -288,14 +380,20 @@ try {
     identity: 'Synthetic research activity; no account, private browsing, or existing browser profile',
     seedFingerprint,
     capture: 'Normal Chrome tabs metadata observer only; no fixture records injected',
+    foregroundActivation: 'Test-only open -a activates the isolated Chrome for Testing app with the same temporary profile before each focus check; the real focus assertion remains enforced',
+    foregroundActivity: 'Test-only caffeinate -u -t 2 before each Chrome idle assertion; focus and active-state assertions remain enforced',
     batchDelivery: 'Real extension batch alarm accelerated to 750 ms; native helper handled actual captured outbox',
     nativeMessaging: 'PASS: pairing hello, consent policy update, captured-event ingest, dashboard read',
     nativeHostInvocations: nativeCalls,
     retainedPublicPages: expectedRetained.length,
-    dashboardCards: dashboard.cards.length,
+    dashboardCards: rawCards.length,
+    researchMemories: memories.length,
+    prominentEvidenceCards: expectedProminent.length,
+    rawActivityCards: rawCards.length,
+    rawActivityCollapsedByDefault: true,
     modelAvailable: dashboard.model_available,
     modelStatus: modelStatusText,
-    visits,
+    visits: visits.map(({ name, status, source }) => ({ name, status, source })),
     screenshots: [
       'docs/screenshots/research-demo-light.png',
       'docs/screenshots/research-demo-dark.png',
@@ -305,7 +403,12 @@ try {
       'pairing completed through the actual extension/native host',
       'capture began after explicit test consent',
       'tab metadata was read via chrome.tabs from the extension only',
+      'Chrome for Testing app activated with its temporary profile for each focus check while the real focused-window assertion remained enforced',
+      'macOS idle state refreshed with caffeinate while Chrome focus and active state remained asserted',
       'public page title or search query appeared in native dashboard',
+      'research-memory groups match the native dashboard response',
+      'prominent evidence is selected using native prominence signals',
+      'all native raw observations appear only in collapsed activity by default',
       'no page body or DOM text was read',
       'no extension observation fixture was injected',
       'real browser alarm delivered captured outbox to native helper',
@@ -313,6 +416,7 @@ try {
       'no extension page errors',
     ],
   };
+  await writeFile(resultsPath, `${JSON.stringify(result, null, 2)}\n`);
   console.log(JSON.stringify(result, null, 2));
 } finally {
   if (context) await context.close();

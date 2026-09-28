@@ -1,0 +1,493 @@
+{
+  "fixture_id": "serein-calibration-dev-dashboard-labels-v1",
+  "synthetic_notice": "All labels are hand-curated judgments over constructed DEV evidence metadata only. They are development review labels, not user data, model outputs, held-out evaluation, or real-user quality claims.",
+  "label_basis": "Whether the title, hostname, kind, dwell, and session metadata plausibly identify useful topical research suitable for dashboard prominence. Repetition is supporting context only and does not imply preference.",
+  "source_fixtures": [
+    "tests/fixtures/calibration_dev_relevance_noise.json",
+    "tests/fixtures/calibration_dev_multilingual.json"
+  ],
+  "labels": [
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev001",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev002",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev003",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev004",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev005",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev006",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev007",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev008",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev009",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev010",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev011",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev012",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev013",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev014",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev015",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev016",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev017",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev018",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev019",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev020",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev021",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev022",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev023",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev024",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev025",
+      "prominent": false
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev026",
+      "prominent": false
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev027",
+      "prominent": false
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev028",
+      "prominent": false
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev029",
+      "prominent": true,
+      "note": "Specific, long-viewed aircraft video title is retrievable content, though it is outside the surrounding research clusters."
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev030",
+      "prominent": false
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev031",
+      "prominent": false
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev032",
+      "prominent": false
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev033",
+      "prominent": false,
+      "note": "Long dwell does not make a single airline-card forum page useful research; no supporting topic trail."
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev034",
+      "prominent": false
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev035",
+      "prominent": false
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev036",
+      "prominent": false,
+      "note": "Subreddit title plus long dwell is suggestive, but gives no specific keyboard item or research question."
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev037",
+      "prominent": false,
+      "note": "A specific comparison page could be useful, but this isolated incidental session provides little evidence of a research thread."
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev038",
+      "prominent": false
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev039",
+      "prominent": false,
+      "note": "Specific recipe may be useful content, but appears only as an isolated incidental visit."
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev040",
+      "prominent": false
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev041",
+      "prominent": false
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev042",
+      "prominent": false
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev043",
+      "prominent": true,
+      "note": "Short dwell on a relevant chair page is retained because the title directly names the established chair research topic."
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev044",
+      "prominent": false
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev045",
+      "prominent": false
+    },
+    {
+      "fixture": "calibration_dev_relevance_noise.json",
+      "evidence_id": "ev046",
+      "prominent": false
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev001",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev002",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev003",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev004",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev005",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev006",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev007",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev008",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev009",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev010",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev011",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev012",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev013",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev014",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev015",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev016",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev017",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev018",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev019",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev020",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev021",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev022",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev023",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev024",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev025",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev026",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev027",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev028",
+      "prominent": true
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev029",
+      "prominent": true,
+      "note": "Specific search wording is topical but could be incidental; retained as direct Kyoto and rail research evidence."
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev030",
+      "prominent": false
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev031",
+      "prominent": false
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev032",
+      "prominent": false
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev033",
+      "prominent": false
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev034",
+      "prominent": false
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev035",
+      "prominent": false,
+      "note": "Long aircraft-video view has a specific title, but is outside the research topic clusters; not elevated as a dashboard topic."
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev036",
+      "prominent": false
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev037",
+      "prominent": false
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev038",
+      "prominent": false
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev039",
+      "prominent": false
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev040",
+      "prominent": false
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev041",
+      "prominent": true,
+      "note": "Repeated exact identifier search is potentially useful recall, but its subject is unknown; retained for exact-term utility only."
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev042",
+      "prominent": false
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev043",
+      "prominent": true,
+      "note": "Repeated exact measurement search is potentially useful recall, but its object and meaning are unknown; retained without interpretation."
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev044",
+      "prominent": false
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev045",
+      "prominent": false
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev046",
+      "prominent": true,
+      "note": "Official tourism guide has a short dwell, but its exact title recurs in a relevant Kyoto research trail."
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev047",
+      "prominent": true,
+      "note": "Explicit wind-energy title is topical, despite a short dwell and being outside the initial solar session."
+    },
+    {
+      "fixture": "calibration_dev_multilingual.json",
+      "evidence_id": "ev048",
+      "prominent": false
+    }
+  ]
+}

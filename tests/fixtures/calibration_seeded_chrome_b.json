@@ -1,0 +1,91 @@
+{
+  "fixture_id": "calibration_seeded_chrome_b_v1",
+  "provenance": {
+    "method": "Cryptographic 64-byte alphanumeric seed generated with Node crypto.randomBytes; SHA-256 fingerprint only. Seeded PRNG selected the public research topic, natural query variants, and 4–7 public URLs from a topic-specific source pool.",
+    "seed_fingerprint_sha256": "2b1156fb33f7d8c1ce3ed8efaae0bf822b418a57de85a07781535ed9f189aa29",
+    "live_browsing": "attempted_in_fresh_temporary_chrome_profile",
+    "data_scope": "Only final browser title, hostname, search query URL/title presence, and navigation outcome were read. No page body, DOM content, account, or persistent profile data was collected."
+  },
+  "topic": "marine heatwaves and coral bleaching",
+  "search_phrases": [
+    "How do marine heatwaves trigger coral bleaching?",
+    "What methods monitor coral reefs during ocean heat events?"
+  ],
+  "tabs": [
+    {
+      "step": 1,
+      "kind": "search",
+      "query": "How do marine heatwaves trigger coral bleaching?",
+      "url": "https://html.duckduckgo.com/html/?q=How%20do%20marine%20heatwaves%20trigger%20coral%20bleaching%3F",
+      "hostname": "html.duckduckgo.com",
+      "observed": {
+        "title": "DuckDuckGo",
+        "hostname": "html.duckduckgo.com",
+        "outcome": "validated_public_metadata",
+        "query_in_final_url_or_title": true,
+        "query_in_final_url": true,
+        "query_in_title": false
+      }
+    },
+    {
+      "step": 2,
+      "kind": "search",
+      "query": "What methods monitor coral reefs during ocean heat events?",
+      "url": "https://html.duckduckgo.com/html/?q=What%20methods%20monitor%20coral%20reefs%20during%20ocean%20heat%20events%3F",
+      "hostname": "html.duckduckgo.com",
+      "observed": {
+        "title": "DuckDuckGo",
+        "hostname": "html.duckduckgo.com",
+        "outcome": "validated_public_metadata",
+        "query_in_final_url_or_title": true,
+        "query_in_final_url": true,
+        "query_in_title": false
+      }
+    },
+    {
+      "step": 3,
+      "kind": "public_source",
+      "source_id": "gbrmpa",
+      "url": "https://www2.gbrmpa.gov.au/learn/reef-health/coral-bleaching",
+      "observed": {
+        "outcome": "navigation_error",
+        "error_name": "Error",
+        "error_code": "net::ERR_HTTP"
+      },
+      "requested_hostname": "www2.gbrmpa.gov.au"
+    },
+    {
+      "step": 4,
+      "kind": "public_source",
+      "source_id": "noaa-coral",
+      "url": "https://oceanservice.noaa.gov/facts/coral_bleach.html",
+      "observed": {
+        "outcome": "navigation_error",
+        "error_name": "Error"
+      },
+      "requested_hostname": "oceanservice.noaa.gov"
+    },
+    {
+      "step": 5,
+      "kind": "public_source",
+      "source_id": "nature-mhw",
+      "url": "https://www.nature.com/articles/s41467-019-12263-2",
+      "observed": {
+        "outcome": "navigation_error",
+        "error_name": "Error"
+      },
+      "requested_hostname": "www.nature.com"
+    },
+    {
+      "step": 6,
+      "kind": "public_source",
+      "source_id": "smithsonian-ocean",
+      "url": "https://ocean.si.edu/ocean-life/invertebrates/coral-reef",
+      "observed": {
+        "outcome": "navigation_error",
+        "error_name": "Error"
+      },
+      "requested_hostname": "ocean.si.edu"
+    }
+  ]
+}

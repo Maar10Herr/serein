@@ -1,0 +1,115 @@
+{
+  "fixture_id": "calibration_seeded_chrome_c_v1",
+  "provenance": {
+    "method": "A 64-byte cryptographic seed selected a topic from an 11-topic public-research pool, varied query templates, and a sequence drawn from topic-specific and broad public-site pools. Only the SHA-256 fingerprint is recorded.",
+    "seed_fingerprint_sha256": "c8613def3f213618fee1013b768606298a669f96a70482c816b52c9a0527f2c2",
+    "seed_length_characters": 128,
+    "raw_seed_stored": false,
+    "live_browsing": "isolated Chrome for Testing with a temporary profile; tab title and hostname only",
+    "data_scope": "Search phrases, tab titles, and hostnames only. No page body, DOM content, accounts, profiles, or search-result links were inspected.",
+    "relevance_labels": "not_assigned"
+  },
+  "topic": "lithium-ion battery recycling",
+  "search_phrases": [
+    "Which factors limit lithium-ion battery recycling across different sites?",
+    "What measurements track battery hydrometallurgy in field studies?",
+    "How do recycling processes recover critical minerals from end-of-life electric-vehicle batteries?",
+    "Evidence and tradeoffs for black mass recovery compared with direct recycling"
+  ],
+  "search_observations": [
+    {
+      "step": 1,
+      "search_phrase": "Which factors limit lithium-ion battery recycling across different sites?",
+      "provider": "Bing",
+      "hostname": "www.bing.com",
+      "tab_title": "Which factors limit lithium-ion battery recycling across different sites? - Search",
+      "validation": "actually_browser_observed",
+      "scope_note": "Search result body and links were not inspected."
+    },
+    {
+      "step": 2,
+      "search_phrase": "What measurements track battery hydrometallurgy in field studies?",
+      "provider": "Bing",
+      "hostname": "www.bing.com",
+      "tab_title": "What measurements track battery hydrometallurgy in field studies? - Search",
+      "validation": "actually_browser_observed",
+      "scope_note": "Search result body and links were not inspected."
+    },
+    {
+      "step": 3,
+      "search_phrase": "How do recycling processes recover critical minerals from end-of-life electric-vehicle batteries?",
+      "provider": "Bing",
+      "hostname": "www.bing.com",
+      "tab_title": "How do recycling processes recover critical minerals from end-of-life electric-vehicle batteries? - Search",
+      "validation": "actually_browser_observed",
+      "scope_note": "Search result body and links were not inspected."
+    },
+    {
+      "step": 4,
+      "search_phrase": "Evidence and tradeoffs for black mass recovery compared with direct recycling",
+      "provider": "Bing",
+      "hostname": "www.bing.com",
+      "tab_title": "Evidence and tradeoffs for black mass recovery compared with direct recycling - Search",
+      "validation": "actually_browser_observed",
+      "scope_note": "Search result body and links were not inspected."
+    }
+  ],
+  "site_sequence": [
+    {
+      "step": 1,
+      "source": "National Renewable Energy Laboratory",
+      "source_role": "topic_source",
+      "url": "https://www.nrel.gov/transportation/battery-recycling.html",
+      "planned_hostname": "www.nrel.gov",
+      "tab_title": null,
+      "validation": "planned_only",
+      "reason": "Chrome could not resolve the hostname in this environment."
+    },
+    {
+      "step": 2,
+      "source": "U.S. EPA",
+      "source_role": "topic_source",
+      "url": "https://www.epa.gov/recycle/used-lithium-ion-batteries",
+      "hostname": "www.epa.gov",
+      "tab_title": "Used Lithium-Ion Batteries | US EPA",
+      "validation": "actually_browser_observed"
+    },
+    {
+      "step": 3,
+      "source": "Argonne National Laboratory",
+      "source_role": "topic_source",
+      "url": "https://www.anl.gov/energy-storage",
+      "hostname": "www.anl.gov",
+      "tab_title": "Just a moment...",
+      "validation": "actually_browser_observed",
+      "observation_note": "Only an automated-access challenge title was visible; the source-page title was not validated."
+    },
+    {
+      "step": 4,
+      "source": "International Energy Agency",
+      "source_role": "topic_source",
+      "url": "https://www.iea.org/energy-system/transport/electric-vehicles",
+      "hostname": "www.iea.org",
+      "tab_title": "Electric vehicles - IEA",
+      "validation": "actually_browser_observed"
+    },
+    {
+      "step": 5,
+      "source": "Mozilla Developer Network",
+      "source_role": "broad_pool_source",
+      "url": "https://developer.mozilla.org/",
+      "hostname": "developer.mozilla.org",
+      "tab_title": "MDN Web Docs",
+      "validation": "actually_browser_observed"
+    },
+    {
+      "step": 6,
+      "source": "RFC Editor",
+      "source_role": "broad_pool_source",
+      "url": "https://www.rfc-editor.org/",
+      "hostname": "www.rfc-editor.org",
+      "tab_title": "RFC Editor",
+      "validation": "actually_browser_observed"
+    }
+  ]
+}

@@ -325,6 +325,108 @@ hr {
   background: none;
   color: var(--muted);
 }
+.research-section {
+  margin-top: 34px;
+}
+.section-heading {
+  margin-bottom: 14px;
+}
+.section-heading h2 {
+  font-size: 17px;
+  letter-spacing: -0.2px;
+}
+.section-heading p {
+  margin-top: 5px;
+  max-width: 700px;
+  font-size: 12px;
+}
+.memory-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.memory-card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  padding: 20px;
+}
+.memory-card h3 {
+  overflow-wrap: anywhere;
+  line-height: 1.45;
+}
+.memory-meta {
+  font-size: 12px;
+}
+.memory-sources {
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+  margin-top: auto;
+}
+.memory-sources summary,
+.raw-activity summary {
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 550;
+}
+.memory-evidence-list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+}
+.memory-evidence {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  border-top: 1px solid var(--line);
+  padding: 10px 0;
+}
+.memory-evidence-copy {
+  min-width: 0;
+}
+.memory-evidence-copy strong {
+  display: block;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+  font-weight: 550;
+}
+.memory-evidence-copy p {
+  margin-top: 3px;
+}
+.evidence-actions {
+  gap: 2px;
+  flex: none;
+}
+.evidence-actions button {
+  font-size: 12px;
+  padding: 4px 6px;
+  border: 0;
+  background: none;
+  color: var(--muted);
+}
+.evidence-actions button:hover {
+  color: var(--accent);
+}
+.evidence-card {
+  min-height: 0;
+}
+.memory-empty,
+.evidence-empty {
+  margin-top: 0;
+}
+.raw-activity {
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+}
+.raw-activity-description {
+  margin: 8px 0 14px;
+}
+.raw-activity .context-grid {
+  margin-top: 14px;
+}
 .initial {
   width: 30px;
   height: 30px;
@@ -751,6 +853,7 @@ body {
     padding: 24px 12px;
   }
   .context-grid,
+  .memory-grid,
   .connections,
   .first-run-steps {
     grid-template-columns: 1fr 1fr;
@@ -787,6 +890,12 @@ body {
     padding: 24px;
   }
   .context-grid {
+    grid-template-columns: 1fr;
+  }
+  .memory-grid {
+    grid-template-columns: 1fr;
+  }
+  .memory-evidence {
     grid-template-columns: 1fr;
   }
   .first-run-steps {

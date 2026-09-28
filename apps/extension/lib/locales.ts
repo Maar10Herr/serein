@@ -573,7 +573,8 @@ const zhCN = {
   "exclude.futureActivity": "排除今后的活动记录",
   "exclude.futureActivityDescription": "停止保存新记录，并保留已有记录。",
   "exclude.andForget": "排除并删除已有记录",
-  "exclude.andForgetDescription": "停止保存，并删除已保存的活动记录及其派生上下文。",
+  "exclude.andForgetDescription":
+    "停止保存，并删除已保存的活动记录及其派生上下文。",
   "exclude.subdomains": "同时包括此网站的所有子域名",
   "exclude.currentHost": "此主机名及其子域名",
   "exclude.deletionPending": "已排除 · 等待删除",
@@ -584,9 +585,11 @@ const zhCN = {
   "navigation.storage": "存储",
   "navigation.about": "关于",
   "context.heading": "你的上下文",
-  "context.description": "查看 Serein 观察到的内容，并决定助手可以使用哪些内容。",
+  "context.description":
+    "查看 Serein 观察到的内容，并决定助手可以使用哪些内容。",
   "context.emptyTitle": "你的上下文正在逐步形成",
-  "context.emptyDescription": "浏览网页时，Serein 可以在本地保存获准的网站和标题信息。",
+  "context.emptyDescription":
+    "浏览网页时，Serein 可以在本地保存获准的网站和标题信息。",
   "context.observed": "观察到",
   "context.suggested": "建议",
   "context.confirmed": "已确认",
@@ -635,7 +638,8 @@ const zhCN = {
   "connections.openClaw": "OpenClaw",
   "connections.genericExecutor": "通用本地执行器",
   "privacy.heading": "隐私",
-  "privacy.description": "选择 Serein 可以保存哪些内容，以及可以向助手提供哪些内容。",
+  "privacy.description":
+    "选择 Serein 可以保存哪些内容，以及可以向助手提供哪些内容。",
   "privacy.excludedSites": "已排除的网站",
   "privacy.noExcludedSites": "没有排除任何网站。",
   "privacy.selectedSitesOnly": "仅限指定网站",
@@ -643,13 +647,16 @@ const zhCN = {
   "privacy.capture": "保存浏览上下文",
   "privacy.assistantRecall": "允许助手检索",
   "privacy.sensitiveScopes": "敏感主题",
-  "privacy.sensitiveScopesDescription": "一般健康、政治、宗教、法律和性相关主题的细节不会自动提供给助手。",
-  "privacy.filteringLimit": "自动筛选可能漏掉敏感活动。请检查网站设置，不要把筛选当作匿名化手段。",
+  "privacy.sensitiveScopesDescription":
+    "一般健康、政治、宗教、法律和性相关主题的细节不会自动提供给助手。",
+  "privacy.filteringLimit":
+    "自动筛选可能漏掉敏感活动。请检查网站设置，不要把筛选当作匿名化手段。",
   "privacy.privateBrowsing": "永不记录无痕浏览窗口中的活动。",
   "privacy.browserHistory": "暂停 Serein 不会暂停浏览器历史记录。",
   "privacy.pauseCapture": "暂停保存",
   "privacy.resumeCapture": "继续保存",
-  "privacy.recallOffDescription": "已保存的上下文仍留在此设备上，但不会返回给助手。",
+  "privacy.recallOffDescription":
+    "已保存的上下文仍留在此设备上，但不会返回给助手。",
   "privacy.removeSite": "移除网站规则",
   "storage.heading": "存储",
   "storage.description": "所有 Serein 数据都存储在此设备上。",
@@ -720,17 +727,21 @@ const ja = {
   "popup.finishLocalSetup": "ローカルセットアップを完了",
   "popup.helperMissing": "ローカルヘルパーがまだインストールされていません。",
   "popup.unsupportedSite": "このページではサイト設定を利用できません。",
-  "popup.unsupportedReason": "Serein は許可されたウェブページのメタデータのみを保存します。",
+  "popup.unsupportedReason":
+    "Serein は許可されたウェブページのメタデータのみを保存します。",
   "popup.pausedUntilResumed": "保存は再開するまで一時停止しています。",
   "popup.pauseFor30Minutes": "30 分間一時停止",
   "popup.pauseUntilResumed": "再開するまで一時停止",
   "popup.resumeAt": "{time} に保存を再開します。",
   "exclude.title": "{domain} を除外しますか？",
-  "exclude.description": "このサイトからすでに保存したアクティビティの扱いを選択してください。",
+  "exclude.description":
+    "このサイトからすでに保存したアクティビティの扱いを選択してください。",
   "exclude.futureActivity": "今後のアクティビティを除外",
-  "exclude.futureActivityDescription": "新しいアクティビティの保存を停止し、保存済みのものは残します。",
+  "exclude.futureActivityDescription":
+    "新しいアクティビティの保存を停止し、保存済みのものは残します。",
   "exclude.andForget": "除外して削除",
-  "exclude.andForgetDescription": "保存を停止し、保存済みのアクティビティとそこから作られたコンテキストを削除します。",
+  "exclude.andForgetDescription":
+    "保存を停止し、保存済みのアクティビティとそこから作られたコンテキストを削除します。",
   "exclude.subdomains": "このサイトのすべてのサブドメインも含める",
   "exclude.currentHost": "このホスト名とそのサブドメイン",
   "exclude.deletionPending": "除外済み · 削除待ち",
@@ -741,9 +752,11 @@ const ja = {
   "navigation.storage": "ストレージ",
   "navigation.about": "Serein について",
   "context.heading": "あなたのコンテキスト",
-  "context.description": "Serein が記録した内容を確認し、アシスタントが利用できる情報を選択できます。",
+  "context.description":
+    "Serein が記録した内容を確認し、アシスタントが利用できる情報を選択できます。",
   "context.emptyTitle": "コンテキストを作成しています",
-  "context.emptyDescription": "閲覧中に、許可されたサイト名やタイトルを Serein がローカルに保存できます。",
+  "context.emptyDescription":
+    "閲覧中に、許可されたサイト名やタイトルを Serein がローカルに保存できます。",
   "context.observed": "記録済み",
   "context.suggested": "提案",
   "context.confirmed": "確認済み",
@@ -754,14 +767,16 @@ const ja = {
   "context.why": "理由",
   "context.correct": "修正",
   "context.forget": "削除",
-  "context.confidenceLimited": "提案には不確実性があり、個人の事実を示すものではありません。",
+  "context.confidenceLimited":
+    "提案には不確実性があり、個人の事実を示すものではありません。",
   "context.refresh": "コンテキストを更新",
   "context.refreshing": "コンテキストを更新中…",
   "context.updated": "コンテキストを更新しました",
   "why.heading": "表示された理由",
   "why.sources": "ソース",
   "why.activity": "最近のアクティビティ",
-  "why.attentionProxy": "時間は大まかな注目度の目安であり、同意や理解を示すものではありません。",
+  "why.attentionProxy":
+    "時間は大まかな注目度の目安であり、同意や理解を示すものではありません。",
   "correction.heading": "このコンテキストを修正",
   "correction.notAboutMe": "自分についてではない",
   "correction.wrongTopic": "トピックが違う",
@@ -770,7 +785,8 @@ const ja = {
   "correction.doNotUse": "この情報を使用しない",
   "correction.saved": "修正を保存しました",
   "connections.heading": "接続",
-  "connections.description": "Serein が検出した、または追加したローカルアシスタントです。",
+  "connections.description":
+    "Serein が検出した、または追加したローカルアシスタントです。",
   "connections.installed": "インストール済み",
   "connections.notInstalled": "未インストール",
   "connections.tested": "テスト済み",
@@ -792,21 +808,27 @@ const ja = {
   "connections.openClaw": "OpenClaw",
   "connections.genericExecutor": "汎用ローカル実行ツール",
   "privacy.heading": "プライバシー",
-  "privacy.description": "保存する情報と、アシスタントに渡す情報を選択できます。",
+  "privacy.description":
+    "保存する情報と、アシスタントに渡す情報を選択できます。",
   "privacy.excludedSites": "除外したサイト",
   "privacy.noExcludedSites": "除外したサイトはありません。",
   "privacy.selectedSitesOnly": "選択したサイトのみ",
-  "privacy.selectedSitesOnlyDescription": "許可したサイトのアクティビティのみを保存します。",
+  "privacy.selectedSitesOnlyDescription":
+    "許可したサイトのアクティビティのみを保存します。",
   "privacy.capture": "閲覧コンテキストを保存",
   "privacy.assistantRecall": "アシスタントによる取得を許可",
   "privacy.sensitiveScopes": "機微なトピック",
-  "privacy.sensitiveScopesDescription": "一般的な健康、政治、宗教、法律、性に関するトピックの詳細は、アシスタントへの自動開示の対象外です。",
-  "privacy.filteringLimit": "自動フィルターは機微なアクティビティを見逃すことがあります。サイト設定を確認し、匿名化の手段としてフィルターに頼らないでください。",
+  "privacy.sensitiveScopesDescription":
+    "一般的な健康、政治、宗教、法律、性に関するトピックの詳細は、アシスタントへの自動開示の対象外です。",
+  "privacy.filteringLimit":
+    "自動フィルターは機微なアクティビティを見逃すことがあります。サイト設定を確認し、匿名化の手段としてフィルターに頼らないでください。",
   "privacy.privateBrowsing": "プライベートウィンドウは記録されません。",
-  "privacy.browserHistory": "Serein を一時停止しても、ブラウザーの履歴は停止しません。",
+  "privacy.browserHistory":
+    "Serein を一時停止しても、ブラウザーの履歴は停止しません。",
   "privacy.pauseCapture": "保存を一時停止",
   "privacy.resumeCapture": "保存を再開",
-  "privacy.recallOffDescription": "保存済みのコンテキストはこのデバイスに残りますが、アシスタントには返されません。",
+  "privacy.recallOffDescription":
+    "保存済みのコンテキストはこのデバイスに残りますが、アシスタントには返されません。",
   "privacy.removeSite": "サイトルールを削除",
   "storage.heading": "ストレージ",
   "storage.description": "Serein のデータはすべてこのデバイスに保存されます。",
@@ -822,8 +844,10 @@ const ja = {
   "storage.items": "項目数",
   "storage.pending": "保留中",
   "storage.lastUpdated": "最終更新",
-  "storage.localOnly": "Serein は記録や取得のためにバックグラウンドプロセスやネットワークサービスを追加しません。",
-  "storage.eraseWarning": "この操作により、このデバイス上の Serein データが完全に削除されます。",
+  "storage.localOnly":
+    "Serein は記録や取得のためにバックグラウンドプロセスやネットワークサービスを追加しません。",
+  "storage.eraseWarning":
+    "この操作により、このデバイス上の Serein データが完全に削除されます。",
   "storage.eraseComplete": "Serein のデータを削除しました。",
   "storage.exportReady": "エクスポートの準備ができました。",
   "about.heading": "Serein について",
@@ -832,13 +856,16 @@ const ja = {
   "about.license": "ライセンス",
   "about.productLine": "必要なときに役立つ、あなたのコンテキスト。",
   "setup.heading": "ローカルセットアップを完了",
-  "setup.description": "Serein はコンテキストを保存し、アシスタントのリクエストに応答するためにローカルヘルパーを必要とします。",
-  "setup.installInstructions": "ローカルアシスタントに表示されるセットアップ手順に従ってください。",
+  "setup.description":
+    "Serein はコンテキストを保存し、アシスタントのリクエストに応答するためにローカルヘルパーを必要とします。",
+  "setup.installInstructions":
+    "ローカルアシスタントに表示されるセットアップ手順に従ってください。",
   "setup.copyInstructions": "セットアップ手順をコピー",
   "setup.instructionsCopied": "セットアップ手順をコピーしました",
   "setup.nativeHostMissing": "ローカルヘルパーに接続できませんでした。",
   "setup.retry": "再試行",
-  "setup.consent": "許可された閲覧メタデータをこのデバイスに保存することに同意します。",
+  "setup.consent":
+    "許可された閲覧メタデータをこのデバイスに保存することに同意します。",
   "setup.continue": "続行",
   "setup.consentRequired": "続行するには同意を選択してください。",
   "errors.generic": "問題が発生しました。もう一度お試しください。",
@@ -877,17 +904,22 @@ const es = {
   "popup.finishLocalSetup": "Terminar la configuración local",
   "popup.helperMissing": "El asistente local todavía no está instalado.",
   "popup.unsupportedSite": "Aquí no se pueden administrar sitios.",
-  "popup.unsupportedReason": "Serein solo guarda metadatos permitidos de páginas web.",
-  "popup.pausedUntilResumed": "El guardado está en pausa hasta que lo reanudes.",
+  "popup.unsupportedReason":
+    "Serein solo guarda metadatos permitidos de páginas web.",
+  "popup.pausedUntilResumed":
+    "El guardado está en pausa hasta que lo reanudes.",
   "popup.pauseFor30Minutes": "Pausar durante 30 minutos",
   "popup.pauseUntilResumed": "Pausar hasta que lo reanude",
   "popup.resumeAt": "El guardado se reanudará a las {time}.",
   "exclude.title": "¿Excluir {domain}?",
-  "exclude.description": "Elige qué hacer con la actividad de este sitio que ya se ha guardado.",
+  "exclude.description":
+    "Elige qué hacer con la actividad de este sitio que ya se ha guardado.",
   "exclude.futureActivity": "Excluir actividad futura",
-  "exclude.futureActivityDescription": "Dejar de guardar actividad nueva y conservar lo que ya está guardado.",
+  "exclude.futureActivityDescription":
+    "Dejar de guardar actividad nueva y conservar lo que ya está guardado.",
   "exclude.andForget": "Excluir y borrar",
-  "exclude.andForgetDescription": "Dejar de guardar y eliminar la actividad guardada y el contexto derivado de ella.",
+  "exclude.andForgetDescription":
+    "Dejar de guardar y eliminar la actividad guardada y el contexto derivado de ella.",
   "exclude.subdomains": "Incluir todos los subdominios de este sitio",
   "exclude.currentHost": "Este nombre de host y sus subdominios",
   "exclude.deletionPending": "Excluido · eliminación pendiente",
@@ -898,9 +930,11 @@ const es = {
   "navigation.storage": "Almacenamiento",
   "navigation.about": "Acerca de",
   "context.heading": "Tu contexto",
-  "context.description": "Revisa lo que Serein ha observado y decide qué pueden usar los asistentes.",
+  "context.description":
+    "Revisa lo que Serein ha observado y decide qué pueden usar los asistentes.",
   "context.emptyTitle": "Tu contexto está tomando forma",
-  "context.emptyDescription": "Mientras navegas, Serein puede guardar localmente los datos permitidos del sitio y de sus títulos.",
+  "context.emptyDescription":
+    "Mientras navegas, Serein puede guardar localmente los datos permitidos del sitio y de sus títulos.",
   "context.observed": "Observado",
   "context.suggested": "Sugerido",
   "context.confirmed": "Confirmado",
@@ -911,14 +945,16 @@ const es = {
   "context.why": "Motivo",
   "context.correct": "Corregir",
   "context.forget": "Olvidar",
-  "context.confidenceLimited": "Las sugerencias pueden ser inciertas y no son datos personales confirmados.",
+  "context.confidenceLimited":
+    "Las sugerencias pueden ser inciertas y no son datos personales confirmados.",
   "context.refresh": "Actualizar contexto",
   "context.refreshing": "Actualizando contexto…",
   "context.updated": "Contexto actualizado",
   "why.heading": "Por qué aparece esto",
   "why.sources": "Fuentes",
   "why.activity": "Actividad reciente",
-  "why.attentionProxy": "El tiempo es una estimación aproximada de atención, no una medida de acuerdo o comprensión.",
+  "why.attentionProxy":
+    "El tiempo es una estimación aproximada de atención, no una medida de acuerdo o comprensión.",
   "correction.heading": "Corregir este contexto",
   "correction.notAboutMe": "No trata sobre mí",
   "correction.wrongTopic": "Tema incorrecto",
@@ -927,7 +963,8 @@ const es = {
   "correction.doNotUse": "No usar esto",
   "correction.saved": "Corrección guardada",
   "connections.heading": "Conexiones",
-  "connections.description": "Asistentes locales que Serein ha detectado o que has añadido.",
+  "connections.description":
+    "Asistentes locales que Serein ha detectado o que has añadido.",
   "connections.installed": "Instalado",
   "connections.notInstalled": "No instalado",
   "connections.tested": "Probado",
@@ -949,24 +986,32 @@ const es = {
   "connections.openClaw": "OpenClaw",
   "connections.genericExecutor": "Ejecutor local genérico",
   "privacy.heading": "Privacidad",
-  "privacy.description": "Elige qué puede guardar Serein y qué pueden recibir los asistentes.",
+  "privacy.description":
+    "Elige qué puede guardar Serein y qué pueden recibir los asistentes.",
   "privacy.excludedSites": "Sitios excluidos",
   "privacy.noExcludedSites": "No hay sitios excluidos.",
   "privacy.selectedSitesOnly": "Solo sitios seleccionados",
-  "privacy.selectedSitesOnlyDescription": "Guardar actividad únicamente de los sitios que permitas.",
+  "privacy.selectedSitesOnlyDescription":
+    "Guardar actividad únicamente de los sitios que permitas.",
   "privacy.capture": "Guardar contexto de navegación",
   "privacy.assistantRecall": "Permitir que los asistentes recuperen contexto",
   "privacy.sensitiveScopes": "Temas sensibles",
-  "privacy.sensitiveScopesDescription": "Los detalles generales sobre salud, política, religión, asuntos legales y sexualidad no se pueden compartir automáticamente con asistentes.",
-  "privacy.filteringLimit": "Los filtros automáticos pueden pasar por alto actividad sensible. Revisa los controles de sitios y no confíes en el filtrado como método de anonimización.",
-  "privacy.privateBrowsing": "Nunca se registra la actividad de las ventanas privadas.",
-  "privacy.browserHistory": "Pausar Serein no pausa el historial del navegador.",
+  "privacy.sensitiveScopesDescription":
+    "Los detalles generales sobre salud, política, religión, asuntos legales y sexualidad no se pueden compartir automáticamente con asistentes.",
+  "privacy.filteringLimit":
+    "Los filtros automáticos pueden pasar por alto actividad sensible. Revisa los controles de sitios y no confíes en el filtrado como método de anonimización.",
+  "privacy.privateBrowsing":
+    "Nunca se registra la actividad de las ventanas privadas.",
+  "privacy.browserHistory":
+    "Pausar Serein no pausa el historial del navegador.",
   "privacy.pauseCapture": "Pausar guardado",
   "privacy.resumeCapture": "Reanudar guardado",
-  "privacy.recallOffDescription": "El contexto guardado permanece en este dispositivo, pero no se devuelve a los asistentes.",
+  "privacy.recallOffDescription":
+    "El contexto guardado permanece en este dispositivo, pero no se devuelve a los asistentes.",
   "privacy.removeSite": "Quitar regla del sitio",
   "storage.heading": "Almacenamiento",
-  "storage.description": "Todos los datos de Serein se guardan en este dispositivo.",
+  "storage.description":
+    "Todos los datos de Serein se guardan en este dispositivo.",
   "storage.vault": "Almacén",
   "storage.queue": "Cola pendiente",
   "storage.modelPack": "Paquete de modelo",
@@ -979,8 +1024,10 @@ const es = {
   "storage.items": "Elementos",
   "storage.pending": "Pendiente",
   "storage.lastUpdated": "Última actualización",
-  "storage.localOnly": "Serein no añade procesos en segundo plano ni servicios de red para capturar o recuperar contexto.",
-  "storage.eraseWarning": "Esto eliminará de forma permanente los datos de Serein de este dispositivo.",
+  "storage.localOnly":
+    "Serein no añade procesos en segundo plano ni servicios de red para capturar o recuperar contexto.",
+  "storage.eraseWarning":
+    "Esto eliminará de forma permanente los datos de Serein de este dispositivo.",
   "storage.eraseComplete": "Se han eliminado los datos de Serein.",
   "storage.exportReady": "La exportación está lista.",
   "about.heading": "Acerca de Serein",
@@ -989,13 +1036,16 @@ const es = {
   "about.license": "Licencia",
   "about.productLine": "Tu contexto. Solo cuando te resulte útil.",
   "setup.heading": "Terminar la configuración local",
-  "setup.description": "Serein necesita su asistente local para guardar contexto y responder a las solicitudes de los asistentes.",
-  "setup.installInstructions": "Sigue las instrucciones de configuración de tu asistente local.",
+  "setup.description":
+    "Serein necesita su asistente local para guardar contexto y responder a las solicitudes de los asistentes.",
+  "setup.installInstructions":
+    "Sigue las instrucciones de configuración de tu asistente local.",
   "setup.copyInstructions": "Copiar instrucciones de configuración",
   "setup.instructionsCopied": "Instrucciones de configuración copiadas",
   "setup.nativeHostMissing": "No se pudo conectar con el asistente local.",
   "setup.retry": "Reintentar",
-  "setup.consent": "Acepto guardar metadatos permitidos de navegación en este dispositivo.",
+  "setup.consent":
+    "Acepto guardar metadatos permitidos de navegación en este dispositivo.",
   "setup.continue": "Continuar",
   "setup.consentRequired": "Debes dar tu consentimiento para continuar.",
   "errors.generic": "Se ha producido un error. Inténtalo de nuevo.",
@@ -1029,7 +1079,25 @@ const uiEn = {
   "dashboard.themeToggle": "Toggle color theme",
   "dashboard.pendingPrivacy":
     "Privacy changes are saved here and waiting for the local helper. Deletion is not complete yet.",
-  "context.subtitle": "A little context. A clearer starting point.",
+  "context.subtitle":
+    "Research themes and useful evidence, with the sources behind them.",
+  "context.researchMemories": "Research memories",
+  "context.memoriesDescription":
+    "Related observations grouped into research themes. These summaries describe activity, not personal facts.",
+  "context.noResearchMemories":
+    "Related research will appear here when Serein can group it. Recent evidence and the full activity list stay below.",
+  "context.suggestedProject": "Suggested research",
+  "context.evidenceCount":
+    "{count} observations · {sessions} sessions · {sites} sites",
+  "context.viewEvidence": "View evidence ({count})",
+  "context.noLinkedEvidence":
+    "No linked evidence is available in this dashboard view.",
+  "context.recentEvidence": "Recent useful evidence",
+  "context.noRecentEvidence":
+    "No separate evidence cards to show.",
+  "context.rawActivity": "More recent activity · {count} observations",
+  "context.rawActivityDescription":
+    "All recent observations in this view, including generic page titles.",
   "context.savedDevice": "Saved on this device",
   "context.filterLabel": "Context filter",
   "context.filterAll": "All context",
@@ -1050,10 +1118,11 @@ const uiEn = {
   "context.evidenceNote":
     "Browsing is evidence of activity, not proof of a preference. Nothing becomes confirmed without your correction.",
   "context.semanticUnavailable":
-    "Lexical index active. A verified semantic model pack is not installed; multilingual semantic recall is not enabled.",
-  "context.semanticEnabled": "Semantic indexing is available.",
+    "Search works with saved titles and searches. Meaning-based search is unavailable.",
+  "context.semanticEnabled": "Search ready.",
   "journey.connected": "You're connected",
-  "journey.intro": "Give Serein a little context, then see what your assistant remembers.",
+  "journey.intro":
+    "Give Serein a little context, then see what your assistant remembers.",
   "journey.statusLabel": "Connection and retrieval status",
   "journey.browser": "Browser",
   "journey.paired": "Paired",
@@ -1062,14 +1131,18 @@ const uiEn = {
   "journey.semanticAvailable": "Search ready",
   "journey.lexicalFallback": "Keyword search available",
   "journey.researchTitle": "Browse 2–3 allowed pages",
-  "journey.researchDetail": "Open a few pages on sites where saving is allowed. Serein saves permitted page metadata only.",
-  "journey.researchPaused": "Saving is off. Turn it on in Privacy, then open 2–3 allowed pages.",
+  "journey.researchDetail":
+    "Open a few pages on sites where saving is allowed. Serein saves permitted page metadata only.",
+  "journey.researchPaused":
+    "Saving is off. Turn it on in Privacy, then open 2–3 allowed pages.",
   "journey.askTitle": "Ask your assistant",
   "journey.askDetail": "Try this question in the assistant you linked:",
-  "journey.recallDisabled": "Assistant recall is off. Turn it on in Privacy before trying.",
+  "journey.recallDisabled":
+    "Assistant recall is off. Turn it on in Privacy before trying.",
   "journey.question": "What was I just researching?",
   "journey.reviewPrivacy": "Review privacy settings",
-  "connections.readyDescription": "Your browser is paired. Ask your local assistant a question to test the connection.",
+  "connections.readyDescription":
+    "Your browser is paired. Ask your local assistant a question to test the connection.",
   "connections.getStartedDescription":
     "A more helpful assistant starts with a little context.",
   "connections.localControlTitle": "Local by design. Yours to control.",
@@ -1091,17 +1164,22 @@ const uiEn = {
   "connections.installSkill": "Install the Serein skill",
   "connections.setupSteps": "Install the skill and link it to this browser",
   "connections.linkAnother": "Link another assistant",
-  "connections.skillInstallDetails": "Use your assistant’s skill installer to install the GitHub skill. The helper and reader are included.",
-  "connections.skillGlobalNote": "The skill installs for the selected assistant. Link it to this browser next.",
+  "connections.skillInstallDetails":
+    "Use your assistant’s skill installer to install the GitHub skill. The helper and reader are included.",
+  "connections.skillGlobalNote":
+    "The skill installs for the selected assistant. Link it to this browser next.",
   "connections.copySkillCommand": "Copy install request",
-  "connections.skillInstallPrompt": "Install the serein-context skill from {repository} using your native skill installer. Copy the complete skill folder, including its scripts and runtime assets. Do not run setup yet; I will link it to the extension next.",
+  "connections.skillInstallPrompt":
+    "Install the serein-context skill from {repository} using your native skill installer. Copy the complete skill folder, including its scripts and runtime assets. Do not run setup yet; I will link it to the extension next.",
   "connections.skillCommandCopied": "Installation instructions copied.",
   "connections.skillSourceUnconfigured":
     "This build has no public GitHub skill source configured. No files or skill directory setup are needed; the install command will appear once the repository is configured.",
-  "connections.helperSeparateFromSkill": "The skill contains the helper. Linking registers it for this browser, then Serein checks the connection automatically.",
+  "connections.helperSeparateFromSkill":
+    "The skill contains the helper. Linking registers it for this browser, then Serein checks the connection automatically.",
   "connections.connectedBrowser": "Connected to this browser",
   "connections.helperTitle": "One small helper. No always-on service.",
-  "connections.helperDetails": "Copy the link instruction into the local assistant where you installed the skill. Serein connects automatically when setup finishes.",
+  "connections.helperDetails":
+    "Copy the link instruction into the local assistant where you installed the skill. Serein connects automatically when setup finishes.",
   "connections.reviewInstructions": "Review copied instructions",
   "connections.advancedVault": "Advanced · your local vault",
   "connections.actualDatabasePath": "Actual database path",
@@ -1159,7 +1237,7 @@ const uiEn = {
   "about.quieterContext": "A quieter kind of context.",
   "about.description":
     "Serein remembers the useful pieces, so you can pick up where you left off.",
-  "about.developmentVersion": "0.1.2",
+  "about.developmentVersion": "0.1.3",
   "about.filesAtRest": "Files at rest. Programs on demand.",
   "about.filesDescription":
     "Serein uses your browser’s tab metadata, a short-lived native helper, and a local SQLite vault. There is no resident Serein service, cloud sync, or telemetry.",
@@ -1197,7 +1275,8 @@ const uiEn = {
   "modal.eraseAndPause": "Erase and pause",
   "modal.forgetObservation": "Forget observation",
   "modal.savedEvidenceRemoved": "Saved evidence removed.",
-  "setup.assistantInstructions": "Link my installed Serein skill to this browser. Find the installed serein-context skill folder containing SKILL.md. On this Mac, run its scripts/connect.sh with sh, passing only the JSON ticket below on standard input. Do not put the ticket in a shell argument, command string, or remote service. The script finds the bundled helper and model. Do not ask me for a runtime path or download one. Serein checks the connection automatically. Report the setup result and whether the skill is usable.\n\n{ticket}",
+  "setup.assistantInstructions":
+    "Link my installed Serein skill to this browser. Find the installed serein-context skill folder containing SKILL.md. On this Mac, run its scripts/connect.sh with sh, passing only the JSON ticket below on standard input. Do not put the ticket in a shell argument, command string, or remote service. The script finds the bundled helper and model. Do not ask me for a runtime path or download one. Serein checks the connection automatically. Report the setup result and whether the skill is usable.\n\n{ticket}",
   "setup.copyInstructions": "Copy link instruction",
   "setup.instructionsPasteHint": "Paste them into your local assistant.",
 } as const;
@@ -1231,7 +1310,25 @@ const uiDe = {
   "dashboard.themeToggle": "Farbschema umschalten",
   "dashboard.pendingPrivacy":
     "Datenschutzänderungen sind hier gespeichert und warten auf den lokalen Helfer. Die Löschung ist noch nicht abgeschlossen.",
-  "context.subtitle": "Ein wenig Kontext. Ein klarerer Ausgangspunkt.",
+  "context.subtitle":
+    "Forschungsthemen und nützliche Belege mit den zugehörigen Quellen.",
+  "context.researchMemories": "Forschungserinnerungen",
+  "context.memoriesDescription":
+    "Verwandte Beobachtungen, zu Forschungsthemen gruppiert. Diese Zusammenfassungen beschreiben Aktivitäten, keine persönlichen Eigenschaften.",
+  "context.noResearchMemories":
+    "Verwandte Recherche erscheint hier, sobald Serein sie gruppieren kann. Aktuelle Belege und alle Aktivitäten findest du weiter unten.",
+  "context.suggestedProject": "Vorgeschlagene Recherche",
+  "context.evidenceCount":
+    "{count} Beobachtungen · {sessions} Sitzungen · {sites} Websites",
+  "context.viewEvidence": "Belege ansehen ({count})",
+  "context.noLinkedEvidence":
+    "In dieser Dashboardansicht sind keine verknüpften Belege verfügbar.",
+  "context.recentEvidence": "Nützliche aktuelle Belege",
+  "context.noRecentEvidence":
+    "Keine zusätzlichen Belegkarten.",
+  "context.rawActivity": "Weitere aktuelle Aktivitäten · {count} Beobachtungen",
+  "context.rawActivityDescription":
+    "Alle aktuellen Beobachtungen in dieser Ansicht, einschließlich allgemeiner Seitentitel.",
   "context.savedDevice": "Auf diesem Gerät gespeichert",
   "context.filterLabel": "Kontextfilter",
   "context.filterAll": "Gesamter Kontext",
@@ -1252,10 +1349,11 @@ const uiDe = {
   "context.evidenceNote":
     "Surfen ist ein Beleg für Aktivität, kein Beweis für eine Vorliebe. Ohne deine Korrektur wird nichts bestätigt.",
   "context.semanticUnavailable":
-    "Lexikalischer Index aktiv. Ein geprüftes semantisches Modellpaket ist nicht installiert; mehrsprachiger semantischer Abruf ist nicht aktiviert.",
-  "context.semanticEnabled": "Semantische Indexierung ist verfügbar.",
+    "Die Suche nach gespeicherten Titeln und Suchanfragen funktioniert. Die Bedeutungssuche ist nicht verfügbar.",
+  "context.semanticEnabled": "Suche bereit.",
   "journey.connected": "Verbunden",
-  "journey.intro": "Gib Serein etwas Kontext und probiere aus, was dein Assistent wiederfindet.",
+  "journey.intro":
+    "Gib Serein etwas Kontext und probiere aus, was dein Assistent wiederfindet.",
   "journey.statusLabel": "Verbindungs- und Abrufstatus",
   "journey.browser": "Browser",
   "journey.paired": "Gekoppelt",
@@ -1264,14 +1362,19 @@ const uiDe = {
   "journey.semanticAvailable": "Semantische Suche bereit",
   "journey.lexicalFallback": "Wortsuche verfügbar",
   "journey.researchTitle": "Recherchiere auf 2–3 erlaubten Seiten",
-  "journey.researchDetail": "Öffne ein paar Seiten, auf denen Speichern erlaubt ist. Serein speichert nur zulässige Seitenmetadaten.",
-  "journey.researchPaused": "Speichern ist aus. Aktiviere es unter Datenschutz und öffne dann 2–3 erlaubte Seiten.",
+  "journey.researchDetail":
+    "Öffne ein paar Seiten, auf denen Speichern erlaubt ist. Serein speichert nur zulässige Seitenmetadaten.",
+  "journey.researchPaused":
+    "Speichern ist aus. Aktiviere es unter Datenschutz und öffne dann 2–3 erlaubte Seiten.",
   "journey.askTitle": "Frag deinen Assistenten",
-  "journey.askDetail": "Probiere diese Frage in deinem gekoppelten Assistenten aus:",
-  "journey.recallDisabled": "Der Assistentenabruf ist aus. Aktiviere ihn unter Datenschutz, bevor du es ausprobierst.",
+  "journey.askDetail":
+    "Probiere diese Frage in deinem gekoppelten Assistenten aus:",
+  "journey.recallDisabled":
+    "Der Assistentenabruf ist aus. Aktiviere ihn unter Datenschutz, bevor du es ausprobierst.",
   "journey.question": "Woran habe ich gerade recherchiert?",
   "journey.reviewPrivacy": "Datenschutzeinstellungen prüfen",
-  "connections.readyDescription": "Dein Browser ist gekoppelt. Stelle deinem lokalen Assistenten eine Frage, um die Verbindung zu testen.",
+  "connections.readyDescription":
+    "Dein Browser ist gekoppelt. Stelle deinem lokalen Assistenten eine Frage, um die Verbindung zu testen.",
   "connections.getStartedDescription":
     "Ein hilfreicherer Assistent beginnt mit etwas Kontext.",
   "connections.localControlTitle": "Lokal. Unter deiner Kontrolle.",
@@ -1291,19 +1394,25 @@ const uiDe = {
   "connections.remoteLimit": "Verwende einen Assistenten auf diesem Mac.",
   "connections.connectLocally": "Lokal verbinden",
   "connections.installSkill": "Serein-Skill installieren",
-  "connections.setupSteps": "Skill installieren und mit diesem Browser verbinden",
+  "connections.setupSteps":
+    "Skill installieren und mit diesem Browser verbinden",
   "connections.linkAnother": "Weiteren Assistenten verbinden",
-  "connections.skillInstallDetails": "Installiere den GitHub-Skill mit dem Skill-Installer deines Assistenten. Helfer und Leser sind enthalten.",
-  "connections.skillGlobalNote": "Der Skill wird für den gewählten Assistenten installiert. Verbinde ihn danach mit diesem Browser.",
+  "connections.skillInstallDetails":
+    "Installiere den GitHub-Skill mit dem Skill-Installer deines Assistenten. Helfer und Leser sind enthalten.",
+  "connections.skillGlobalNote":
+    "Der Skill wird für den gewählten Assistenten installiert. Verbinde ihn danach mit diesem Browser.",
   "connections.copySkillCommand": "Installationsanfrage kopieren",
-  "connections.skillInstallPrompt": "Installiere den Skill serein-context von {repository} mit deinem Skill-Installer. Kopiere den gesamten Skill-Ordner einschließlich Skripten und Laufzeitdateien. Führe die Einrichtung noch nicht aus; danach verbinde ich ihn mit der Erweiterung.",
+  "connections.skillInstallPrompt":
+    "Installiere den Skill serein-context von {repository} mit deinem Skill-Installer. Kopiere den gesamten Skill-Ordner einschließlich Skripten und Laufzeitdateien. Führe die Einrichtung noch nicht aus; danach verbinde ich ihn mit der Erweiterung.",
   "connections.skillCommandCopied": "Installationsanweisung kopiert.",
   "connections.skillSourceUnconfigured":
     "Für diesen Build ist keine öffentliche GitHub-Skillquelle konfiguriert. Dateien oder Skill-Verzeichnisse müssen nicht manuell eingerichtet werden. Der Installationsbefehl erscheint, sobald das Repository konfiguriert ist.",
-  "connections.helperSeparateFromSkill": "Der Helfer ist im Skill enthalten. Beim Verbinden wird er für diesen Browser registriert; Serein prüft die Verbindung automatisch.",
+  "connections.helperSeparateFromSkill":
+    "Der Helfer ist im Skill enthalten. Beim Verbinden wird er für diesen Browser registriert; Serein prüft die Verbindung automatisch.",
   "connections.connectedBrowser": "Mit diesem Browser verbunden",
   "connections.helperTitle": "Ein kleiner Helfer. Kein dauerhafter Dienst.",
-  "connections.helperDetails": "Kopiere die Verbindungsanweisung in den lokalen Assistenten, in dem du den Skill installiert hast. Serein verbindet sich nach der Einrichtung automatisch.",
+  "connections.helperDetails":
+    "Kopiere die Verbindungsanweisung in den lokalen Assistenten, in dem du den Skill installiert hast. Serein verbindet sich nach der Einrichtung automatisch.",
   "connections.reviewInstructions": "Kopierte Anweisungen prüfen",
   "connections.advancedVault": "Erweitert · dein lokaler Tresor",
   "connections.actualDatabasePath": "Tatsächlicher Datenbankpfad",
@@ -1365,7 +1474,7 @@ const uiDe = {
   "about.quieterContext": "Eine ruhigere Art von Kontext.",
   "about.description":
     "Serein merkt sich Nützliches, damit du dort weitermachen kannst, wo du aufgehört hast.",
-  "about.developmentVersion": "0.1.2",
+  "about.developmentVersion": "0.1.3",
   "about.filesAtRest": "Dateien ruhen. Programme starten bei Bedarf.",
   "about.filesDescription":
     "Serein nutzt Tab-Metadaten deines Browsers, einen kurzlebigen nativen Helfer und einen lokalen SQLite-Tresor. Es gibt keinen dauerhaften Serein-Dienst, keine Cloud-Synchronisierung und keine Telemetrie.",
@@ -1405,7 +1514,8 @@ const uiDe = {
   "modal.eraseAndPause": "Löschen und pausieren",
   "modal.forgetObservation": "Beobachtung vergessen",
   "modal.savedEvidenceRemoved": "Gespeicherte Belege entfernt.",
-  "setup.assistantInstructions": "Verbinde meinen installierten Serein-Skill mit diesem Browser. Finde den installierten Skill-Ordner serein-context mit SKILL.md. Führe auf diesem Mac scripts/connect.sh aus diesem Ordner mit sh aus und übergib nur das JSON-Ticket unten über die Standardeingabe. Gib das Ticket nicht als Shell-Argument oder an einen entfernten Dienst weiter. Das Skript findet Helfer und Modell selbst. Frage mich nicht nach einem Laufzeitpfad und lade keine separate Laufzeit herunter. Serein prüft die Verbindung automatisch. Melde das Ergebnis und ob der Skill nutzbar ist.\n\n{ticket}",
+  "setup.assistantInstructions":
+    "Verbinde meinen installierten Serein-Skill mit diesem Browser. Finde den installierten Skill-Ordner serein-context mit SKILL.md. Führe auf diesem Mac scripts/connect.sh aus diesem Ordner mit sh aus und übergib nur das JSON-Ticket unten über die Standardeingabe. Gib das Ticket nicht als Shell-Argument oder an einen entfernten Dienst weiter. Das Skript findet Helfer und Modell selbst. Frage mich nicht nach einem Laufzeitpfad und lade keine separate Laufzeit herunter. Serein prüft die Verbindung automatisch. Melde das Ergebnis und ob der Skill nutzbar ist.\n\n{ticket}",
   "setup.copyInstructions": "Verbindungsanweisung kopieren",
   "setup.instructionsPasteHint": "Füge sie in deinen lokalen Assistenten ein.",
 } satisfies Record<UiKey, string>;
@@ -1439,7 +1549,25 @@ const uiNl = {
   "dashboard.themeToggle": "Kleurthema wisselen",
   "dashboard.pendingPrivacy":
     "Privacywijzigingen zijn hier opgeslagen en wachten op de lokale hulp. Verwijderen is nog niet voltooid.",
-  "context.subtitle": "Een beetje context. Een helderder beginpunt.",
+  "context.subtitle":
+    "Onderzoeksthema's en bruikbare aanwijzingen, met de bijbehorende bronnen.",
+  "context.researchMemories": "Onderzoeksherinneringen",
+  "context.memoriesDescription":
+    "Verwante waarnemingen, gegroepeerd in onderzoeksthema's. Deze samenvattingen beschrijven activiteit, geen persoonlijke feiten.",
+  "context.noResearchMemories":
+    "Verwant onderzoek verschijnt hier zodra Serein het kan groeperen. Recente aanwijzingen en alle activiteit staan hieronder.",
+  "context.suggestedProject": "Voorgesteld onderzoek",
+  "context.evidenceCount":
+    "{count} waarnemingen · {sessions} sessies · {sites} sites",
+  "context.viewEvidence": "Aanwijzingen bekijken ({count})",
+  "context.noLinkedEvidence":
+    "In dit dashboard zijn geen gekoppelde aanwijzingen beschikbaar.",
+  "context.recentEvidence": "Bruikbare recente aanwijzingen",
+  "context.noRecentEvidence":
+    "Geen losse aanwijzingskaarten om te tonen.",
+  "context.rawActivity": "Meer recente activiteit · {count} waarnemingen",
+  "context.rawActivityDescription":
+    "Alle recente waarnemingen in deze weergave, inclusief algemene paginatitels.",
   "context.savedDevice": "Op dit apparaat opgeslagen",
   "context.filterLabel": "Contextfilter",
   "context.filterAll": "Alle context",
@@ -1460,10 +1588,11 @@ const uiNl = {
   "context.evidenceNote":
     "Browsen is bewijs van activiteit, geen bewijs van een voorkeur. Niets wordt bevestigd zonder jouw correctie.",
   "context.semanticUnavailable":
-    "Lexicale index actief. Er is geen geverifieerd semantisch modelpakket geïnstalleerd; meertalisch semantisch ophalen is niet ingeschakeld.",
-  "context.semanticEnabled": "Semantische indexering is beschikbaar.",
+    "Zoeken in opgeslagen titels en zoekopdrachten werkt. Zoeken op betekenis is niet beschikbaar.",
+  "context.semanticEnabled": "Zoeken is klaar.",
   "journey.connected": "Je bent verbonden",
-  "journey.intro": "Geef Serein wat context en ontdek wat je assistent kan terughalen.",
+  "journey.intro":
+    "Geef Serein wat context en ontdek wat je assistent kan terughalen.",
   "journey.statusLabel": "Status van verbinding en ophalen",
   "journey.browser": "Browser",
   "journey.paired": "Gekoppeld",
@@ -1472,14 +1601,18 @@ const uiNl = {
   "journey.semanticAvailable": "Semantisch zoeken klaar",
   "journey.lexicalFallback": "Zoeken op woorden beschikbaar",
   "journey.researchTitle": "Zoek op 2–3 toegestane pagina’s",
-  "journey.researchDetail": "Open een paar pagina’s op sites waar opslaan is toegestaan. Serein bewaart alleen toegestane paginametadata.",
-  "journey.researchPaused": "Opslaan staat uit. Zet het aan bij Privacy en open daarna 2–3 toegestane pagina’s.",
+  "journey.researchDetail":
+    "Open een paar pagina’s op sites waar opslaan is toegestaan. Serein bewaart alleen toegestane paginametadata.",
+  "journey.researchPaused":
+    "Opslaan staat uit. Zet het aan bij Privacy en open daarna 2–3 toegestane pagina’s.",
   "journey.askTitle": "Vraag het je assistent",
   "journey.askDetail": "Probeer deze vraag in de gekoppelde assistent:",
-  "journey.recallDisabled": "Ophalen door de assistent staat uit. Zet het aan bij Privacy om dit te proberen.",
+  "journey.recallDisabled":
+    "Ophalen door de assistent staat uit. Zet het aan bij Privacy om dit te proberen.",
   "journey.question": "Wat was ik net aan het onderzoeken?",
   "journey.reviewPrivacy": "Privacyinstellingen bekijken",
-  "connections.readyDescription": "Je browser is gekoppeld. Stel je lokale assistent een vraag om de verbinding te testen.",
+  "connections.readyDescription":
+    "Je browser is gekoppeld. Stel je lokale assistent een vraag om de verbinding te testen.",
   "connections.getStartedDescription":
     "Een behulpzamere assistent begint met een beetje context.",
   "connections.localControlTitle": "Lokaal ontworpen. Jij houdt de controle.",
@@ -1501,17 +1634,22 @@ const uiNl = {
   "connections.installSkill": "De Serein-skill installeren",
   "connections.setupSteps": "Installeer de skill en koppel deze browser",
   "connections.linkAnother": "Nog een assistent koppelen",
-  "connections.skillInstallDetails": "Installeer de GitHub-skill met de skillinstaller van je assistent. De helper en lezer zitten erbij.",
-  "connections.skillGlobalNote": "De skill wordt voor je gekozen assistent geïnstalleerd. Koppel daarna deze browser.",
+  "connections.skillInstallDetails":
+    "Installeer de GitHub-skill met de skillinstaller van je assistent. De helper en lezer zitten erbij.",
+  "connections.skillGlobalNote":
+    "De skill wordt voor je gekozen assistent geïnstalleerd. Koppel daarna deze browser.",
   "connections.copySkillCommand": "Installatieverzoek kopiëren",
-  "connections.skillInstallPrompt": "Installeer de skill serein-context vanaf {repository} met je eigen skillinstaller. Kopieer de volledige skillmap, inclusief scripts en runtimebestanden. Voer de configuratie nog niet uit; daarna koppel ik hem aan de extensie.",
+  "connections.skillInstallPrompt":
+    "Installeer de skill serein-context vanaf {repository} met je eigen skillinstaller. Kopieer de volledige skillmap, inclusief scripts en runtimebestanden. Voer de configuratie nog niet uit; daarna koppel ik hem aan de extensie.",
   "connections.skillCommandCopied": "Installatie-instructies gekopieerd.",
   "connections.skillSourceUnconfigured":
     "Voor deze build is geen openbare GitHub-skillbron ingesteld. Bestanden of een skillmap hoef je niet handmatig te beheren; de installatieopdracht verschijnt zodra de repository is ingesteld.",
-  "connections.helperSeparateFromSkill": "De skill bevat de helper. Bij het koppelen wordt die voor deze browser geregistreerd; Serein controleert de verbinding automatisch.",
+  "connections.helperSeparateFromSkill":
+    "De skill bevat de helper. Bij het koppelen wordt die voor deze browser geregistreerd; Serein controleert de verbinding automatisch.",
   "connections.connectedBrowser": "Verbonden met deze browser",
   "connections.helperTitle": "Eén kleine hulp. Geen blijvende dienst.",
-  "connections.helperDetails": "Kopieer de koppelinstructie naar de lokale assistent waarin je de skill hebt geïnstalleerd. Serein maakt automatisch verbinding zodra de installatie klaar is.",
+  "connections.helperDetails":
+    "Kopieer de koppelinstructie naar de lokale assistent waarin je de skill hebt geïnstalleerd. Serein maakt automatisch verbinding zodra de installatie klaar is.",
   "connections.reviewInstructions": "Gekopieerde instructies bekijken",
   "connections.advancedVault": "Geavanceerd · je lokale kluis",
   "connections.actualDatabasePath": "Werkelijk databasepad",
@@ -1573,7 +1711,7 @@ const uiNl = {
   "about.quieterContext": "Een rustigere vorm van context.",
   "about.description":
     "Serein onthoudt de nuttige onderdelen, zodat je verder kunt waar je gebleven was.",
-  "about.developmentVersion": "0.1.2",
+  "about.developmentVersion": "0.1.3",
   "about.filesAtRest": "Bestanden in rust. Programma's op aanvraag.",
   "about.filesDescription":
     "Serein gebruikt tabmetadata van je browser, een kortstondige native hulp en een lokale SQLite-kluis. Er is geen blijvende Serein-dienst, cloudsynchronisatie of telemetrie.",
@@ -1612,7 +1750,8 @@ const uiNl = {
   "modal.eraseAndPause": "Wissen en pauzeren",
   "modal.forgetObservation": "Waarneming vergeten",
   "modal.savedEvidenceRemoved": "Opgeslagen bewijs verwijderd.",
-  "setup.assistantInstructions": "Koppel mijn geïnstalleerde Serein-skill aan deze browser. Zoek de geïnstalleerde map serein-context met SKILL.md. Voer op deze Mac scripts/connect.sh uit die map uit met sh en geef alleen het JSON-ticket hieronder via standaardinvoer door. Zet het ticket niet in een shellargument of externe dienst. Het script vindt de helper en het model zelf. Vraag me niet om een runtimepad en download geen aparte runtime. Serein controleert de verbinding automatisch. Meld het resultaat en of de skill bruikbaar is.\n\n{ticket}",
+  "setup.assistantInstructions":
+    "Koppel mijn geïnstalleerde Serein-skill aan deze browser. Zoek de geïnstalleerde map serein-context met SKILL.md. Voer op deze Mac scripts/connect.sh uit die map uit met sh en geef alleen het JSON-ticket hieronder via standaardinvoer door. Zet het ticket niet in een shellargument of externe dienst. Het script vindt de helper en het model zelf. Vraag me niet om een runtimepad en download geen aparte runtime. Serein controleert de verbinding automatisch. Meld het resultaat en of de skill bruikbaar is.\n\n{ticket}",
   "setup.copyInstructions": "Koppelinstructie kopiëren",
   "setup.instructionsPasteHint": "Plak ze in je lokale assistent.",
 } satisfies Record<UiKey, string>;
@@ -1628,7 +1767,8 @@ const uiZhCN = {
   "popup.keepSavedContext": "保留先前保存的上下文。",
   "popup.deleteSavedEvidence": "删除已保存的证据及其派生内容。",
   "popup.privacyTitle": "更多隐私控制",
-  "popup.pauseExplanation": "暂停 Serein 保存。浏览器历史记录不受影响；已有上下文仍会按你的检索设置提供。",
+  "popup.pauseExplanation":
+    "暂停 Serein 保存。浏览器历史记录不受影响；已有上下文仍会按你的检索设置提供。",
   "popup.pauseUntilResume": "直到我恢复保存",
   "popup.pausePersists": "重启浏览器后仍会保持暂停。",
   "popup.pause30m": "暂停 30 分钟",
@@ -1638,8 +1778,25 @@ const uiZhCN = {
   "dashboard.eyebrow": "一点上下文，大有帮助",
   "dashboard.language": "语言",
   "dashboard.themeToggle": "切换颜色主题",
-  "dashboard.pendingPrivacy": "隐私更改已保存在此处，正在等待本地助手程序处理。删除尚未完成。",
-  "context.subtitle": "一点上下文，让起点更清晰。",
+  "dashboard.pendingPrivacy":
+    "隐私更改已保存在此处，正在等待本地助手程序处理。删除尚未完成。",
+  "context.subtitle": "研究主题和有用线索，并显示它们的来源。",
+  "context.researchMemories": "研究记忆",
+  "context.memoriesDescription":
+    "将相关观察归为研究主题。这些摘要描述的是活动，不是个人事实。",
+  "context.noResearchMemories":
+    "Serein 能够归组相关研究后，这里会显示研究主题。近期线索和完整活动列表在下方。",
+  "context.suggestedProject": "建议的研究主题",
+  "context.evidenceCount":
+    "{count} 条观察 · {sessions} 个会话 · {sites} 个网站",
+  "context.viewEvidence": "查看线索（{count}）",
+  "context.noLinkedEvidence": "此仪表板视图中没有关联的线索。",
+  "context.recentEvidence": "近期有用线索",
+  "context.noRecentEvidence":
+    "当前没有单独的线索卡片。",
+  "context.rawActivity": "更多近期活动 · {count} 条观察",
+  "context.rawActivityDescription":
+    "此视图中的所有近期观察记录，包括通用页面标题。",
   "context.savedDevice": "保存在此设备上",
   "context.filterLabel": "上下文筛选",
   "context.filterAll": "所有上下文",
@@ -1652,12 +1809,16 @@ const uiZhCN = {
   "context.sitesPlural": "{count} 个网站",
   "context.sourceBacked": "有来源依据的上下文",
   "context.noMatch": "没有匹配的上下文",
-  "context.emptyConnected": "浏览网页时，获准保存的标题和搜索记录会显示在这里。由你决定保留什么，以及助手可以使用什么。",
-  "context.emptyDisconnected": "连接 Serein 后，即可根据获准的浏览活动建立有用的上下文。所有内容都保存在此设备上。",
+  "context.emptyConnected":
+    "浏览网页时，获准保存的标题和搜索记录会显示在这里。由你决定保留什么，以及助手可以使用什么。",
+  "context.emptyDisconnected":
+    "连接 Serein 后，即可根据获准的浏览活动建立有用的上下文。所有内容都保存在此设备上。",
   "context.connect": "连接 Serein",
-  "context.evidenceNote": "浏览活动只能说明发生过访问，不能证明存在偏好。只有经过你的更正，内容才会标记为已确认。",
-  "context.semanticUnavailable": "语义索引未启用。尚未安装经过验证的语义模型包，因此不支持多语言语义检索。",
-  "context.semanticEnabled": "语义索引可用。",
+  "context.evidenceNote":
+    "浏览活动只能说明发生过访问，不能证明存在偏好。只有经过你的更正，内容才会标记为已确认。",
+  "context.semanticUnavailable":
+    "仍可搜索已保存的标题和搜索词，但暂时无法按含义搜索。",
+  "context.semanticEnabled": "搜索已就绪。",
   "journey.connected": "已连接",
   "journey.intro": "让 Serein 了解一点浏览上下文，再看看助手能找回什么。",
   "journey.statusLabel": "连接与检索状态",
@@ -1668,22 +1829,28 @@ const uiZhCN = {
   "journey.semanticAvailable": "语义搜索就绪",
   "journey.lexicalFallback": "关键词搜索可用",
   "journey.researchTitle": "在允许保存的网站上浏览 2–3 个页面",
-  "journey.researchDetail": "打开几个允许保存的网站页面。Serein 只保存获准的页面元数据。",
-  "journey.researchPaused": "保存功能已关闭。请先在“隐私”中开启，再浏览 2–3 个允许保存的页面。",
+  "journey.researchDetail":
+    "打开几个允许保存的网站页面。Serein 只保存获准的页面元数据。",
+  "journey.researchPaused":
+    "保存功能已关闭。请先在“隐私”中开启，再浏览 2–3 个允许保存的页面。",
   "journey.askTitle": "向助手提问",
   "journey.askDetail": "在你连接的助手中试试这个问题：",
   "journey.recallDisabled": "助手检索已关闭。请先在“隐私”中开启，再试试。",
   "journey.question": "我刚才在研究什么？",
   "journey.reviewPrivacy": "查看隐私设置",
-  "connections.readyDescription": "浏览器已配对。向本机助手提问，试试这项连接。",
+  "connections.readyDescription":
+    "浏览器已配对。向本机助手提问，试试这项连接。",
   "connections.getStartedDescription": "一点上下文，就能让助手更有帮助。",
   "connections.localControlTitle": "专为本地运行，始终由你掌控。",
-  "connections.captureDetails": "Serein 会保存获准的标签页标题、网站名称、搜索词和粗略的前台活动信息。它不会读取网页内容。",
+  "connections.captureDetails":
+    "Serein 会保存获准的标签页标题、网站名称、搜索词和粗略的前台活动信息。它不会读取网页内容。",
   "connections.consentCapture": "我同意在此设备上保存获准的浏览元数据。",
-  "connections.consentRecallDetails": "我允许助手检索上下文。收集和索引都在此设备上进行。返回给助手的上下文可能会发送给该助手的模型提供商。",
+  "connections.consentRecallDetails":
+    "我允许助手检索上下文。收集和索引都在此设备上进行。返回给助手的上下文可能会发送给该助手的模型提供商。",
   "connections.captureScope": "采集范围",
   "connections.recommendedExclusions": "建议排除的网站",
-  "connections.filterLimitShort": "自动筛选无法识别所有敏感页面。如需更严格的控制，请选择“仅限指定网站”。",
+  "connections.filterLimitShort":
+    "自动筛选无法识别所有敏感页面。如需更严格的控制，请选择“仅限指定网站”。",
   "connections.chooseAssistants": "选择 AI 助手",
   "connections.executionNotTested": "已检测到技能",
   "connections.localExecutionRequired": "在此 Mac 上使用",
@@ -1692,24 +1859,32 @@ const uiZhCN = {
   "connections.installSkill": "安装 Serein 技能",
   "connections.setupSteps": "安装技能并连接此浏览器",
   "connections.linkAnother": "连接其他助手",
-  "connections.skillInstallDetails": "使用助手的技能安装器安装 GitHub 技能。技能内含本地辅助程序和读取器。",
-  "connections.skillGlobalNote": "技能会安装到所选助手；下一步将它连接到此浏览器。",
+  "connections.skillInstallDetails":
+    "使用助手的技能安装器安装 GitHub 技能。技能内含本地辅助程序和读取器。",
+  "connections.skillGlobalNote":
+    "技能会安装到所选助手；下一步将它连接到此浏览器。",
   "connections.copySkillCommand": "复制安装请求",
-  "connections.skillInstallPrompt": "请使用你的原生技能安装器从 {repository} 安装 serein-context 技能。复制完整的技能目录，包括脚本和运行时文件。暂时不要运行设置；下一步我会将它连接到扩展程序。",
+  "connections.skillInstallPrompt":
+    "请使用你的原生技能安装器从 {repository} 安装 serein-context 技能。复制完整的技能目录，包括脚本和运行时文件。暂时不要运行设置；下一步我会将它连接到扩展程序。",
   "connections.skillCommandCopied": "安装说明已复制。",
-  "connections.skillSourceUnconfigured": "此构建未配置公开的 GitHub 技能源。无需下载文件或手动设置技能目录；配置代码库后，此处会显示安装命令。",
-  "connections.helperSeparateFromSkill": "辅助程序包含在技能中。连接时会为此浏览器注册；Serein 随后自动检查连接。",
+  "connections.skillSourceUnconfigured":
+    "此构建未配置公开的 GitHub 技能源。无需下载文件或手动设置技能目录；配置代码库后，此处会显示安装命令。",
+  "connections.helperSeparateFromSkill":
+    "辅助程序包含在技能中。连接时会为此浏览器注册；Serein 随后自动检查连接。",
   "connections.connectedBrowser": "已连接到此浏览器",
   "connections.helperTitle": "轻量助手程序，无常驻服务。",
-  "connections.helperDetails": "将连接说明粘贴到已安装此技能的本地助手中。设置完成后，Serein 会自动连接。",
+  "connections.helperDetails":
+    "将连接说明粘贴到已安装此技能的本地助手中。设置完成后，Serein 会自动连接。",
   "connections.reviewInstructions": "检查已复制的说明",
   "connections.advancedVault": "高级 · 你的本地库",
   "connections.actualDatabasePath": "实际数据库路径",
   "connections.copyDatabasePath": "复制数据库路径",
   "connections.databasePathCopied": "数据库路径已复制。",
   "privacy.pageDescription": "由你决定保存哪些内容，以及何时共享。",
-  "privacy.captureDescription": "仅采集符合条件的前台标签页元数据，不包括无痕窗口。",
-  "privacy.recallDescription": "允许已连接的本地助手检索相关的已保存上下文。模型提供商可能会收到这些内容。",
+  "privacy.captureDescription":
+    "仅采集符合条件的前台标签页元数据，不包括无痕窗口。",
+  "privacy.recallDescription":
+    "允许已连接的本地助手检索相关的已保存上下文。模型提供商可能会收到这些内容。",
   "privacy.onlySelectedDescription": "仅保存你在下方明确允许的网站元数据。",
   "privacy.selectedSiteMode": "允许的网站",
   "privacy.excludedSiteMode": "排除的网站",
@@ -1719,7 +1894,8 @@ const uiZhCN = {
   "privacy.includeSite": "允许网站",
   "privacy.excludeSite": "排除网站",
   "privacy.removeRule": "移除规则",
-  "privacy.sensitiveNotice": "敏感类别不会自动提供给助手。筛选器无法保证识别所有敏感活动。暂停 Serein 不会暂停浏览器历史记录，也不会删除已保存的上下文。",
+  "privacy.sensitiveNotice":
+    "敏感类别不会自动提供给助手。筛选器无法保证识别所有敏感活动。暂停 Serein 不会暂停浏览器历史记录，也不会删除已保存的上下文。",
   "privacy.receipts": "信息披露记录",
   "privacy.receiptsDescription": "显示证据 ID 和数量，不包含完整查询或回复。",
   "privacy.viewReceipts": "查看记录",
@@ -1737,26 +1913,34 @@ const uiZhCN = {
   "storage.browsingObservations": "浏览记录",
   "storage.retentionNinetyDays": "90 天",
   "storage.eventRetentionTitle": "详细事件和信息披露记录",
-  "storage.eventRetentionDescription": "保留七天。每次检索返回的上下文都有数量限制。",
+  "storage.eventRetentionDescription":
+    "保留七天。每次检索返回的上下文都有数量限制。",
   "storage.retentionSevenDays": "7 天",
   "storage.constraintsTitle": "已确认的限制条件",
-  "storage.constraintsDescription": "保留至你主动删除；绝不会仅根据浏览活动推断。",
+  "storage.constraintsDescription":
+    "保留至你主动删除；绝不会仅根据浏览活动推断。",
   "storage.retentionUntilRemoved": "直到删除",
   "storage.dataOnYourTerms": "你的数据，由你决定",
-  "storage.exportDescription": "导出当前显示的记录，或删除此配置中的已保存证据。",
+  "storage.exportDescription":
+    "导出当前显示的记录，或删除此配置中的已保存证据。",
   "storage.exportReviewedContext": "导出已审核的上下文",
   "storage.eraseSavedContext": "删除已保存的上下文",
-  "storage.deletionLimit": "逻辑删除无法清除 SSD 残留、备份或已发送给助手模型提供商的上下文。达到存储上限后，已丢弃 {count} 个排队事件。",
+  "storage.deletionLimit":
+    "逻辑删除无法清除 SSD 残留、备份或已发送给助手模型提供商的上下文。达到存储上限后，已丢弃 {count} 个排队事件。",
   "about.quieterContext": "更安静、更从容的上下文。",
   "about.description": "Serein 会记住有用的信息，让你轻松接续之前的工作。",
-  "about.developmentVersion": "0.1.2",
+  "about.developmentVersion": "0.1.3",
   "about.filesAtRest": "文件静态存储，程序按需运行。",
-  "about.filesDescription": "Serein 使用浏览器标签页元数据、短时运行的本地助手程序和本地 SQLite 数据库。没有常驻服务、云同步或遥测。",
+  "about.filesDescription":
+    "Serein 使用浏览器标签页元数据、短时运行的本地助手程序和本地 SQLite 数据库。没有常驻服务、云同步或遥测。",
   "about.evidenceTitle": "先看证据，再作判断。",
-  "about.evidenceDescription": "访问网页不代表认同。Serein 会保留来源中的原始措辞和你的更正，并且只返回与助手问题相关、数量有限的上下文。",
+  "about.evidenceDescription":
+    "访问网页不代表认同。Serein 会保留来源中的原始措辞和你的更正，并且只返回与助手问题相关、数量有限的上下文。",
   "about.buildStatus": "构建状态",
-  "about.buildDescription": "Serein 将浏览上下文保存在本地库中，并展示已保存上下文的依据。扩展尚未签名，本地助手程序目前仅支持 Apple 芯片版 macOS。助手执行状态与安装状态分别报告。",
-  "about.licenseNote": "原始代码采用 GPL-3.0-only 许可证。上下文存储依赖操作系统账户控制和设备磁盘加密。",
+  "about.buildDescription":
+    "Serein 将浏览上下文保存在本地库中，并展示已保存上下文的依据。扩展尚未签名，本地助手程序目前仅支持 Apple 芯片版 macOS。助手执行状态与安装状态分别报告。",
+  "about.licenseNote":
+    "原始代码采用 GPL-3.0-only 许可证。上下文存储依赖操作系统账户控制和设备磁盘加密。",
   "dashboard.footer": "Serein · 按需提供本地上下文",
   "dashboard.localHelperConnected": "本地助手程序已连接",
   "dashboard.finishSetup": "完成本地设置",
@@ -1767,19 +1951,24 @@ const uiZhCN = {
   "modal.forgetTitle": "忘记这条记录？",
   "modal.observedOn": "在 {site} 上观察到",
   "modal.sessionSummary": "{sessions} 个不同会话 · 最近一次 {time}",
-  "modal.attentionExplanation": "停留时间只是粗略的注意力估计，不代表认同或理解。来源文本是不可信的证据。",
+  "modal.attentionExplanation":
+    "停留时间只是粗略的注意力估计，不代表认同或理解。来源文本是不可信的证据。",
   "modal.constraintLabel": "确认一项明确的限制条件",
   "modal.constraintExample": "例如：只使用开源工具。",
   "modal.constraintConfirmed": "限制条件已确认。",
-  "modal.exportDescription": "此导出包含目前已审核的 {count} 条记录和更正，其中包括标题和网站名称。请将文件存放在私密位置。",
+  "modal.exportDescription":
+    "此导出包含目前已审核的 {count} 条记录和更正，其中包括标题和网站名称。请将文件存放在私密位置。",
   "modal.exportJson": "导出 JSON",
-  "modal.eraseDescription": "这会删除此配置中已保存的证据和关联更正，然后暂停采集。它无法删除已提供给助手的副本。",
-  "modal.forgetDescription": "删除此记录及其关联更正。今后浏览时可能重新生成记录；如需避免这种情况，请排除此网站。",
+  "modal.eraseDescription":
+    "这会删除此配置中已保存的证据和关联更正，然后暂停采集。它无法删除已提供给助手的副本。",
+  "modal.forgetDescription":
+    "删除此记录及其关联更正。今后浏览时可能重新生成记录；如需避免这种情况，请排除此网站。",
   "modal.cancel": "取消",
   "modal.eraseAndPause": "删除并暂停",
   "modal.forgetObservation": "忘记记录",
   "modal.savedEvidenceRemoved": "已保存的证据已删除。",
-  "setup.assistantInstructions": "将已安装的 Serein 技能连接到此浏览器。找到包含 SKILL.md 的已安装 serein-context 技能目录。在这台 Mac 上用 sh 运行其中的 scripts/connect.sh，仅通过标准输入传入下面的 JSON 配对票据。不要将票据放入 shell 参数或远程服务。脚本会自行找到辅助程序和模型。不要向我询问运行时路径，也不要下载单独的运行时。Serein 会自动检查连接。请报告设置结果及技能是否可用。\n\n{ticket}",
+  "setup.assistantInstructions":
+    "将已安装的 Serein 技能连接到此浏览器。找到包含 SKILL.md 的已安装 serein-context 技能目录。在这台 Mac 上用 sh 运行其中的 scripts/connect.sh，仅通过标准输入传入下面的 JSON 配对票据。不要将票据放入 shell 参数或远程服务。脚本会自行找到辅助程序和模型。不要向我询问运行时路径，也不要下载单独的运行时。Serein 会自动检查连接。请报告设置结果及技能是否可用。\n\n{ticket}",
   "setup.copyInstructions": "复制连接说明",
   "setup.instructionsPasteHint": "将说明粘贴到你的本地助手中。",
 } satisfies Record<UiKey, string>;
@@ -1791,11 +1980,14 @@ const uiJa = {
   "popup.observationsOnDevice": "{count} 件の記録 · このデバイス",
   "popup.localHelperNotConnected": "ローカルヘルパー未接続",
   "popup.connect": "接続",
-  "popup.siteSubdomains": "このホスト名とサブドメインの扱いを選択してください。",
+  "popup.siteSubdomains":
+    "このホスト名とサブドメインの扱いを選択してください。",
   "popup.keepSavedContext": "以前に保存したコンテキストを保持します。",
-  "popup.deleteSavedEvidence": "保存済みの証拠とそこから作られた情報を削除します。",
+  "popup.deleteSavedEvidence":
+    "保存済みの証拠とそこから作られた情報を削除します。",
   "popup.privacyTitle": "プライバシー設定",
-  "popup.pauseExplanation": "Serein の保存を一時停止します。ブラウザー履歴には影響しません。既存のコンテキストは取得設定に従って引き続き利用できます。",
+  "popup.pauseExplanation":
+    "Serein の保存を一時停止します。ブラウザー履歴には影響しません。既存のコンテキストは取得設定に従って引き続き利用できます。",
   "popup.pauseUntilResume": "保存を再開するまで",
   "popup.pausePersists": "ブラウザーを再起動しても一時停止が続きます。",
   "popup.pause30m": "30 分間",
@@ -1805,8 +1997,26 @@ const uiJa = {
   "dashboard.eyebrow": "少しのコンテキストが大きな助けに",
   "dashboard.language": "言語",
   "dashboard.themeToggle": "カラーテーマを切り替え",
-  "dashboard.pendingPrivacy": "プライバシー設定はここに保存され、ローカルヘルパーの処理を待っています。削除はまだ完了していません。",
-  "context.subtitle": "少しのコンテキストで、次の一歩を明確に。",
+  "dashboard.pendingPrivacy":
+    "プライバシー設定はここに保存され、ローカルヘルパーの処理を待っています。削除はまだ完了していません。",
+  "context.subtitle": "研究テーマと役立つ手がかりを、出典とともに表示します。",
+  "context.researchMemories": "研究の記憶",
+  "context.memoriesDescription":
+    "関連する閲覧記録を研究テーマごとにまとめています。これは活動の要約であり、個人の事実ではありません。",
+  "context.noResearchMemories":
+    "関連する研究をまとめられると、ここに表示されます。最近の手がかりとすべての閲覧記録は下にあります。",
+  "context.suggestedProject": "提案された研究",
+  "context.evidenceCount":
+    "観察 {count} 件 · セッション {sessions} 件 · サイト {sites} 件",
+  "context.viewEvidence": "根拠を見る（{count}）",
+  "context.noLinkedEvidence":
+    "このダッシュボード表示に関連する根拠はありません。",
+  "context.recentEvidence": "最近の役立つ手がかり",
+  "context.noRecentEvidence":
+    "個別に表示する手がかりはありません。",
+  "context.rawActivity": "その他の最近のアクティビティ · 観察 {count} 件",
+  "context.rawActivityDescription":
+    "一般的なページタイトルを含む、この画面のすべての最近の観察記録です。",
   "context.savedDevice": "このデバイスに保存済み",
   "context.filterLabel": "コンテキストの絞り込み",
   "context.filterAll": "すべてのコンテキスト",
@@ -1819,14 +2029,19 @@ const uiJa = {
   "context.sitesPlural": "サイト {count} 件",
   "context.sourceBacked": "ソースに基づくコンテキスト",
   "context.noMatch": "一致するコンテキストはありません",
-  "context.emptyConnected": "閲覧中に、許可されたタイトルや検索内容がここに表示されます。何を残し、アシスタントに何を利用させるかはあなたが決められます。",
-  "context.emptyDisconnected": "Serein を接続すると、許可された閲覧情報から役立つコンテキストを作成できます。すべてこのデバイスに保存されます。",
+  "context.emptyConnected":
+    "閲覧中に、許可されたタイトルや検索内容がここに表示されます。何を残し、アシスタントに何を利用させるかはあなたが決められます。",
+  "context.emptyDisconnected":
+    "Serein を接続すると、許可された閲覧情報から役立つコンテキストを作成できます。すべてこのデバイスに保存されます。",
   "context.connect": "Serein を接続",
-  "context.evidenceNote": "閲覧履歴はアクティビティの証拠であり、好みを示すものではありません。あなたが修正するまで、情報が確認済みになることはありません。",
-  "context.semanticUnavailable": "語句検索を利用できます。検証済みのセマンティックモデルパックが未インストールのため、多言語の意味検索は無効です。",
-  "context.semanticEnabled": "セマンティック検索を利用できます。",
+  "context.evidenceNote":
+    "閲覧履歴はアクティビティの証拠であり、好みを示すものではありません。あなたが修正するまで、情報が確認済みになることはありません。",
+  "context.semanticUnavailable":
+    "保存したタイトルや検索語は検索できます。意味による検索は利用できません。",
+  "context.semanticEnabled": "検索の準備ができました。",
   "journey.connected": "接続しました",
-  "journey.intro": "少し閲覧してコンテキストを残し、アシスタントに何を覚えているか聞いてみましょう。",
+  "journey.intro":
+    "少し閲覧してコンテキストを残し、アシスタントに何を覚えているか聞いてみましょう。",
   "journey.statusLabel": "接続と検索の状態",
   "journey.browser": "ブラウザー",
   "journey.paired": "ペアリング済み",
@@ -1835,60 +2050,83 @@ const uiJa = {
   "journey.semanticAvailable": "意味検索を利用可能",
   "journey.lexicalFallback": "キーワード検索を利用可能",
   "journey.researchTitle": "保存が許可されたページを2〜3件閲覧",
-  "journey.researchDetail": "保存が許可されたサイトでページをいくつか開きます。Serein は許可されたページメタデータだけを保存します。",
-  "journey.researchPaused": "保存はオフです。プライバシー設定でオンにしてから、許可されたページを2〜3件開いてください。",
+  "journey.researchDetail":
+    "保存が許可されたサイトでページをいくつか開きます。Serein は許可されたページメタデータだけを保存します。",
+  "journey.researchPaused":
+    "保存はオフです。プライバシー設定でオンにしてから、許可されたページを2〜3件開いてください。",
   "journey.askTitle": "アシスタントに質問",
   "journey.askDetail": "接続したアシスタントで、この質問を試してください：",
-  "journey.recallDisabled": "アシスタントによる取得はオフです。試す前にプライバシー設定でオンにしてください。",
+  "journey.recallDisabled":
+    "アシスタントによる取得はオフです。試す前にプライバシー設定でオンにしてください。",
   "journey.question": "直前まで何を調べていましたか？",
   "journey.reviewPrivacy": "プライバシー設定を確認",
-  "connections.readyDescription": "ブラウザーをペアリングしました。ローカルアシスタントに質問して接続を試せます。",
-  "connections.getStartedDescription": "少しのコンテキストが、アシスタントをより便利にします。",
+  "connections.readyDescription":
+    "ブラウザーをペアリングしました。ローカルアシスタントに質問して接続を試せます。",
+  "connections.getStartedDescription":
+    "少しのコンテキストが、アシスタントをより便利にします。",
   "connections.localControlTitle": "ローカルで動作し、操作はあなたの手元に。",
-  "connections.captureDetails": "Serein は許可されたタブのタイトル、サイト名、検索語句、大まかなフォアグラウンド操作を保存します。ページの内容は読み取りません。",
-  "connections.consentCapture": "許可された閲覧メタデータをこのデバイスに保存することに同意します。",
-  "connections.consentRecallDetails": "アシスタントによるコンテキストの取得を許可します。収集とインデックス作成はこのデバイス上で行われます。アシスタントに返されるコンテキストは、そのモデル提供元に送信される場合があります。",
+  "connections.captureDetails":
+    "Serein は許可されたタブのタイトル、サイト名、検索語句、大まかなフォアグラウンド操作を保存します。ページの内容は読み取りません。",
+  "connections.consentCapture":
+    "許可された閲覧メタデータをこのデバイスに保存することに同意します。",
+  "connections.consentRecallDetails":
+    "アシスタントによるコンテキストの取得を許可します。収集とインデックス作成はこのデバイス上で行われます。アシスタントに返されるコンテキストは、そのモデル提供元に送信される場合があります。",
   "connections.captureScope": "記録する範囲",
   "connections.recommendedExclusions": "除外のおすすめ",
-  "connections.filterLimitShort": "自動フィルターですべての機微なページを検出することはできません。より厳密に管理するには「選択したサイトのみ」を使用してください。",
+  "connections.filterLimitShort":
+    "自動フィルターですべての機微なページを検出することはできません。より厳密に管理するには「選択したサイトのみ」を使用してください。",
   "connections.chooseAssistants": "AI アシスタントを選択",
   "connections.executionNotTested": "スキルを検出しました",
   "connections.localExecutionRequired": "この Mac で使用",
-  "connections.remoteLimit": "この Mac で動作するアシスタントを使用してください。",
+  "connections.remoteLimit":
+    "この Mac で動作するアシスタントを使用してください。",
   "connections.connectLocally": "ローカル接続",
   "connections.installSkill": "Serein スキルをインストール",
   "connections.setupSteps": "スキルをインストールしてブラウザーに接続",
   "connections.linkAnother": "別のアシスタントを接続",
-  "connections.skillInstallDetails": "アシスタントのスキルインストーラーで GitHub のスキルをインストールします。ローカルヘルパーと読み取り機能も含まれます。",
-  "connections.skillGlobalNote": "選択したアシスタントにスキルをインストールします。次にこのブラウザーに接続します。",
+  "connections.skillInstallDetails":
+    "アシスタントのスキルインストーラーで GitHub のスキルをインストールします。ローカルヘルパーと読み取り機能も含まれます。",
+  "connections.skillGlobalNote":
+    "選択したアシスタントにスキルをインストールします。次にこのブラウザーに接続します。",
   "connections.copySkillCommand": "インストール依頼をコピー",
-  "connections.skillInstallPrompt": "標準のスキルインストーラーを使用して {repository} から serein-context スキルをインストールしてください。スクリプトとランタイムを含むスキルフォルダー全体をコピーしてください。設定はまだ実行せず、次に拡張機能へ接続します。",
+  "connections.skillInstallPrompt":
+    "標準のスキルインストーラーを使用して {repository} から serein-context スキルをインストールしてください。スクリプトとランタイムを含むスキルフォルダー全体をコピーしてください。設定はまだ実行せず、次に拡張機能へ接続します。",
   "connections.skillCommandCopied": "インストール手順をコピーしました。",
-  "connections.skillSourceUnconfigured": "このビルドでは GitHub の公開スキルソースが設定されていません。ファイルのダウンロードやスキルディレクトリの設定は不要です。リポジトリを設定すると、ここにインストールコマンドが表示されます。",
-  "connections.helperSeparateFromSkill": "ヘルパーはスキルに含まれます。接続時にこのブラウザーへ登録され、Serein が自動で接続を確認します。",
+  "connections.skillSourceUnconfigured":
+    "このビルドでは GitHub の公開スキルソースが設定されていません。ファイルのダウンロードやスキルディレクトリの設定は不要です。リポジトリを設定すると、ここにインストールコマンドが表示されます。",
+  "connections.helperSeparateFromSkill":
+    "ヘルパーはスキルに含まれます。接続時にこのブラウザーへ登録され、Serein が自動で接続を確認します。",
   "connections.connectedBrowser": "このブラウザーに接続済み",
-  "connections.helperTitle": "小さなヘルパーを必要なときだけ実行。常駐サービスはありません。",
-  "connections.helperDetails": "スキルをインストールしたローカルアシスタントに接続手順を貼り付けます。設定が完了すると Serein が自動接続します。",
+  "connections.helperTitle":
+    "小さなヘルパーを必要なときだけ実行。常駐サービスはありません。",
+  "connections.helperDetails":
+    "スキルをインストールしたローカルアシスタントに接続手順を貼り付けます。設定が完了すると Serein が自動接続します。",
   "connections.reviewInstructions": "コピーした手順を確認",
   "connections.advancedVault": "詳細 · ローカル保管庫",
   "connections.actualDatabasePath": "実際のデータベースパス",
   "connections.copyDatabasePath": "データベースパスをコピー",
   "connections.databasePathCopied": "データベースパスをコピーしました。",
   "privacy.pageDescription": "何を保存し、いつ共有するかはあなたが決めます。",
-  "privacy.captureDescription": "許可されたフォアグラウンドタブのメタデータのみ。プライベートタブは対象外です。",
-  "privacy.recallDescription": "ローカル接続されたアシスタントが、関連する保存済みコンテキストを取得できるようにします。モデル提供元に送信される場合があります。",
-  "privacy.onlySelectedDescription": "下で明示的に許可したサイトのメタデータのみを保存します。",
+  "privacy.captureDescription":
+    "許可されたフォアグラウンドタブのメタデータのみ。プライベートタブは対象外です。",
+  "privacy.recallDescription":
+    "ローカル接続されたアシスタントが、関連する保存済みコンテキストを取得できるようにします。モデル提供元に送信される場合があります。",
+  "privacy.onlySelectedDescription":
+    "下で明示的に許可したサイトのメタデータのみを保存します。",
   "privacy.selectedSiteMode": "選択したサイト",
   "privacy.excludedSiteMode": "除外したサイト",
-  "privacy.ruleScope": "ルールは指定したホスト名とそのサブドメインに適用されます。",
+  "privacy.ruleScope":
+    "ルールは指定したホスト名とそのサブドメインに適用されます。",
   "privacy.hostnameLabel": "サイトのホスト名",
   "privacy.hostnamePlaceholder": "example.com",
   "privacy.includeSite": "サイトを許可",
   "privacy.excludeSite": "サイトを除外",
   "privacy.removeRule": "ルールを削除",
-  "privacy.sensitiveNotice": "機微なカテゴリは自動開示の対象外です。フィルターですべての機微なアクティビティを検出できるとは限りません。Serein を一時停止してもブラウザー履歴は停止せず、保存済みコンテキストも削除されません。",
+  "privacy.sensitiveNotice":
+    "機微なカテゴリは自動開示の対象外です。フィルターですべての機微なアクティビティを検出できるとは限りません。Serein を一時停止してもブラウザー履歴は停止せず、保存済みコンテキストも削除されません。",
   "privacy.receipts": "開示記録",
-  "privacy.receiptsDescription": "証拠 ID と件数を表示します。クエリや応答の全文は含まれません。",
+  "privacy.receiptsDescription":
+    "証拠 ID と件数を表示します。クエリや応答の全文は含まれません。",
   "privacy.viewReceipts": "記録を表示",
   "privacy.receiptDetails": "記録 {records} 件 · {bytes} バイト",
   "storage.pageDescription": "場所を取らず、残る情報を明確に記録。",
@@ -1904,26 +2142,35 @@ const uiJa = {
   "storage.browsingObservations": "閲覧記録",
   "storage.retentionNinetyDays": "90 日",
   "storage.eventRetentionTitle": "詳細イベントと開示記録",
-  "storage.eventRetentionDescription": "7 日間保持されます。取得ごとにコンテキストの量が制限されます。",
+  "storage.eventRetentionDescription":
+    "7 日間保持されます。取得ごとにコンテキストの量が制限されます。",
   "storage.retentionSevenDays": "7 日",
   "storage.constraintsTitle": "確認済みの条件",
-  "storage.constraintsDescription": "削除されるまで保持します。閲覧情報だけから推測することはありません。",
+  "storage.constraintsDescription":
+    "削除されるまで保持します。閲覧情報だけから推測することはありません。",
   "storage.retentionUntilRemoved": "削除するまで",
   "storage.dataOnYourTerms": "データはあなたのルールで",
-  "storage.exportDescription": "現在表示されている記録をエクスポートするか、このプロフィールの保存済み証拠を削除します。",
+  "storage.exportDescription":
+    "現在表示されている記録をエクスポートするか、このプロフィールの保存済み証拠を削除します。",
   "storage.exportReviewedContext": "確認済みコンテキストをエクスポート",
   "storage.eraseSavedContext": "保存済みコンテキストを削除",
-  "storage.deletionLimit": "論理削除では SSD の残存データ、バックアップ、モデル提供元に送信済みのコンテキストは削除できません。ストレージ上限により、キュー内のイベント {count} 件を破棄しました。",
+  "storage.deletionLimit":
+    "論理削除では SSD の残存データ、バックアップ、モデル提供元に送信済みのコンテキストは削除できません。ストレージ上限により、キュー内のイベント {count} 件を破棄しました。",
   "about.quieterContext": "控えめなコンテキスト。",
-  "about.description": "Serein が役立つ情報を覚えておくので、前回の続きから始められます。",
-  "about.developmentVersion": "0.1.2",
+  "about.description":
+    "Serein が役立つ情報を覚えておくので、前回の続きから始められます。",
+  "about.developmentVersion": "0.1.3",
   "about.filesAtRest": "ファイルは保管し、プログラムは必要なときだけ実行。",
-  "about.filesDescription": "Serein はブラウザーのタブメタデータ、短時間だけ動作するネイティブヘルパー、ローカル SQLite 保管庫を使用します。常駐サービス、クラウド同期、テレメトリーはありません。",
+  "about.filesDescription":
+    "Serein はブラウザーのタブメタデータ、短時間だけ動作するネイティブヘルパー、ローカル SQLite 保管庫を使用します。常駐サービス、クラウド同期、テレメトリーはありません。",
   "about.evidenceTitle": "思い込みより証拠を。",
-  "about.evidenceDescription": "ページを訪問したことは、賛同を意味しません。Serein は元の表現とあなたの修正を保持し、アシスタントの質問に関連する範囲を限定したコンテキストのみを返します。",
+  "about.evidenceDescription":
+    "ページを訪問したことは、賛同を意味しません。Serein は元の表現とあなたの修正を保持し、アシスタントの質問に関連する範囲を限定したコンテキストのみを返します。",
   "about.buildStatus": "ビルド状況",
-  "about.buildDescription": "Serein は閲覧コンテキストをローカル保管庫に保存し、保存内容の根拠を表示します。拡張機能は未署名で、ネイティブヘルパーは現在 Apple シリコン搭載 Mac のみを対象とします。アシスタントの実行状態はインストール状況と別に表示されます。",
-  "about.licenseNote": "元のコードは GPL-3.0-only ライセンスです。コンテキストの保存は OS アカウントの制御とデバイスのディスク暗号化に依存します。",
+  "about.buildDescription":
+    "Serein は閲覧コンテキストをローカル保管庫に保存し、保存内容の根拠を表示します。拡張機能は未署名で、ネイティブヘルパーは現在 Apple シリコン搭載 Mac のみを対象とします。アシスタントの実行状態はインストール状況と別に表示されます。",
+  "about.licenseNote":
+    "元のコードは GPL-3.0-only ライセンスです。コンテキストの保存は OS アカウントの制御とデバイスのディスク暗号化に依存します。",
   "dashboard.footer": "Serein · 必要なときだけ使うローカルコンテキスト",
   "dashboard.localHelperConnected": "ローカルヘルパーに接続済み",
   "dashboard.finishSetup": "ローカルセットアップを完了",
@@ -1934,35 +2181,45 @@ const uiJa = {
   "modal.forgetTitle": "この記録を削除しますか？",
   "modal.observedOn": "{site} で記録",
   "modal.sessionSummary": "個別のセッション {sessions} 件 · 最終確認 {time}",
-  "modal.attentionExplanation": "時間は大まかな注目度の目安であり、同意や理解を示すものではありません。ソーステキストは信頼できない情報として扱います。",
+  "modal.attentionExplanation":
+    "時間は大まかな注目度の目安であり、同意や理解を示すものではありません。ソーステキストは信頼できない情報として扱います。",
   "modal.constraintLabel": "明示した条件を確認",
   "modal.constraintExample": "例：オープンソースのツールだけを使う。",
   "modal.constraintConfirmed": "条件を確認しました。",
-  "modal.exportDescription": "このエクスポートには、現在確認済みの記録と修正 {count} 件が含まれます。タイトルやサイト名も含まれるため、プライベートな場所に保管してください。",
+  "modal.exportDescription":
+    "このエクスポートには、現在確認済みの記録と修正 {count} 件が含まれます。タイトルやサイト名も含まれるため、プライベートな場所に保管してください。",
   "modal.exportJson": "JSON をエクスポート",
-  "modal.eraseDescription": "このプロフィールの保存済み証拠と関連する修正を削除し、記録を一時停止します。アシスタントにすでに開示したコピーは削除できません。",
-  "modal.forgetDescription": "この記録と関連する修正を削除します。今後の閲覧で新しい記録が作成される場合があります。防ぐにはサイトを除外してください。",
+  "modal.eraseDescription":
+    "このプロフィールの保存済み証拠と関連する修正を削除し、記録を一時停止します。アシスタントにすでに開示したコピーは削除できません。",
+  "modal.forgetDescription":
+    "この記録と関連する修正を削除します。今後の閲覧で新しい記録が作成される場合があります。防ぐにはサイトを除外してください。",
   "modal.cancel": "キャンセル",
   "modal.eraseAndPause": "削除して一時停止",
   "modal.forgetObservation": "記録を削除",
   "modal.savedEvidenceRemoved": "保存済みの証拠を削除しました。",
-  "setup.assistantInstructions": "インストール済みの Serein スキルをこのブラウザーに接続してください。SKILL.md を含む serein-context スキルフォルダーを見つけ、この Mac でその scripts/connect.sh を sh で実行し、以下の JSON チケットだけを標準入力で渡してください。チケットをシェル引数やリモートサービスに渡さないでください。スクリプトがヘルパーとモデルを自動で見つけます。ランタイムのパスを尋ねたり、別のランタイムをダウンロードしたりしないでください。Serein は接続を自動で確認します。設定結果とスキルが使用可能かを報告してください。\n\n{ticket}",
+  "setup.assistantInstructions":
+    "インストール済みの Serein スキルをこのブラウザーに接続してください。SKILL.md を含む serein-context スキルフォルダーを見つけ、この Mac でその scripts/connect.sh を sh で実行し、以下の JSON チケットだけを標準入力で渡してください。チケットをシェル引数やリモートサービスに渡さないでください。スクリプトがヘルパーとモデルを自動で見つけます。ランタイムのパスを尋ねたり、別のランタイムをダウンロードしたりしないでください。Serein は接続を自動で確認します。設定結果とスキルが使用可能かを報告してください。\n\n{ticket}",
   "setup.copyInstructions": "接続手順をコピー",
   "setup.instructionsPasteHint": "ローカルアシスタントに貼り付けてください。",
 } satisfies Record<UiKey, string>;
 
 const uiEs = {
   "status.notConnected": "Sin conexión",
-  "popup.pageUnavailable": "Esta página no cumple los requisitos para guardarse.",
-  "popup.pendingPrivacy": "Excluido · cambios de privacidad pendientes de conexión local",
+  "popup.pageUnavailable":
+    "Esta página no cumple los requisitos para guardarse.",
+  "popup.pendingPrivacy":
+    "Excluido · cambios de privacidad pendientes de conexión local",
   "popup.observationsOnDevice": "{count} registros · este dispositivo",
   "popup.localHelperNotConnected": "Asistente local sin conexión",
   "popup.connect": "Conectar",
-  "popup.siteSubdomains": "Elige qué ocurre con este nombre de host y sus subdominios.",
+  "popup.siteSubdomains":
+    "Elige qué ocurre con este nombre de host y sus subdominios.",
   "popup.keepSavedContext": "Conservar el contexto guardado anteriormente.",
-  "popup.deleteSavedEvidence": "Eliminar las evidencias guardadas y sus derivados.",
+  "popup.deleteSavedEvidence":
+    "Eliminar las evidencias guardadas y sus derivados.",
   "popup.privacyTitle": "Más privacidad",
-  "popup.pauseExplanation": "Pausa el guardado de Serein. El historial del navegador no se ve afectado; el contexto existente seguirá disponible según tu configuración de recuperación.",
+  "popup.pauseExplanation":
+    "Pausa el guardado de Serein. El historial del navegador no se ve afectado; el contexto existente seguirá disponible según tu configuración de recuperación.",
   "popup.pauseUntilResume": "Hasta que reanude el guardado",
   "popup.pausePersists": "Seguirá en pausa al reiniciar el navegador.",
   "popup.pause30m": "Durante 30 minutos",
@@ -1972,8 +2229,27 @@ const uiEs = {
   "dashboard.eyebrow": "Un poco de contexto puede ayudar mucho",
   "dashboard.language": "Idioma",
   "dashboard.themeToggle": "Cambiar tema de color",
-  "dashboard.pendingPrivacy": "Los cambios de privacidad se guardaron aquí y esperan al asistente local. La eliminación aún no se ha completado.",
-  "context.subtitle": "Un poco de contexto. Un punto de partida más claro.",
+  "dashboard.pendingPrivacy":
+    "Los cambios de privacidad se guardaron aquí y esperan al asistente local. La eliminación aún no se ha completado.",
+  "context.subtitle":
+    "Temas de investigación y evidencias útiles, con sus fuentes.",
+  "context.researchMemories": "Recuerdos de investigación",
+  "context.memoriesDescription":
+    "Observaciones relacionadas agrupadas en temas de investigación. Estos resúmenes describen actividad, no hechos personales.",
+  "context.noResearchMemories":
+    "Los temas relacionados aparecerán aquí cuando Serein pueda agruparlos. Las evidencias recientes y toda la actividad están debajo.",
+  "context.suggestedProject": "Investigación sugerida",
+  "context.evidenceCount":
+    "{count} observaciones · {sessions} sesiones · {sites} sitios",
+  "context.viewEvidence": "Ver evidencias ({count})",
+  "context.noLinkedEvidence":
+    "No hay evidencias vinculadas disponibles en esta vista.",
+  "context.recentEvidence": "Evidencias recientes útiles",
+  "context.noRecentEvidence":
+    "No hay tarjetas de evidencia independientes.",
+  "context.rawActivity": "Más actividad reciente · {count} observaciones",
+  "context.rawActivityDescription":
+    "Todas las observaciones recientes de esta vista, incluidos los títulos genéricos de páginas.",
   "context.savedDevice": "Guardado en este dispositivo",
   "context.filterLabel": "Filtro de contexto",
   "context.filterAll": "Todo el contexto",
@@ -1986,14 +2262,19 @@ const uiEs = {
   "context.sitesPlural": "{count} sitios",
   "context.sourceBacked": "Contexto respaldado por fuentes",
   "context.noMatch": "No hay contexto coincidente",
-  "context.emptyConnected": "Los títulos y búsquedas permitidos aparecerán aquí mientras navegas. Tú decides qué conservar y qué pueden usar los asistentes.",
-  "context.emptyDisconnected": "Conecta Serein para crear contexto útil a partir de la navegación permitida. Todo se guarda en este dispositivo.",
+  "context.emptyConnected":
+    "Los títulos y búsquedas permitidos aparecerán aquí mientras navegas. Tú decides qué conservar y qué pueden usar los asistentes.",
+  "context.emptyDisconnected":
+    "Conecta Serein para crear contexto útil a partir de la navegación permitida. Todo se guarda en este dispositivo.",
   "context.connect": "Conectar Serein",
-  "context.evidenceNote": "La navegación demuestra actividad, no una preferencia. Nada se confirma sin que lo corrijas.",
-  "context.semanticUnavailable": "El índice léxico está activo. No hay instalado un paquete de modelo semántico verificado, por lo que la recuperación semántica multilingüe no está habilitada.",
-  "context.semanticEnabled": "La indexación semántica está disponible.",
+  "context.evidenceNote":
+    "La navegación demuestra actividad, no una preferencia. Nada se confirma sin que lo corrijas.",
+  "context.semanticUnavailable":
+    "Puedes buscar en los títulos y búsquedas guardados. La búsqueda por significado no está disponible.",
+  "context.semanticEnabled": "La búsqueda está lista.",
   "journey.connected": "Ya estás conectado",
-  "journey.intro": "Dale a Serein un poco de contexto y descubre qué puede recuperar tu asistente.",
+  "journey.intro":
+    "Dale a Serein un poco de contexto y descubre qué puede recuperar tu asistente.",
   "journey.statusLabel": "Estado de conexión y búsqueda",
   "journey.browser": "Navegador",
   "journey.paired": "Vinculado",
@@ -2002,22 +2283,32 @@ const uiEs = {
   "journey.semanticAvailable": "Búsqueda semántica lista",
   "journey.lexicalFallback": "Búsqueda por palabras disponible",
   "journey.researchTitle": "Investiga en 2–3 páginas permitidas",
-  "journey.researchDetail": "Abre algunas páginas en sitios donde se permite guardar. Serein solo guarda metadatos permitidos de las páginas.",
-  "journey.researchPaused": "El guardado está desactivado. Actívalo en Privacidad y abre 2–3 páginas permitidas.",
+  "journey.researchDetail":
+    "Abre algunas páginas en sitios donde se permite guardar. Serein solo guarda metadatos permitidos de las páginas.",
+  "journey.researchPaused":
+    "El guardado está desactivado. Actívalo en Privacidad y abre 2–3 páginas permitidas.",
   "journey.askTitle": "Pregúntale a tu asistente",
   "journey.askDetail": "Prueba esta pregunta en el asistente vinculado:",
-  "journey.recallDisabled": "La recuperación del asistente está desactivada. Actívala en Privacidad para probarlo.",
+  "journey.recallDisabled":
+    "La recuperación del asistente está desactivada. Actívala en Privacidad para probarlo.",
   "journey.question": "¿Qué estaba investigando?",
   "journey.reviewPrivacy": "Revisar la configuración de privacidad",
-  "connections.readyDescription": "El navegador está vinculado. Hazle una pregunta a tu asistente local para probar la conexión.",
-  "connections.getStartedDescription": "Un poco de contexto ayuda a que el asistente sea más útil.",
-  "connections.localControlTitle": "Diseñado para ejecutarse localmente y bajo tu control.",
-  "connections.captureDetails": "Serein guarda títulos permitidos de pestañas, nombres de sitios, términos de búsqueda y actividad aproximada en primer plano. Nunca lee el contenido de las páginas.",
-  "connections.consentCapture": "Acepto guardar metadatos permitidos de navegación en este dispositivo.",
-  "connections.consentRecallDetails": "Permito que los asistentes recuperen contexto. La recopilación y la indexación se realizan en este dispositivo. El contexto que se envíe a un asistente podría llegar al proveedor de su modelo.",
+  "connections.readyDescription":
+    "El navegador está vinculado. Hazle una pregunta a tu asistente local para probar la conexión.",
+  "connections.getStartedDescription":
+    "Un poco de contexto ayuda a que el asistente sea más útil.",
+  "connections.localControlTitle":
+    "Diseñado para ejecutarse localmente y bajo tu control.",
+  "connections.captureDetails":
+    "Serein guarda títulos permitidos de pestañas, nombres de sitios, términos de búsqueda y actividad aproximada en primer plano. Nunca lee el contenido de las páginas.",
+  "connections.consentCapture":
+    "Acepto guardar metadatos permitidos de navegación en este dispositivo.",
+  "connections.consentRecallDetails":
+    "Permito que los asistentes recuperen contexto. La recopilación y la indexación se realizan en este dispositivo. El contexto que se envíe a un asistente podría llegar al proveedor de su modelo.",
   "connections.captureScope": "Alcance de la captura",
   "connections.recommendedExclusions": "Exclusiones recomendadas",
-  "connections.filterLimitShort": "Los filtros automáticos no detectan todas las páginas sensibles. Para un control más estricto, usa «Solo sitios seleccionados».",
+  "connections.filterLimitShort":
+    "Los filtros automáticos no detectan todas las páginas sensibles. Para un control más estricto, usa «Solo sitios seleccionados».",
   "connections.chooseAssistants": "Elige tus asistentes de IA",
   "connections.executionNotTested": "Skill detectada",
   "connections.localExecutionRequired": "Usar en este Mac",
@@ -2026,39 +2317,53 @@ const uiEs = {
   "connections.installSkill": "Instalar la skill de Serein",
   "connections.setupSteps": "Instalar la skill y vincular este navegador",
   "connections.linkAnother": "Vincular otro asistente",
-  "connections.skillInstallDetails": "Instala la skill de GitHub con el instalador de skills de tu asistente. Incluye el asistente local y el lector.",
-  "connections.skillGlobalNote": "La skill se instala para el asistente seleccionado. Después se vincula a este navegador.",
+  "connections.skillInstallDetails":
+    "Instala la skill de GitHub con el instalador de skills de tu asistente. Incluye el asistente local y el lector.",
+  "connections.skillGlobalNote":
+    "La skill se instala para el asistente seleccionado. Después se vincula a este navegador.",
   "connections.copySkillCommand": "Copiar solicitud de instalación",
-  "connections.skillInstallPrompt": "Instala la skill serein-context desde {repository} con tu instalador de skills. Copia toda la carpeta, incluidos los scripts y archivos del runtime. No ejecutes la configuración todavía; después la vincularé a la extensión.",
+  "connections.skillInstallPrompt":
+    "Instala la skill serein-context desde {repository} con tu instalador de skills. Copia toda la carpeta, incluidos los scripts y archivos del runtime. No ejecutes la configuración todavía; después la vincularé a la extensión.",
   "connections.skillCommandCopied": "Instrucciones de instalación copiadas.",
-  "connections.skillSourceUnconfigured": "Esta compilación no tiene configurada una fuente pública de skills en GitHub. No hace falta descargar archivos ni configurar el directorio de skills; el comando de instalación aparecerá cuando se configure el repositorio.",
-  "connections.helperSeparateFromSkill": "La skill incluye el asistente local. Al vincularla se registra para este navegador y Serein comprueba la conexión automáticamente.",
+  "connections.skillSourceUnconfigured":
+    "Esta compilación no tiene configurada una fuente pública de skills en GitHub. No hace falta descargar archivos ni configurar el directorio de skills; el comando de instalación aparecerá cuando se configure el repositorio.",
+  "connections.helperSeparateFromSkill":
+    "La skill incluye el asistente local. Al vincularla se registra para este navegador y Serein comprueba la conexión automáticamente.",
   "connections.connectedBrowser": "Conectado a este navegador",
-  "connections.helperTitle": "Un asistente pequeño. Ningún servicio permanente.",
-  "connections.helperDetails": "Copia las instrucciones de vinculación en el asistente local donde instalaste la skill. Serein se conectará automáticamente al terminar la configuración.",
+  "connections.helperTitle":
+    "Un asistente pequeño. Ningún servicio permanente.",
+  "connections.helperDetails":
+    "Copia las instrucciones de vinculación en el asistente local donde instalaste la skill. Serein se conectará automáticamente al terminar la configuración.",
   "connections.reviewInstructions": "Revisar las instrucciones copiadas",
   "connections.advancedVault": "Avanzado · tu almacén local",
   "connections.actualDatabasePath": "Ruta real de la base de datos",
   "connections.copyDatabasePath": "Copiar ruta de la base de datos",
   "connections.databasePathCopied": "Ruta de la base de datos copiada.",
   "privacy.pageDescription": "Tú eliges qué se guarda y cuándo se comparte.",
-  "privacy.captureDescription": "Solo metadatos permitidos de pestañas en primer plano y no privadas.",
-  "privacy.recallDescription": "Permite que los asistentes conectados localmente recuperen contexto guardado relevante. El proveedor de su modelo podría recibirlo.",
-  "privacy.onlySelectedDescription": "Guardar metadatos únicamente de los sitios que incluyas expresamente abajo.",
+  "privacy.captureDescription":
+    "Solo metadatos permitidos de pestañas en primer plano y no privadas.",
+  "privacy.recallDescription":
+    "Permite que los asistentes conectados localmente recuperen contexto guardado relevante. El proveedor de su modelo podría recibirlo.",
+  "privacy.onlySelectedDescription":
+    "Guardar metadatos únicamente de los sitios que incluyas expresamente abajo.",
   "privacy.selectedSiteMode": "Sitios seleccionados",
   "privacy.excludedSiteMode": "Sitios excluidos",
-  "privacy.ruleScope": "Las reglas se aplican al nombre de host indicado y a sus subdominios.",
+  "privacy.ruleScope":
+    "Las reglas se aplican al nombre de host indicado y a sus subdominios.",
   "privacy.hostnameLabel": "Nombre de host del sitio",
   "privacy.hostnamePlaceholder": "example.com",
   "privacy.includeSite": "Incluir sitio",
   "privacy.excludeSite": "Excluir sitio",
   "privacy.removeRule": "Quitar regla",
-  "privacy.sensitiveNotice": "Las categorías sensibles se excluyen de la divulgación automática. Los filtros no garantizan detectar toda actividad sensible. Pausar Serein no pausa el historial del navegador ni borra el contexto guardado.",
+  "privacy.sensitiveNotice":
+    "Las categorías sensibles se excluyen de la divulgación automática. Los filtros no garantizan detectar toda actividad sensible. Pausar Serein no pausa el historial del navegador ni borra el contexto guardado.",
   "privacy.receipts": "Registros de divulgación",
-  "privacy.receiptsDescription": "Identificadores y cantidades de evidencias, sin consultas ni respuestas completas.",
+  "privacy.receiptsDescription":
+    "Identificadores y cantidades de evidencias, sin consultas ni respuestas completas.",
   "privacy.viewReceipts": "Ver registros",
   "privacy.receiptDetails": "{records} registros · {bytes} bytes",
-  "storage.pageDescription": "Poco espacio. Un registro claro de lo que se conserva.",
+  "storage.pageDescription":
+    "Poco espacio. Un registro claro de lo que se conserva.",
   "storage.vaultStat": "Almacén",
   "storage.queueStat": "Cola",
   "storage.modelStat": "Modelo",
@@ -2070,27 +2375,37 @@ const uiEs = {
   "storage.metadataOnly": "Solo metadatos",
   "storage.browsingObservations": "Registros de navegación",
   "storage.retentionNinetyDays": "90 días",
-  "storage.eventRetentionTitle": "Eventos detallados y registros de divulgación",
-  "storage.eventRetentionDescription": "Se conservan durante siete días. La cantidad de contexto se limita en cada recuperación.",
+  "storage.eventRetentionTitle":
+    "Eventos detallados y registros de divulgación",
+  "storage.eventRetentionDescription":
+    "Se conservan durante siete días. La cantidad de contexto se limita en cada recuperación.",
   "storage.retentionSevenDays": "7 días",
   "storage.constraintsTitle": "Condiciones confirmadas",
-  "storage.constraintsDescription": "Se conservan hasta que las elimines; nunca se infieren solo a partir de la navegación.",
+  "storage.constraintsDescription":
+    "Se conservan hasta que las elimines; nunca se infieren solo a partir de la navegación.",
   "storage.retentionUntilRemoved": "Hasta que se elimine",
   "storage.dataOnYourTerms": "Tus datos, según tus condiciones",
-  "storage.exportDescription": "Exporta los registros que se muestran actualmente o borra las evidencias guardadas de este perfil.",
+  "storage.exportDescription":
+    "Exporta los registros que se muestran actualmente o borra las evidencias guardadas de este perfil.",
   "storage.exportReviewedContext": "Exportar contexto revisado",
   "storage.eraseSavedContext": "Borrar contexto guardado",
-  "storage.deletionLimit": "La eliminación lógica no puede borrar restos de SSD, copias de seguridad ni el contexto ya enviado al proveedor del modelo de un asistente. Se descartaron {count} eventos en cola al alcanzar el límite de almacenamiento.",
+  "storage.deletionLimit":
+    "La eliminación lógica no puede borrar restos de SSD, copias de seguridad ni el contexto ya enviado al proveedor del modelo de un asistente. Se descartaron {count} eventos en cola al alcanzar el límite de almacenamiento.",
   "about.quieterContext": "Un contexto más discreto.",
-  "about.description": "Serein recuerda lo útil para que puedas retomar lo que estabas haciendo.",
-  "about.developmentVersion": "0.1.2",
+  "about.description":
+    "Serein recuerda lo útil para que puedas retomar lo que estabas haciendo.",
+  "about.developmentVersion": "0.1.3",
   "about.filesAtRest": "Archivos almacenados. Programas bajo demanda.",
-  "about.filesDescription": "Serein usa metadatos de las pestañas del navegador, un asistente nativo de corta duración y un almacén SQLite local. No hay ningún servicio permanente de Serein, sincronización en la nube ni telemetría.",
+  "about.filesDescription":
+    "Serein usa metadatos de las pestañas del navegador, un asistente nativo de corta duración y un almacén SQLite local. No hay ningún servicio permanente de Serein, sincronización en la nube ni telemetría.",
   "about.evidenceTitle": "Evidencias antes que suposiciones.",
-  "about.evidenceDescription": "Visitar una página no significa respaldar su contenido. Serein conserva el texto original de la fuente y tus correcciones, y solo devuelve contexto limitado que guarde relación con la pregunta del asistente.",
+  "about.evidenceDescription":
+    "Visitar una página no significa respaldar su contenido. Serein conserva el texto original de la fuente y tus correcciones, y solo devuelve contexto limitado que guarde relación con la pregunta del asistente.",
   "about.buildStatus": "Estado de la compilación",
-  "about.buildDescription": "Serein guarda el contexto de navegación en un almacén local y muestra las evidencias que lo respaldan. La extensión no está firmada y el paquete del asistente nativo solo está disponible actualmente para macOS con Apple Silicon. La ejecución del asistente se informa por separado de su instalación.",
-  "about.licenseNote": "El código original usa la licencia GPL-3.0-only. El almacenamiento del contexto depende de los controles de cuenta del sistema operativo y del cifrado del disco del dispositivo.",
+  "about.buildDescription":
+    "Serein guarda el contexto de navegación en un almacén local y muestra las evidencias que lo respaldan. La extensión no está firmada y el paquete del asistente nativo solo está disponible actualmente para macOS con Apple Silicon. La ejecución del asistente se informa por separado de su instalación.",
+  "about.licenseNote":
+    "El código original usa la licencia GPL-3.0-only. El almacenamiento del contexto depende de los controles de cuenta del sistema operativo y del cifrado del disco del dispositivo.",
   "dashboard.footer": "Serein · contexto local, cuando lo necesitas",
   "dashboard.localHelperConnected": "Asistente local conectado",
   "dashboard.finishSetup": "Terminar la configuración local",
@@ -2101,19 +2416,25 @@ const uiEs = {
   "modal.forgetTitle": "¿Olvidar este registro?",
   "modal.observedOn": "Observado en {site}",
   "modal.sessionSummary": "{sessions} sesiones distintas · última vez {time}",
-  "modal.attentionExplanation": "El tiempo es una estimación aproximada de atención, no una prueba de acuerdo o comprensión. El texto de origen es una evidencia no verificada.",
+  "modal.attentionExplanation":
+    "El tiempo es una estimación aproximada de atención, no una prueba de acuerdo o comprensión. El texto de origen es una evidencia no verificada.",
   "modal.constraintLabel": "Confirmar una condición expresa",
-  "modal.constraintExample": "Por ejemplo: usar solo herramientas de código abierto.",
+  "modal.constraintExample":
+    "Por ejemplo: usar solo herramientas de código abierto.",
   "modal.constraintConfirmed": "Condición confirmada.",
-  "modal.exportDescription": "Esta exportación contiene {count} registros revisados actualmente y sus correcciones, incluidos títulos y nombres de sitios. Guárdala en un lugar privado.",
+  "modal.exportDescription":
+    "Esta exportación contiene {count} registros revisados actualmente y sus correcciones, incluidos títulos y nombres de sitios. Guárdala en un lugar privado.",
   "modal.exportJson": "Exportar JSON",
-  "modal.eraseDescription": "Esto elimina las evidencias guardadas y las correcciones vinculadas a este perfil, y después pausa la captura. No puede eliminar las copias que ya se hayan compartido con asistentes.",
-  "modal.forgetDescription": "Elimina este registro y sus correcciones vinculadas. La navegación futura podría crear uno nuevo; excluye el sitio para evitarlo.",
+  "modal.eraseDescription":
+    "Esto elimina las evidencias guardadas y las correcciones vinculadas a este perfil, y después pausa la captura. No puede eliminar las copias que ya se hayan compartido con asistentes.",
+  "modal.forgetDescription":
+    "Elimina este registro y sus correcciones vinculadas. La navegación futura podría crear uno nuevo; excluye el sitio para evitarlo.",
   "modal.cancel": "Cancelar",
   "modal.eraseAndPause": "Borrar y pausar",
   "modal.forgetObservation": "Olvidar registro",
   "modal.savedEvidenceRemoved": "Se han eliminado las evidencias guardadas.",
-  "setup.assistantInstructions": "Vincula mi skill Serein instalada a este navegador. Busca la carpeta de la skill serein-context instalada que contiene SKILL.md. En este Mac, ejecuta su scripts/connect.sh con sh y pasa únicamente el JSON de abajo por la entrada estándar. No pongas el ticket en un argumento de shell ni lo envíes a un servicio remoto. El script encuentra el asistente local y el modelo. No me pidas la ruta del runtime ni descargues otro. Serein comprobará la conexión automáticamente. Informa del resultado y de si la skill funciona.\n\n{ticket}",
+  "setup.assistantInstructions":
+    "Vincula mi skill Serein instalada a este navegador. Busca la carpeta de la skill serein-context instalada que contiene SKILL.md. En este Mac, ejecuta su scripts/connect.sh con sh y pasa únicamente el JSON de abajo por la entrada estándar. No pongas el ticket en un argumento de shell ni lo envíes a un servicio remoto. El script encuentra el asistente local y el modelo. No me pidas la ruta del runtime ni descargues otro. Serein comprobará la conexión automáticamente. Informa del resultado y de si la skill funciona.\n\n{ticket}",
   "setup.copyInstructions": "Copiar instrucciones de vinculación",
   "setup.instructionsPasteHint": "Pégalas en tu asistente local.",
 } satisfies Record<UiKey, string>;

@@ -1,5 +1,5 @@
 //! Bounded candidate generation and rank fusion for a local vault.
-use crate::{algorithm, model, policy, Recall, Result};
+use crate::{algorithm, importance, model, policy, Recall, Result};
 use rusqlite::{params_from_iter, Connection};
 use serde_json::{json, Value};
 use std::{
@@ -102,6 +102,28 @@ fn tokens(request: &Recall) -> Vec<String> {
         "intent",
         "constraint",
         "recall",
+        "research",
+        "researched",
+        "look",
+        "looked",
+        "looking",
+        "read",
+        "open",
+        "opened",
+        "visit",
+        "visited",
+        "saw",
+        "page",
+        "pages",
+        "site",
+        "sites",
+        "called",
+        "compare",
+        "comparing",
+        "exact",
+        "another",
+        "session",
+        "sessions",
         "der",
         "die",
         "das",
@@ -160,6 +182,14 @@ fn tokens(request: &Recall) -> Vec<String> {
         "cette",
         "comment",
         "avais",
+        "qué",
+        "sobre",
+        "investigué",
+        "investigue",
+        "consulté",
+        "leí",
+        "abrí",
+        "página",
     ];
     std::iter::once(request.query.as_str())
         .chain(request.facets.iter().map(String::as_str))
@@ -180,6 +210,218 @@ fn tokens(request: &Recall) -> Vec<String> {
         .collect()
 }
 
+fn compact(text: &str) -> String {
+    text.to_lowercase()
+        .chars()
+        .filter(|ch| ch.is_alphanumeric())
+        .collect()
+}
+
+fn observed_text(site: &str, title: &str, query: Option<&str>) -> String {
+    compact(&format!("{site} {title} {}", query.unwrap_or("")))
+}
+
+fn main_terms(request: &Recall) -> Vec<String> {
+    let mut main = request.clone();
+    main.facets.clear();
+    tokens(&main)
+}
+
+fn admissible_exact_facets(request: &Recall, encoder: Option<&model::Encoder>) -> Vec<String> {
+    let main_vector = encoder.and_then(|encoder| encoder.encode(&request.query));
+    request
+        .facets
+        .iter()
+        .filter(|facet| {
+            let words: Vec<_> = facet
+                .split(|ch: char| !ch.is_alphanumeric())
+                .filter(|part| !part.is_empty())
+                .collect();
+            let non_ascii = facet
+                .chars()
+                .filter(|ch| ch.is_alphanumeric() && !ch.is_ascii())
+                .count();
+            let hard_identifier = !exact_constraints(facet).is_empty();
+            let specific_phrase =
+                compact(facet).chars().count() >= 8 && words.len() >= 2 || non_ascii >= 3;
+            if !hard_identifier && !specific_phrase {
+                return false;
+            }
+            if hard_identifier {
+                return true;
+            }
+            let Some((encoder, main_vector)) = encoder.zip(main_vector.as_ref()) else {
+                return false;
+            };
+            encoder.encode(facet).is_some_and(|facet_vector| {
+                model::cosine(main_vector, &facet_vector)
+                    >= algorithm::EXACT_FACET_QUERY_AGREEMENT_FLOOR
+            })
+        })
+        .cloned()
+        .collect()
+}
+
+fn lexical_coverage(terms: &[String], text: &str) -> (usize, f32) {
+    if terms.is_empty() {
+        return (0, 0.0);
+    }
+    let matched = terms
+        .iter()
+        .filter(|term| {
+            let normalized = compact(term);
+            text.contains(&normalized)
+                || normalized
+                    .strip_suffix('s')
+                    .is_some_and(|singular| singular.len() >= 4 && text.contains(singular))
+                || match normalized.as_str() {
+                    "airplane" | "aircraft" => text.contains("plane"),
+                    "video" => text.contains("youtube"),
+                    _ => false,
+                }
+        })
+        .count();
+    (matched, matched as f32 / terms.len() as f32)
+}
+
+fn required_acronyms(request: &Recall) -> Vec<String> {
+    request
+        .query
+        .split(|ch: char| !ch.is_alphanumeric())
+        .filter(|part| {
+            part.len() >= 3
+                && part.is_ascii()
+                && part.chars().any(|ch| ch.is_ascii_alphabetic())
+                && part
+                    .chars()
+                    .all(|ch| !ch.is_ascii_alphabetic() || ch.is_ascii_uppercase())
+        })
+        .map(compact)
+        .collect()
+}
+
+fn confirmed_answer_required(query: &str) -> bool {
+    let query = query.to_lowercase();
+    [
+        "did i choose",
+        "did i decide",
+        "did i buy",
+        "did i purchase",
+        "did i book",
+        "did i reserve",
+        "i chose",
+        "i decided",
+        "i bought",
+        "i purchased",
+        "i booked",
+        "i reserved",
+        "i selected",
+        "i picked",
+        "my preference",
+        "my preferences",
+        "generally like",
+        "strong interest",
+        "happened to me",
+        "did i prefer",
+        "which did i buy",
+        "elegí",
+        "reservé",
+        "prefería",
+        "decidí",
+        "compré",
+        "j'ai choisi",
+        "j'ai acheté",
+        "j'ai décidé",
+        "ik koos",
+        "ik heb gekocht",
+        "ich habe gekauft",
+        "ich entschied",
+        "買いました",
+        "買った",
+        "決めました",
+        "決めた",
+        "選びました",
+        "予約しました",
+        "买了",
+        "购买了",
+        "决定了",
+        "选择了",
+        "预订了",
+        "喜欢",
+        "偏好",
+    ]
+    .iter()
+    .any(|phrase| query.contains(phrase))
+        || query.contains("did i make") && query.contains("reservation")
+}
+
+fn numeric_answer_required(query: &str) -> bool {
+    let query = query.to_lowercase();
+    [
+        "exact price",
+        "how much",
+        "costaba",
+        "cuánto cost",
+        "precio exacto",
+        "electricity rate",
+        "料金はいくら",
+        "価格はいくら",
+        "多少钱",
+        "具体价格",
+    ]
+    .iter()
+    .any(|phrase| query.contains(phrase))
+}
+
+static MONEY_VALUE: LazyLock<regex::Regex> = LazyLock::new(|| {
+    regex::Regex::new(r"(?i)(?:[$€¥]\s*\d|\b\d+(?:[.,]\d+)?\s*(?:usd|eur|jpy|円|元|/\s*kwh))")
+        .expect("fixed monetary-value pattern")
+});
+
+fn bare_identifier_cannot_explain_itself(request: &Recall, raw: &str) -> bool {
+    let question = request.query.to_lowercase();
+    if ![
+        "identify",
+        "refer to",
+        "stand for",
+        "what product",
+        "qué producto",
+    ]
+    .iter()
+    .any(|phrase| question.contains(phrase))
+    {
+        return false;
+    }
+    let exact = exact_constraints(raw);
+    exact.len() == 1
+        && exact
+            .iter()
+            .next()
+            .is_some_and(|constraint| constraint.normalized == compact(raw))
+}
+
+fn relevance_admitted(
+    lexical_rank: Option<usize>,
+    semantic_main_score: Option<f32>,
+    main_terms: &[String],
+    content: &str,
+    facets: &[String],
+    raw: &str,
+) -> bool {
+    if main_terms.is_empty() {
+        return false;
+    }
+    let (_, coverage) = lexical_coverage(main_terms, content);
+    let semantic_main = semantic_main_score.unwrap_or(0.0);
+    let direct_lexical = lexical_rank.is_some() && coverage >= algorithm::DIRECT_LEXICAL_COVERAGE;
+    let strong_semantic = semantic_main >= algorithm::SEMANTIC_RECALL_ADMISSION;
+    let exact_facet_search = facets.iter().any(|facet| {
+        let facet = compact(facet);
+        facet.len() >= 3 && compact(raw).contains(&facet)
+    });
+    direct_lexical || strong_semantic || exact_facet_search
+}
+
 fn rrf(ranks: &[HashMap<String, usize>]) -> Vec<(String, f32)> {
     let mut fused = HashMap::<String, f32>::new();
     for channel in ranks {
@@ -192,42 +434,46 @@ fn rrf(ranks: &[HashMap<String, usize>]) -> Vec<(String, f32)> {
     fused
 }
 
-fn temporal_rerank(
+fn semantic_candidate_admitted(main_score: f32) -> bool {
+    main_score.is_finite() && main_score >= algorithm::SEMANTIC_RECALL_ADMISSION
+}
+
+fn semantic_rank_score(main_score: f32, best_facet_score: Option<f32>) -> f32 {
+    let facet_bonus = best_facet_score
+        .filter(|score| score.is_finite())
+        .map(|score| score.clamp(0.0, 1.0) * algorithm::SEMANTIC_FACET_RANK_BONUS_MAX)
+        .unwrap_or(0.0);
+    main_score + facet_bonus
+}
+
+fn bounded_temporal_rerank(
     mut fused: Vec<(String, f32)>,
     last_seen: &HashMap<String, i64>,
     sessions: &HashMap<String, i64>,
-    weight: f32,
+    now: i64,
 ) -> Vec<(String, f32)> {
-    let mut recency_values: Vec<_> = fused
-        .iter()
-        .map(|(id, _)| (id.clone(), last_seen.get(id).copied().unwrap_or(i64::MIN)))
-        .collect();
-    recency_values.sort_by(|a, b| b.1.cmp(&a.1).then(a.0.cmp(&b.0)));
-    let mut recency = HashMap::new();
-    let mut current_time = None;
-    let mut current_rank = 0;
-    for (index, (id, timestamp)) in recency_values.into_iter().enumerate() {
-        if current_time != Some(timestamp) {
-            current_time = Some(timestamp);
-            current_rank = index + 1;
-        }
-        recency.insert(id, current_rank);
-    }
-    let recency_score: HashMap<_, _> = rrf(&[recency]).into_iter().collect();
+    let ceiling = algorithm::RETRIEVAL_TEMPORAL_BONUS_FRACTION / (algorithm::RRF_OFFSET + 1) as f32;
+    let log_cap = (1.0 + algorithm::RETRIEVAL_SESSION_CAP as f32).ln();
     for (id, score) in &mut fused {
-        *score += weight * recency_score.get(id).copied().unwrap_or_default();
+        let age_days = last_seen.get(id).map_or(90.0, |seen| {
+            (now.saturating_sub(*seen).max(0) as f32 / 86_400.0).min(90.0)
+        });
+        let recency = 2f32.powf(-age_days / algorithm::RETRIEVAL_RECENCY_HALF_LIFE_DAYS);
+        let repeat = (1.0
+            + sessions
+                .get(id)
+                .copied()
+                .unwrap_or(0)
+                .clamp(0, algorithm::RETRIEVAL_SESSION_CAP) as f32)
+            .ln()
+            / log_cap;
+        // Both features lie in [0, 1], so an older high-relevance hit cannot
+        // lose to a weak one separated by more than `ceiling` in fused score.
+        *score += ceiling
+            * (algorithm::RETRIEVAL_RECENCY_SHARE * recency
+                + (1.0 - algorithm::RETRIEVAL_RECENCY_SHARE) * repeat);
     }
-    fused.sort_by(|a, b| {
-        b.1.total_cmp(&a.1)
-            .then_with(|| {
-                sessions
-                    .get(&b.0)
-                    .copied()
-                    .unwrap_or_default()
-                    .cmp(&sessions.get(&a.0).copied().unwrap_or_default())
-            })
-            .then(a.0.cmp(&b.0))
-    });
+    fused.sort_by(|a, b| b.1.total_cmp(&a.1).then(a.0.cmp(&b.0)));
     fused
 }
 
@@ -295,6 +541,12 @@ ORDER BY bm25(atom_fts),a.id LIMIT ?"
         .collect())
 }
 
+#[derive(Default)]
+struct SemanticMatches {
+    ranks: HashMap<String, usize>,
+    main_scores: HashMap<String, f32>,
+}
+
 fn semantic_ranks(
     conn: &Connection,
     source: &str,
@@ -303,18 +555,19 @@ fn semantic_ranks(
     request: &Recall,
     start: Instant,
     budget: u64,
-) -> Result<HashMap<String, usize>> {
+) -> Result<SemanticMatches> {
     let Some(encoder) = encoder else {
-        return Ok(HashMap::new());
+        return Ok(SemanticMatches::default());
     };
-    let queries: Vec<_> = std::iter::once(&request.query)
-        .chain(request.facets.iter())
-        .filter_map(|term| encoder.encode(term))
+    let Some(main_query) = encoder.encode(&request.query) else {
+        return Ok(SemanticMatches::default());
+    };
+    let facets: Vec<_> = request
+        .facets
+        .iter()
+        .filter_map(|facet| encoder.encode(facet))
         .collect();
-    if queries.is_empty() {
-        return Ok(HashMap::new());
-    }
-    let mut scored = Vec::<(String, f32)>::new();
+    let mut scored = Vec::<(String, f32, f32)>::new();
     let mut args = vec![source.to_string(), encoder.manifest.model_hash.clone()];
     let filter = site_filter_sql(policy, &mut args);
     let sql = format!(
@@ -341,21 +594,27 @@ ORDER BY a.last_seen DESC,a.id LIMIT 10000"
             .chunks_exact(4)
             .map(|part| f32::from_le_bytes(part.try_into().unwrap()))
             .collect();
-        let score = queries
+        let main = model::cosine(&main_query, &vector);
+        let facet = facets
             .iter()
             .map(|query| model::cosine(query, &vector))
-            .fold(f32::NEG_INFINITY, f32::max);
-        if score.is_finite() && score >= algorithm::SEMANTIC_RECALL_ADMISSION {
-            scored.push((id, score));
+            .filter(|score| score.is_finite())
+            .reduce(f32::max);
+        // The main question is the semantic admission signal. Facets can add a
+        // small positive ordering bonus, but a generic or cross-language facet
+        // cannot suppress a candidate that fits the question itself.
+        if semantic_candidate_admitted(main) {
+            scored.push((id, semantic_rank_score(main, facet), main));
         }
     }
     scored.sort_by(|a, b| b.1.total_cmp(&a.1).then(a.0.cmp(&b.0)));
     scored.truncate(algorithm::RETRIEVAL_CANDIDATES_PER_CHANNEL);
-    Ok(scored
-        .into_iter()
-        .enumerate()
-        .map(|(i, (id, _))| (id, i + 1))
-        .collect())
+    let mut matches = SemanticMatches::default();
+    for (index, (id, _, main_score)) in scored.into_iter().enumerate() {
+        matches.ranks.insert(id.clone(), index + 1);
+        matches.main_scores.insert(id, main_score);
+    }
+    Ok(matches)
 }
 
 fn confirmed_ranks(
@@ -430,13 +689,13 @@ pub fn candidates(
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 enum RankingVariant {
     Baseline,
-    TemporalRrf,
+    BoundedTemporal,
 }
 
 fn configured_variant() -> RankingVariant {
     match algorithm::RETRIEVAL_RANKING_VERSION {
         1 => RankingVariant::Baseline,
-        2 => RankingVariant::TemporalRrf,
+        3 => RankingVariant::BoundedTemporal,
         version => panic!("unsupported retrieval ranking version {version}"),
     }
 }
@@ -452,10 +711,12 @@ fn candidates_with_variant(
     variant: RankingVariant,
 ) -> Result<Vec<(f32, String, Value)>> {
     let terms = tokens(request);
+    let main_terms = main_terms(request);
+    let exact_facets = admissible_exact_facets(request, encoder);
     let lexical = lexical_ranks(conn, source, policy, &terms)?;
     let semantic = semantic_ranks(conn, source, policy, encoder, request, start, budget)?;
     let confirmed = confirmed_ranks(conn, source, policy, &terms)?;
-    let mut fused = rrf(&[lexical, semantic, confirmed]);
+    let mut fused = rrf(&[lexical.clone(), semantic.ranks.clone(), confirmed]);
     let exact = exact_constraints(
         &std::iter::once(&request.query)
             .chain(request.facets.iter())
@@ -515,7 +776,7 @@ fn candidates_with_variant(
         let (id, count) = row?;
         sessions.insert(id, count);
     }
-    if variant == RankingVariant::TemporalRrf {
+    if variant == RankingVariant::BoundedTemporal {
         let last_seen: HashMap<String, i64> = metadata
             .iter()
             .filter_map(|(id, (_, _, _, time))| {
@@ -524,13 +785,12 @@ fn candidates_with_variant(
                     .map(|parsed| (id.clone(), parsed.timestamp()))
             })
             .collect();
-        fused = temporal_rerank(
-            fused,
-            &last_seen,
-            &sessions,
-            algorithm::RETRIEVAL_TEMPORAL_WEIGHT,
-        );
+        fused =
+            bounded_temporal_rerank(fused, &last_seen, &sessions, chrono::Utc::now().timestamp());
     }
+    let needs_confirmation = confirmed_answer_required(&request.query);
+    let needs_number = numeric_answer_required(&request.query);
+    let acronyms = required_acronyms(request);
     let mut output = vec![];
     for (id, score) in fused {
         let Some((site, title, query, time)) = metadata.remove(&id) else {
@@ -559,6 +819,19 @@ fn candidates_with_variant(
             .iter()
             .rev()
             .find(|(action, _)| action == "confirm_constraint");
+        // A generic feed or home tab contains no useful page-level evidence.
+        // Keep it in the local activity record, but never offer it as inferred
+        // research unless the user explicitly confirmed a constraint on it.
+        if confirmed.is_none() && query.is_none() && importance::generic_title(&title) {
+            continue;
+        }
+        if confirmed.is_none()
+            && query.as_deref().is_some_and(|search| {
+                !importance::groupable(&title, Some(search)) && exact_constraints(search).is_empty()
+            })
+        {
+            continue;
+        }
         if confirmed.is_some() && !request.scope.iter().any(|x| x == "confirmed_preferences")
             || confirmed.is_none()
                 && !request
@@ -572,6 +845,24 @@ fn candidates_with_variant(
             .and_then(|(_, text)| text.as_deref())
             .or(query.as_deref())
             .unwrap_or(&title);
+        if confirmed.is_none() {
+            let observed = observed_text(&site, &title, query.as_deref());
+            if needs_confirmation
+                || needs_number && !MONEY_VALUE.is_match(raw)
+                || bare_identifier_cannot_explain_itself(request, raw)
+                || acronyms.iter().any(|acronym| !observed.contains(acronym))
+                || !relevance_admitted(
+                    lexical.get(&id).copied(),
+                    semantic.main_scores.get(&id).copied(),
+                    &main_terms,
+                    &compact(&format!("{title} {}", query.as_deref().unwrap_or(""))),
+                    &exact_facets,
+                    raw,
+                )
+            {
+                continue;
+            }
+        }
         let exact_text = if confirmed.is_some() {
             raw.to_owned()
         } else {
@@ -689,7 +980,89 @@ CREATE TABLE atom_days(atom TEXT,session TEXT);",
     }
 
     #[test]
-    fn temporal_variant_preserves_baseline_facet_candidate_eligibility() {
+    fn semantic_facets_only_add_a_bounded_positive_bonus() {
+        let main = 0.61;
+        let no_facet = semantic_rank_score(main, None);
+        assert!(semantic_candidate_admitted(main));
+        assert!(semantic_candidate_admitted(
+            algorithm::SEMANTIC_RECALL_ADMISSION
+        ));
+        assert!(!semantic_candidate_admitted(
+            algorithm::SEMANTIC_RECALL_ADMISSION - 0.001
+        ));
+        assert!(!semantic_candidate_admitted(f32::NAN));
+
+        assert_eq!(semantic_rank_score(main, Some(-0.4)), no_facet);
+        let with_facet = semantic_rank_score(main, Some(0.9));
+        assert!(with_facet > no_facet);
+        assert!(with_facet <= main + algorithm::SEMANTIC_FACET_RANK_BONUS_MAX);
+        assert!(
+            semantic_rank_score(0.67, None) > semantic_rank_score(main, Some(1.0)),
+            "a facet bonus must not override a larger main-question score gap"
+        );
+    }
+
+    #[test]
+    fn semantic_answerability_requires_main_terms_and_supported_evidence() {
+        let main_terms = vec!["quiet".to_string(), "grinder".to_string()];
+        assert!(relevance_admitted(
+            None,
+            Some(algorithm::SEMANTIC_RECALL_ADMISSION),
+            &main_terms,
+            "manual coffee mill",
+            &[],
+            "manual coffee mill",
+        ));
+        assert!(!relevance_admitted(
+            None,
+            Some(algorithm::SEMANTIC_RECALL_ADMISSION - 0.001),
+            &main_terms,
+            "manual coffee mill",
+            &[],
+            "manual coffee mill",
+        ));
+        assert!(!relevance_admitted(
+            None,
+            Some(1.0),
+            &[],
+            "manual coffee mill",
+            &["manual coffee mill".to_string()],
+            "manual coffee mill",
+        ));
+        assert!(relevance_admitted(
+            Some(1),
+            None,
+            &["grinder".to_string()],
+            "manual grinder",
+            &[],
+            "manual grinder",
+        ));
+    }
+
+    #[test]
+    fn exact_facet_support_requires_the_saved_text_to_contain_the_facet() {
+        let main_terms = vec!["train".to_string(), "schedule".to_string()];
+        let exact_facet = vec!["ThinkPad X1 Carbon".to_string()];
+        assert!(relevance_admitted(
+            None,
+            Some(0.1),
+            &main_terms,
+            "thinkpad x1 carbon laptop",
+            &exact_facet,
+            "ThinkPad X1 Carbon",
+        ));
+        assert!(!relevance_admitted(
+            None,
+            Some(0.1),
+            &main_terms,
+            "train schedule",
+            &exact_facet,
+            "Train schedule",
+        ));
+    }
+
+    #[test]
+    fn temporal_variant_preserves_admitted_candidate_eligibility() {
         let conn = retrieval_conn();
         insert_observation(
             &conn,
@@ -700,7 +1073,7 @@ CREATE TABLE atom_days(atom TEXT,session TEXT);",
         insert_observation(
             &conn,
             "facet-only",
-            "Ergonomic posture guide",
+            "Office chair ergonomic posture guide",
             &crate::now(),
         );
         let request = recall("office chair setup", &["ergonomic"]);
@@ -729,7 +1102,7 @@ CREATE TABLE atom_days(atom TEXT,session TEXT);",
             None,
             Instant::now(),
             1500,
-            RankingVariant::TemporalRrf,
+            RankingVariant::BoundedTemporal,
         )
         .unwrap();
         let baseline_ids: BTreeSet<_> = baseline
@@ -745,19 +1118,132 @@ CREATE TABLE atom_days(atom TEXT,session TEXT);",
     }
 
     #[test]
-    fn recency_reranks_within_candidate_pool_and_sessions_break_time_ties() {
+    fn generic_home_title_does_not_become_assistant_context() {
+        let conn = retrieval_conn();
+        insert_observation(&conn, "feed", "Home / X", &crate::now());
+        let request = recall("What was on the home page?", &[]);
+        let policy = Policy {
+            consent: true,
+            recall_enabled: true,
+            ..Policy::default()
+        };
+        let result = candidates(
+            &conn,
+            "source",
+            &policy,
+            &request,
+            None,
+            Instant::now(),
+            1500,
+        )
+        .unwrap();
+        assert!(result.is_empty());
+    }
+
+    #[test]
+    fn facet_match_without_main_question_support_abstains() {
+        let conn = retrieval_conn();
+        insert_observation(
+            &conn,
+            "unrelated-chair",
+            "Office chair buying guide",
+            &crate::now(),
+        );
+        let request = recall("What did I research about trains?", &["chair"]);
+        let policy = Policy {
+            consent: true,
+            recall_enabled: true,
+            ..Policy::default()
+        };
+        let result = candidates(
+            &conn,
+            "source",
+            &policy,
+            &request,
+            None,
+            Instant::now(),
+            1500,
+        )
+        .unwrap();
+        assert!(result.is_empty());
+
+        conn.execute(
+            "UPDATE atoms SET site='trains.example' WHERE id='unrelated-chair'",
+            [],
+        )
+        .unwrap();
+        let result = candidates(
+            &conn,
+            "source",
+            &policy,
+            &request,
+            None,
+            Instant::now(),
+            1500,
+        )
+        .unwrap();
+        assert!(
+            result.is_empty(),
+            "hostname-only overlap must not satisfy the facet gate"
+        );
+
+        let weak_main = recall(
+            "What did I research about chair ergonomics budget?",
+            &["buying guide"],
+        );
+        let result = candidates(
+            &conn,
+            "source",
+            &policy,
+            &weak_main,
+            None,
+            Instant::now(),
+            1500,
+        )
+        .unwrap();
+        assert!(
+            result.is_empty(),
+            "one matching term must not bypass a multi-term question"
+        );
+    }
+
+    #[test]
+    fn unsupported_choice_and_named_entity_questions_abstain() {
+        let conn = retrieval_conn();
+        insert_observation(&conn, "chair", "Ergonomic office chair", &crate::now());
+        let policy = Policy {
+            consent: true,
+            recall_enabled: true,
+            ..Policy::default()
+        };
+        for question in [
+            "Which ergonomic office chair did I choose?",
+            "Did I research an IKEA ergonomic office chair?",
+        ] {
+            let result = candidates(
+                &conn,
+                "source",
+                &policy,
+                &recall(question, &[]),
+                None,
+                Instant::now(),
+                1500,
+            )
+            .unwrap();
+            assert!(result.is_empty(), "unsupported question: {question}");
+        }
+    }
+
+    #[test]
+    fn temporal_bonus_reorders_ties_without_overriding_clear_relevance() {
         let recency_candidates = vec![("older".to_string(), 1.0), ("newer".to_string(), 1.0)];
         let timestamps = HashMap::from([
             ("older".to_string(), 1_767_225_600),
             ("newer".to_string(), 1_790_784_000),
         ]);
         let sessions = HashMap::from([("older".to_string(), 4), ("newer".to_string(), 1)]);
-        let reranked = temporal_rerank(
-            recency_candidates,
-            &timestamps,
-            &sessions,
-            algorithm::RETRIEVAL_TEMPORAL_WEIGHT,
-        );
+        let reranked =
+            bounded_temporal_rerank(recency_candidates, &timestamps, &sessions, 1_790_784_000);
         assert_eq!(reranked[0].0, "newer");
         assert_eq!(
             reranked
@@ -779,13 +1265,18 @@ CREATE TABLE atom_days(atom TEXT,session TEXT);",
             ("one-session".to_string(), 1),
             ("many-sessions".to_string(), 4),
         ]);
-        let reranked = temporal_rerank(
+        let reranked = bounded_temporal_rerank(
             session_candidates,
             &same_timestamp,
             &session_counts,
-            algorithm::RETRIEVAL_TEMPORAL_WEIGHT,
+            1_790_784_000,
         );
         assert_eq!(reranked[0].0, "many-sessions");
+
+        let clear_relevance = vec![("older".to_string(), 0.020), ("newer".to_string(), 0.015)];
+        let reranked =
+            bounded_temporal_rerank(clear_relevance, &timestamps, &sessions, 1_790_784_000);
+        assert_eq!(reranked[0].0, "older");
     }
     #[test]
     fn multi_identifier_query_requires_all_identifiers() {

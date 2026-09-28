@@ -1,0 +1,968 @@
+{
+  "fixture_id": "calibration_holdout_v2_relevance",
+  "provenance": {
+    "method": "Synthetic public-web metadata and hand-curated retrieval labels. A cryptographic 64-byte alphanumeric seed drove topic selection, observation and query ordering, dwell times, timestamps, and browser-verification sample. Seed was discarded; only SHA-256 fingerprint is retained.",
+    "seed_fingerprint_sha256": "b57a21282376b4563d0c000ff93ba7490e77f3f7561d67be17b7bd307cf16fce",
+    "browsing": "Fresh isolated Chrome for Testing profile; only page title, hostname, final URL, and navigation outcome were read for a seeded subset. No page body or DOM content was captured.",
+    "label_status": "Expected IDs and expected-empty labels are hand-curated for this synthetic holdout; they are not model scores or validated user judgments.",
+    "metadata_note": "Evidence title fields prefixed UNVERIFIED are candidate public-source labels not verified in this Chrome session; metadata_status identifies those records. Observed titles are recorded only for successfully reached public page metadata."
+  },
+  "research_metadata": [
+    {
+      "evidence_id": "noaa_arctic_permafrost",
+      "requested_url": "https://arctic.noaa.gov/report-card/report-card-2024/permafrost/",
+      "hostname": "arctic.noaa.gov",
+      "title": "Permafrost and the Global Carbon Cycle - NOAA Arctic",
+      "outcome": "public_page_metadata"
+    },
+    {
+      "evidence_id": "nasa_siberia",
+      "requested_url": "https://climate.nasa.gov/news/3039/record-setting-temperatures-in-siberian-heatwave/",
+      "hostname": "science.nasa.gov",
+      "title": "Climate Change - NASA Science",
+      "outcome": "public_page_metadata"
+    },
+    {
+      "evidence_id": "nasa_earthdata_drought",
+      "requested_url": "https://www.earthdata.nasa.gov/topics/land-surface/drought",
+      "hostname": "www.earthdata.nasa.gov",
+      "title": "404 | NASA Earthdata",
+      "outcome": "error_page"
+    },
+    {
+      "evidence_id": "noaa_drought",
+      "requested_url": "https://www.noaa.gov/education/resource-collections/weather-atmosphere/drought",
+      "hostname": "www.noaa.gov",
+      "title": "Page Not Found | National Oceanic and Atmospheric Administration",
+      "outcome": "error_page"
+    },
+    {
+      "evidence_id": "nps_wetlands",
+      "requested_url": "https://www.nps.gov/subjects/wetlands/index.htm",
+      "hostname": "www.nps.gov",
+      "title": "Wetlands (U.S. National Park Service)",
+      "outcome": "public_page_metadata"
+    },
+    {
+      "evidence_id": "epa_wetlands",
+      "requested_url": "https://www.epa.gov/wetlands",
+      "hostname": "www.epa.gov",
+      "title": "Wetlands Protection and Restoration | US EPA",
+      "outcome": "public_page_metadata"
+    },
+    {
+      "evidence_id": "epa_gi_research",
+      "requested_url": "https://www.epa.gov/water-research/green-infrastructure-research",
+      "hostname": "www.epa.gov",
+      "title": "Stormwater Management Research | US EPA",
+      "outcome": "public_page_metadata"
+    },
+    {
+      "evidence_id": "noaa_stormwater",
+      "requested_url": "https://coast.noaa.gov/states/fast-facts/stormwater.html",
+      "hostname": "coast.noaa.gov",
+      "title": "NOAA Office for Coastal Management | Page Not Found",
+      "outcome": "error_page"
+    },
+    {
+      "evidence_id": "icao_saf",
+      "requested_url": "https://www.icao.int/environmental-protection/GFAAF/Pages/default.aspx",
+      "hostname": "www.icao.int",
+      "title": "Page not found | International Civil Aviation Organization",
+      "outcome": "error_page"
+    },
+    {
+      "evidence_id": "faa_saf",
+      "requested_url": "https://www.faa.gov/about/office_org/headquarters_offices/apl/research/alternative_fuels/saft",
+      "hostname": "www.faa.gov",
+      "title": "Access Denied",
+      "outcome": "challenge_page"
+    }
+  ],
+  "topics": [
+    {
+      "id": "permafrost",
+      "label": "permafrost monitoring and Arctic ground change"
+    },
+    {
+      "id": "drought",
+      "label": "satellite drought monitoring and agricultural impacts"
+    },
+    {
+      "id": "wetlands",
+      "label": "wetland restoration and coastal ecosystem functions"
+    },
+    {
+      "id": "stormwater",
+      "label": "urban stormwater and green infrastructure"
+    },
+    {
+      "id": "saf",
+      "label": "sustainable aviation fuel pathways and lifecycle emissions"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "ramsar_mission",
+      "title": "UNVERIFIED — Our Mission",
+      "hostname": "www.ramsar.org",
+      "kind": "international_policy",
+      "dwell_seconds": 36,
+      "observed_at": "2026-08-08T15:23:55.530Z",
+      "topic": "wetlands",
+      "source_url": "https://www.ramsar.org/about/our-mission",
+      "metadata_status": "unverified_title"
+    },
+    {
+      "id": "nps_alaska_permafrost",
+      "title": "UNVERIFIED — Permafrost in Alaska",
+      "hostname": "www.nps.gov",
+      "kind": "government_webpage",
+      "dwell_seconds": 252,
+      "observed_at": "2026-08-19T05:51:55.530Z",
+      "topic": "permafrost",
+      "source_url": "https://www.nps.gov/articles/permafrost-in-alaska.htm",
+      "metadata_status": "unverified_title"
+    },
+    {
+      "id": "noaa_drought",
+      "title": "UNVERIFIED — Drought",
+      "hostname": "www.noaa.gov",
+      "kind": "government_resource",
+      "dwell_seconds": 251,
+      "observed_at": "2026-09-02T01:21:55.530Z",
+      "topic": "drought",
+      "source_url": "https://www.noaa.gov/education/resource-collections/weather-atmosphere/drought",
+      "metadata_status": "unverified_error_page"
+    },
+    {
+      "id": "noaa_arctic_permafrost",
+      "title": "Permafrost and the Global Carbon Cycle - NOAA Arctic",
+      "hostname": "arctic.noaa.gov",
+      "kind": "research_report",
+      "dwell_seconds": 65,
+      "observed_at": "2026-09-11T06:01:55.528Z",
+      "topic": "permafrost",
+      "source_url": "https://arctic.noaa.gov/report-card/report-card-2019/permafrost-and-the-global-carbon-cycle/",
+      "metadata_status": "observed_public_page_metadata"
+    },
+    {
+      "id": "nasa_earthdata_drought",
+      "title": "UNVERIFIED — Drought",
+      "hostname": "www.earthdata.nasa.gov",
+      "kind": "science_portal",
+      "dwell_seconds": 354,
+      "observed_at": "2026-07-31T22:05:55.530Z",
+      "topic": "drought",
+      "source_url": "https://www.earthdata.nasa.gov/topics/land-surface/drought",
+      "metadata_status": "unverified_error_page"
+    },
+    {
+      "id": "nsidc_permafrost",
+      "title": "UNVERIFIED — Frozen Ground and Permafrost",
+      "hostname": "nsidc.org",
+      "kind": "science_explainer",
+      "dwell_seconds": 362,
+      "observed_at": "2026-09-03T10:42:55.530Z",
+      "topic": "permafrost",
+      "source_url": "https://nsidc.org/learn/parts-cryosphere/frozen-ground-permafrost",
+      "metadata_status": "unverified_title"
+    },
+    {
+      "id": "nyc_rainfall",
+      "title": "UNVERIFIED — Rainfall Ready NYC",
+      "hostname": "www.nyc.gov",
+      "kind": "government_webpage",
+      "dwell_seconds": 66,
+      "observed_at": "2026-07-12T08:15:55.530Z",
+      "topic": "stormwater",
+      "source_url": "https://www.nyc.gov/site/dep/water/rain-fall.page",
+      "metadata_status": "unverified_title"
+    },
+    {
+      "id": "noaa_digitalcoast",
+      "title": "UNVERIFIED — Wetlands",
+      "hostname": "coast.noaa.gov",
+      "kind": "government_training",
+      "dwell_seconds": 309,
+      "observed_at": "2026-08-04T06:51:55.530Z",
+      "topic": "wetlands",
+      "source_url": "https://coast.noaa.gov/digitalcoast/training/wetlands.html",
+      "metadata_status": "unverified_title"
+    },
+    {
+      "id": "drought_gov_current",
+      "title": "UNVERIFIED — Current U.S. Drought Conditions",
+      "hostname": "www.drought.gov",
+      "kind": "government_portal",
+      "dwell_seconds": 325,
+      "observed_at": "2026-07-14T23:28:55.530Z",
+      "topic": "drought",
+      "source_url": "https://www.drought.gov/drought/current-conditions",
+      "metadata_status": "unverified_title"
+    },
+    {
+      "id": "icao_saf",
+      "title": "UNVERIFIED — Global Framework for Aviation Alternative Fuels",
+      "hostname": "www.icao.int",
+      "kind": "international_policy",
+      "dwell_seconds": 68,
+      "observed_at": "2026-07-19T21:11:55.530Z",
+      "topic": "saf",
+      "source_url": "https://www.icao.int/environmental-protection/GFAAF/Pages/default.aspx",
+      "metadata_status": "unverified_error_page"
+    },
+    {
+      "id": "usgs_drought",
+      "title": "UNVERIFIED — Drought",
+      "hostname": "www.usgs.gov",
+      "kind": "government_webpage",
+      "dwell_seconds": 50,
+      "observed_at": "2026-07-19T06:53:55.530Z",
+      "topic": "drought",
+      "source_url": "https://www.usgs.gov/mission-areas/water-resources/science/drought",
+      "metadata_status": "unverified_title"
+    },
+    {
+      "id": "usgs_urban_water",
+      "title": "UNVERIFIED — Urbanization and Water Quality",
+      "hostname": "www.usgs.gov",
+      "kind": "government_webpage",
+      "dwell_seconds": 434,
+      "observed_at": "2026-08-28T02:21:55.530Z",
+      "topic": "stormwater",
+      "source_url": "https://www.usgs.gov/special-topics/water-science-school/science/urbanization-and-water-quality",
+      "metadata_status": "unverified_title"
+    },
+    {
+      "id": "eia_saf",
+      "title": "UNVERIFIED — Sustainable aviation fuel is gaining momentum",
+      "hostname": "www.eia.gov",
+      "kind": "government_analysis",
+      "dwell_seconds": 150,
+      "observed_at": "2026-09-14T11:16:55.530Z",
+      "topic": "saf",
+      "source_url": "https://www.eia.gov/todayinenergy/detail.php?id=52138",
+      "metadata_status": "unverified_title"
+    },
+    {
+      "id": "doe_saf",
+      "title": "UNVERIFIED — Sustainable Aviation Fuels",
+      "hostname": "www.energy.gov",
+      "kind": "government_webpage",
+      "dwell_seconds": 48,
+      "observed_at": "2026-07-26T10:15:55.530Z",
+      "topic": "saf",
+      "source_url": "https://www.energy.gov/eere/bioenergy/sustainable-aviation-fuels",
+      "metadata_status": "unverified_title"
+    },
+    {
+      "id": "usgs_wetlands_climate",
+      "title": "UNVERIFIED — Wetlands and Climate Change",
+      "hostname": "www.usgs.gov",
+      "kind": "research_webpage",
+      "dwell_seconds": 462,
+      "observed_at": "2026-07-30T05:49:55.530Z",
+      "topic": "wetlands",
+      "source_url": "https://www.usgs.gov/programs/climate-research-and-development-program/science/wetlands-and-climate-change",
+      "metadata_status": "unverified_title"
+    },
+    {
+      "id": "unesco_wetlands",
+      "title": "UNVERIFIED — Wetlands",
+      "hostname": "www.unesco.org",
+      "kind": "international_resource",
+      "dwell_seconds": 224,
+      "observed_at": "2026-08-11T10:27:55.530Z",
+      "topic": "wetlands",
+      "source_url": "https://www.unesco.org/en/water/wetlands",
+      "metadata_status": "unverified_title"
+    },
+    {
+      "id": "noaa_wetlands",
+      "title": "UNVERIFIED — Wetlands",
+      "hostname": "oceanservice.noaa.gov",
+      "kind": "government_explainer",
+      "dwell_seconds": 200,
+      "observed_at": "2026-09-12T05:15:55.530Z",
+      "topic": "wetlands",
+      "source_url": "https://oceanservice.noaa.gov/facts/wetland.html",
+      "metadata_status": "unverified_title"
+    },
+    {
+      "id": "noaa_stormwater",
+      "title": "UNVERIFIED — Stormwater and Coastal Resilience",
+      "hostname": "coast.noaa.gov",
+      "kind": "government_webpage",
+      "dwell_seconds": 161,
+      "observed_at": "2026-08-14T17:18:55.530Z",
+      "topic": "stormwater",
+      "source_url": "https://coast.noaa.gov/states/fast-facts/stormwater.html",
+      "metadata_status": "unverified_error_page"
+    },
+    {
+      "id": "usgs_permafrost",
+      "title": "UNVERIFIED — Permafrost Research",
+      "hostname": "www.usgs.gov",
+      "kind": "government_webpage",
+      "dwell_seconds": 383,
+      "observed_at": "2026-09-06T03:20:55.530Z",
+      "topic": "permafrost",
+      "source_url": "https://www.usgs.gov/programs/climate-research-and-development-program/science/permafrost",
+      "metadata_status": "unverified_title"
+    },
+    {
+      "id": "nasa_permafrost",
+      "title": "UNVERIFIED — Permafrost",
+      "hostname": "earthobservatory.nasa.gov",
+      "kind": "science_explainer",
+      "dwell_seconds": 122,
+      "observed_at": "2026-09-04T19:25:55.530Z",
+      "topic": "permafrost",
+      "source_url": "https://earthobservatory.nasa.gov/features/Permafrost",
+      "metadata_status": "unverified_title"
+    },
+    {
+      "id": "nrel_saf",
+      "title": "UNVERIFIED — Sustainable Aviation Fuels",
+      "hostname": "www.nrel.gov",
+      "kind": "research_webpage",
+      "dwell_seconds": 231,
+      "observed_at": "2026-09-16T20:08:55.530Z",
+      "topic": "saf",
+      "source_url": "https://www.nrel.gov/bioenergy/sustainable-aviation-fuels.html",
+      "metadata_status": "unverified_title"
+    },
+    {
+      "id": "nacto_stormwater",
+      "title": "UNVERIFIED — Urban Street Stormwater Guide",
+      "hostname": "nacto.org",
+      "kind": "technical_guide",
+      "dwell_seconds": 488,
+      "observed_at": "2026-09-15T12:27:55.530Z",
+      "topic": "stormwater",
+      "source_url": "https://nacto.org/publication/urban-street-stormwater-guide/",
+      "metadata_status": "unverified_title"
+    },
+    {
+      "id": "afdc_saf",
+      "title": "UNVERIFIED — Sustainable Aviation Fuel",
+      "hostname": "afdc.energy.gov",
+      "kind": "government_webpage",
+      "dwell_seconds": 392,
+      "observed_at": "2026-07-31T11:06:55.530Z",
+      "topic": "saf",
+      "source_url": "https://afdc.energy.gov/fuels/sustainable_aviation_fuel.html",
+      "metadata_status": "unverified_title"
+    },
+    {
+      "id": "nasa_siberia",
+      "title": "Climate Change - NASA Science",
+      "hostname": "science.nasa.gov",
+      "kind": "science_news",
+      "dwell_seconds": 491,
+      "observed_at": "2026-09-08T12:15:55.530Z",
+      "topic": "permafrost",
+      "source_url": "https://science.nasa.gov/climate-change/",
+      "metadata_status": "observed_public_page_metadata"
+    },
+    {
+      "id": "faa_saf",
+      "title": "UNVERIFIED — Sustainable Aviation Fuels",
+      "hostname": "www.faa.gov",
+      "kind": "government_webpage",
+      "dwell_seconds": 535,
+      "observed_at": "2026-08-17T08:59:55.530Z",
+      "topic": "saf",
+      "source_url": "https://www.faa.gov/about/office_org/headquarters_offices/apl/research/alternative_fuels/saft",
+      "metadata_status": "unverified_challenge_page"
+    },
+    {
+      "id": "epa_rain_gardens",
+      "title": "UNVERIFIED — Rain Gardens",
+      "hostname": "www.epa.gov",
+      "kind": "government_webpage",
+      "dwell_seconds": 115,
+      "observed_at": "2026-08-16T13:12:55.530Z",
+      "topic": "stormwater",
+      "source_url": "https://www.epa.gov/soakuptherain/soak-rain-rain-gardens",
+      "metadata_status": "unverified_title"
+    },
+    {
+      "id": "nps_wetlands",
+      "title": "Wetlands (U.S. National Park Service)",
+      "hostname": "www.nps.gov",
+      "kind": "government_resource",
+      "dwell_seconds": 103,
+      "observed_at": "2026-09-08T11:05:55.530Z",
+      "topic": "wetlands",
+      "source_url": "https://www.nps.gov/subjects/wetlands/index.htm",
+      "metadata_status": "observed_public_page_metadata"
+    },
+    {
+      "id": "natgeo_permafrost",
+      "title": "UNVERIFIED — Permafrost",
+      "hostname": "education.nationalgeographic.org",
+      "kind": "science_explainer",
+      "dwell_seconds": 217,
+      "observed_at": "2026-07-30T06:09:55.530Z",
+      "topic": "permafrost",
+      "source_url": "https://education.nationalgeographic.org/resource/permafrost/",
+      "metadata_status": "unverified_title"
+    },
+    {
+      "id": "fws_wetlands",
+      "title": "UNVERIFIED — Wetlands",
+      "hostname": "www.fws.gov",
+      "kind": "government_resource",
+      "dwell_seconds": 308,
+      "observed_at": "2026-09-08T16:33:55.530Z",
+      "topic": "wetlands",
+      "source_url": "https://www.fws.gov/program/national-wetlands-inventory/wetlands-and-deepwater-habitats",
+      "metadata_status": "unverified_title"
+    },
+    {
+      "id": "usdm_map",
+      "title": "UNVERIFIED — U.S. Drought Monitor",
+      "hostname": "droughtmonitor.unl.edu",
+      "kind": "monitoring_map",
+      "dwell_seconds": 74,
+      "observed_at": "2026-09-16T02:43:55.530Z",
+      "topic": "drought",
+      "source_url": "https://droughtmonitor.unl.edu/CurrentMap.aspx",
+      "metadata_status": "unverified_title"
+    },
+    {
+      "id": "epa_green_infrastructure",
+      "title": "UNVERIFIED — What Is Green Infrastructure?",
+      "hostname": "www.epa.gov",
+      "kind": "government_webpage",
+      "dwell_seconds": 452,
+      "observed_at": "2026-08-09T01:37:55.530Z",
+      "topic": "stormwater",
+      "source_url": "https://www.epa.gov/green-infrastructure/what-green-infrastructure",
+      "metadata_status": "unverified_title"
+    },
+    {
+      "id": "caafi_saf",
+      "title": "UNVERIFIED — Resources",
+      "hostname": "caafi.org",
+      "kind": "industry_resources",
+      "dwell_seconds": 140,
+      "observed_at": "2026-09-04T17:37:55.530Z",
+      "topic": "saf",
+      "source_url": "https://caafi.org/resources/",
+      "metadata_status": "unverified_title"
+    },
+    {
+      "id": "drought_gov_monitor",
+      "title": "UNVERIFIED — Drought Monitoring",
+      "hostname": "www.drought.gov",
+      "kind": "government_portal",
+      "dwell_seconds": 539,
+      "observed_at": "2026-09-11T21:36:55.530Z",
+      "topic": "drought",
+      "source_url": "https://www.drought.gov/topics/monitoring",
+      "metadata_status": "unverified_title"
+    },
+    {
+      "id": "philly_green_city",
+      "title": "UNVERIFIED — Green City, Clean Waters",
+      "hostname": "www.phila.gov",
+      "kind": "government_webpage",
+      "dwell_seconds": 265,
+      "observed_at": "2026-07-20T22:46:55.530Z",
+      "topic": "stormwater",
+      "source_url": "https://www.phila.gov/programs/green-city-clean-waters/",
+      "metadata_status": "unverified_title"
+    },
+    {
+      "id": "usdm_guide",
+      "title": "UNVERIFIED — U.S. Drought Monitor",
+      "hostname": "climatedataguide.ucar.edu",
+      "kind": "climate_data_guide",
+      "dwell_seconds": 438,
+      "observed_at": "2026-09-24T17:33:55.530Z",
+      "topic": "drought",
+      "source_url": "https://climatedataguide.ucar.edu/climate-data/us-drought-monitor",
+      "metadata_status": "unverified_title"
+    },
+    {
+      "id": "epa_wetlands",
+      "title": "Wetlands Protection and Restoration | US EPA",
+      "hostname": "www.epa.gov",
+      "kind": "government_webpage",
+      "dwell_seconds": 378,
+      "observed_at": "2026-07-22T06:41:55.530Z",
+      "topic": "wetlands",
+      "source_url": "https://www.epa.gov/wetlands",
+      "metadata_status": "observed_public_page_metadata"
+    },
+    {
+      "id": "epa_gi_research",
+      "title": "Stormwater Management Research | US EPA",
+      "hostname": "www.epa.gov",
+      "kind": "research_webpage",
+      "dwell_seconds": 180,
+      "observed_at": "2026-08-15T12:46:55.530Z",
+      "topic": "stormwater",
+      "source_url": "https://www.epa.gov/water-research/stormwater-management-research",
+      "metadata_status": "observed_public_page_metadata"
+    },
+    {
+      "id": "iata_saf",
+      "title": "UNVERIFIED — Sustainable Aviation Fuels",
+      "hostname": "www.iata.org",
+      "kind": "industry_webpage",
+      "dwell_seconds": 266,
+      "observed_at": "2026-09-02T19:17:55.530Z",
+      "topic": "saf",
+      "source_url": "https://www.iata.org/en/programs/environment/sustainable-aviation-fuels/",
+      "metadata_status": "unverified_title"
+    },
+    {
+      "id": "nasa_drought",
+      "title": "UNVERIFIED — Drought",
+      "hostname": "earthobservatory.nasa.gov",
+      "kind": "science_explainer",
+      "dwell_seconds": 275,
+      "observed_at": "2026-09-01T10:18:55.530Z",
+      "topic": "drought",
+      "source_url": "https://earthobservatory.nasa.gov/topic/drought",
+      "metadata_status": "unverified_title"
+    },
+    {
+      "id": "frontiers_permafrost",
+      "title": "UNVERIFIED — Permafrost and Climate Change",
+      "hostname": "www.frontiersin.org",
+      "kind": "research_article",
+      "dwell_seconds": 296,
+      "observed_at": "2026-08-27T00:25:55.530Z",
+      "topic": "permafrost",
+      "source_url": "https://www.frontiersin.org/journals/earth-science/articles/10.3389/feart.2020.576871/full",
+      "metadata_status": "unverified_title"
+    }
+  ],
+  "queries": [
+    {
+      "id": "q_drought_es",
+      "text": "¿Dónde puedo consultar el seguimiento de la sequía y sus efectos en Estados Unidos?",
+      "facets": [
+        "topic:drought",
+        "region:us",
+        "task:monitoring"
+      ],
+      "expected_ids": [
+        "drought_gov_monitor",
+        "drought_gov_current"
+      ],
+      "expected_empty": false
+    },
+    {
+      "id": "q_empty_10",
+      "text": "Where are public transit GTFS feed rules documented?",
+      "facets": [
+        "topic:public-transit",
+        "format:gtfs"
+      ],
+      "expected_ids": [],
+      "expected_empty": true
+    },
+    {
+      "id": "q_wetlands_3",
+      "text": "Which USGS page links wetlands with climate change?",
+      "facets": [
+        "topic:wetlands",
+        "source:usgs",
+        "concept:climate"
+      ],
+      "expected_ids": [
+        "usgs_wetlands_climate"
+      ],
+      "expected_empty": false
+    },
+    {
+      "id": "q_empty_01",
+      "text": "Which source explains residential rooftop solar tax credits?",
+      "facets": [
+        "topic:solar",
+        "task:tax-credit"
+      ],
+      "expected_ids": [],
+      "expected_empty": true
+    },
+    {
+      "id": "q_saf_ja",
+      "text": "持続可能な航空燃料の原料と製造経路を説明する資料はどれですか？",
+      "facets": [
+        "topic:saf",
+        "concept:feedstocks"
+      ],
+      "expected_ids": [
+        "doe_saf"
+      ],
+      "expected_empty": false
+    },
+    {
+      "id": "q_drought_1",
+      "text": "Where can I see U.S. drought monitoring and current conditions?",
+      "facets": [
+        "topic:drought",
+        "region:us",
+        "task:monitoring"
+      ],
+      "expected_ids": [
+        "drought_gov_monitor",
+        "drought_gov_current"
+      ],
+      "expected_empty": false
+    },
+    {
+      "id": "q_stormwater_2",
+      "text": "Where did I read EPA’s definition of green infrastructure and its water benefits?",
+      "facets": [
+        "topic:stormwater",
+        "source:epa",
+        "concept:green-infrastructure"
+      ],
+      "expected_ids": [
+        "epa_green_infrastructure",
+        "epa_gi_research"
+      ],
+      "expected_empty": false
+    },
+    {
+      "id": "q_saf_2",
+      "text": "Which FAA page covers aviation alternative fuels and sustainable fuel approval?",
+      "facets": [
+        "topic:saf",
+        "source:faa",
+        "task:approval"
+      ],
+      "expected_ids": [
+        "faa_saf"
+      ],
+      "expected_empty": false
+    },
+    {
+      "id": "q_empty_03",
+      "text": "Which page describes hydrothermal vents on the ocean floor?",
+      "facets": [
+        "topic:hydrothermal-vents",
+        "environment:deep-ocean"
+      ],
+      "expected_ids": [],
+      "expected_empty": true
+    },
+    {
+      "id": "q_empty_08",
+      "text": "What guide discusses fish passage at hydropower dams?",
+      "facets": [
+        "topic:fish-passage",
+        "infrastructure:hydropower"
+      ],
+      "expected_ids": [],
+      "expected_empty": true
+    },
+    {
+      "id": "q_empty_05",
+      "text": "Which agency report compares lithium-ion battery recycling methods?",
+      "facets": [
+        "topic:battery-recycling",
+        "topic:materials"
+      ],
+      "expected_ids": [],
+      "expected_empty": true
+    },
+    {
+      "id": "q_drought_2",
+      "text": "What NASA pages explain satellite observations of drought?",
+      "facets": [
+        "topic:drought",
+        "source:nasa",
+        "method:satellite"
+      ],
+      "expected_ids": [
+        "nasa_drought",
+        "nasa_earthdata_drought"
+      ],
+      "expected_empty": false
+    },
+    {
+      "id": "q_empty_07",
+      "text": "Which resource explains Antarctic ozone hole measurements?",
+      "facets": [
+        "topic:ozone",
+        "region:antarctica"
+      ],
+      "expected_ids": [],
+      "expected_empty": true
+    },
+    {
+      "id": "q_drought_3",
+      "text": "Which USGS resource describes drought science and water conditions?",
+      "facets": [
+        "topic:drought",
+        "source:usgs",
+        "concept:water"
+      ],
+      "expected_ids": [
+        "usgs_drought"
+      ],
+      "expected_empty": false
+    },
+    {
+      "id": "q_wetlands_zh",
+      "text": "哪个 EPA 资源介绍湿地的定义和保护计划？",
+      "facets": [
+        "topic:wetlands",
+        "source:epa"
+      ],
+      "expected_ids": [
+        "epa_wetlands"
+      ],
+      "expected_empty": false
+    },
+    {
+      "id": "q_permafrost_1",
+      "text": "Which guide defines permafrost and explains where permanently frozen ground occurs?",
+      "facets": [
+        "topic:permafrost",
+        "concept:definition"
+      ],
+      "expected_ids": [
+        "nsidc_permafrost"
+      ],
+      "expected_empty": false
+    },
+    {
+      "id": "q_saf_4",
+      "text": "Which airline-industry overview explains sustainable aviation fuel adoption and emissions?",
+      "facets": [
+        "topic:saf",
+        "source:iata",
+        "concept:lifecycle-emissions"
+      ],
+      "expected_ids": [
+        "iata_saf",
+        "eia_saf"
+      ],
+      "expected_empty": false
+    },
+    {
+      "id": "q_empty_06",
+      "text": "Where can I find an overview of radio telescope arrays?",
+      "facets": [
+        "topic:radio-astronomy",
+        "instrument:telescopes"
+      ],
+      "expected_ids": [],
+      "expected_empty": true
+    },
+    {
+      "id": "q_saf_1",
+      "text": "Which DOE resource outlines feedstocks and production pathways for sustainable aviation fuel?",
+      "facets": [
+        "topic:saf",
+        "source:doe",
+        "concept:feedstocks"
+      ],
+      "expected_ids": [
+        "doe_saf"
+      ],
+      "expected_empty": false
+    },
+    {
+      "id": "q_empty_04",
+      "text": "What guide covers parametrized tests in Python?",
+      "facets": [
+        "topic:python-testing",
+        "tool:pytest"
+      ],
+      "expected_ids": [],
+      "expected_empty": true
+    },
+    {
+      "id": "q_stormwater_4",
+      "text": "What source connects urban development to runoff and water quality?",
+      "facets": [
+        "topic:stormwater",
+        "concept:urbanization"
+      ],
+      "expected_ids": [
+        "usgs_urban_water"
+      ],
+      "expected_empty": false
+    },
+    {
+      "id": "q_stormwater_1",
+      "text": "Which EPA page explains how rain gardens capture runoff from roofs and pavement?",
+      "facets": [
+        "topic:stormwater",
+        "source:epa",
+        "concept:rain-garden"
+      ],
+      "expected_ids": [
+        "epa_rain_gardens"
+      ],
+      "expected_empty": false
+    },
+    {
+      "id": "q_empty_12",
+      "text": "What documentation explains Kubernetes pod autoscaling?",
+      "facets": [
+        "topic:kubernetes",
+        "task:autoscaling"
+      ],
+      "expected_ids": [],
+      "expected_empty": true
+    },
+    {
+      "id": "q_wetlands_2",
+      "text": "Where does NOAA explain coastal wetlands and their benefits?",
+      "facets": [
+        "topic:wetlands",
+        "source:noaa",
+        "concept:coastal-benefits"
+      ],
+      "expected_ids": [
+        "noaa_wetlands"
+      ],
+      "expected_empty": false
+    },
+    {
+      "id": "q_saf_3",
+      "text": "Where does ICAO describe its global framework for aviation alternative fuels?",
+      "facets": [
+        "topic:saf",
+        "source:icao",
+        "artifact:framework"
+      ],
+      "expected_ids": [
+        "icao_saf"
+      ],
+      "expected_empty": false
+    },
+    {
+      "id": "q_permafrost_2",
+      "text": "Where are annual Arctic Report Card observations of permafrost summarized?",
+      "facets": [
+        "topic:permafrost",
+        "source:noaa",
+        "artifact:report-card"
+      ],
+      "expected_ids": [
+        "noaa_arctic_permafrost"
+      ],
+      "expected_empty": false
+    },
+    {
+      "id": "q_empty_11",
+      "text": "Which source compares wildfire smoke masks for children?",
+      "facets": [
+        "topic:wildfire-smoke",
+        "population:children"
+      ],
+      "expected_ids": [],
+      "expected_empty": true
+    },
+    {
+      "id": "q_empty_02",
+      "text": "Where did I read about monarch butterfly migration routes?",
+      "facets": [
+        "topic:monarchs",
+        "task:migration"
+      ],
+      "expected_ids": [],
+      "expected_empty": true
+    },
+    {
+      "id": "q_stormwater_3",
+      "text": "Which design guide discusses stormwater management on city streets?",
+      "facets": [
+        "topic:stormwater",
+        "source:nacto",
+        "task:street-design"
+      ],
+      "expected_ids": [
+        "nacto_stormwater"
+      ],
+      "expected_empty": false
+    },
+    {
+      "id": "q_wetlands_4",
+      "text": "Where are the Ramsar Convention’s wetland mission and goals summarized?",
+      "facets": [
+        "topic:wetlands",
+        "source:ramsar",
+        "artifact:mission"
+      ],
+      "expected_ids": [
+        "ramsar_mission"
+      ],
+      "expected_empty": false
+    },
+    {
+      "id": "q_drought_4",
+      "text": "Where is the U.S. Drought Monitor explained as a climate data product?",
+      "facets": [
+        "topic:drought",
+        "artifact:us-drought-monitor"
+      ],
+      "expected_ids": [
+        "usdm_guide",
+        "usdm_map"
+      ],
+      "expected_empty": false
+    },
+    {
+      "id": "q_permafrost_4",
+      "text": "What source explains how thawing permafrost connects with climate change?",
+      "facets": [
+        "topic:permafrost",
+        "concept:thaw-feedback"
+      ],
+      "expected_ids": [
+        "frontiers_permafrost",
+        "nasa_siberia"
+      ],
+      "expected_empty": false
+    },
+    {
+      "id": "q_empty_09",
+      "text": "Which paper describes detecting exoplanets with transit photometry?",
+      "facets": [
+        "topic:exoplanets",
+        "method:transit-photometry"
+      ],
+      "expected_ids": [],
+      "expected_empty": true
+    },
+    {
+      "id": "q_wetlands_1",
+      "text": "Which EPA resource defines wetlands and explains their protection programs?",
+      "facets": [
+        "topic:wetlands",
+        "source:epa",
+        "concept:protection"
+      ],
+      "expected_ids": [
+        "epa_wetlands"
+      ],
+      "expected_empty": false
+    },
+    {
+      "id": "q_permafrost_3",
+      "text": "Which USGS page covers permafrost research and changing ground conditions?",
+      "facets": [
+        "topic:permafrost",
+        "source:usgs",
+        "task:monitoring"
+      ],
+      "expected_ids": [
+        "usgs_permafrost"
+      ],
+      "expected_empty": false
+    }
+  ]
+}

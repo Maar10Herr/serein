@@ -1,0 +1,1237 @@
+{
+  "fixture_id": "calibration_holdout_relevance_noise_v1",
+  "synthetic_notice": "Every observation and query is synthetic. Public source titles and hostnames are references for plausible page metadata only; no person's browsing history, account, or activity is represented. Query-to-evidence labels were hand-curated before any algorithm tuning.",
+  "split": "held-out",
+  "seed_fingerprint_sha256_16": "24d2c382a39841d9",
+  "source_references": [
+    {
+      "id": "s-energy-hpwh",
+      "url": "https://bsesc.energy.gov/training-modules/heat-pump-water-heater-decision-guidance",
+      "title": "Heat Pump Water Heater — Decision Guidance",
+      "host": "bsesc.energy.gov"
+    },
+    {
+      "id": "s-doe-water",
+      "url": "https://www.energy.gov/cmei/buildings/consumer-water-heaters",
+      "title": "Consumer Water Heaters",
+      "host": "energy.gov"
+    },
+    {
+      "id": "s-steelcase-leap",
+      "url": "https://www.steelcase.com/resources/documents/leap-spec-guide/",
+      "title": "Leap Spec Guide",
+      "host": "steelcase.com"
+    },
+    {
+      "id": "s-steelcase-chair",
+      "url": "https://store.steelcase.com/gaming/leap",
+      "title": "Leap Adjustable Upholstered Office Chair",
+      "host": "steelcase.com"
+    },
+    {
+      "id": "s-mdn-native",
+      "url": "https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime/sendNativeMessage",
+      "title": "runtime.sendNativeMessage()",
+      "host": "developer.mozilla.org"
+    },
+    {
+      "id": "s-mdn-host",
+      "url": "https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Native_messaging",
+      "title": "Native messaging",
+      "host": "developer.mozilla.org"
+    },
+    {
+      "id": "s-github-actions",
+      "url": "https://docs.github.com/en/actions",
+      "title": "GitHub Actions documentation",
+      "host": "docs.github.com"
+    },
+    {
+      "id": "s-rust-book",
+      "url": "https://doc.rust-lang.org/book/",
+      "title": "The Rust Programming Language",
+      "host": "doc.rust-lang.org"
+    },
+    {
+      "id": "s-sqlite-wal",
+      "url": "https://www.sqlite.org/wal.html",
+      "title": "Write-Ahead Logging",
+      "host": "sqlite.org"
+    },
+    {
+      "id": "s-sqlite-fts",
+      "url": "https://www.sqlite.org/fts5.html",
+      "title": "SQLite FTS5 Extension",
+      "host": "sqlite.org"
+    },
+    {
+      "id": "s-mdn-storage",
+      "url": "https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/storage",
+      "title": "storage",
+      "host": "developer.mozilla.org"
+    },
+    {
+      "id": "s-ikea-desk",
+      "url": "https://www.ikea.com/us/en/cat/desks-computer-desks-20649/",
+      "title": "Desks & computer desks",
+      "host": "ikea.com"
+    },
+    {
+      "id": "s-ikea-chair",
+      "url": "https://www.ikea.com/us/en/cat/office-chairs-20654/",
+      "title": "Office chairs",
+      "host": "ikea.com"
+    },
+    {
+      "id": "s-nps-acadia",
+      "url": "https://www.nps.gov/acad/planyourvisit/index.htm",
+      "title": "Plan Your Visit",
+      "host": "nps.gov"
+    },
+    {
+      "id": "s-nps-shenandoah",
+      "url": "https://www.nps.gov/shen/planyourvisit/index.htm",
+      "title": "Plan Your Visit",
+      "host": "nps.gov"
+    },
+    {
+      "id": "s-amtrak",
+      "url": "https://www.amtrak.com/routes/northeast-regional-train.html",
+      "title": "Northeast Regional",
+      "host": "amtrak.com"
+    },
+    {
+      "id": "s-nature-sleep",
+      "url": "https://www.nature.com/articles/s41598-021-84031-0",
+      "title": "Sleep and cognitive performance research",
+      "host": "nature.com"
+    },
+    {
+      "id": "s-mayo-migraine",
+      "url": "https://www.mayoclinic.org/diseases-conditions/migraine-headache/symptoms-causes/syc-20360201",
+      "title": "Migraine — Symptoms and causes",
+      "host": "mayoclinic.org"
+    },
+    {
+      "id": "s-nist-password",
+      "url": "https://pages.nist.gov/800-63-4/sp800-63b.html",
+      "title": "Authentication and Authenticator Management",
+      "host": "nist.gov"
+    },
+    {
+      "id": "s-cloudflare-passkey",
+      "url": "https://www.cloudflare.com/learning/access-management/what-is-a-passkey/",
+      "title": "What is a passkey?",
+      "host": "cloudflare.com"
+    },
+    {
+      "id": "s-python-async",
+      "url": "https://docs.python.org/3/library/asyncio.html",
+      "title": "asyncio — Asynchronous I/O",
+      "host": "docs.python.org"
+    },
+    {
+      "id": "s-mdn-promises",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises",
+      "title": "Using promises",
+      "host": "developer.mozilla.org"
+    },
+    {
+      "id": "s-kotlin-coroutines",
+      "url": "https://kotlinlang.org/docs/coroutines-overview.html",
+      "title": "Coroutines overview",
+      "host": "kotlinlang.org"
+    },
+    {
+      "id": "s-apple-battery",
+      "url": "https://www.apple.com/batteries/why-lithium-ion/",
+      "title": "Why Lithium-ion?",
+      "host": "apple.com"
+    },
+    {
+      "id": "s-energy-heatpump",
+      "url": "https://bsesc.energy.gov/energy-basics/hvac-heat-pump-water-heaters",
+      "title": "HVAC Heat Pump Water Heaters",
+      "host": "bsesc.energy.gov"
+    },
+    {
+      "id": "s-w3c-a11y",
+      "url": "https://www.w3.org/WAI/fundamentals/accessibility-intro/",
+      "title": "Introduction to Web Accessibility",
+      "host": "w3.org"
+    },
+    {
+      "id": "s-web.dev-lcp",
+      "url": "https://web.dev/articles/vitals",
+      "title": "Web Vitals",
+      "host": "web.dev"
+    },
+    {
+      "id": "s-khan-fractions",
+      "url": "https://www.khanacademy.org/math/arithmetic/fraction-arithmetic",
+      "title": "Fractions arithmetic",
+      "host": "khanacademy.org"
+    },
+    {
+      "id": "s-nps-yellowstone",
+      "url": "https://www.nps.gov/yell/planyourvisit/index.htm",
+      "title": "Plan Your Visit",
+      "host": "nps.gov"
+    },
+    {
+      "id": "s-amtrak-saver",
+      "url": "https://www.amtrak.com/deals-discounts/everyday-discounts.html",
+      "title": "Everyday Discounts",
+      "host": "amtrak.com"
+    },
+    {
+      "id": "s-energy-star",
+      "url": "https://www.energystar.gov/products/heat_pump_water_heaters",
+      "title": "Heat Pump Water Heaters",
+      "host": "energystar.gov"
+    },
+    {
+      "id": "s-wikipedia-photosynthesis",
+      "url": "https://en.wikipedia.org/wiki/Photosynthesis",
+      "title": "Photosynthesis",
+      "host": "wikipedia.org"
+    },
+    {
+      "id": "s-github-home",
+      "url": "https://github.com/",
+      "title": "GitHub · Build and ship software",
+      "host": "github.com"
+    },
+    {
+      "id": "s-youtube-home",
+      "url": "https://www.youtube.com/",
+      "title": "YouTube",
+      "host": "youtube.com"
+    },
+    {
+      "id": "s-reddit-home",
+      "url": "https://www.reddit.com/",
+      "title": "Home : Reddit",
+      "host": "reddit.com"
+    },
+    {
+      "id": "s-x-home",
+      "url": "https://x.com/home",
+      "title": "Home / X",
+      "host": "x.com"
+    },
+    {
+      "id": "s-google-home",
+      "url": "https://www.google.com/",
+      "title": "Google",
+      "host": "google.com"
+    },
+    {
+      "id": "s-newtab",
+      "url": "about:newtab",
+      "title": "New Tab",
+      "host": "browser.local"
+    },
+    {
+      "id": "s-youtube-airplane",
+      "url": "https://www.youtube.com/results?search_query=aircraft+ nose+design",
+      "title": "Why some airliners have a drooped nose — aviation explainer",
+      "host": "youtube.com"
+    },
+    {
+      "id": "s-nytimes-recipe",
+      "url": "https://cooking.nytimes.com/",
+      "title": "Weeknight pasta recipes",
+      "host": "cooking.nytimes.com"
+    }
+  ],
+  "observations": [
+    {
+      "id": "o01",
+      "evidence": {
+        "title": "Heat pump water heater sizing and installation constraints",
+        "host": "bsesc.energy.gov",
+        "query": "heat pump water heater basement size clearance",
+        "dwell_seconds": 142,
+        "session_id": "a",
+        "observed_at": "2026-09-02T12:00:00Z",
+        "source_id": "s-energy-hpwh"
+      },
+      "synthetic_kind": "research"
+    },
+    {
+      "id": "o02",
+      "evidence": {
+        "title": "Consumer water heaters: heat-pump models",
+        "host": "energy.gov",
+        "query": "",
+        "dwell_seconds": 91,
+        "session_id": "a",
+        "observed_at": "2026-09-02T12:00:00Z",
+        "source_id": "s-doe-water"
+      },
+      "synthetic_kind": "research"
+    },
+    {
+      "id": "o03",
+      "evidence": {
+        "title": "Heat pump water heater electricity use in a cold basement",
+        "host": "bsesc.energy.gov",
+        "query": "heat pump water heater cold climate electricity use",
+        "dwell_seconds": 18,
+        "session_id": "b",
+        "observed_at": "2026-09-06T12:00:00Z",
+        "source_id": "s-energy-heatpump"
+      },
+      "synthetic_kind": "research"
+    },
+    {
+      "id": "o04",
+      "evidence": {
+        "title": "ENERGY STAR heat pump water heater buying guide",
+        "host": "energystar.gov",
+        "query": "",
+        "dwell_seconds": 74,
+        "session_id": "b",
+        "observed_at": "2026-09-06T12:00:00Z",
+        "source_id": "s-energy-star"
+      },
+      "synthetic_kind": "research"
+    },
+    {
+      "id": "o05",
+      "evidence": {
+        "title": "Home / X",
+        "host": "x.com",
+        "query": "",
+        "dwell_seconds": 5,
+        "session_id": "b",
+        "observed_at": "2026-09-06T12:00:00Z",
+        "source_id": "s-x-home"
+      },
+      "synthetic_kind": "incidental"
+    },
+    {
+      "id": "o06",
+      "evidence": {
+        "title": "Leap chair dimensions and adjustable seat depth",
+        "host": "steelcase.com",
+        "query": "Steelcase Leap seat depth dimensions",
+        "dwell_seconds": 158,
+        "session_id": "c",
+        "observed_at": "2026-09-03T12:00:00Z",
+        "source_id": "s-steelcase-leap"
+      },
+      "synthetic_kind": "research"
+    },
+    {
+      "id": "o07",
+      "evidence": {
+        "title": "Leap chair — adjustable ergonomic support",
+        "host": "steelcase.com",
+        "query": "",
+        "dwell_seconds": 102,
+        "session_id": "c",
+        "observed_at": "2026-09-03T12:00:00Z",
+        "source_id": "s-steelcase-chair"
+      },
+      "synthetic_kind": "research"
+    },
+    {
+      "id": "o08",
+      "evidence": {
+        "title": "Office chairs",
+        "host": "ikea.com",
+        "query": "",
+        "dwell_seconds": 16,
+        "session_id": "c",
+        "observed_at": "2026-09-03T12:00:00Z",
+        "source_id": "s-ikea-chair"
+      },
+      "synthetic_kind": "ambiguous"
+    },
+    {
+      "id": "o09",
+      "evidence": {
+        "title": "Desks & computer desks",
+        "host": "ikea.com",
+        "query": "",
+        "dwell_seconds": 9,
+        "session_id": "c",
+        "observed_at": "2026-09-03T12:00:00Z",
+        "source_id": "s-ikea-desk"
+      },
+      "synthetic_kind": "ambiguous"
+    },
+    {
+      "id": "o10",
+      "evidence": {
+        "title": "Plan Your Visit",
+        "host": "nps.gov",
+        "query": "Acadia National Park September shuttle parking",
+        "dwell_seconds": 120,
+        "session_id": "d",
+        "observed_at": "2026-09-05T12:00:00Z",
+        "source_id": "s-nps-acadia"
+      },
+      "synthetic_kind": "research"
+    },
+    {
+      "id": "o11",
+      "evidence": {
+        "title": "Plan Your Visit",
+        "host": "nps.gov",
+        "query": "Shenandoah fall foliage October weekend",
+        "dwell_seconds": 88,
+        "session_id": "d",
+        "observed_at": "2026-09-05T12:00:00Z",
+        "source_id": "s-nps-shenandoah"
+      },
+      "synthetic_kind": "research"
+    },
+    {
+      "id": "o12",
+      "evidence": {
+        "title": "Northeast Regional",
+        "host": "amtrak.com",
+        "query": "Boston to New York train schedule October",
+        "dwell_seconds": 39,
+        "session_id": "e",
+        "observed_at": "2026-09-07T12:00:00Z",
+        "source_id": "s-amtrak"
+      },
+      "synthetic_kind": "research"
+    },
+    {
+      "id": "o13",
+      "evidence": {
+        "title": "Everyday Discounts",
+        "host": "amtrak.com",
+        "query": "Amtrak senior discount rules",
+        "dwell_seconds": 66,
+        "session_id": "e",
+        "observed_at": "2026-09-07T12:00:00Z",
+        "source_id": "s-amtrak-saver"
+      },
+      "synthetic_kind": "research"
+    },
+    {
+      "id": "o14",
+      "evidence": {
+        "title": "Sleep timing and next-day cognitive performance",
+        "host": "nature.com",
+        "query": "sleep restriction reaction time study",
+        "dwell_seconds": 133,
+        "session_id": "f",
+        "observed_at": "2026-09-08T12:00:00Z",
+        "source_id": "s-nature-sleep"
+      },
+      "synthetic_kind": "research"
+    },
+    {
+      "id": "o15",
+      "evidence": {
+        "title": "Migraine — Symptoms and causes",
+        "host": "mayoclinic.org",
+        "query": "migraine aura versus tension headache symptoms",
+        "dwell_seconds": 92,
+        "session_id": "f",
+        "observed_at": "2026-09-08T12:00:00Z",
+        "source_id": "s-mayo-migraine"
+      },
+      "synthetic_kind": "research"
+    },
+    {
+      "id": "o16",
+      "evidence": {
+        "title": "Authentication and Authenticator Management",
+        "host": "nist.gov",
+        "query": "NIST passkey phishing resistant authenticator requirements",
+        "dwell_seconds": 111,
+        "session_id": "g",
+        "observed_at": "2026-09-10T12:00:00Z",
+        "source_id": "s-nist-password"
+      },
+      "synthetic_kind": "research"
+    },
+    {
+      "id": "o17",
+      "evidence": {
+        "title": "What is a passkey?",
+        "host": "cloudflare.com",
+        "query": "passkeys vs hardware security keys",
+        "dwell_seconds": 84,
+        "session_id": "g",
+        "observed_at": "2026-09-10T12:00:00Z",
+        "source_id": "s-cloudflare-passkey"
+      },
+      "synthetic_kind": "research"
+    },
+    {
+      "id": "o18",
+      "evidence": {
+        "title": "asyncio — Asynchronous I/O",
+        "host": "docs.python.org",
+        "query": "Python asyncio task cancellation structured concurrency",
+        "dwell_seconds": 150,
+        "session_id": "h",
+        "observed_at": "2026-09-11T12:00:00Z",
+        "source_id": "s-python-async"
+      },
+      "synthetic_kind": "research"
+    },
+    {
+      "id": "o19",
+      "evidence": {
+        "title": "Using promises",
+        "host": "developer.mozilla.org",
+        "query": "javascript promise cancellation abort signal",
+        "dwell_seconds": 46,
+        "session_id": "h",
+        "observed_at": "2026-09-11T12:00:00Z",
+        "source_id": "s-mdn-promises"
+      },
+      "synthetic_kind": "research"
+    },
+    {
+      "id": "o20",
+      "evidence": {
+        "title": "Coroutines overview",
+        "host": "kotlinlang.org",
+        "query": "",
+        "dwell_seconds": 103,
+        "session_id": "h",
+        "observed_at": "2026-09-11T12:00:00Z",
+        "source_id": "s-kotlin-coroutines"
+      },
+      "synthetic_kind": "research"
+    },
+    {
+      "id": "o21",
+      "evidence": {
+        "title": "Why Lithium-ion?",
+        "host": "apple.com",
+        "query": "MacBook battery health optimized charging lithium ion",
+        "dwell_seconds": 44,
+        "session_id": "i",
+        "observed_at": "2026-09-12T12:00:00Z",
+        "source_id": "s-apple-battery"
+      },
+      "synthetic_kind": "research"
+    },
+    {
+      "id": "o22",
+      "evidence": {
+        "title": "Introduction to Web Accessibility",
+        "host": "w3.org",
+        "query": "web accessibility keyboard focus WCAG introduction",
+        "dwell_seconds": 147,
+        "session_id": "j",
+        "observed_at": "2026-09-13T12:00:00Z",
+        "source_id": "s-w3c-a11y"
+      },
+      "synthetic_kind": "research"
+    },
+    {
+      "id": "o23",
+      "evidence": {
+        "title": "Web Vitals",
+        "host": "web.dev",
+        "query": "Core Web Vitals INP LCP CLS thresholds",
+        "dwell_seconds": 98,
+        "session_id": "j",
+        "observed_at": "2026-09-13T12:00:00Z",
+        "source_id": "s-web.dev-lcp"
+      },
+      "synthetic_kind": "research"
+    },
+    {
+      "id": "o24",
+      "evidence": {
+        "title": "Fractions arithmetic",
+        "host": "khanacademy.org",
+        "query": "",
+        "dwell_seconds": 81,
+        "session_id": "k",
+        "observed_at": "2026-09-14T12:00:00Z",
+        "source_id": "s-khan-fractions"
+      },
+      "synthetic_kind": "research"
+    },
+    {
+      "id": "o25",
+      "evidence": {
+        "title": "Photosynthesis",
+        "host": "wikipedia.org",
+        "query": "",
+        "dwell_seconds": 13,
+        "session_id": "k",
+        "observed_at": "2026-09-14T12:00:00Z",
+        "source_id": "s-wikipedia-photosynthesis"
+      },
+      "synthetic_kind": "ambiguous"
+    },
+    {
+      "id": "o26",
+      "evidence": {
+        "title": "Write-Ahead Logging",
+        "host": "sqlite.org",
+        "query": "SQLite WAL checkpoint busy readers",
+        "dwell_seconds": 62,
+        "session_id": "l",
+        "observed_at": "2026-09-15T12:00:00Z",
+        "source_id": "s-sqlite-wal"
+      },
+      "synthetic_kind": "research"
+    },
+    {
+      "id": "o27",
+      "evidence": {
+        "title": "SQLite FTS5 Extension",
+        "host": "sqlite.org",
+        "query": "FTS5 BM25 rank ordering",
+        "dwell_seconds": 123,
+        "session_id": "l",
+        "observed_at": "2026-09-15T12:00:00Z",
+        "source_id": "s-sqlite-fts"
+      },
+      "synthetic_kind": "research"
+    },
+    {
+      "id": "o28",
+      "evidence": {
+        "title": "runtime.sendNativeMessage()",
+        "host": "developer.mozilla.org",
+        "query": "Firefox extension native messaging restart connection",
+        "dwell_seconds": 26,
+        "session_id": "m",
+        "observed_at": "2026-09-16T12:00:00Z",
+        "source_id": "s-mdn-native"
+      },
+      "synthetic_kind": "research"
+    },
+    {
+      "id": "o29",
+      "evidence": {
+        "title": "Native messaging",
+        "host": "developer.mozilla.org",
+        "query": "Firefox native messaging host manifest allowed extensions",
+        "dwell_seconds": 91,
+        "session_id": "m",
+        "observed_at": "2026-09-16T12:00:00Z",
+        "source_id": "s-mdn-host"
+      },
+      "synthetic_kind": "research"
+    },
+    {
+      "id": "o30",
+      "evidence": {
+        "title": "storage",
+        "host": "developer.mozilla.org",
+        "query": "Firefox extension local storage quota",
+        "dwell_seconds": 5,
+        "session_id": "m",
+        "observed_at": "2026-09-16T12:00:00Z",
+        "source_id": "s-mdn-storage"
+      },
+      "synthetic_kind": "incidental"
+    },
+    {
+      "id": "o31",
+      "evidence": {
+        "title": "The Rust Programming Language",
+        "host": "doc.rust-lang.org",
+        "query": "Rust ownership borrowing lifetime examples",
+        "dwell_seconds": 136,
+        "session_id": "n",
+        "observed_at": "2026-09-17T12:00:00Z",
+        "source_id": "s-rust-book"
+      },
+      "synthetic_kind": "research"
+    },
+    {
+      "id": "o32",
+      "evidence": {
+        "title": "GitHub Actions documentation",
+        "host": "docs.github.com",
+        "query": "GitHub Actions cache Rust cargo workflow",
+        "dwell_seconds": 97,
+        "session_id": "n",
+        "observed_at": "2026-09-17T12:00:00Z",
+        "source_id": "s-github-actions"
+      },
+      "synthetic_kind": "research"
+    },
+    {
+      "id": "o33",
+      "evidence": {
+        "title": "Home : Reddit",
+        "host": "reddit.com",
+        "query": "",
+        "dwell_seconds": 7,
+        "session_id": "o",
+        "observed_at": "2026-09-18T12:00:00Z",
+        "source_id": "s-reddit-home"
+      },
+      "synthetic_kind": "incidental"
+    },
+    {
+      "id": "o34",
+      "evidence": {
+        "title": "YouTube",
+        "host": "youtube.com",
+        "query": "",
+        "dwell_seconds": 3,
+        "session_id": "o",
+        "observed_at": "2026-09-18T12:00:00Z",
+        "source_id": "s-youtube-home"
+      },
+      "synthetic_kind": "incidental"
+    },
+    {
+      "id": "o35",
+      "evidence": {
+        "title": "Google",
+        "host": "google.com",
+        "query": "",
+        "dwell_seconds": 2,
+        "session_id": "o",
+        "observed_at": "2026-09-18T12:00:00Z",
+        "source_id": "s-google-home"
+      },
+      "synthetic_kind": "incidental"
+    },
+    {
+      "id": "o36",
+      "evidence": {
+        "title": "New Tab",
+        "host": "browser.local",
+        "query": "",
+        "dwell_seconds": 1,
+        "session_id": "o",
+        "observed_at": "2026-09-18T12:00:00Z",
+        "source_id": "s-newtab"
+      },
+      "synthetic_kind": "incidental"
+    },
+    {
+      "id": "o37",
+      "evidence": {
+        "title": "YouTube: Why some airliners have a drooped nose",
+        "host": "youtube.com",
+        "query": "why airliner nose droops aerodynamic reason",
+        "dwell_seconds": 11,
+        "session_id": "p",
+        "observed_at": "2026-09-19T12:00:00Z",
+        "source_id": "s-youtube-airplane"
+      },
+      "synthetic_kind": "ambiguous"
+    },
+    {
+      "id": "o38",
+      "evidence": {
+        "title": "Weeknight pasta recipes",
+        "host": "cooking.nytimes.com",
+        "query": "one pot vegetarian pasta recipe",
+        "dwell_seconds": 24,
+        "session_id": "q",
+        "observed_at": "2026-09-19T12:00:00Z",
+        "source_id": "s-nytimes-recipe"
+      },
+      "synthetic_kind": "research"
+    },
+    {
+      "id": "o39",
+      "evidence": {
+        "title": "Leap chair dimensions and adjustable seat depth",
+        "host": "steelcase.com",
+        "query": "",
+        "dwell_seconds": 8,
+        "session_id": "r",
+        "observed_at": "2026-09-20T12:00:00Z",
+        "source_id": "s-steelcase-leap"
+      },
+      "synthetic_kind": "research"
+    },
+    {
+      "id": "o40",
+      "evidence": {
+        "title": "Home / X",
+        "host": "x.com",
+        "query": "",
+        "dwell_seconds": 4,
+        "session_id": "r",
+        "observed_at": "2026-09-20T12:00:00Z",
+        "source_id": "s-x-home"
+      },
+      "synthetic_kind": "incidental"
+    },
+    {
+      "id": "o41",
+      "evidence": {
+        "title": "GitHub · Build and ship software",
+        "host": "github.com",
+        "query": "",
+        "dwell_seconds": 6,
+        "session_id": "s",
+        "observed_at": "2026-09-21T12:00:00Z",
+        "source_id": "s-github-home"
+      },
+      "synthetic_kind": "incidental"
+    },
+    {
+      "id": "o42",
+      "evidence": {
+        "title": "Heat pump water heater installation planning",
+        "host": "bsesc.energy.gov",
+        "query": "120V heat pump water heater closet clearance condensate",
+        "dwell_seconds": 106,
+        "session_id": "t",
+        "observed_at": "2026-09-22T12:00:00Z",
+        "source_id": "s-energy-hpwh"
+      },
+      "synthetic_kind": "research"
+    }
+  ],
+  "queries": [
+    {
+      "id": "q01",
+      "question": "Which heat-pump water heater pages did I read about basement clearance and sizing?",
+      "relevant_observation_ids": [
+        "o01",
+        "o02",
+        "o42"
+      ],
+      "expected_empty": false,
+      "facets": [
+        "heat pump water heater",
+        "basement",
+        "sizing"
+      ]
+    },
+    {
+      "id": "q02",
+      "question": "What was I comparing about heat-pump water heater cold-climate operation?",
+      "relevant_observation_ids": [
+        "o03",
+        "o04"
+      ],
+      "expected_empty": false,
+      "facets": [
+        "heat pump",
+        "cold climate",
+        "water heater"
+      ]
+    },
+    {
+      "id": "q03",
+      "question": "What office chair model had adjustable seat depth, and what were its dimensions?",
+      "relevant_observation_ids": [
+        "o06",
+        "o07"
+      ],
+      "expected_empty": false,
+      "facets": [
+        "office chair",
+        "adjustable seat depth",
+        "dimensions"
+      ]
+    },
+    {
+      "id": "q04",
+      "question": "Did I research an Aeron chair, or was my chair research about something else?",
+      "relevant_observation_ids": [],
+      "expected_empty": true,
+      "facets": [
+        "Aeron",
+        "office chair"
+      ]
+    },
+    {
+      "id": "q05",
+      "question": "What were the two national parks I looked at for fall trips?",
+      "relevant_observation_ids": [
+        "o10",
+        "o11"
+      ],
+      "expected_empty": false,
+      "facets": [
+        "national parks",
+        "fall trip"
+      ]
+    },
+    {
+      "id": "q06",
+      "question": "Which park had a shuttle or parking question?",
+      "relevant_observation_ids": [
+        "o10"
+      ],
+      "expected_empty": false,
+      "facets": [
+        "shuttle",
+        "parking",
+        "park"
+      ]
+    },
+    {
+      "id": "q07",
+      "question": "What train route and discount rules did I check?",
+      "relevant_observation_ids": [
+        "o12",
+        "o13"
+      ],
+      "expected_empty": false,
+      "facets": [
+        "train",
+        "Amtrak",
+        "discount"
+      ]
+    },
+    {
+      "id": "q08",
+      "question": "What did I read about sleep and cognitive performance?",
+      "relevant_observation_ids": [
+        "o14"
+      ],
+      "expected_empty": false,
+      "facets": [
+        "sleep",
+        "cognitive performance"
+      ]
+    },
+    {
+      "id": "q09",
+      "question": "What symptoms did I compare for migraine versus tension headache?",
+      "relevant_observation_ids": [
+        "o15"
+      ],
+      "expected_empty": false,
+      "facets": [
+        "migraine",
+        "headache symptoms"
+      ]
+    },
+    {
+      "id": "q10",
+      "question": "What were the passkey and authenticator sources I consulted?",
+      "relevant_observation_ids": [
+        "o16",
+        "o17"
+      ],
+      "expected_empty": false,
+      "facets": [
+        "passkey",
+        "authenticator"
+      ]
+    },
+    {
+      "id": "q11",
+      "question": "What did I read about cancelling Python asyncio tasks?",
+      "relevant_observation_ids": [
+        "o18"
+      ],
+      "expected_empty": false,
+      "facets": [
+        "Python",
+        "asyncio",
+        "cancellation"
+      ]
+    },
+    {
+      "id": "q12",
+      "question": "Was I researching JavaScript promises or Kotlin coroutines?",
+      "relevant_observation_ids": [
+        "o19",
+        "o20"
+      ],
+      "expected_empty": false,
+      "facets": [
+        "async programming",
+        "promises",
+        "coroutines"
+      ]
+    },
+    {
+      "id": "q13",
+      "question": "What did I look up about laptop battery charging and lithium-ion batteries?",
+      "relevant_observation_ids": [
+        "o21"
+      ],
+      "expected_empty": false,
+      "facets": [
+        "battery",
+        "charging",
+        "lithium ion"
+      ]
+    },
+    {
+      "id": "q14",
+      "question": "Which accessibility standards or keyboard navigation page did I open?",
+      "relevant_observation_ids": [
+        "o22"
+      ],
+      "expected_empty": false,
+      "facets": [
+        "accessibility",
+        "keyboard navigation"
+      ]
+    },
+    {
+      "id": "q15",
+      "question": "What are the Core Web Vitals and which thresholds did I check?",
+      "relevant_observation_ids": [
+        "o23"
+      ],
+      "expected_empty": false,
+      "facets": [
+        "Core Web Vitals",
+        "thresholds"
+      ]
+    },
+    {
+      "id": "q16",
+      "question": "Did I research SQLite write-ahead logging or FTS5 ranking?",
+      "relevant_observation_ids": [
+        "o26",
+        "o27"
+      ],
+      "expected_empty": false,
+      "facets": [
+        "SQLite",
+        "WAL",
+        "FTS5"
+      ]
+    },
+    {
+      "id": "q17",
+      "question": "What did I check about Firefox extension native messaging after the connection issue?",
+      "relevant_observation_ids": [
+        "o28",
+        "o29"
+      ],
+      "expected_empty": false,
+      "facets": [
+        "Firefox",
+        "native messaging",
+        "host"
+      ]
+    },
+    {
+      "id": "q18",
+      "question": "What Rust topic and CI cache workflow did I read about?",
+      "relevant_observation_ids": [
+        "o31",
+        "o32"
+      ],
+      "expected_empty": false,
+      "facets": [
+        "Rust",
+        "GitHub Actions",
+        "cache"
+      ]
+    },
+    {
+      "id": "q19",
+      "question": "Which recipe did I save for a quick vegetarian dinner?",
+      "relevant_observation_ids": [
+        "o38"
+      ],
+      "expected_empty": false,
+      "facets": [
+        "vegetarian pasta",
+        "weeknight dinner"
+      ]
+    },
+    {
+      "id": "q20",
+      "question": "What aircraft nose design video did I briefly see?",
+      "relevant_observation_ids": [
+        "o37"
+      ],
+      "expected_empty": false,
+      "facets": [
+        "aircraft",
+        "nose design"
+      ]
+    },
+    {
+      "id": "q21",
+      "question": "What was I researching about hydronic radiant floor heating?",
+      "relevant_observation_ids": [],
+      "expected_empty": true,
+      "facets": [
+        "radiant floor heating",
+        "hydronic"
+      ]
+    },
+    {
+      "id": "q22",
+      "question": "Which credit card had airport lounge access and travel credits?",
+      "relevant_observation_ids": [],
+      "expected_empty": true,
+      "facets": [
+        "credit card",
+        "airport lounge",
+        "travel credit"
+      ]
+    },
+    {
+      "id": "q23",
+      "question": "What did I decide about buying a new phone?",
+      "relevant_observation_ids": [],
+      "expected_empty": true,
+      "facets": [
+        "phone purchase",
+        "decision"
+      ]
+    },
+    {
+      "id": "q24",
+      "question": "Which laptop did I choose?",
+      "relevant_observation_ids": [],
+      "expected_empty": true,
+      "facets": [
+        "laptop",
+        "choice"
+      ]
+    },
+    {
+      "id": "q25",
+      "question": "What was the price of the chair I bought?",
+      "relevant_observation_ids": [],
+      "expected_empty": true,
+      "facets": [
+        "chair",
+        "price",
+        "purchase"
+      ]
+    },
+    {
+      "id": "q26",
+      "question": "Did I research heat-pump water heaters, or standard gas tankless heaters?",
+      "relevant_observation_ids": [
+        "o01",
+        "o02",
+        "o03",
+        "o04",
+        "o42"
+      ],
+      "expected_empty": false,
+      "facets": [
+        "water heater",
+        "heat pump",
+        "gas tankless"
+      ]
+    },
+    {
+      "id": "q27",
+      "question": "What does repeated browsing say about my personal preferences?",
+      "relevant_observation_ids": [],
+      "expected_empty": true,
+      "facets": [
+        "preferences",
+        "personality"
+      ]
+    },
+    {
+      "id": "q28",
+      "question": "What home or social feed pages appeared in this evidence?",
+      "relevant_observation_ids": [
+        "o05",
+        "o33",
+        "o34",
+        "o35",
+        "o36",
+        "o40",
+        "o41"
+      ],
+      "expected_empty": false,
+      "facets": [
+        "home page",
+        "feed"
+      ]
+    },
+    {
+      "id": "q29",
+      "question": "Which query did I type about low-cost standing desks?",
+      "relevant_observation_ids": [],
+      "expected_empty": true,
+      "facets": [
+        "standing desk",
+        "low cost"
+      ]
+    },
+    {
+      "id": "q30",
+      "question": "What was the name of the school math page about fractions?",
+      "relevant_observation_ids": [
+        "o24"
+      ],
+      "expected_empty": false,
+      "facets": [
+        "fractions",
+        "math"
+      ]
+    },
+    {
+      "id": "q31",
+      "question": "Did I look at an ergonomic chair for a short person?",
+      "relevant_observation_ids": [
+        "o06",
+        "o07",
+        "o08"
+      ],
+      "expected_empty": false,
+      "facets": [
+        "ergonomic chair",
+        "short person"
+      ]
+    },
+    {
+      "id": "q32",
+      "question": "What specific X post did I read about office chairs?",
+      "relevant_observation_ids": [],
+      "expected_empty": true,
+      "facets": [
+        "X post",
+        "office chair"
+      ]
+    },
+    {
+      "id": "q33",
+      "question": "What was my exact home address?",
+      "relevant_observation_ids": [],
+      "expected_empty": true,
+      "facets": [
+        "home address"
+      ]
+    },
+    {
+      "id": "q34",
+      "question": "How many minutes did I spend on the Heat Pump Water Heater Decision Guidance page?",
+      "relevant_observation_ids": [
+        "o01"
+      ],
+      "expected_empty": false,
+      "facets": [
+        "Heat Pump Water Heater Decision Guidance",
+        "dwell time"
+      ]
+    },
+    {
+      "id": "q35",
+      "question": "What did I research about storing browser history in the cloud?",
+      "relevant_observation_ids": [],
+      "expected_empty": true,
+      "facets": [
+        "browser history",
+        "cloud storage"
+      ]
+    }
+  ],
+  "labeling": {
+    "method": "hand-curated relevance IDs and expected-empty labels",
+    "algorithm_outcomes_consulted": false,
+    "real_user_data": false
+  }
+}

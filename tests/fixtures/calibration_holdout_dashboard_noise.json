@@ -1,0 +1,717 @@
+{
+  "fixture_id": "calibration_holdout_dashboard_noise_v1",
+  "synthetic_notice": "Every observation and query is synthetic. Public source titles and hostnames are references for plausible page metadata only; no person's browsing history, account, or activity is represented. Query-to-evidence labels were hand-curated before any algorithm tuning.",
+  "split": "held-out",
+  "seed_fingerprint_sha256_16": "24d2c382a39841d9",
+  "source_references": [
+    {
+      "id": "s-energy-hpwh",
+      "url": "https://bsesc.energy.gov/training-modules/heat-pump-water-heater-decision-guidance",
+      "title": "Heat Pump Water Heater — Decision Guidance",
+      "host": "bsesc.energy.gov"
+    },
+    {
+      "id": "s-doe-water",
+      "url": "https://www.energy.gov/cmei/buildings/consumer-water-heaters",
+      "title": "Consumer Water Heaters",
+      "host": "energy.gov"
+    },
+    {
+      "id": "s-steelcase-leap",
+      "url": "https://www.steelcase.com/resources/documents/leap-spec-guide/",
+      "title": "Leap Spec Guide",
+      "host": "steelcase.com"
+    },
+    {
+      "id": "s-steelcase-chair",
+      "url": "https://store.steelcase.com/gaming/leap",
+      "title": "Leap Adjustable Upholstered Office Chair",
+      "host": "steelcase.com"
+    },
+    {
+      "id": "s-mdn-native",
+      "url": "https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime/sendNativeMessage",
+      "title": "runtime.sendNativeMessage()",
+      "host": "developer.mozilla.org"
+    },
+    {
+      "id": "s-mdn-host",
+      "url": "https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Native_messaging",
+      "title": "Native messaging",
+      "host": "developer.mozilla.org"
+    },
+    {
+      "id": "s-github-actions",
+      "url": "https://docs.github.com/en/actions",
+      "title": "GitHub Actions documentation",
+      "host": "docs.github.com"
+    },
+    {
+      "id": "s-rust-book",
+      "url": "https://doc.rust-lang.org/book/",
+      "title": "The Rust Programming Language",
+      "host": "doc.rust-lang.org"
+    },
+    {
+      "id": "s-sqlite-wal",
+      "url": "https://www.sqlite.org/wal.html",
+      "title": "Write-Ahead Logging",
+      "host": "sqlite.org"
+    },
+    {
+      "id": "s-sqlite-fts",
+      "url": "https://www.sqlite.org/fts5.html",
+      "title": "SQLite FTS5 Extension",
+      "host": "sqlite.org"
+    },
+    {
+      "id": "s-mdn-storage",
+      "url": "https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/storage",
+      "title": "storage",
+      "host": "developer.mozilla.org"
+    },
+    {
+      "id": "s-ikea-desk",
+      "url": "https://www.ikea.com/us/en/cat/desks-computer-desks-20649/",
+      "title": "Desks & computer desks",
+      "host": "ikea.com"
+    },
+    {
+      "id": "s-ikea-chair",
+      "url": "https://www.ikea.com/us/en/cat/office-chairs-20654/",
+      "title": "Office chairs",
+      "host": "ikea.com"
+    },
+    {
+      "id": "s-nps-acadia",
+      "url": "https://www.nps.gov/acad/planyourvisit/index.htm",
+      "title": "Plan Your Visit",
+      "host": "nps.gov"
+    },
+    {
+      "id": "s-nps-shenandoah",
+      "url": "https://www.nps.gov/shen/planyourvisit/index.htm",
+      "title": "Plan Your Visit",
+      "host": "nps.gov"
+    },
+    {
+      "id": "s-amtrak",
+      "url": "https://www.amtrak.com/routes/northeast-regional-train.html",
+      "title": "Northeast Regional",
+      "host": "amtrak.com"
+    },
+    {
+      "id": "s-nature-sleep",
+      "url": "https://www.nature.com/articles/s41598-021-84031-0",
+      "title": "Sleep and cognitive performance research",
+      "host": "nature.com"
+    },
+    {
+      "id": "s-mayo-migraine",
+      "url": "https://www.mayoclinic.org/diseases-conditions/migraine-headache/symptoms-causes/syc-20360201",
+      "title": "Migraine — Symptoms and causes",
+      "host": "mayoclinic.org"
+    },
+    {
+      "id": "s-nist-password",
+      "url": "https://pages.nist.gov/800-63-4/sp800-63b.html",
+      "title": "Authentication and Authenticator Management",
+      "host": "nist.gov"
+    },
+    {
+      "id": "s-cloudflare-passkey",
+      "url": "https://www.cloudflare.com/learning/access-management/what-is-a-passkey/",
+      "title": "What is a passkey?",
+      "host": "cloudflare.com"
+    },
+    {
+      "id": "s-python-async",
+      "url": "https://docs.python.org/3/library/asyncio.html",
+      "title": "asyncio — Asynchronous I/O",
+      "host": "docs.python.org"
+    },
+    {
+      "id": "s-mdn-promises",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises",
+      "title": "Using promises",
+      "host": "developer.mozilla.org"
+    },
+    {
+      "id": "s-kotlin-coroutines",
+      "url": "https://kotlinlang.org/docs/coroutines-overview.html",
+      "title": "Coroutines overview",
+      "host": "kotlinlang.org"
+    },
+    {
+      "id": "s-apple-battery",
+      "url": "https://www.apple.com/batteries/why-lithium-ion/",
+      "title": "Why Lithium-ion?",
+      "host": "apple.com"
+    },
+    {
+      "id": "s-energy-heatpump",
+      "url": "https://bsesc.energy.gov/energy-basics/hvac-heat-pump-water-heaters",
+      "title": "HVAC Heat Pump Water Heaters",
+      "host": "bsesc.energy.gov"
+    },
+    {
+      "id": "s-w3c-a11y",
+      "url": "https://www.w3.org/WAI/fundamentals/accessibility-intro/",
+      "title": "Introduction to Web Accessibility",
+      "host": "w3.org"
+    },
+    {
+      "id": "s-web.dev-lcp",
+      "url": "https://web.dev/articles/vitals",
+      "title": "Web Vitals",
+      "host": "web.dev"
+    },
+    {
+      "id": "s-khan-fractions",
+      "url": "https://www.khanacademy.org/math/arithmetic/fraction-arithmetic",
+      "title": "Fractions arithmetic",
+      "host": "khanacademy.org"
+    },
+    {
+      "id": "s-nps-yellowstone",
+      "url": "https://www.nps.gov/yell/planyourvisit/index.htm",
+      "title": "Plan Your Visit",
+      "host": "nps.gov"
+    },
+    {
+      "id": "s-amtrak-saver",
+      "url": "https://www.amtrak.com/deals-discounts/everyday-discounts.html",
+      "title": "Everyday Discounts",
+      "host": "amtrak.com"
+    },
+    {
+      "id": "s-energy-star",
+      "url": "https://www.energystar.gov/products/heat_pump_water_heaters",
+      "title": "Heat Pump Water Heaters",
+      "host": "energystar.gov"
+    },
+    {
+      "id": "s-wikipedia-photosynthesis",
+      "url": "https://en.wikipedia.org/wiki/Photosynthesis",
+      "title": "Photosynthesis",
+      "host": "wikipedia.org"
+    },
+    {
+      "id": "s-github-home",
+      "url": "https://github.com/",
+      "title": "GitHub · Build and ship software",
+      "host": "github.com"
+    },
+    {
+      "id": "s-youtube-home",
+      "url": "https://www.youtube.com/",
+      "title": "YouTube",
+      "host": "youtube.com"
+    },
+    {
+      "id": "s-reddit-home",
+      "url": "https://www.reddit.com/",
+      "title": "Home : Reddit",
+      "host": "reddit.com"
+    },
+    {
+      "id": "s-x-home",
+      "url": "https://x.com/home",
+      "title": "Home / X",
+      "host": "x.com"
+    },
+    {
+      "id": "s-google-home",
+      "url": "https://www.google.com/",
+      "title": "Google",
+      "host": "google.com"
+    },
+    {
+      "id": "s-newtab",
+      "url": "about:newtab",
+      "title": "New Tab",
+      "host": "browser.local"
+    },
+    {
+      "id": "s-youtube-airplane",
+      "url": "https://www.youtube.com/results?search_query=aircraft+ nose+design",
+      "title": "Why some airliners have a drooped nose — aviation explainer",
+      "host": "youtube.com"
+    },
+    {
+      "id": "s-nytimes-recipe",
+      "url": "https://cooking.nytimes.com/",
+      "title": "Weeknight pasta recipes",
+      "host": "cooking.nytimes.com"
+    }
+  ],
+  "observations": [
+    {
+      "observation_id": "o01",
+      "title": "Heat pump water heater sizing and installation constraints",
+      "host": "bsesc.energy.gov",
+      "query_present": true,
+      "dwell_seconds": 142,
+      "session_id": "a",
+      "research_label": "research",
+      "expected_dashboard_treatment": "prominent",
+      "rationale": "Specific research evidence, a recognizable question, or sustained dwell."
+    },
+    {
+      "observation_id": "o02",
+      "title": "Consumer water heaters: heat-pump models",
+      "host": "energy.gov",
+      "query_present": false,
+      "dwell_seconds": 91,
+      "session_id": "a",
+      "research_label": "research",
+      "expected_dashboard_treatment": "prominent",
+      "rationale": "Specific research evidence, a recognizable question, or sustained dwell."
+    },
+    {
+      "observation_id": "o03",
+      "title": "Heat pump water heater electricity use in a cold basement",
+      "host": "bsesc.energy.gov",
+      "query_present": true,
+      "dwell_seconds": 18,
+      "session_id": "b",
+      "research_label": "research",
+      "expected_dashboard_treatment": "prominent",
+      "rationale": "Specific research evidence, a recognizable question, or sustained dwell."
+    },
+    {
+      "observation_id": "o04",
+      "title": "ENERGY STAR heat pump water heater buying guide",
+      "host": "energystar.gov",
+      "query_present": false,
+      "dwell_seconds": 74,
+      "session_id": "b",
+      "research_label": "research",
+      "expected_dashboard_treatment": "prominent",
+      "rationale": "Specific research evidence, a recognizable question, or sustained dwell."
+    },
+    {
+      "observation_id": "o05",
+      "title": "Home / X",
+      "host": "x.com",
+      "query_present": false,
+      "dwell_seconds": 5,
+      "session_id": "b",
+      "research_label": "incidental",
+      "expected_dashboard_treatment": "activity_only",
+      "rationale": "Generic home/feed/new-tab or very brief observation should not receive a full-size research card."
+    },
+    {
+      "observation_id": "o06",
+      "title": "Leap chair dimensions and adjustable seat depth",
+      "host": "steelcase.com",
+      "query_present": true,
+      "dwell_seconds": 158,
+      "session_id": "c",
+      "research_label": "research",
+      "expected_dashboard_treatment": "prominent",
+      "rationale": "Specific research evidence, a recognizable question, or sustained dwell."
+    },
+    {
+      "observation_id": "o07",
+      "title": "Leap chair — adjustable ergonomic support",
+      "host": "steelcase.com",
+      "query_present": false,
+      "dwell_seconds": 102,
+      "session_id": "c",
+      "research_label": "research",
+      "expected_dashboard_treatment": "prominent",
+      "rationale": "Specific research evidence, a recognizable question, or sustained dwell."
+    },
+    {
+      "observation_id": "o08",
+      "title": "Office chairs",
+      "host": "ikea.com",
+      "query_present": false,
+      "dwell_seconds": 16,
+      "session_id": "c",
+      "research_label": "ambiguous",
+      "expected_dashboard_treatment": "low_prominence",
+      "rationale": "Page is generic or dwell is brief; preserve only as low-weight activity context."
+    },
+    {
+      "observation_id": "o09",
+      "title": "Desks & computer desks",
+      "host": "ikea.com",
+      "query_present": false,
+      "dwell_seconds": 9,
+      "session_id": "c",
+      "research_label": "ambiguous",
+      "expected_dashboard_treatment": "low_prominence",
+      "rationale": "Page is generic or dwell is brief; preserve only as low-weight activity context."
+    },
+    {
+      "observation_id": "o10",
+      "title": "Plan Your Visit",
+      "host": "nps.gov",
+      "query_present": true,
+      "dwell_seconds": 120,
+      "session_id": "d",
+      "research_label": "research",
+      "expected_dashboard_treatment": "prominent",
+      "rationale": "Specific research evidence, a recognizable question, or sustained dwell."
+    },
+    {
+      "observation_id": "o11",
+      "title": "Plan Your Visit",
+      "host": "nps.gov",
+      "query_present": true,
+      "dwell_seconds": 88,
+      "session_id": "d",
+      "research_label": "research",
+      "expected_dashboard_treatment": "prominent",
+      "rationale": "Specific research evidence, a recognizable question, or sustained dwell."
+    },
+    {
+      "observation_id": "o12",
+      "title": "Northeast Regional",
+      "host": "amtrak.com",
+      "query_present": true,
+      "dwell_seconds": 39,
+      "session_id": "e",
+      "research_label": "research",
+      "expected_dashboard_treatment": "prominent",
+      "rationale": "Specific research evidence, a recognizable question, or sustained dwell."
+    },
+    {
+      "observation_id": "o13",
+      "title": "Everyday Discounts",
+      "host": "amtrak.com",
+      "query_present": true,
+      "dwell_seconds": 66,
+      "session_id": "e",
+      "research_label": "research",
+      "expected_dashboard_treatment": "prominent",
+      "rationale": "Specific research evidence, a recognizable question, or sustained dwell."
+    },
+    {
+      "observation_id": "o14",
+      "title": "Sleep timing and next-day cognitive performance",
+      "host": "nature.com",
+      "query_present": true,
+      "dwell_seconds": 133,
+      "session_id": "f",
+      "research_label": "research",
+      "expected_dashboard_treatment": "prominent",
+      "rationale": "Specific research evidence, a recognizable question, or sustained dwell."
+    },
+    {
+      "observation_id": "o15",
+      "title": "Migraine — Symptoms and causes",
+      "host": "mayoclinic.org",
+      "query_present": true,
+      "dwell_seconds": 92,
+      "session_id": "f",
+      "research_label": "research",
+      "expected_dashboard_treatment": "prominent",
+      "rationale": "Specific research evidence, a recognizable question, or sustained dwell."
+    },
+    {
+      "observation_id": "o16",
+      "title": "Authentication and Authenticator Management",
+      "host": "nist.gov",
+      "query_present": true,
+      "dwell_seconds": 111,
+      "session_id": "g",
+      "research_label": "research",
+      "expected_dashboard_treatment": "prominent",
+      "rationale": "Specific research evidence, a recognizable question, or sustained dwell."
+    },
+    {
+      "observation_id": "o17",
+      "title": "What is a passkey?",
+      "host": "cloudflare.com",
+      "query_present": true,
+      "dwell_seconds": 84,
+      "session_id": "g",
+      "research_label": "research",
+      "expected_dashboard_treatment": "prominent",
+      "rationale": "Specific research evidence, a recognizable question, or sustained dwell."
+    },
+    {
+      "observation_id": "o18",
+      "title": "asyncio — Asynchronous I/O",
+      "host": "docs.python.org",
+      "query_present": true,
+      "dwell_seconds": 150,
+      "session_id": "h",
+      "research_label": "research",
+      "expected_dashboard_treatment": "prominent",
+      "rationale": "Specific research evidence, a recognizable question, or sustained dwell."
+    },
+    {
+      "observation_id": "o19",
+      "title": "Using promises",
+      "host": "developer.mozilla.org",
+      "query_present": true,
+      "dwell_seconds": 46,
+      "session_id": "h",
+      "research_label": "research",
+      "expected_dashboard_treatment": "prominent",
+      "rationale": "Specific research evidence, a recognizable question, or sustained dwell."
+    },
+    {
+      "observation_id": "o20",
+      "title": "Coroutines overview",
+      "host": "kotlinlang.org",
+      "query_present": false,
+      "dwell_seconds": 103,
+      "session_id": "h",
+      "research_label": "research",
+      "expected_dashboard_treatment": "prominent",
+      "rationale": "Specific research evidence, a recognizable question, or sustained dwell."
+    },
+    {
+      "observation_id": "o21",
+      "title": "Why Lithium-ion?",
+      "host": "apple.com",
+      "query_present": true,
+      "dwell_seconds": 44,
+      "session_id": "i",
+      "research_label": "research",
+      "expected_dashboard_treatment": "prominent",
+      "rationale": "Specific research evidence, a recognizable question, or sustained dwell."
+    },
+    {
+      "observation_id": "o22",
+      "title": "Introduction to Web Accessibility",
+      "host": "w3.org",
+      "query_present": true,
+      "dwell_seconds": 147,
+      "session_id": "j",
+      "research_label": "research",
+      "expected_dashboard_treatment": "prominent",
+      "rationale": "Specific research evidence, a recognizable question, or sustained dwell."
+    },
+    {
+      "observation_id": "o23",
+      "title": "Web Vitals",
+      "host": "web.dev",
+      "query_present": true,
+      "dwell_seconds": 98,
+      "session_id": "j",
+      "research_label": "research",
+      "expected_dashboard_treatment": "prominent",
+      "rationale": "Specific research evidence, a recognizable question, or sustained dwell."
+    },
+    {
+      "observation_id": "o24",
+      "title": "Fractions arithmetic",
+      "host": "khanacademy.org",
+      "query_present": false,
+      "dwell_seconds": 81,
+      "session_id": "k",
+      "research_label": "research",
+      "expected_dashboard_treatment": "prominent",
+      "rationale": "Specific research evidence, a recognizable question, or sustained dwell."
+    },
+    {
+      "observation_id": "o25",
+      "title": "Photosynthesis",
+      "host": "wikipedia.org",
+      "query_present": false,
+      "dwell_seconds": 13,
+      "session_id": "k",
+      "research_label": "ambiguous",
+      "expected_dashboard_treatment": "low_prominence",
+      "rationale": "Page is generic or dwell is brief; preserve only as low-weight activity context."
+    },
+    {
+      "observation_id": "o26",
+      "title": "Write-Ahead Logging",
+      "host": "sqlite.org",
+      "query_present": true,
+      "dwell_seconds": 62,
+      "session_id": "l",
+      "research_label": "research",
+      "expected_dashboard_treatment": "prominent",
+      "rationale": "Specific research evidence, a recognizable question, or sustained dwell."
+    },
+    {
+      "observation_id": "o27",
+      "title": "SQLite FTS5 Extension",
+      "host": "sqlite.org",
+      "query_present": true,
+      "dwell_seconds": 123,
+      "session_id": "l",
+      "research_label": "research",
+      "expected_dashboard_treatment": "prominent",
+      "rationale": "Specific research evidence, a recognizable question, or sustained dwell."
+    },
+    {
+      "observation_id": "o28",
+      "title": "runtime.sendNativeMessage()",
+      "host": "developer.mozilla.org",
+      "query_present": true,
+      "dwell_seconds": 26,
+      "session_id": "m",
+      "research_label": "research",
+      "expected_dashboard_treatment": "prominent",
+      "rationale": "Specific research evidence, a recognizable question, or sustained dwell."
+    },
+    {
+      "observation_id": "o29",
+      "title": "Native messaging",
+      "host": "developer.mozilla.org",
+      "query_present": true,
+      "dwell_seconds": 91,
+      "session_id": "m",
+      "research_label": "research",
+      "expected_dashboard_treatment": "prominent",
+      "rationale": "Specific research evidence, a recognizable question, or sustained dwell."
+    },
+    {
+      "observation_id": "o30",
+      "title": "storage",
+      "host": "developer.mozilla.org",
+      "query_present": true,
+      "dwell_seconds": 5,
+      "session_id": "m",
+      "research_label": "incidental",
+      "expected_dashboard_treatment": "activity_only",
+      "rationale": "Generic home/feed/new-tab or very brief observation should not receive a full-size research card."
+    },
+    {
+      "observation_id": "o31",
+      "title": "The Rust Programming Language",
+      "host": "doc.rust-lang.org",
+      "query_present": true,
+      "dwell_seconds": 136,
+      "session_id": "n",
+      "research_label": "research",
+      "expected_dashboard_treatment": "prominent",
+      "rationale": "Specific research evidence, a recognizable question, or sustained dwell."
+    },
+    {
+      "observation_id": "o32",
+      "title": "GitHub Actions documentation",
+      "host": "docs.github.com",
+      "query_present": true,
+      "dwell_seconds": 97,
+      "session_id": "n",
+      "research_label": "research",
+      "expected_dashboard_treatment": "prominent",
+      "rationale": "Specific research evidence, a recognizable question, or sustained dwell."
+    },
+    {
+      "observation_id": "o33",
+      "title": "Home : Reddit",
+      "host": "reddit.com",
+      "query_present": false,
+      "dwell_seconds": 7,
+      "session_id": "o",
+      "research_label": "incidental",
+      "expected_dashboard_treatment": "activity_only",
+      "rationale": "Generic home/feed/new-tab or very brief observation should not receive a full-size research card."
+    },
+    {
+      "observation_id": "o34",
+      "title": "YouTube",
+      "host": "youtube.com",
+      "query_present": false,
+      "dwell_seconds": 3,
+      "session_id": "o",
+      "research_label": "incidental",
+      "expected_dashboard_treatment": "activity_only",
+      "rationale": "Generic home/feed/new-tab or very brief observation should not receive a full-size research card."
+    },
+    {
+      "observation_id": "o35",
+      "title": "Google",
+      "host": "google.com",
+      "query_present": false,
+      "dwell_seconds": 2,
+      "session_id": "o",
+      "research_label": "incidental",
+      "expected_dashboard_treatment": "activity_only",
+      "rationale": "Generic home/feed/new-tab or very brief observation should not receive a full-size research card."
+    },
+    {
+      "observation_id": "o36",
+      "title": "New Tab",
+      "host": "browser.local",
+      "query_present": false,
+      "dwell_seconds": 1,
+      "session_id": "o",
+      "research_label": "incidental",
+      "expected_dashboard_treatment": "activity_only",
+      "rationale": "Generic home/feed/new-tab or very brief observation should not receive a full-size research card."
+    },
+    {
+      "observation_id": "o37",
+      "title": "YouTube: Why some airliners have a drooped nose",
+      "host": "youtube.com",
+      "query_present": true,
+      "dwell_seconds": 11,
+      "session_id": "p",
+      "research_label": "ambiguous",
+      "expected_dashboard_treatment": "low_prominence",
+      "rationale": "Page is generic or dwell is brief; preserve only as low-weight activity context."
+    },
+    {
+      "observation_id": "o38",
+      "title": "Weeknight pasta recipes",
+      "host": "cooking.nytimes.com",
+      "query_present": true,
+      "dwell_seconds": 24,
+      "session_id": "q",
+      "research_label": "research",
+      "expected_dashboard_treatment": "prominent",
+      "rationale": "Specific research evidence, a recognizable question, or sustained dwell."
+    },
+    {
+      "observation_id": "o39",
+      "title": "Leap chair dimensions and adjustable seat depth",
+      "host": "steelcase.com",
+      "query_present": false,
+      "dwell_seconds": 8,
+      "session_id": "r",
+      "research_label": "research",
+      "expected_dashboard_treatment": "activity_only",
+      "rationale": "Generic home/feed/new-tab or very brief observation should not receive a full-size research card."
+    },
+    {
+      "observation_id": "o40",
+      "title": "Home / X",
+      "host": "x.com",
+      "query_present": false,
+      "dwell_seconds": 4,
+      "session_id": "r",
+      "research_label": "incidental",
+      "expected_dashboard_treatment": "activity_only",
+      "rationale": "Generic home/feed/new-tab or very brief observation should not receive a full-size research card."
+    },
+    {
+      "observation_id": "o41",
+      "title": "GitHub · Build and ship software",
+      "host": "github.com",
+      "query_present": false,
+      "dwell_seconds": 6,
+      "session_id": "s",
+      "research_label": "incidental",
+      "expected_dashboard_treatment": "activity_only",
+      "rationale": "Generic home/feed/new-tab or very brief observation should not receive a full-size research card."
+    },
+    {
+      "observation_id": "o42",
+      "title": "Heat pump water heater installation planning",
+      "host": "bsesc.energy.gov",
+      "query_present": true,
+      "dwell_seconds": 106,
+      "session_id": "t",
+      "research_label": "research",
+      "expected_dashboard_treatment": "prominent",
+      "rationale": "Specific research evidence, a recognizable question, or sustained dwell."
+    }
+  ],
+  "labeling": {
+    "method": "hand-curated prominence categories from specificity, query presence, dwell, and page role",
+    "algorithm_outcomes_consulted": false,
+    "real_user_data": false
+  }
+}

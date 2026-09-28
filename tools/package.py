@@ -16,9 +16,9 @@ from datetime import datetime, timezone
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 OUT = ROOT / "release"
-VERSION = os.environ.get("SEREIN_VERSION", "0.1.2")
+VERSION = re.search(r'^version = "([^"]+)"', (ROOT / "Cargo.toml").read_text(), re.MULTILINE).group(1)
 if not re.fullmatch(r"\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?", VERSION):
-    raise SystemExit("SEREIN_VERSION must be a simple semantic version.")
+    raise SystemExit("Workspace version must be a simple semantic version.")
 AUDIT_PATH = ROOT / "docs/publication-audit.json"
 
 SOURCE_ALLOWLIST = [

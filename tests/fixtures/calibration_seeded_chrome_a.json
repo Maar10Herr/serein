@@ -1,0 +1,89 @@
+{
+  "fixture_id": "calibration_seeded_chrome_a_v1",
+  "provenance": {
+    "method": "Cryptographic 48-byte seed generated with Python secrets.token_hex; SHA-256 fingerprint only. Seeded PRNG selected topic, generated phrase permutations, and selected 4–7 pages from a 20-domain public-source pool.",
+    "seed_fingerprint_sha256": "c7ea711c08fcb8a21039902413261769796b055b4939d8f6c0a1e30d7fb51779",
+    "live_browsing": "attempted_in_isolated_temporary_chrome_profile",
+    "search_phrases_browsed": false,
+    "reason": "Visited 5 of 5 planned public URLs using Playwright and an isolated temporary profile; failures are individually labeled.",
+    "data_scope": "Only final hostname and document title were read from reached public pages. No page body, DOM content, account, or persistent profile data was collected."
+  },
+  "topic": "digital preservation file formats",
+  "search_phrases": [
+    "sustainability of digital file Library Congress format preservation",
+    "sustainability Library digital of preservation file format Congress",
+    "sustainability format Library preservation digital Congress file of",
+    "of file format Library digital sustainability Congress preservation"
+  ],
+  "tabs": [
+    {
+      "step": 1,
+      "url": "https://www.rfc-editor.org/",
+      "expected_title": "RFC Editor",
+      "hostname": "www.rfc-editor.org",
+      "validation": "live_metadata_observed",
+      "relevance_prompt": "Expected mostly empty or weak relevance; verify before labeling",
+      "observed": {
+        "hostname": "www.rfc-editor.org",
+        "title": "RFC Editor",
+        "outcome": "reached"
+      }
+    },
+    {
+      "step": 2,
+      "url": "https://www.britannica.com/",
+      "expected_title": "Encyclopaedia Britannica",
+      "hostname": "www.britannica.com",
+      "validation": "challenge_page_metadata_only",
+      "relevance_prompt": "Expected mostly empty or weak relevance; verify before labeling",
+      "observed": {
+        "hostname": "www.britannica.com",
+        "title": "Just a moment...",
+        "outcome": "challenge_page"
+      }
+    },
+    {
+      "step": 3,
+      "url": "https://gtfs.org/",
+      "expected_title": "GTFS",
+      "hostname": "gtfs.org",
+      "validation": "live_metadata_observed",
+      "relevance_prompt": "Expected mostly empty or weak relevance; verify before labeling",
+      "observed": {
+        "hostname": "gtfs.org",
+        "title": "Home - General Transit Feed Specification",
+        "outcome": "reached"
+      }
+    },
+    {
+      "step": 4,
+      "url": "https://www.cdc.gov/",
+      "expected_title": "CDC",
+      "hostname": "www.cdc.gov",
+      "validation": "live_metadata_observed",
+      "relevance_prompt": "Expected mostly empty or weak relevance; verify before labeling",
+      "observed": {
+        "hostname": "www.cdc.gov",
+        "title": "Centers for Disease Control and Prevention | CDC",
+        "outcome": "reached"
+      }
+    },
+    {
+      "step": 5,
+      "url": "https://www.loc.gov/preservation/digital/formats/",
+      "expected_title": "Library of Congress Sustainability of Digital Formats",
+      "hostname": "www.loc.gov",
+      "validation": "challenge_page_metadata_only",
+      "relevance_prompt": "Expected relevant to topic",
+      "observed": {
+        "hostname": "www.loc.gov",
+        "title": "Just a moment...",
+        "outcome": "challenge_page"
+      }
+    }
+  ],
+  "prompts": {
+    "relevance": "Does this tab metadata appear relevant to the stated topic? Judge from validated title and hostname only.",
+    "empty": "Would a topic-focused user reasonably expect this tab to be irrelevant or insufficiently informative? Mark only after actual metadata validation."
+  }
+}

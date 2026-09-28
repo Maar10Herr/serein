@@ -27,6 +27,7 @@ SCHEMAS = {
     "registry": "registry.schema.json",
     "setup": "setup-ticket.schema.json",
     "manifest": "model-manifest.schema.json",
+    "dashboard": "dashboard-response.schema.json",
 }
 
 
@@ -244,7 +245,34 @@ def examples() -> dict[str, Any]:
         "tokenizer_sha256": "d" * 64,
         "special_ids": [0, 1],
     }
-    return {"event": event, "policy": policy, "recall": recall, "native": native, "registry": registry, "setup": setup, "manifest": manifest}
+    card = {
+        "id": "00000000-0000-4000-8000-000000000008",
+        "site": "research.example",
+        "text": "Mock shelf width 42 cm",
+        "state": "observed",
+        "last_seen": "2026-09-27T00:00:00Z",
+        "sessions": 2,
+        "sites": 1,
+        "kind": "visit",
+        "prominent": True,
+        "corrections": [],
+    }
+    dashboard = {
+        "cards": [card],
+        "memories": [{
+            "id": "00000000-0000-4000-8000-000000000009",
+            "label": "Mock shelf research",
+            "last_seen": "2026-09-27T00:00:00Z",
+            "sessions": 2,
+            "sites": 2,
+            "evidence_count": 2,
+            "items": [card],
+        }],
+        "topics": [],
+        "model_available": True,
+        "index_mode": "hybrid",
+    }
+    return {"event": event, "policy": policy, "recall": recall, "native": native, "registry": registry, "setup": setup, "manifest": manifest, "dashboard": dashboard}
 
 
 def unknown_mutations(examples_by_name: dict[str, Any]) -> list[tuple[str, dict[str, Any]]]:
@@ -278,6 +306,12 @@ def unknown_mutations(examples_by_name: dict[str, Any]) -> list[tuple[str, dict[
     nested_connection = copy.deepcopy(examples_by_name["registry"])
     nested_connection["connections"][0]["unexpected_field"] = True
     cases.append(("registry", nested_connection))
+    nested_dashboard_card = copy.deepcopy(examples_by_name["dashboard"])
+    nested_dashboard_card["cards"][0]["unexpected_field"] = True
+    cases.append(("dashboard", nested_dashboard_card))
+    nested_dashboard_memory = copy.deepcopy(examples_by_name["dashboard"])
+    nested_dashboard_memory["memories"][0]["unexpected_field"] = True
+    cases.append(("dashboard", nested_dashboard_memory))
     return cases
 
 
@@ -291,6 +325,7 @@ def main() -> int:
         ("registry", examples_by_name["registry"]),
         ("setup", examples_by_name["setup"]),
         ("manifest", examples_by_name["manifest"]),
+        ("dashboard", examples_by_name["dashboard"]),
     ]
     cases.extend(("native", item) for item in examples_by_name["native"])
 

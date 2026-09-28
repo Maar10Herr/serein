@@ -1,9 +1,11 @@
 import { defineConfig } from "wxt";
 import preact from "@preact/preset-vite";
 import metadata from "../../release/extension-identity.json";
+import packageMetadata from "./package.json";
 
 const configuredSkillRepository =
-  process.env.SEREIN_SKILL_REPOSITORY?.trim() ?? "";
+  process.env.SEREIN_SKILL_REPOSITORY?.trim() ||
+  "https://github.com/Maar10Herr/serein";
 const githubRepositoryPattern =
   /^https:\/\/github\.com\/([A-Za-z0-9](?:[A-Za-z0-9-]{0,38}))\/([A-Za-z0-9](?:[A-Za-z0-9._-]{0,99}))\/?$/;
 const skillRepository = githubRepositoryPattern.test(configuredSkillRepository)
@@ -21,7 +23,7 @@ export default defineConfig({
   manifest: ({ browser }) => ({
     name: "Serein",
     description: "Your context. Only when it helps.",
-    version: "0.1.2",
+    version: packageMetadata.version,
     permissions: ["tabs", "storage", "alarms", "idle", "nativeMessaging"],
     ...(browser === "firefox"
       ? {
