@@ -1,0 +1,17 @@
+{
+  "capture_mode": "Constructed replay of five public-site title/host records previously observed in the v0.1.2 Chrome demo; not a fresh live-site capture or user history.",
+  "browser": "148.0.7778.96",
+  "isolated_profile": true,
+  "synthetic_events": 10,
+  "synthetic_sessions": 2,
+  "distinct_public_sites": 5,
+  "ingress": "Actual native host ingest request with constructed records; extension tabs observer was not used for these observations.",
+  "dashboard_raw_cards": 5,
+  "dashboard_research_groups": 1,
+  "model_available": true,
+  "source_demo": "docs/research-demo-results.json",
+  "screenshots": [
+    "docs/screenshots/research-preview-light.png",
+    "docs/screenshots/research-preview-dark.png"
+  ]
+}

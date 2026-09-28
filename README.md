@@ -8,9 +8,9 @@ Serein does not read page bodies or import browser history. Collection can be pa
 
 [Install Serein v0.1.3](docs/INSTALL.md) · [Release v0.1.3](https://github.com/Maar10Herr/serein/releases/tag/v0.1.3) · [Release notes](.github/RELEASE_NOTES.md) · [How it works](#how-it-works) · [Privacy](docs/PRIVACY.md)
 
-![Five public-page observations captured in an isolated Chrome run, shown in Serein v0.1.2](docs/screenshots/research-demo-light.png)
+![Serein v0.1.3 dashboard showing a constructed public-site research replay](docs/screenshots/research-preview-light.png)
 
-This capture shows saved titles and one recognized search term from a single isolated Chrome run. It uses the v0.1.2 dashboard; v0.1.3 places research groups first and folds the raw activity list below. [See the dark theme](docs/screenshots/research-demo-dark.png) and the [capture method](docs/TEST_REPORT.md#v012-real-site-research-demo).
+This v0.1.3 preview replays invented visits using public-site titles and hosts observed in an earlier test. It is not a live browsing capture or user history. [Dark theme](docs/screenshots/research-preview-dark.png) · [Earlier live public-site capture](docs/screenshots/research-demo-light.png) · [Preview method](docs/TEST_REPORT.md#constructed-v013-dashboard-preview)
 
 ## How it works
 

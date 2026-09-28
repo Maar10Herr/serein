@@ -2,6 +2,10 @@
 
 Serein brings browser research you chose to save back into a conversation with a local AI assistant. This release makes the dashboard quieter: related research appears together, useful standalone observations remain visible, and the full activity list stays available when you need to inspect it.
 
+![Serein v0.1.3 dashboard with constructed public-site research](https://github.com/Maar10Herr/serein/releases/download/v0.1.3/research-preview-light.png)
+
+This preview shows the real dashboard using invented visits built from public-site metadata; it is not a live capture or user history. [Dark preview](https://github.com/Maar10Herr/serein/releases/download/v0.1.3/research-preview-dark.png) · [Capture method](https://github.com/Maar10Herr/serein/blob/main/docs/TEST_REPORT.md#constructed-v013-dashboard-preview)
+
 ## Install on a Mac with Apple silicon
 
 1. Download the [Chrome extension ZIP](https://github.com/Maar10Herr/serein/releases/download/v0.1.3/serein-chrome-0.1.3-unsigned.zip) or [Firefox extension ZIP](https://github.com/Maar10Herr/serein/releases/download/v0.1.3/serein-firefox-0.1.3-unsigned.zip) and extract it. In Chrome, open `chrome://extensions`, turn on **Developer mode**, and choose **Load unpacked**. In Firefox, open `about:debugging#/runtime/this-firefox`, choose **Load Temporary Add-on**, and select the extracted `manifest.json`.
