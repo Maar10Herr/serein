@@ -1,13 +1,22 @@
 import { render } from "preact";
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useRef, useState } from "preact/hooks";
 import type { ComponentChildren } from "preact";
 import { browser } from "wxt/browser";
 import { call, host } from "../../lib/client";
 import { Icon } from "../../lib/Icon";
 import { Modal } from "../../lib/Modal";
+import {
+  CorrectionDialog,
+  type CorrectionSubmission,
+} from "./CorrectionDialog";
 import { t, type Locale, type MessageKey } from "../../lib/locales";
 import { validSite } from "../../lib/policy";
-import type { DashboardCard, DashboardMemory, DashboardResponse, State } from "../../lib/types";
+import type {
+  DashboardCard,
+  DashboardMemory,
+  DashboardResponse,
+  State,
+} from "../../lib/types";
 import "../../lib/styles.css";
 const assistants = [
   ["claude-code", "connections.claudeCode", "C"],
@@ -95,7 +104,11 @@ function App() {
   const [theme, setTheme] = useState<"system" | "light" | "dark">("system");
   const [prefsLoaded, setPrefsLoaded] = useState(false);
   const [s, setS] = useState<State>();
-  const [data, setData] = useState<DashboardResponse>({ cards: [], memories: [], topics: [] });
+  const [data, setData] = useState<DashboardResponse>({
+    cards: [],
+    memories: [],
+    topics: [],
+  });
   const [dashboardLoaded, setDashboardLoaded] = useState(false);
   const [queue, setQueue] = useState(0);
   const [pending, setPending] = useState(0);
@@ -110,13 +123,45 @@ function App() {
   const [selectedOnly, setSelectedOnly] = useState(false);
   const [setupText, setSetupText] = useState("");
   const [site, setSite] = useState("");
-  const [modal, setModal] = useState<{ kind: string; card?: any } | null>(null);
-  const [constraint, setConstraint] = useState("");
+  const [modal, setModal] = useState<{
+    kind: string;
+    card?: any;
+    generation: number;
+  } | null>(null);
+  const modalGeneration = useRef(0);
   const [receipt, setReceipt] = useState<any[]>([]);
   const tr = (
     key: MessageKey,
     values?: Readonly<Record<string, string | number>>,
   ) => t(locale, key, values);
+  function openModal(next: Omit<NonNullable<typeof modal>, "generation">) {
+    const generation = ++modalGeneration.current;
+    setModal({ ...next, generation });
+  }
+  function closeModal(generation?: number) {
+    if (generation !== undefined && generation !== modalGeneration.current)
+      return;
+    modalGeneration.current++;
+    setModal(null);
+  }
+  function isCurrentModalGeneration(generation: number) {
+    return generation === modalGeneration.current;
+  }
+  async function submitCorrection(submission: CorrectionSubmission) {
+    await host("feedback", {
+      atom_id: submission.atom_id,
+      action: submission.action,
+      text: submission.text,
+    });
+  }
+  function refreshAfterCorrection() {
+    void load().catch((cause) => setError((cause as Error).message));
+  }
+  function finishCorrection(generation: number) {
+    if (!isCurrentModalGeneration(generation)) return;
+    setNotice(tr("correction.saved"));
+    closeModal(generation);
+  }
   const skillTargets = selected
     .map((id) => skillAgentIds[id])
     .filter((id): id is string => Boolean(id));
@@ -251,7 +296,9 @@ function App() {
       `${card.text || ""} ${card.site || ""}`.toLowerCase().includes(query));
   const allCards: DashboardCard[] = dashboardLoaded ? data.cards || [] : [];
   const cards = allCards.filter(matchesCard);
-  const sourceMemories: DashboardMemory[] = dashboardLoaded ? data.memories || [] : [];
+  const sourceMemories: DashboardMemory[] = dashboardLoaded
+    ? data.memories || []
+    : [];
   const memoryEvidenceIds = new Set(
     sourceMemories.flatMap((memory) =>
       (Array.isArray(memory.items) ? memory.items : [])
@@ -295,13 +342,13 @@ function App() {
     .slice(0, 6);
   const renderActions = (card: any) => (
     <div class="row evidence-actions">
-      <button onClick={() => setModal({ kind: "why", card })}>
+      <button onClick={() => openModal({ kind: "why", card })}>
         {tr("context.why")}
       </button>
-      <button onClick={() => setModal({ kind: "correct", card })}>
+      <button onClick={() => openModal({ kind: "correct", card })}>
         {tr("context.correct")}
       </button>
-      <button onClick={() => setModal({ kind: "forget", card })}>
+      <button onClick={() => openModal({ kind: "forget", card })}>
         {tr("context.forget")}
       </button>
     </div>
@@ -367,9 +414,7 @@ function App() {
             .join(" · ")}
         </p>
       )}
-      <footer>
-        {renderActions(card)}
-      </footer>
+      <footer>{renderActions(card)}</footer>
     </article>
   );
   return (
@@ -1123,14 +1168,14 @@ function App() {
               <div class="form-actions">
                 <button
                   disabled={!s?.paired}
-                  onClick={() => setModal({ kind: "export" })}
+                  onClick={() => openModal({ kind: "export" })}
                 >
                   {tr("storage.exportReviewedContext")}
                 </button>
                 <button
                   class="danger"
                   disabled={!s?.paired}
-                  onClick={() => setModal({ kind: "erase" })}
+                  onClick={() => openModal({ kind: "erase" })}
                 >
                   <Icon name="forget" size={16} />
                   {tr("storage.eraseSavedContext")}
@@ -1175,7 +1220,19 @@ function App() {
           </span>
         </footer>
       </main>
-      {modal && (
+      {modal?.kind === "correct" ? (
+        <CorrectionDialog
+          key={`${modal.card.id}:${modal.generation}`}
+          card={modal.card}
+          generation={modal.generation}
+          translate={(key) => tr(key)}
+          isCurrentGeneration={isCurrentModalGeneration}
+          onClose={closeModal}
+          onSubmit={submitCorrection}
+          onRefresh={refreshAfterCorrection}
+          onSaved={finishCorrection}
+        />
+      ) : modal ? (
         <Modal
           title={
             modal.kind === "why"
@@ -1188,7 +1245,7 @@ function App() {
                     ? tr("modal.eraseTitle")
                     : tr("modal.forgetTitle")
           }
-          onClose={() => setModal(null)}
+          onClose={() => closeModal(modal.generation)}
         >
           {modal.kind === "why" ? (
             <div class="stack">
@@ -1202,58 +1259,6 @@ function App() {
                 })}
               </div>
               <p>{tr("modal.attentionExplanation")}</p>
-            </div>
-          ) : modal.kind === "correct" ? (
-            <div class="stack">
-              {[
-                ["not_about_me", "correction.notAboutMe"],
-                ["wrong_topic", "correction.wrongTopic"],
-                ["temporary_research", "correction.temporaryResearch"],
-                ["do_not_use", "correction.doNotUse"],
-              ].map(([action, key]) => (
-                <button
-                  disabled={busy}
-                  style={{ justifyContent: "flex-start" }}
-                  onClick={() =>
-                    run(async () => {
-                      await host("feedback", {
-                        atom_id: modal.card.id,
-                        action,
-                        text: null,
-                      });
-                      setModal(null);
-                    }, tr("correction.saved"))
-                  }
-                >
-                  {tr(key as MessageKey)}
-                </button>
-              ))}
-              <label class="small">
-                {tr("modal.constraintLabel")}
-                <textarea
-                  placeholder={tr("modal.constraintExample")}
-                  value={constraint}
-                  onInput={(e) => setConstraint(e.currentTarget.value)}
-                  maxLength={512}
-                />
-              </label>
-              <button
-                class="primary"
-                disabled={busy || !constraint.trim()}
-                onClick={() =>
-                  run(async () => {
-                    await host("feedback", {
-                      atom_id: modal.card.id,
-                      action: "confirm_constraint",
-                      text: constraint,
-                    });
-                    setModal(null);
-                    setConstraint("");
-                  }, tr("modal.constraintConfirmed"))
-                }
-              >
-                {tr("correction.confirmConstraint")}
-              </button>
             </div>
           ) : modal.kind === "export" ? (
             <>
@@ -1285,7 +1290,7 @@ function App() {
                   a.download = "serein-reviewed-context.json";
                   a.click();
                   URL.revokeObjectURL(a.href);
-                  setModal(null);
+                  closeModal(modal.generation);
                 }}
               >
                 {tr("modal.exportJson")}
@@ -1299,7 +1304,7 @@ function App() {
                   : tr("modal.forgetDescription")}
               </p>
               <div class="form-actions">
-                <button onClick={() => setModal(null)}>
+                <button onClick={() => closeModal(modal.generation)}>
                   {tr("modal.cancel")}
                 </button>
                 <button
@@ -1314,7 +1319,7 @@ function App() {
                         atom_id: modal.card?.id || null,
                         site_epoch: (s?.policy.capture_epoch || 0) + 1,
                       });
-                      setModal(null);
+                      closeModal(modal.generation);
                     }, tr("modal.savedEvidenceRemoved"))
                   }
                 >
@@ -1326,7 +1331,7 @@ function App() {
             </>
           )}
         </Modal>
-      )}
+      ) : null}
     </div>
   );
 }
