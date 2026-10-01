@@ -205,6 +205,30 @@ pub struct Vault {
     pub conn: Connection,
     pub path: PathBuf,
 }
+
+#[derive(Debug)]
+struct PendingAtom {
+    id: String,
+    title: String,
+    query: Option<String>,
+    stored_vector: Option<Vec<f32>>,
+    needs_vector: bool,
+    needs_topic: bool,
+}
+
+fn decode_vector_blob(blob: &[u8]) -> Vec<f32> {
+    blob.chunks_exact(4)
+        .map(|component| f32::from_le_bytes(component.try_into().unwrap()))
+        .collect()
+}
+
+fn vector_blob_is_valid(blob: &[u8]) -> bool {
+    blob.len() == algorithm::DIMENSIONS * 4
+        && blob
+            .chunks_exact(4)
+            .all(|component| f32::from_le_bytes(component.try_into().unwrap()).is_finite())
+}
+
 impl Vault {
     pub fn open(path: &Path) -> Result<Self> {
         if let Some(p) = path.parent() {
@@ -300,30 +324,130 @@ COMMIT;")?;
     }
     fn pending_atoms_for_model(&self, model_hash: Option<&str>) -> Result<i64> {
         match model_hash {
-            Some(hash) => Ok(self.conn.query_row(
-                "SELECT count(*) FROM atoms a
-WHERE NOT EXISTS (SELECT 1 FROM vectors v WHERE v.atom=a.id AND v.model=?)
-   OR (NOT EXISTS (SELECT 1 FROM atom_topics m JOIN topics t ON t.id=m.topic WHERE m.atom=a.id AND t.model=?)
-       AND NOT EXISTS (SELECT 1 FROM topic_skips s WHERE s.atom=a.id AND s.model=?))",
-                params![hash,hash,hash],
-                |r| r.get(0),
-            )?),
-            None => Ok(self.conn.query_row("SELECT count(*) FROM atoms", [], |r| r.get(0))?),
+            Some(hash) => {
+                let mut statement = self.conn.prepare(
+                    "SELECT v.model,v.vector,
+                            EXISTS (
+                                SELECT 1 FROM atom_topics m
+                                JOIN topics t ON t.id=m.topic
+                                WHERE m.atom=a.id AND t.model=?1
+                            ),
+                            EXISTS (
+                                SELECT 1 FROM topic_skips s
+                                WHERE s.atom=a.id AND s.model=?1
+                            )
+                     FROM atoms a
+                     LEFT JOIN vectors v ON v.atom=a.id",
+                )?;
+                let mut rows = statement.query([hash])?;
+                let mut pending = 0i64;
+                while let Some(row) = rows.next()? {
+                    let vector_model_matches = matches!(
+                        row.get_ref(0)?,
+                        rusqlite::types::ValueRef::Text(model) if model == hash.as_bytes()
+                    );
+                    let vector_blob = match row.get_ref(1)? {
+                        rusqlite::types::ValueRef::Blob(blob) => Some(blob),
+                        _ => None,
+                    };
+                    let vector_valid =
+                        vector_model_matches && vector_blob.is_some_and(vector_blob_is_valid);
+                    let topic_ready = row.get::<_, bool>(2)? || row.get::<_, bool>(3)?;
+                    if !vector_valid || !topic_ready {
+                        pending += 1;
+                    }
+                }
+                Ok(pending)
+            }
+            None => Ok(self
+                .conn
+                .query_row("SELECT count(*) FROM atoms", [], |r| r.get(0))?),
         }
     }
+    fn pending_atom_work(
+        &self,
+        model_hash: &str,
+        limit: i64,
+        deadline: Option<(Instant, u64)>,
+    ) -> Result<Vec<PendingAtom>> {
+        let mut statement = self.conn.prepare(
+            "SELECT a.id,a.title,a.query,v.model,v.vector,
+                    EXISTS (
+                        SELECT 1 FROM atom_topics m
+                        JOIN topics t ON t.id=m.topic
+                        WHERE m.atom=a.id AND t.model=?1
+                    ),
+                    EXISTS (
+                        SELECT 1 FROM topic_skips s
+                        WHERE s.atom=a.id AND s.model=?1
+                    )
+             FROM atoms a
+             LEFT JOIN vectors v ON v.atom=a.id
+             ORDER BY a.first_seen,a.id",
+        )?;
+        let mut rows = statement.query([model_hash])?;
+        let mut pending = Vec::new();
+        let limit = limit.max(0) as usize;
+        loop {
+            if pending.len() >= limit {
+                break;
+            }
+            let Some(row) = rows.next()? else {
+                break;
+            };
+            if deadline.is_some_and(|(start, budget)| start.elapsed().as_millis() as u64 >= budget)
+            {
+                break;
+            }
+            let vector_model_matches = matches!(
+                row.get_ref(3)?,
+                rusqlite::types::ValueRef::Text(model) if model == model_hash.as_bytes()
+            );
+            let vector_blob = match row.get_ref(4)? {
+                rusqlite::types::ValueRef::Blob(blob) => Some(blob),
+                _ => None,
+            };
+            let topic_ready = row.get::<_, bool>(5)? || row.get::<_, bool>(6)?;
+            let needs_vector =
+                !vector_model_matches || !vector_blob.is_some_and(vector_blob_is_valid);
+            let needs_topic = !topic_ready || needs_vector;
+            if !needs_vector && !needs_topic {
+                continue;
+            }
+
+            let id: String = row.get(0)?;
+            let title: String = row.get(1)?;
+            let query: Option<String> = row.get(2)?;
+            // Canonical atom identity includes observed title and query, so those inputs are
+            // immutable for a retained atom. The refresh transaction rechecks them before
+            // committing any work to close the read/encode/write race.
+            let stored_vector = if needs_vector {
+                None
+            } else {
+                vector_blob.map(decode_vector_blob)
+            };
+            pending.push(PendingAtom {
+                id,
+                title,
+                query,
+                stored_vector,
+                needs_vector,
+                needs_topic,
+            });
+        }
+        Ok(pending)
+    }
+    #[cfg(test)]
     fn unindexed_atoms(
         &self,
         model_hash: &str,
         limit: i64,
     ) -> Result<Vec<(String, String, Option<String>)>> {
-        let rows = self.conn.prepare("SELECT a.id,a.title,a.query FROM atoms a
-WHERE NOT EXISTS (SELECT 1 FROM vectors v WHERE v.atom=a.id AND v.model=?)
-   OR (NOT EXISTS (SELECT 1 FROM atom_topics m JOIN topics t ON t.id=m.topic WHERE m.atom=a.id AND t.model=?)
-       AND NOT EXISTS (SELECT 1 FROM topic_skips s WHERE s.atom=a.id AND s.model=?))
-ORDER BY a.first_seen,a.id LIMIT ?")?
-            .query_map(params![model_hash,model_hash,model_hash,limit],|r|Ok((r.get(0)?,r.get(1)?,r.get(2)?)))?
-            .collect::<std::result::Result<Vec<_>,_>>()?;
-        Ok(rows)
+        Ok(self
+            .pending_atom_work(model_hash, limit, None)?
+            .into_iter()
+            .map(|row| (row.id, row.title, row.query))
+            .collect())
     }
     fn activate_model(&mut self, model_hash: &str) -> Result<()> {
         let tx = self
@@ -973,6 +1097,18 @@ ORDER BY a.first_seen,a.id LIMIT ?")?
         self.refresh_with_encoder(&encoder, budget)
     }
     fn refresh_with_encoder(&mut self, encoder: &model::Encoder, budget: u64) -> Result<Value> {
+        let model_hash = encoder.manifest.model_hash.clone();
+        self.refresh_with_encode_fn(&model_hash, budget, |text| encoder.encode(text))
+    }
+    fn refresh_with_encode_fn<F>(
+        &mut self,
+        model_hash: &str,
+        budget: u64,
+        mut encode: F,
+    ) -> Result<Value>
+    where
+        F: FnMut(&str) -> Option<Vec<f32>>,
+    {
         let start = Instant::now();
         let lock = std::fs::OpenOptions::new()
             .create(true)
@@ -982,53 +1118,100 @@ ORDER BY a.first_seen,a.id LIMIT ?")?
         if fs2::FileExt::try_lock_exclusive(&lock).is_err() {
             return Ok(json!({"status":"partial","reason":"REFRESH_BUSY"}));
         }
-        self.activate_model(&encoder.manifest.model_hash)?;
+        self.activate_model(model_hash)?;
         let generation = self.generation()?;
-        let rows = self.unindexed_atoms(&encoder.manifest.model_hash, 256)?;
+        let rows = self.pending_atom_work(model_hash, 256, Some((start, budget)))?;
         let mut processed = 0;
-        for (id, title, query) in rows {
+        for row in rows {
             if start.elapsed().as_millis() as u64 >= budget {
                 break;
             }
-            let tv = encoder.encode(&title);
-            let qv = query.as_ref().and_then(|x| encoder.encode(x));
-            let v = match (tv, qv) {
-                (Some(t), Some(q)) => model::normalize(
-                    t.iter()
-                        .zip(q)
-                        .map(|(t, q)| algorithm::TITLE_WEIGHT * t + algorithm::QUERY_WEIGHT * q)
-                        .collect(),
-                ),
-                (t, q) => t.or(q),
-            };
-            if let Some(v) = v {
-                let bytes: Vec<u8> = v.iter().flat_map(|x| x.to_le_bytes()).collect();
-                let tx = self.conn.transaction()?;
-                let current: i64 = tx
-                    .query_row("SELECT value FROM meta WHERE key='privacy'", [], |r| {
-                        r.get::<_, String>(0)
-                    })?
-                    .parse()
-                    .unwrap_or(-1);
-                if current != generation.1 {
-                    break;
+            if !row.needs_vector && !row.needs_topic {
+                continue;
+            }
+
+            let vector = if row.needs_vector {
+                let title_vector = encode(&row.title);
+                let query_vector = row.query.as_deref().and_then(&mut encode);
+                match (title_vector, query_vector) {
+                    (Some(title), Some(query)) => model::normalize(
+                        title
+                            .iter()
+                            .zip(query)
+                            .map(|(title, query)| {
+                                algorithm::TITLE_WEIGHT * title + algorithm::QUERY_WEIGHT * query
+                            })
+                            .collect(),
+                    ),
+                    (title, query) => title.or(query),
                 }
+            } else {
+                row.stored_vector.clone()
+            };
+            let Some(vector) = vector.filter(|vector| {
+                vector.len() == algorithm::DIMENSIONS && vector.iter().all(|x| x.is_finite())
+            }) else {
+                continue;
+            };
+
+            // Encoding happens outside the write transaction. Recheck every live input before
+            // committing so a concurrent privacy change, deletion, text change, or model switch
+            // cannot recreate stale vector/topic state.
+            let tx = self
+                .conn
+                .transaction_with_behavior(TransactionBehavior::Immediate)?;
+            let current_privacy: i64 = tx
+                .query_row("SELECT value FROM meta WHERE key='privacy'", [], |r| {
+                    r.get::<_, String>(0)
+                })?
+                .parse()
+                .unwrap_or(-1);
+            if current_privacy != generation.1 {
+                drop(tx);
+                break;
+            }
+            let active_model: Option<String> = tx
+                .query_row(
+                    "SELECT value FROM meta WHERE key='active_model_hash'",
+                    [],
+                    |r| r.get(0),
+                )
+                .optional()?;
+            if active_model.as_deref() != Some(model_hash) {
+                drop(tx);
+                break;
+            }
+            let live_input: Option<(String, Option<String>)> = tx
+                .query_row("SELECT title,query FROM atoms WHERE id=?", [&row.id], |r| {
+                    Ok((r.get(0)?, r.get(1)?))
+                })
+                .optional()?;
+            if live_input
+                .as_ref()
+                .is_none_or(|(title, query)| title != &row.title || query != &row.query)
+            {
+                drop(tx);
+                continue;
+            }
+
+            if row.needs_vector {
+                let bytes: Vec<u8> = vector.iter().flat_map(|x| x.to_le_bytes()).collect();
                 tx.execute(
                     "INSERT OR REPLACE INTO vectors VALUES(?,?,?)",
-                    params![id, encoder.manifest.model_hash, bytes],
+                    params![row.id, model_hash, bytes],
                 )?;
-                inference::assign(
-                    &tx,
-                    &id,
-                    &v,
-                    query.as_deref().unwrap_or(&title),
-                    &encoder.manifest.model_hash,
-                )?;
-                tx.commit()?;
-                processed += 1
             }
+            inference::assign(
+                &tx,
+                &row.id,
+                &vector,
+                row.query.as_deref().unwrap_or(&row.title),
+                model_hash,
+            )?;
+            tx.commit()?;
+            processed += 1;
         }
-        let pending = self.pending_atoms_for_model(Some(&encoder.manifest.model_hash))?;
+        let pending = self.pending_atoms_for_model(Some(model_hash))?;
         Ok(
             json!({"status":if pending>0{"partial"}else{"ok"},"processed":processed,"pending_atoms":pending,"mode":"hybrid"}),
         )
@@ -1488,5 +1671,178 @@ PRAGMA user_version=1;",
             .execute("DELETE FROM atoms WHERE id='atom-000'", [])
             .unwrap();
         assert_eq!(v.pending_atoms_for_model(Some("model")).unwrap(), 1);
+    }
+
+    fn insert_pending_atom(v: &Vault, atom: &str) {
+        insert_atom(v, atom, "2026-01-01T00:00:00Z", &axis(0), "model");
+        v.conn
+            .execute("DELETE FROM vectors WHERE atom=?", [atom])
+            .unwrap();
+    }
+
+    fn vector_blob(v: &Vault, atom: &str) -> Vec<u8> {
+        v.conn
+            .query_row("SELECT vector FROM vectors WHERE atom=?", [atom], |row| {
+                row.get(0)
+            })
+            .unwrap()
+    }
+
+    #[test]
+    fn topic_only_refresh_skips_encoder_and_preserves_observation_vector() {
+        let (_dir, mut v) = vault();
+        let atom = "topic-only";
+        insert_atom(&v, atom, "2026-01-01T00:00:00Z", &axis(0), "model");
+        let before = vector_blob(&v, atom);
+        v.activate_model("model").unwrap();
+        let mut encode_calls = 0;
+
+        let result = v
+            .refresh_with_encode_fn("model", 60_000, |_| {
+                encode_calls += 1;
+                Some(axis(1))
+            })
+            .unwrap();
+
+        assert_eq!(encode_calls, 0);
+        assert_eq!(result["processed"], 1);
+        assert_eq!(result["pending_atoms"], 0);
+        assert_eq!(vector_blob(&v, atom), before);
+    }
+
+    #[test]
+    fn refresh_aborts_encoded_work_after_privacy_generation_changes() {
+        let (_dir, mut v) = vault();
+        let atom = id();
+        insert_pending_atom(&v, &atom);
+        let mut other = Vault::open(&v.path).unwrap();
+        let mut encode_calls = 0;
+
+        let result = v
+            .refresh_with_encode_fn("model", 60_000, |_| {
+                encode_calls += 1;
+                other.feedback("source", &atom, "do_not_use", None).unwrap();
+                Some(axis(1))
+            })
+            .unwrap();
+
+        assert_eq!(encode_calls, 1);
+        assert_eq!(result["processed"], 0);
+        assert_eq!(result["pending_atoms"], 1);
+        let derived_rows: i64 = v
+            .conn
+            .query_row(
+                "SELECT (SELECT count(*) FROM vectors WHERE atom=?1)
+                      + (SELECT count(*) FROM atom_topics WHERE atom=?1)
+                      + (SELECT count(*) FROM topic_skips WHERE atom=?1)",
+                [&atom],
+                |row| row.get(0),
+            )
+            .unwrap();
+        assert_eq!(derived_rows, 0);
+    }
+
+    #[test]
+    fn refresh_aborts_encoded_work_after_active_model_changes() {
+        let (_dir, mut v) = vault();
+        let atom = "model-race";
+        insert_pending_atom(&v, atom);
+        let mut other = Vault::open(&v.path).unwrap();
+        let mut encode_calls = 0;
+
+        let result = v
+            .refresh_with_encode_fn("model", 60_000, |_| {
+                encode_calls += 1;
+                other.activate_model("other-model").unwrap();
+                Some(axis(1))
+            })
+            .unwrap();
+
+        assert_eq!(encode_calls, 1);
+        assert_eq!(result["processed"], 0);
+        assert_eq!(result["pending_atoms"], 1);
+        let derived_rows: i64 = v
+            .conn
+            .query_row(
+                "SELECT (SELECT count(*) FROM vectors WHERE atom=?1)
+                      + (SELECT count(*) FROM atom_topics WHERE atom=?1)
+                      + (SELECT count(*) FROM topic_skips WHERE atom=?1)",
+                [atom],
+                |row| row.get(0),
+            )
+            .unwrap();
+        assert_eq!(derived_rows, 0);
+    }
+
+    #[test]
+    fn refresh_cannot_recreate_work_for_an_atom_deleted_during_encoding() {
+        let (_dir, mut v) = vault();
+        let atom = "delete-race";
+        insert_pending_atom(&v, atom);
+        let other = Vault::open(&v.path).unwrap();
+        let mut encode_calls = 0;
+
+        let result = v
+            .refresh_with_encode_fn("model", 60_000, |_| {
+                encode_calls += 1;
+                other
+                    .conn
+                    .execute("DELETE FROM atoms WHERE id=?", [atom])
+                    .unwrap();
+                Some(axis(1))
+            })
+            .unwrap();
+
+        assert_eq!(encode_calls, 1);
+        assert_eq!(result["processed"], 0);
+        assert_eq!(result["pending_atoms"], 0);
+        let atom_rows: i64 = v
+            .conn
+            .query_row("SELECT count(*) FROM atoms WHERE id=?", [atom], |row| {
+                row.get(0)
+            })
+            .unwrap();
+        assert_eq!(atom_rows, 0);
+        let derived_rows: i64 = v
+            .conn
+            .query_row(
+                "SELECT (SELECT count(*) FROM vectors WHERE atom=?1)
+                      + (SELECT count(*) FROM atom_topics WHERE atom=?1)
+                      + (SELECT count(*) FROM topic_skips WHERE atom=?1)",
+                [atom],
+                |row| row.get(0),
+            )
+            .unwrap();
+        assert_eq!(derived_rows, 0);
+    }
+
+    #[test]
+    fn deleting_topic_member_reuses_survivor_vector_during_reconsideration() {
+        let (_dir, mut v) = vault();
+        let removed = "removed-member";
+        let survivor = "surviving-member";
+        insert_atom(&v, removed, "2026-01-01T00:00:00Z", &axis(0), "model");
+        insert_atom(&v, survivor, "2026-01-02T00:00:00Z", &axis(0), "model");
+        v.activate_model("model").unwrap();
+        inference::assign(&v.conn, removed, &axis(0), "Removed", "model").unwrap();
+        inference::assign(&v.conn, survivor, &axis(0), "Survivor", "model").unwrap();
+        let before = vector_blob(&v, survivor);
+
+        v.conn
+            .execute("DELETE FROM atoms WHERE id=?", [removed])
+            .unwrap();
+        assert_eq!(v.pending_atoms_for_model(Some("model")).unwrap(), 1);
+        let mut encode_calls = 0;
+        let result = v
+            .refresh_with_encode_fn("model", 60_000, |_| {
+                encode_calls += 1;
+                Some(axis(1))
+            })
+            .unwrap();
+
+        assert_eq!(encode_calls, 0);
+        assert_eq!(result["processed"], 1);
+        assert_eq!(result["pending_atoms"], 0);
+        assert_eq!(vector_blob(&v, survivor), before);
     }
 }
