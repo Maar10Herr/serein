@@ -1084,12 +1084,12 @@ ORDER BY a.first_seen,a.id LIMIT ?")?
             }
         }
         let empty = packet["context"].as_array().unwrap().is_empty();
-        packet["status"] = json!(if empty {
+        let deadline_reached = start.elapsed().as_millis() as u64 >= budget;
+        packet["status"] = json!(if deadline_reached {
+            "partial"
+        } else if empty {
             "empty"
-        } else if encoder.is_none()
-            || refresh["status"] != "ok"
-            || start.elapsed().as_millis() as u64 >= budget
-        {
+        } else if encoder.is_none() || refresh["status"] != "ok" {
             "partial"
         } else {
             "ok"

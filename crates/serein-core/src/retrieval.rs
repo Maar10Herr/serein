@@ -1,5 +1,5 @@
 //! Bounded candidate generation and rank fusion for a local vault.
-use crate::feedback::{self, FeedbackEntry};
+use crate::feedback::{self, FeedbackEntry, FeedbackResolution};
 use crate::{algorithm, importance, model, policy, Recall, Result};
 use rusqlite::{params_from_iter, Connection};
 use serde_json::{json, Value};
@@ -228,39 +228,64 @@ fn main_terms(request: &Recall) -> Vec<String> {
     tokens(&main)
 }
 
-fn admissible_exact_facets(request: &Recall, encoder: Option<&model::Encoder>) -> Vec<String> {
+fn deadline_reached(start: Instant, budget: u64) -> bool {
+    start.elapsed().as_millis() as u64 >= budget
+}
+
+fn admissible_exact_facets(
+    request: &Recall,
+    encoder: Option<&model::Encoder>,
+    start: Instant,
+    budget: u64,
+) -> Vec<String> {
+    if request.facets.is_empty() || deadline_reached(start, budget) {
+        return vec![];
+    }
     let main_vector = encoder.and_then(|encoder| encoder.encode(&request.query));
-    request
-        .facets
-        .iter()
-        .filter(|facet| {
-            let words: Vec<_> = facet
-                .split(|ch: char| !ch.is_alphanumeric())
-                .filter(|part| !part.is_empty())
-                .collect();
-            let non_ascii = facet
-                .chars()
-                .filter(|ch| ch.is_alphanumeric() && !ch.is_ascii())
-                .count();
-            let hard_identifier = !exact_constraints(facet).is_empty();
-            let specific_phrase =
-                compact(facet).chars().count() >= 8 && words.len() >= 2 || non_ascii >= 3;
-            if !hard_identifier && !specific_phrase {
-                return false;
+    if deadline_reached(start, budget) {
+        return vec![];
+    }
+    let mut admissible = Vec::new();
+    for facet in &request.facets {
+        if deadline_reached(start, budget) {
+            break;
+        }
+        let words: Vec<_> = facet
+            .split(|ch: char| !ch.is_alphanumeric())
+            .filter(|part| !part.is_empty())
+            .collect();
+        let non_ascii = facet
+            .chars()
+            .filter(|ch| ch.is_alphanumeric() && !ch.is_ascii())
+            .count();
+        let hard_identifier = !exact_constraints(facet).is_empty();
+        let specific_phrase =
+            compact(facet).chars().count() >= 8 && words.len() >= 2 || non_ascii >= 3;
+        if !hard_identifier && !specific_phrase {
+            continue;
+        }
+        if hard_identifier {
+            admissible.push(facet.clone());
+            continue;
+        }
+        let Some((encoder, main_vector)) = encoder.zip(main_vector.as_ref()) else {
+            continue;
+        };
+        let Some(facet_vector) = encoder.encode(facet) else {
+            if deadline_reached(start, budget) {
+                break;
             }
-            if hard_identifier {
-                return true;
-            }
-            let Some((encoder, main_vector)) = encoder.zip(main_vector.as_ref()) else {
-                return false;
-            };
-            encoder.encode(facet).is_some_and(|facet_vector| {
-                model::cosine(main_vector, &facet_vector)
-                    >= algorithm::EXACT_FACET_QUERY_AGREEMENT_FLOOR
-            })
-        })
-        .cloned()
-        .collect()
+            continue;
+        };
+        if deadline_reached(start, budget) {
+            break;
+        }
+        if model::cosine(main_vector, &facet_vector) >= algorithm::EXACT_FACET_QUERY_AGREEMENT_FLOOR
+        {
+            admissible.push(facet.clone());
+        }
+    }
+    admissible
 }
 
 fn lexical_coverage(terms: &[String], text: &str) -> (usize, f32) {
@@ -423,6 +448,339 @@ fn relevance_admitted(
     direct_lexical || strong_semantic || exact_facet_search
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+enum EvidenceState {
+    Observed,
+    Confirmed,
+}
+
+/// The metadata needed to decide whether an item may enter a retrieval
+/// channel. Channel queries resolve state/suppression/retention in SQL and
+/// populate this row before counting an accepted rank.
+#[derive(Clone, Debug)]
+struct CandidateEvidence {
+    atom_id: String,
+    source_id: String,
+    site: String,
+    atom_kind: String,
+    retained: bool,
+    site_allowed: bool,
+    recall_suppressed: bool,
+    state: EvidenceState,
+    latest_confirmation_seq: Option<i64>,
+    effective_text: Option<String>,
+    original_title: String,
+    original_query: Option<String>,
+    last_seen: String,
+}
+
+impl CandidateEvidence {
+    fn observed(
+        id: String,
+        source: &str,
+        site: String,
+        kind: String,
+        title: String,
+        query: Option<String>,
+        last_seen: String,
+        site_allowed: bool,
+    ) -> Self {
+        let effective_text = Some(query.as_deref().unwrap_or(&title).to_owned());
+        Self {
+            atom_id: id,
+            source_id: source.to_owned(),
+            site,
+            atom_kind: kind,
+            retained: true,
+            site_allowed,
+            recall_suppressed: false,
+            state: EvidenceState::Observed,
+            latest_confirmation_seq: None,
+            effective_text,
+            original_title: title,
+            original_query: query,
+            last_seen,
+        }
+    }
+
+    fn confirmed(
+        id: String,
+        source: &str,
+        site: String,
+        kind: String,
+        title: String,
+        query: Option<String>,
+        last_seen: String,
+        seq: i64,
+        text: Option<String>,
+        site_allowed: bool,
+    ) -> Self {
+        Self {
+            atom_id: id,
+            source_id: source.to_owned(),
+            site,
+            atom_kind: kind,
+            retained: true,
+            site_allowed,
+            recall_suppressed: false,
+            state: EvidenceState::Confirmed,
+            latest_confirmation_seq: Some(seq),
+            // Never fall back to the original title/query for confirmed-state
+            // relevance. A NULL latest value does not resurrect older text.
+            effective_text: text,
+            original_title: title,
+            original_query: query,
+            last_seen,
+        }
+    }
+
+    fn observed_content(&self) -> String {
+        compact(&format!(
+            "{} {}",
+            self.original_title,
+            self.original_query.as_deref().unwrap_or("")
+        ))
+    }
+
+    fn observed_raw(&self) -> &str {
+        self.effective_text.as_deref().unwrap_or("")
+    }
+}
+
+/// Fully hydrated evidence contract used when formatting a result. Candidate
+/// channel rows contain the same resolved state, while correction history is
+/// fetched once in a bounded batch after the three channel unions are known.
+struct ResolvedEvidence {
+    atom_id: String,
+    source_id: String,
+    site: String,
+    #[allow(dead_code)] // Kept in the private evidence contract for policy gates.
+    atom_kind: String,
+    retained: bool,
+    site_allowed: bool,
+    recall_suppressed: bool,
+    state: EvidenceState,
+    latest_confirmation_seq: Option<i64>,
+    effective_text: String,
+    #[allow(dead_code)]
+    original_title: String,
+    #[allow(dead_code)]
+    original_query: Option<String>,
+    correction_actions: Vec<String>,
+    subject: String,
+    last_seen: String,
+}
+
+impl ResolvedEvidence {
+    fn hydrate(candidate: CandidateEvidence, feedback: FeedbackResolution) -> Option<Self> {
+        let confirmation = feedback.latest_confirmation.as_ref();
+        let state = if confirmation.is_some() {
+            EvidenceState::Confirmed
+        } else {
+            EvidenceState::Observed
+        };
+        let effective_text = match confirmation {
+            Some(entry) => entry.text.clone()?,
+            None => candidate.effective_text.clone()?,
+        };
+        Some(Self {
+            atom_id: candidate.atom_id,
+            source_id: candidate.source_id,
+            site: candidate.site,
+            atom_kind: candidate.atom_kind,
+            retained: candidate.retained,
+            site_allowed: candidate.site_allowed,
+            recall_suppressed: feedback.recall_suppressed,
+            state,
+            latest_confirmation_seq: confirmation.map(|entry| entry.seq),
+            effective_text,
+            original_title: candidate.original_title,
+            original_query: candidate.original_query,
+            correction_actions: feedback
+                .history
+                .iter()
+                .filter(|entry| entry.action != "confirm_constraint")
+                .map(|entry| entry.action.clone())
+                .collect(),
+            subject: if feedback.has_action("not_about_me") {
+                "other".to_owned()
+            } else if state == EvidenceState::Confirmed {
+                "self".to_owned()
+            } else {
+                "unknown".to_owned()
+            },
+            last_seen: candidate.last_seen,
+        })
+    }
+}
+
+struct EligibilityPlan<'a> {
+    source: &'a str,
+    policy: &'a crate::Policy,
+    request: &'a Recall,
+    main_terms: Vec<String>,
+    exact: BTreeSet<ExactConstraint>,
+    exact_facets: Vec<String>,
+    acronyms: Vec<String>,
+    needs_confirmation: bool,
+    needs_number: bool,
+    retention_cutoff: String,
+    now: i64,
+}
+
+impl<'a> EligibilityPlan<'a> {
+    fn new(
+        source: &'a str,
+        policy: &'a crate::Policy,
+        request: &'a Recall,
+        encoder: Option<&model::Encoder>,
+        start: Instant,
+        budget: u64,
+    ) -> Self {
+        let now = chrono::Utc::now();
+        let retention_cutoff =
+            (now - chrono::Duration::days(90)).to_rfc3339_opts(chrono::SecondsFormat::Secs, true);
+        Self {
+            source,
+            policy,
+            request,
+            main_terms: main_terms(request),
+            exact: exact_constraints(
+                &std::iter::once(&request.query)
+                    .chain(request.facets.iter())
+                    .map(String::as_str)
+                    .collect::<Vec<_>>()
+                    .join(" "),
+            ),
+            exact_facets: admissible_exact_facets(request, encoder, start, budget),
+            acronyms: required_acronyms(request),
+            needs_confirmation: confirmed_answer_required(&request.query),
+            needs_number: numeric_answer_required(&request.query),
+            retention_cutoff,
+            now: now.timestamp(),
+        }
+    }
+
+    fn site_allowed(&self, site: &str) -> bool {
+        !self
+            .policy
+            .excluded_sites
+            .iter()
+            .any(|rule| policy::matches(site, rule))
+            && (!self.policy.selected_only
+                || self
+                    .policy
+                    .selected_sites
+                    .iter()
+                    .any(|rule| policy::matches(site, rule)))
+    }
+
+    fn in_scope(&self, state: EvidenceState) -> bool {
+        match state {
+            EvidenceState::Observed => self
+                .request
+                .scope
+                .iter()
+                .any(|scope| scope == "research" || scope == "projects"),
+            EvidenceState::Confirmed => self
+                .request
+                .scope
+                .iter()
+                .any(|scope| scope == "confirmed_preferences"),
+        }
+    }
+
+    fn exact_supported(&self, text: &str) -> bool {
+        let available = exact_constraints(text);
+        self.exact
+            .iter()
+            .all(|required| available.contains(required))
+    }
+
+    fn observed_hard_eligible(&self, evidence: &CandidateEvidence) -> bool {
+        if evidence.state != EvidenceState::Observed
+            || evidence.source_id != self.source
+            || !evidence.retained
+            || !evidence.site_allowed
+            || evidence.recall_suppressed
+            || evidence.latest_confirmation_seq.is_some()
+            || !self.in_scope(EvidenceState::Observed)
+            || self.needs_confirmation
+        {
+            return false;
+        }
+        let raw = evidence.observed_raw();
+        if (evidence.original_query.is_none()
+            && importance::generic_title(&evidence.original_title))
+            || evidence.original_query.as_deref().is_some_and(|search| {
+                !importance::groupable(&evidence.original_title, Some(search))
+                    && exact_constraints(search).is_empty()
+            })
+            || self.needs_number && !MONEY_VALUE.is_match(raw)
+            || bare_identifier_cannot_explain_itself(self.request, raw)
+        {
+            return false;
+        }
+        let observed = observed_text(
+            &evidence.site,
+            &evidence.original_title,
+            evidence.original_query.as_deref(),
+        );
+        self.acronyms
+            .iter()
+            .all(|acronym| observed.contains(acronym))
+            && self.exact_supported(&format!(
+                "{} {}",
+                evidence.original_title,
+                evidence.original_query.as_deref().unwrap_or("")
+            ))
+    }
+
+    fn observed_supported(
+        &self,
+        evidence: &CandidateEvidence,
+        lexical_rank: Option<usize>,
+        semantic_main_score: Option<f32>,
+    ) -> bool {
+        self.observed_hard_eligible(evidence)
+            && relevance_admitted(
+                lexical_rank,
+                semantic_main_score,
+                &self.main_terms,
+                &evidence.observed_content(),
+                &self.exact_facets,
+                evidence.observed_raw(),
+            )
+    }
+
+    fn confirmed_eligible(&self, evidence: &CandidateEvidence) -> Option<usize> {
+        if evidence.state != EvidenceState::Confirmed
+            || evidence.source_id != self.source
+            || !evidence.retained
+            || !evidence.site_allowed
+            || evidence.recall_suppressed
+            || evidence.latest_confirmation_seq.is_none()
+            || !self.in_scope(EvidenceState::Confirmed)
+            || self.main_terms.is_empty()
+        {
+            return None;
+        }
+        let text = evidence.effective_text.as_deref()?;
+        if self.needs_number && !MONEY_VALUE.is_match(text)
+            || bare_identifier_cannot_explain_itself(self.request, text)
+            || self
+                .acronyms
+                .iter()
+                .any(|acronym| !compact(text).contains(acronym))
+            || !self.exact_supported(text)
+        {
+            return None;
+        }
+        let (matched, coverage) = lexical_coverage(&self.main_terms, &compact(text));
+        (matched > 0 && coverage >= 0.50).then_some(matched)
+    }
+}
+
 fn rrf(ranks: &[HashMap<String, usize>]) -> Vec<(String, f32)> {
     let mut fused = HashMap::<String, f32>::new();
     for channel in ranks {
@@ -506,13 +864,16 @@ fn site_filter_sql(policy: &crate::Policy, args: &mut Vec<String>) -> String {
     }
 }
 
+const RETRIEVAL_ATOM_SCAN_LIMIT: usize = 10_000;
+
 fn lexical_ranks(
     conn: &Connection,
-    source: &str,
-    policy: &crate::Policy,
+    plan: &EligibilityPlan<'_>,
     terms: &[String],
+    start: Instant,
+    budget: u64,
 ) -> Result<HashMap<String, usize>> {
-    if terms.is_empty() {
+    if terms.is_empty() || deadline_reached(start, budget) {
         return Ok(HashMap::new());
     }
     let query = terms
@@ -520,26 +881,61 @@ fn lexical_ranks(
         .map(|term| format!("\"{}\"", term.replace('"', "\"\"")))
         .collect::<Vec<_>>()
         .join(" OR ");
-    let mut args = vec![query, source.to_string()];
-    let filter = site_filter_sql(policy, &mut args);
-    args.push((algorithm::RETRIEVAL_CANDIDATES_PER_CHANNEL as i64).to_string());
+    let mut args = vec![
+        query,
+        plan.source.to_string(),
+        plan.retention_cutoff.clone(),
+    ];
+    let filter = site_filter_sql(plan.policy, &mut args);
+    if deadline_reached(start, budget) {
+        return Ok(HashMap::new());
+    }
     let sql = format!(
-        "SELECT a.id FROM atom_fts JOIN atoms a ON a.id=atom_fts.id
+        "SELECT a.id,a.site,a.kind,a.title,a.query,a.last_seen FROM atom_fts JOIN atoms a ON a.id=atom_fts.id
 WHERE atom_fts MATCH ? AND a.source=?
+  AND a.last_seen>=?
   {filter}
-  AND (a.last_seen>=strftime('%Y-%m-%dT%H:%M:%SZ','now','-90 days')
-       OR EXISTS (SELECT 1 FROM feedback f WHERE f.atom=a.id AND f.action='confirm_constraint'))
-ORDER BY bm25(atom_fts),a.id LIMIT ?"
+  AND NOT EXISTS (SELECT 1 FROM feedback f WHERE f.atom=a.id AND f.action IN ('do_not_use','wrong_topic'))
+  AND NOT EXISTS (SELECT 1 FROM feedback f WHERE f.atom=a.id AND f.action='confirm_constraint')
+ORDER BY bm25(atom_fts),a.id LIMIT {RETRIEVAL_ATOM_SCAN_LIMIT}"
     );
-    let ids = conn
-        .prepare(&sql)?
-        .query_map(params_from_iter(args.iter()), |r| r.get::<_, String>(0))?
-        .collect::<std::result::Result<Vec<_>, _>>()?;
-    Ok(ids
-        .into_iter()
-        .enumerate()
-        .map(|(i, id)| (id, i + 1))
-        .collect())
+    let mut stmt = conn.prepare(&sql)?;
+    if deadline_reached(start, budget) {
+        return Ok(HashMap::new());
+    }
+    let rows = stmt.query_map(params_from_iter(args.iter()), |r| {
+        Ok((
+            r.get::<_, String>(0)?,
+            r.get::<_, String>(1)?,
+            r.get::<_, String>(2)?,
+            r.get::<_, String>(3)?,
+            r.get::<_, Option<String>>(4)?,
+            r.get::<_, String>(5)?,
+        ))
+    })?;
+    let mut ranks = HashMap::new();
+    for row in rows {
+        if deadline_reached(start, budget)
+            || ranks.len() >= algorithm::RETRIEVAL_CANDIDATES_PER_CHANNEL
+        {
+            break;
+        }
+        let (id, site, kind, title, query, last_seen) = row?;
+        let evidence = CandidateEvidence::observed(
+            id.clone(),
+            plan.source,
+            site.clone(),
+            kind,
+            title,
+            query,
+            last_seen,
+            plan.site_allowed(&site),
+        );
+        if plan.observed_supported(&evidence, Some(1), None) {
+            ranks.insert(id, ranks.len() + 1);
+        }
+    }
+    Ok(ranks)
 }
 
 #[derive(Default)]
@@ -550,45 +946,92 @@ struct SemanticMatches {
 
 fn semantic_ranks(
     conn: &Connection,
-    source: &str,
-    policy: &crate::Policy,
+    plan: &EligibilityPlan<'_>,
     encoder: Option<&model::Encoder>,
     request: &Recall,
     start: Instant,
     budget: u64,
 ) -> Result<SemanticMatches> {
+    if deadline_reached(start, budget) {
+        return Ok(SemanticMatches::default());
+    }
     let Some(encoder) = encoder else {
         return Ok(SemanticMatches::default());
     };
+    if deadline_reached(start, budget) {
+        return Ok(SemanticMatches::default());
+    }
     let Some(main_query) = encoder.encode(&request.query) else {
         return Ok(SemanticMatches::default());
     };
-    let facets: Vec<_> = request
-        .facets
-        .iter()
-        .filter_map(|facet| encoder.encode(facet))
-        .collect();
+    if deadline_reached(start, budget) {
+        return Ok(SemanticMatches::default());
+    }
+    let mut facets = Vec::new();
+    for facet in &request.facets {
+        if deadline_reached(start, budget) {
+            return Ok(SemanticMatches::default());
+        }
+        if let Some(vector) = encoder.encode(facet) {
+            if deadline_reached(start, budget) {
+                return Ok(SemanticMatches::default());
+            }
+            facets.push(vector);
+        }
+    }
     let mut scored = Vec::<(String, f32, f32)>::new();
-    let mut args = vec![source.to_string(), encoder.manifest.model_hash.clone()];
-    let filter = site_filter_sql(policy, &mut args);
+    let mut args = vec![
+        plan.source.to_string(),
+        encoder.manifest.model_hash.clone(),
+        plan.retention_cutoff.clone(),
+    ];
+    let filter = site_filter_sql(plan.policy, &mut args);
+    if deadline_reached(start, budget) {
+        return Ok(SemanticMatches::default());
+    }
     let sql = format!(
-        "SELECT a.id,v.vector FROM vectors v JOIN atoms a ON a.id=v.atom
+        "SELECT a.id,a.site,a.kind,a.title,a.query,a.last_seen,v.vector FROM vectors v JOIN atoms a ON a.id=v.atom
 WHERE a.source=? AND v.model=?
+  AND a.last_seen>=?
   {filter}
-  AND (a.last_seen>=strftime('%Y-%m-%dT%H:%M:%SZ','now','-90 days')
-       OR EXISTS (SELECT 1 FROM feedback f WHERE f.atom=a.id AND f.action='confirm_constraint'))
-ORDER BY a.last_seen DESC,a.id LIMIT 10000"
+  AND NOT EXISTS (SELECT 1 FROM feedback f WHERE f.atom=a.id AND f.action IN ('do_not_use','wrong_topic'))
+  AND NOT EXISTS (SELECT 1 FROM feedback f WHERE f.atom=a.id AND f.action='confirm_constraint')
+ORDER BY a.last_seen DESC,a.id LIMIT {RETRIEVAL_ATOM_SCAN_LIMIT}"
     );
     let mut stmt = conn.prepare(&sql)?;
+    if deadline_reached(start, budget) {
+        return Ok(SemanticMatches::default());
+    }
     let rows = stmt.query_map(params_from_iter(args.iter()), |r| {
-        Ok((r.get::<_, String>(0)?, r.get::<_, Vec<u8>>(1)?))
+        Ok((
+            r.get::<_, String>(0)?,
+            r.get::<_, String>(1)?,
+            r.get::<_, String>(2)?,
+            r.get::<_, String>(3)?,
+            r.get::<_, Option<String>>(4)?,
+            r.get::<_, String>(5)?,
+            r.get::<_, Vec<u8>>(6)?,
+        ))
     })?;
     for row in rows {
-        if start.elapsed().as_millis() as u64 >= budget {
+        if deadline_reached(start, budget) {
             break;
         }
-        let (id, bytes) = row?;
+        let (id, site, kind, title, query, last_seen, bytes) = row?;
         if bytes.len() != encoder.manifest.dimensions * 4 {
+            continue;
+        }
+        let evidence = CandidateEvidence::observed(
+            id.clone(),
+            plan.source,
+            site.clone(),
+            kind,
+            title,
+            query,
+            last_seen,
+            plan.site_allowed(&site),
+        );
+        if !plan.observed_hard_eligible(&evidence) {
             continue;
         }
         let vector: Vec<f32> = bytes
@@ -604,11 +1047,18 @@ ORDER BY a.last_seen DESC,a.id LIMIT 10000"
         // The main question is the semantic admission signal. Facets can add a
         // small positive ordering bonus, but a generic or cross-language facet
         // cannot suppress a candidate that fits the question itself.
-        if semantic_candidate_admitted(main) {
+        if semantic_candidate_admitted(main) && plan.observed_supported(&evidence, None, Some(main))
+        {
             scored.push((id, semantic_rank_score(main, facet), main));
         }
     }
+    if deadline_reached(start, budget) {
+        return Ok(SemanticMatches::default());
+    }
     scored.sort_by(|a, b| b.1.total_cmp(&a.1).then(a.0.cmp(&b.0)));
+    if deadline_reached(start, budget) {
+        return Ok(SemanticMatches::default());
+    }
     scored.truncate(algorithm::RETRIEVAL_CANDIDATES_PER_CHANNEL);
     let mut matches = SemanticMatches::default();
     for (index, (id, _, main_score)) in scored.into_iter().enumerate() {
@@ -620,46 +1070,105 @@ ORDER BY a.last_seen DESC,a.id LIMIT 10000"
 
 fn confirmed_ranks(
     conn: &Connection,
-    source: &str,
-    policy: &crate::Policy,
-    terms: &[String],
+    plan: &EligibilityPlan<'_>,
+    start: Instant,
+    budget: u64,
 ) -> Result<HashMap<String, usize>> {
-    if terms.is_empty() {
+    if deadline_reached(start, budget)
+        || plan.main_terms.is_empty()
+        || !plan.in_scope(EvidenceState::Confirmed)
+    {
         return Ok(HashMap::new());
     }
-    let mut args = vec![source.to_string()];
-    let filter = site_filter_sql(policy, &mut args);
+    let mut args = vec![plan.source.to_string()];
+    let filter = site_filter_sql(plan.policy, &mut args);
+    if deadline_reached(start, budget) {
+        return Ok(HashMap::new());
+    }
     let sql = format!(
-        "SELECT f.seq,f.atom,f.action,f.text FROM feedback f JOIN atoms a ON a.id=f.atom
+        "SELECT f.seq,f.atom,f.text,a.site,a.kind,a.title,a.query,a.last_seen
+FROM feedback f JOIN atoms a ON a.id=f.atom
 WHERE a.source=? AND f.action='confirm_constraint'
+  AND f.seq=(SELECT max(latest.seq) FROM feedback latest
+             WHERE latest.atom=f.atom AND latest.action='confirm_constraint')
+  AND NOT EXISTS (SELECT 1 FROM feedback suppressed
+                  WHERE suppressed.atom=a.id
+                    AND suppressed.action IN ('do_not_use','wrong_topic'))
   {filter}
-ORDER BY f.seq DESC LIMIT 1000"
+ORDER BY f.seq DESC,a.id LIMIT 1000"
     );
-    let rows = conn
-        .prepare(&sql)?
-        .query_map(params_from_iter(args.iter()), |r| {
-            Ok(FeedbackEntry {
-                seq: r.get(0)?,
-                atom: r.get(1)?,
-                action: r.get(2)?,
-                text: r.get(3)?,
-            })
-        })?
-        .collect::<std::result::Result<Vec<_>, _>>()?;
-    let latest = feedback::resolve_rows(rows);
-    let mut matches: Vec<_> = latest
-        .into_iter()
-        .filter_map(|(id, state)| {
-            let text = state.latest_confirmation?.text?;
-            let lower = text.to_lowercase();
-            let count = terms
-                .iter()
-                .filter(|term| lower.contains(term.as_str()))
-                .count();
-            (count > 0).then_some((id, count))
-        })
-        .collect();
-    matches.sort_by(|a, b| b.1.cmp(&a.1).then(a.0.cmp(&b.0)));
+    let mut stmt = conn.prepare(&sql)?;
+    if deadline_reached(start, budget) {
+        return Ok(HashMap::new());
+    }
+    let rows = stmt.query_map(params_from_iter(args.iter()), |r| {
+        Ok((
+            r.get::<_, i64>(0)?,
+            r.get::<_, String>(1)?,
+            r.get::<_, Option<String>>(2)?,
+            r.get::<_, String>(3)?,
+            r.get::<_, String>(4)?,
+            r.get::<_, String>(5)?,
+            r.get::<_, Option<String>>(6)?,
+            r.get::<_, String>(7)?,
+        ))
+    })?;
+    let mut metadata = HashMap::new();
+    let mut latest_rows = Vec::new();
+    for row in rows {
+        if deadline_reached(start, budget) {
+            break;
+        }
+        let (seq, id, text, site, kind, title, query, last_seen) = row?;
+        metadata.insert(id.clone(), (site, kind, title, query, last_seen));
+        latest_rows.push(FeedbackEntry {
+            seq,
+            atom: id,
+            action: "confirm_constraint".to_owned(),
+            text,
+        });
+    }
+    if deadline_reached(start, budget) {
+        return Ok(HashMap::new());
+    }
+    // The query uses the sequence index to limit the source to one latest row
+    // per atom. Feed those rows through the shared resolver so recall,
+    // dashboard, and explain keep a single definition of “latest”.
+    let latest = feedback::resolve_rows(latest_rows);
+    let mut matches = Vec::new();
+    for (id, resolution) in latest {
+        if deadline_reached(start, budget) {
+            break;
+        }
+        let Some((site, kind, title, query, last_seen)) = metadata.remove(&id) else {
+            continue;
+        };
+        let Some(confirmation) = resolution.latest_confirmation.as_ref() else {
+            continue;
+        };
+        let evidence = CandidateEvidence::confirmed(
+            id.clone(),
+            plan.source,
+            site.clone(),
+            kind,
+            title,
+            query,
+            last_seen,
+            confirmation.seq,
+            confirmation.text.clone(),
+            plan.site_allowed(&site),
+        );
+        if let Some(matched) = plan.confirmed_eligible(&evidence) {
+            matches.push((id, matched));
+        }
+    }
+    if deadline_reached(start, budget) {
+        return Ok(HashMap::new());
+    }
+    matches.sort_by(|a: &(String, usize), b| b.1.cmp(&a.1).then(a.0.cmp(&b.0)));
+    if deadline_reached(start, budget) {
+        return Ok(HashMap::new());
+    }
     matches.truncate(algorithm::CONFIRMED_FEEDBACK_CANDIDATES);
     Ok(matches
         .into_iter()
@@ -714,20 +1223,36 @@ fn candidates_with_variant(
     budget: u64,
     variant: RankingVariant,
 ) -> Result<Vec<(f32, String, Value)>> {
+    if deadline_reached(start, budget) {
+        return Ok(vec![]);
+    }
     let terms = tokens(request);
-    let main_terms = main_terms(request);
-    let exact_facets = admissible_exact_facets(request, encoder);
-    let lexical = lexical_ranks(conn, source, policy, &terms)?;
-    let semantic = semantic_ranks(conn, source, policy, encoder, request, start, budget)?;
-    let confirmed = confirmed_ranks(conn, source, policy, &terms)?;
+    if deadline_reached(start, budget) {
+        return Ok(vec![]);
+    }
+    let plan = EligibilityPlan::new(source, policy, request, encoder, start, budget);
+    if deadline_reached(start, budget) {
+        return Ok(vec![]);
+    }
+    let lexical = if deadline_reached(start, budget) {
+        HashMap::new()
+    } else {
+        lexical_ranks(conn, &plan, &terms, start, budget)?
+    };
+    let semantic = if deadline_reached(start, budget) {
+        SemanticMatches::default()
+    } else {
+        semantic_ranks(conn, &plan, encoder, request, start, budget)?
+    };
+    let confirmed = if deadline_reached(start, budget) {
+        HashMap::new()
+    } else {
+        confirmed_ranks(conn, &plan, start, budget)?
+    };
+    if deadline_reached(start, budget) {
+        return Ok(vec![]);
+    }
     let mut fused = rrf(&[lexical.clone(), semantic.ranks.clone(), confirmed]);
-    let exact = exact_constraints(
-        &std::iter::once(&request.query)
-            .chain(request.facets.iter())
-            .map(String::as_str)
-            .collect::<Vec<_>>()
-            .join(" "),
-    );
     if fused.is_empty() {
         return Ok(vec![]);
     }
@@ -735,147 +1260,155 @@ fn candidates_with_variant(
     let placeholders = vec!["?"; ids.len()].join(",");
     let mut metadata = HashMap::new();
     let sql = format!(
-        "SELECT id,site,title,query,last_seen FROM atoms WHERE source=? AND id IN ({placeholders})"
+        "SELECT id,site,kind,title,query,last_seen FROM atoms
+WHERE source=? AND id IN ({placeholders})
+  AND (last_seen>=? OR EXISTS (SELECT 1 FROM feedback f
+                               WHERE f.atom=atoms.id AND f.action='confirm_constraint'))"
     );
-    for row in conn.prepare(&sql)?.query_map(
-        params_from_iter(std::iter::once(source).chain(ids.iter().copied())),
+    if deadline_reached(start, budget) {
+        return Ok(vec![]);
+    }
+    let mut metadata_stmt = conn.prepare(&sql)?;
+    if deadline_reached(start, budget) {
+        return Ok(vec![]);
+    }
+    let metadata_rows = metadata_stmt.query_map(
+        params_from_iter(
+            std::iter::once(source)
+                .chain(ids.iter().copied())
+                .chain(std::iter::once(plan.retention_cutoff.as_str())),
+        ),
         |r| {
             Ok((
                 r.get::<_, String>(0)?,
                 r.get::<_, String>(1)?,
                 r.get::<_, String>(2)?,
-                r.get::<_, Option<String>>(3)?,
-                r.get::<_, String>(4)?,
+                r.get::<_, String>(3)?,
+                r.get::<_, Option<String>>(4)?,
+                r.get::<_, String>(5)?,
             ))
         },
-    )? {
-        let (id, site, title, query, time) = row?;
-        metadata.insert(id, (site, title, query, time));
+    )?;
+    for row in metadata_rows {
+        if deadline_reached(start, budget) {
+            break;
+        }
+        let (id, site, kind, title, query, time) = row?;
+        metadata.insert(id, (site, kind, title, query, time));
+    }
+    if deadline_reached(start, budget) {
+        return Ok(vec![]);
     }
     let feedback_ids: Vec<_> = ids.iter().map(|id| (*id).to_string()).collect();
     let mut feedback_by_atom = feedback::load_for_atoms(conn, &feedback_ids)?;
+    if deadline_reached(start, budget) {
+        return Ok(vec![]);
+    }
     let mut sessions = HashMap::<String, i64>::new();
     let sql=format!("SELECT atom,count(DISTINCT session) FROM atom_days WHERE atom IN ({placeholders}) GROUP BY atom");
-    for row in conn
-        .prepare(&sql)?
-        .query_map(params_from_iter(ids.iter().copied()), |r| {
-            Ok((r.get::<_, String>(0)?, r.get::<_, i64>(1)?))
-        })?
-    {
+    if deadline_reached(start, budget) {
+        return Ok(vec![]);
+    }
+    let mut sessions_stmt = conn.prepare(&sql)?;
+    if deadline_reached(start, budget) {
+        return Ok(vec![]);
+    }
+    let sessions_rows = sessions_stmt.query_map(params_from_iter(ids.iter().copied()), |r| {
+        Ok((r.get::<_, String>(0)?, r.get::<_, i64>(1)?))
+    })?;
+    for row in sessions_rows {
+        if deadline_reached(start, budget) {
+            break;
+        }
         let (id, count) = row?;
         sessions.insert(id, count);
+    }
+    if deadline_reached(start, budget) {
+        return Ok(vec![]);
     }
     if variant == RankingVariant::BoundedTemporal {
         let last_seen: HashMap<String, i64> = metadata
             .iter()
-            .filter_map(|(id, (_, _, _, time))| {
+            .filter_map(|(id, (_, _, _, _, time))| {
                 chrono::DateTime::parse_from_rfc3339(time)
                     .ok()
                     .map(|parsed| (id.clone(), parsed.timestamp()))
             })
             .collect();
-        fused =
-            bounded_temporal_rerank(fused, &last_seen, &sessions, chrono::Utc::now().timestamp());
+        fused = bounded_temporal_rerank(fused, &last_seen, &sessions, plan.now);
     }
-    let needs_confirmation = confirmed_answer_required(&request.query);
-    let needs_number = numeric_answer_required(&request.query);
-    let acronyms = required_acronyms(request);
     let mut output = vec![];
     for (id, score) in fused {
-        let Some((site, title, query, time)) = metadata.remove(&id) else {
+        if deadline_reached(start, budget) {
+            break;
+        }
+        let Some((site, kind, title, query, time)) = metadata.remove(&id) else {
             continue;
         };
-        if policy
-            .excluded_sites
-            .iter()
-            .any(|rule| policy::matches(&site, rule))
-            || policy.selected_only
-                && !policy
-                    .selected_sites
-                    .iter()
-                    .any(|rule| policy::matches(&site, rule))
-        {
-            continue;
-        }
         let feedback = feedback_by_atom.remove(&id).unwrap_or_default();
-        if feedback.recall_suppressed {
-            continue;
-        }
-        let confirmed = feedback.latest_confirmation.as_ref();
-        // A generic feed or home tab contains no useful page-level evidence.
-        // Keep it in the local activity record, but never offer it as inferred
-        // research unless the user explicitly confirmed a constraint on it.
-        if confirmed.is_none() && query.is_none() && importance::generic_title(&title) {
-            continue;
-        }
-        if confirmed.is_none()
-            && query.as_deref().is_some_and(|search| {
-                !importance::groupable(&title, Some(search)) && exact_constraints(search).is_empty()
-            })
-        {
-            continue;
-        }
-        if confirmed.is_some() && !request.scope.iter().any(|x| x == "confirmed_preferences")
-            || confirmed.is_none()
-                && !request
-                    .scope
-                    .iter()
-                    .any(|x| x == "research" || x == "projects")
-        {
-            continue;
-        }
-        let raw = confirmed
-            .and_then(|entry| entry.text.as_deref())
-            .or(query.as_deref())
-            .unwrap_or(&title);
-        if confirmed.is_none() {
-            let observed = observed_text(&site, &title, query.as_deref());
-            if needs_confirmation
-                || needs_number && !MONEY_VALUE.is_match(raw)
-                || bare_identifier_cannot_explain_itself(request, raw)
-                || acronyms.iter().any(|acronym| !observed.contains(acronym))
-                || !relevance_admitted(
-                    lexical.get(&id).copied(),
-                    semantic.main_scores.get(&id).copied(),
-                    &main_terms,
-                    &compact(&format!("{title} {}", query.as_deref().unwrap_or(""))),
-                    &exact_facets,
-                    raw,
-                )
-            {
-                continue;
-            }
-        }
-        let exact_text = if confirmed.is_some() {
-            raw.to_owned()
+        let site_allowed = plan.site_allowed(&site);
+        let candidate = if let Some(confirmation) = feedback.latest_confirmation.as_ref() {
+            CandidateEvidence::confirmed(
+                id.clone(),
+                source,
+                site,
+                kind,
+                title,
+                query,
+                time,
+                confirmation.seq,
+                confirmation.text.clone(),
+                site_allowed,
+            )
         } else {
-            format!("{title} {}", query.as_deref().unwrap_or(""))
+            CandidateEvidence::observed(
+                id.clone(),
+                source,
+                site,
+                kind,
+                title,
+                query,
+                time,
+                site_allowed,
+            )
         };
-        let available = exact_constraints(&exact_text);
-        if !exact
-            .iter()
-            .all(|requirement| available.contains(requirement))
+        let mut candidate = candidate;
+        candidate.recall_suppressed = feedback.recall_suppressed;
+        let Some(evidence) = ResolvedEvidence::hydrate(candidate.clone(), feedback) else {
+            continue;
+        };
+        let eligible = match evidence.state {
+            EvidenceState::Observed => plan.observed_supported(
+                &candidate,
+                lexical.get(&id).copied(),
+                semantic.main_scores.get(&id).copied(),
+            ),
+            EvidenceState::Confirmed => plan.confirmed_eligible(&candidate).is_some(),
+        };
+        let resolved_sequence_matches =
+            evidence.latest_confirmation_seq == candidate.latest_confirmation_seq;
+        if evidence.source_id != source
+            || !evidence.retained
+            || !evidence.site_allowed
+            || evidence.recall_suppressed
+            || !resolved_sequence_matches
+            || !eligible
         {
             continue;
         }
-        let subject = if feedback.has_action("not_about_me") {
-            "other"
-        } else if confirmed.is_some() {
-            "self"
-        } else {
-            "unknown"
-        };
-        let text = if confirmed.is_some() {
+        let confirmed = evidence.state == EvidenceState::Confirmed;
+        let raw = evidence.effective_text.as_str();
+        let text = if confirmed {
             raw.to_owned()
         } else {
             format!(
                 "Observed {} on {}: {}",
-                if query.is_some() {
+                if evidence.original_query.is_some() {
                     "search"
                 } else {
                     "page title"
                 },
-                site,
+                evidence.site,
                 raw
             )
         };
@@ -883,17 +1416,12 @@ fn candidates_with_variant(
             "Browsing does not establish endorsement, ownership, or a settled preference."
                 .to_string(),
         ];
-        for correction in &feedback.history {
-            if correction.action != "confirm_constraint" {
-                limits.push(format!(
-                    "User correction: {}",
-                    correction.action.replace('_', " ")
-                ));
-            }
+        for action in &evidence.correction_actions {
+            limits.push(format!("User correction: {}", action.replace('_', " ")));
         }
-        output.push((score,site,json!({"id":id,"kind":if confirmed.is_some(){"constraint"}else{"research_topic"},
-            "state":if confirmed.is_some(){"confirmed"}else{"observed"},"text":text,"subject":subject,
-            "evidence":{"sessions":sessions.get(&id).copied().unwrap_or(0),"sites":1},"last_seen":time,"limits":limits})));
+        output.push((score,evidence.site,json!({"id":evidence.atom_id,"kind":if confirmed{"constraint"}else{"research_topic"},
+            "state":if confirmed{"confirmed"}else{"observed"},"text":text,"subject":evidence.subject,
+            "evidence":{"sessions":sessions.get(&id).copied().unwrap_or(0),"sites":1},"last_seen":evidence.last_seen,"limits":limits})));
     }
     Ok(output)
 }
@@ -921,7 +1449,7 @@ mod tests {
     fn retrieval_conn() -> Connection {
         let conn = Connection::open_in_memory().unwrap();
         conn.execute_batch(
-            "CREATE TABLE atoms(id TEXT,source TEXT,site TEXT,title TEXT,query TEXT,last_seen TEXT);
+            "CREATE TABLE atoms(id TEXT,source TEXT,site TEXT,title TEXT,query TEXT,kind TEXT,last_seen TEXT);
 CREATE VIRTUAL TABLE atom_fts USING fts5(id UNINDEXED,title,query);
 CREATE TABLE feedback(seq INTEGER PRIMARY KEY AUTOINCREMENT,id TEXT NOT NULL UNIQUE,atom TEXT,action TEXT,text TEXT,time TEXT);
 CREATE TABLE atom_days(atom TEXT,session TEXT);",
@@ -932,13 +1460,14 @@ CREATE TABLE atom_days(atom TEXT,session TEXT);",
 
     fn insert_observation(conn: &Connection, id: &str, title: &str, last_seen: &str) {
         conn.execute(
-            "INSERT INTO atoms VALUES(?,?,?,?,?,?)",
+            "INSERT INTO atoms VALUES(?,?,?,?,?,?,?)",
             params![
                 id,
                 "source",
                 "docs.example",
                 title,
                 Option::<String>::None,
+                "visit",
                 last_seen
             ],
         )
@@ -1277,7 +1806,7 @@ CREATE TABLE atom_days(atom TEXT,session TEXT);",
     #[test]
     fn observed_recall_candidate_requires_every_exact_identifier() {
         let conn = Connection::open_in_memory().unwrap();
-        conn.execute_batch("CREATE TABLE atoms(id TEXT,source TEXT,site TEXT,title TEXT,query TEXT,last_seen TEXT);
+        conn.execute_batch("CREATE TABLE atoms(id TEXT,source TEXT,site TEXT,title TEXT,query TEXT,kind TEXT,last_seen TEXT);
 CREATE VIRTUAL TABLE atom_fts USING fts5(id UNINDEXED,title,query);
 CREATE TABLE feedback(seq INTEGER PRIMARY KEY AUTOINCREMENT,id TEXT NOT NULL UNIQUE,atom TEXT,action TEXT,text TEXT,time TEXT);
 CREATE TABLE atom_days(atom TEXT,session TEXT);") .unwrap();
@@ -1286,13 +1815,14 @@ CREATE TABLE atom_days(atom TEXT,session TEXT);") .unwrap();
             ("complete", "MacBook 16GB 512GB"),
         ] {
             conn.execute(
-                "INSERT INTO atoms VALUES(?,?,?,?,?,?)",
+                "INSERT INTO atoms VALUES(?,?,?,?,?,?,?)",
                 params![
                     id,
                     "source",
                     "example.com",
                     title,
                     Option::<String>::None,
+                    "visit",
                     crate::now()
                 ],
             )
@@ -1339,7 +1869,7 @@ CREATE TABLE atom_days(atom TEXT,session TEXT);") .unwrap();
     fn excluded_sites_do_not_crowd_out_allowed_bm25_hits() {
         let conn = Connection::open_in_memory().unwrap();
         conn.execute_batch(
-            "CREATE TABLE atoms(id TEXT,source TEXT,site TEXT,title TEXT,last_seen TEXT);
+            "CREATE TABLE atoms(id TEXT,source TEXT,site TEXT,title TEXT,query TEXT,kind TEXT,last_seen TEXT);
 CREATE VIRTUAL TABLE atom_fts USING fts5(id UNINDEXED,title,query);
 CREATE TABLE feedback(seq INTEGER PRIMARY KEY AUTOINCREMENT,id TEXT NOT NULL UNIQUE,atom TEXT,action TEXT,text TEXT,time TEXT);",
         )
@@ -1347,36 +1877,40 @@ CREATE TABLE feedback(seq INTEGER PRIMARY KEY AUTOINCREMENT,id TEXT NOT NULL UNI
         for index in 0..80 {
             let id = format!("excluded-{index}");
             conn.execute(
-                "INSERT INTO atoms VALUES(?,?,?,?,?)",
+                "INSERT INTO atoms VALUES(?,?,?,?,?,?,?)",
                 params![
                     id,
                     "source",
                     "excluded.example.com",
-                    "keyboard keyboard keyboard",
+                    "keyboard overview guide",
+                    Option::<String>::None,
+                    "visit",
                     crate::now()
                 ],
             )
             .unwrap();
             conn.execute(
                 "INSERT INTO atom_fts VALUES(?,?,?)",
-                params![id, "keyboard keyboard keyboard", Option::<String>::None],
+                params![id, "keyboard overview guide", Option::<String>::None],
             )
             .unwrap();
         }
         conn.execute(
-            "INSERT INTO atoms VALUES(?,?,?,?,?)",
+            "INSERT INTO atoms VALUES(?,?,?,?,?,?,?)",
             params![
                 "allowed",
                 "source",
                 "allowed.example.com",
-                "keyboard",
+                "keyboard overview guide",
+                Option::<String>::None,
+                "visit",
                 crate::now()
             ],
         )
         .unwrap();
         conn.execute(
             "INSERT INTO atom_fts VALUES(?,?,?)",
-            params!["allowed", "keyboard", Option::<String>::None],
+            params!["allowed", "keyboard overview guide", Option::<String>::None],
         )
         .unwrap();
         let policy = Policy {
@@ -1385,8 +1919,183 @@ CREATE TABLE feedback(seq INTEGER PRIMARY KEY AUTOINCREMENT,id TEXT NOT NULL UNI
             selected_sites: vec!["allowed.example.com".into()],
             ..Policy::default()
         };
-        let ranks = lexical_ranks(&conn, "source", &policy, &["keyboard".into()]).unwrap();
+        let request = recall("keyboard", &[]);
+        let start = Instant::now();
+        let plan = EligibilityPlan::new("source", &policy, &request, None, start, 1500);
+        let ranks = lexical_ranks(&conn, &plan, &["keyboard".into()], start, 1500).unwrap();
         assert_eq!(ranks.get("allowed"), Some(&1));
         assert_eq!(ranks.len(), 1);
+    }
+
+    #[test]
+    fn semantic_channel_fills_slots_after_suppressed_and_out_of_scope_rows() {
+        let conn = retrieval_conn();
+        conn.execute_batch(
+            "CREATE TABLE vectors(atom TEXT PRIMARY KEY,model TEXT NOT NULL,vector BLOB NOT NULL);",
+        )
+        .unwrap();
+        let model_path = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("../../skills/serein-context/runtime/macos-arm64/model");
+        let encoder = model::Encoder::open(&model_path).expect("checked-in model pack");
+        let query_vector = encoder.encode("Desk lamp installation").unwrap();
+
+        let orthogonal_index = query_vector
+            .iter()
+            .enumerate()
+            .min_by(|(_, a), (_, b)| a.abs().total_cmp(&b.abs()))
+            .map(|(index, _)| index)
+            .unwrap();
+        let mut orthogonal = vec![0.0; query_vector.len()];
+        orthogonal[orthogonal_index] = 1.0;
+        let projection = query_vector[orthogonal_index];
+        for (component, query_component) in orthogonal.iter_mut().zip(&query_vector) {
+            *component -= projection * query_component;
+        }
+        let orthogonal = model::normalize(orthogonal).unwrap();
+        let guide_vector: Vec<f32> = query_vector
+            .iter()
+            .zip(&orthogonal)
+            .map(|(query, orthogonal)| query * 0.8 + orthogonal * 0.6)
+            .collect();
+        let encode_vector = |vector: &[f32]| {
+            vector
+                .iter()
+                .flat_map(|component| component.to_le_bytes())
+                .collect::<Vec<_>>()
+        };
+
+        for (index, action) in (0..66).map(|index| {
+            let action = match index % 3 {
+                0 => "do_not_use",
+                1 => "wrong_topic",
+                _ => "confirm_constraint",
+            };
+            (index, action)
+        }) {
+            let id = format!("excluded-{index:02}");
+            insert_observation(
+                &conn,
+                &id,
+                &format!("Desk lamp installation reference {index}"),
+                &crate::now(),
+            );
+            conn.execute(
+                "INSERT INTO vectors(atom,model,vector) VALUES(?,?,?)",
+                params![
+                    id,
+                    encoder.manifest.model_hash,
+                    encode_vector(&query_vector)
+                ],
+            )
+            .unwrap();
+            conn.execute(
+                "INSERT INTO feedback(id,atom,action,text,time) VALUES(?,?,?,?,?)",
+                params![
+                    format!("feedback-{index}"),
+                    id,
+                    action,
+                    (action == "confirm_constraint").then_some("Desk lamp installation reference"),
+                    crate::now()
+                ],
+            )
+            .unwrap();
+        }
+        insert_observation(
+            &conn,
+            "eligible-guide",
+            "Desk lamp installation guide",
+            &crate::now(),
+        );
+        conn.execute(
+            "INSERT INTO vectors(atom,model,vector) VALUES(?,?,?)",
+            params![
+                "eligible-guide",
+                encoder.manifest.model_hash,
+                encode_vector(&guide_vector)
+            ],
+        )
+        .unwrap();
+
+        let request = recall("Desk lamp installation", &[]);
+        let policy = Policy::default();
+        let start = Instant::now();
+        let plan = EligibilityPlan::new("source", &policy, &request, Some(&encoder), start, 1500);
+        let matches = semantic_ranks(&conn, &plan, Some(&encoder), &request, start, 1500).unwrap();
+        assert_eq!(matches.ranks.get("eligible-guide"), Some(&1));
+        assert_eq!(matches.ranks.len(), 1);
+    }
+
+    #[test]
+    fn latest_null_confirmation_does_not_fall_back_to_older_matching_text() {
+        let conn = retrieval_conn();
+        insert_observation(&conn, "latest-null", "Desk lamp observation", &crate::now());
+        insert_observation(
+            &conn,
+            "latest-valid",
+            "Office equipment note",
+            &crate::now(),
+        );
+        conn.execute(
+            "INSERT INTO feedback(id,atom,action,text,time) VALUES(?,?,?,?,?)",
+            params![
+                "old-confirmation",
+                "latest-null",
+                "confirm_constraint",
+                "Desk lamp is the selected option",
+                crate::now()
+            ],
+        )
+        .unwrap();
+        conn.execute(
+            "INSERT INTO feedback(id,atom,action,text,time) VALUES(?,?,?,?,?)",
+            params![
+                "new-null-confirmation",
+                "latest-null",
+                "confirm_constraint",
+                Option::<String>::None,
+                crate::now()
+            ],
+        )
+        .unwrap();
+        conn.execute(
+            "INSERT INTO feedback(id,atom,action,text,time) VALUES(?,?,?,?,?)",
+            params![
+                "valid-confirmation",
+                "latest-valid",
+                "confirm_constraint",
+                "Desk lamp is preferred",
+                crate::now()
+            ],
+        )
+        .unwrap();
+
+        let mut request = recall("Desk lamp", &[]);
+        request.scope = vec!["confirmed_preferences".to_owned()];
+        let policy = Policy::default();
+        let start = Instant::now();
+        let plan = EligibilityPlan::new("source", &policy, &request, None, start, 1500);
+        let ranks = confirmed_ranks(&conn, &plan, start, 1500).unwrap();
+        assert!(!ranks.contains_key("latest-null"));
+        assert_eq!(ranks.get("latest-valid"), Some(&1));
+    }
+
+    #[test]
+    fn expired_shared_deadline_skips_plan_and_channel_queries() {
+        let conn = Connection::open_in_memory().unwrap();
+        let policy = Policy::default();
+        let request = recall("Desk lamp installation", &["specific lamp fixture"]);
+        let start = Instant::now() - std::time::Duration::from_millis(10);
+        let result = candidates_with_variant(
+            &conn,
+            "source",
+            &policy,
+            &request,
+            None,
+            start,
+            1,
+            RankingVariant::BoundedTemporal,
+        )
+        .unwrap();
+        assert!(result.is_empty());
     }
 }
