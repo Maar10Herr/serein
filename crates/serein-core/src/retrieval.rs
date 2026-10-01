@@ -1,4 +1,5 @@
 //! Bounded candidate generation and rank fusion for a local vault.
+use crate::feedback::{self, FeedbackEntry};
 use crate::{algorithm, importance, model, policy, Recall, Result};
 use rusqlite::{params_from_iter, Connection};
 use serde_json::{json, Value};
@@ -629,24 +630,27 @@ fn confirmed_ranks(
     let mut args = vec![source.to_string()];
     let filter = site_filter_sql(policy, &mut args);
     let sql = format!(
-        "SELECT f.atom,f.text FROM feedback f JOIN atoms a ON a.id=f.atom
-WHERE a.source=? AND f.action='confirm_constraint' AND f.text IS NOT NULL
+        "SELECT f.seq,f.atom,f.action,f.text FROM feedback f JOIN atoms a ON a.id=f.atom
+WHERE a.source=? AND f.action='confirm_constraint'
   {filter}
-ORDER BY f.time DESC,f.id DESC LIMIT 1000"
+ORDER BY f.seq DESC LIMIT 1000"
     );
     let rows = conn
         .prepare(&sql)?
         .query_map(params_from_iter(args.iter()), |r| {
-            Ok((r.get::<_, String>(0)?, r.get::<_, String>(1)?))
+            Ok(FeedbackEntry {
+                seq: r.get(0)?,
+                atom: r.get(1)?,
+                action: r.get(2)?,
+                text: r.get(3)?,
+            })
         })?
         .collect::<std::result::Result<Vec<_>, _>>()?;
-    let mut latest = HashMap::new();
-    for (id, text) in rows {
-        latest.entry(id).or_insert(text);
-    }
+    let latest = feedback::resolve_rows(rows);
     let mut matches: Vec<_> = latest
         .into_iter()
-        .filter_map(|(id, text)| {
+        .filter_map(|(id, state)| {
+            let text = state.latest_confirmation?.text?;
             let lower = text.to_lowercase();
             let count = terms
                 .iter()
@@ -748,23 +752,8 @@ fn candidates_with_variant(
         let (id, site, title, query, time) = row?;
         metadata.insert(id, (site, title, query, time));
     }
-    let mut corrections: HashMap<String, Vec<(String, Option<String>)>> = HashMap::new();
-    let sql = format!(
-        "SELECT atom,action,text FROM feedback WHERE atom IN ({placeholders}) ORDER BY time,id"
-    );
-    for row in conn
-        .prepare(&sql)?
-        .query_map(params_from_iter(ids.iter().copied()), |r| {
-            Ok((
-                r.get::<_, String>(0)?,
-                r.get::<_, String>(1)?,
-                r.get::<_, Option<String>>(2)?,
-            ))
-        })?
-    {
-        let (id, action, text) = row?;
-        corrections.entry(id).or_default().push((action, text));
-    }
+    let feedback_ids: Vec<_> = ids.iter().map(|id| (*id).to_string()).collect();
+    let mut feedback_by_atom = feedback::load_for_atoms(conn, &feedback_ids)?;
     let mut sessions = HashMap::<String, i64>::new();
     let sql=format!("SELECT atom,count(DISTINCT session) FROM atom_days WHERE atom IN ({placeholders}) GROUP BY atom");
     for row in conn
@@ -808,17 +797,11 @@ fn candidates_with_variant(
         {
             continue;
         }
-        let corrections = corrections.remove(&id).unwrap_or_default();
-        if corrections
-            .iter()
-            .any(|(action, _)| action == "do_not_use" || action == "wrong_topic")
-        {
+        let feedback = feedback_by_atom.remove(&id).unwrap_or_default();
+        if feedback.recall_suppressed {
             continue;
         }
-        let confirmed = corrections
-            .iter()
-            .rev()
-            .find(|(action, _)| action == "confirm_constraint");
+        let confirmed = feedback.latest_confirmation.as_ref();
         // A generic feed or home tab contains no useful page-level evidence.
         // Keep it in the local activity record, but never offer it as inferred
         // research unless the user explicitly confirmed a constraint on it.
@@ -842,7 +825,7 @@ fn candidates_with_variant(
             continue;
         }
         let raw = confirmed
-            .and_then(|(_, text)| text.as_deref())
+            .and_then(|entry| entry.text.as_deref())
             .or(query.as_deref())
             .unwrap_or(&title);
         if confirmed.is_none() {
@@ -875,10 +858,7 @@ fn candidates_with_variant(
         {
             continue;
         }
-        let subject = if corrections
-            .iter()
-            .any(|(action, _)| action == "not_about_me")
-        {
+        let subject = if feedback.has_action("not_about_me") {
             "other"
         } else if confirmed.is_some() {
             "self"
@@ -903,9 +883,12 @@ fn candidates_with_variant(
             "Browsing does not establish endorsement, ownership, or a settled preference."
                 .to_string(),
         ];
-        for (action, _) in &corrections {
-            if action != "confirm_constraint" {
-                limits.push(format!("User correction: {}", action.replace('_', " ")));
+        for correction in &feedback.history {
+            if correction.action != "confirm_constraint" {
+                limits.push(format!(
+                    "User correction: {}",
+                    correction.action.replace('_', " ")
+                ));
             }
         }
         output.push((score,site,json!({"id":id,"kind":if confirmed.is_some(){"constraint"}else{"research_topic"},
@@ -940,7 +923,7 @@ mod tests {
         conn.execute_batch(
             "CREATE TABLE atoms(id TEXT,source TEXT,site TEXT,title TEXT,query TEXT,last_seen TEXT);
 CREATE VIRTUAL TABLE atom_fts USING fts5(id UNINDEXED,title,query);
-CREATE TABLE feedback(id INTEGER PRIMARY KEY,atom TEXT,action TEXT,text TEXT,time TEXT);
+CREATE TABLE feedback(seq INTEGER PRIMARY KEY AUTOINCREMENT,id TEXT NOT NULL UNIQUE,atom TEXT,action TEXT,text TEXT,time TEXT);
 CREATE TABLE atom_days(atom TEXT,session TEXT);",
         )
         .unwrap();
@@ -1296,7 +1279,7 @@ CREATE TABLE atom_days(atom TEXT,session TEXT);",
         let conn = Connection::open_in_memory().unwrap();
         conn.execute_batch("CREATE TABLE atoms(id TEXT,source TEXT,site TEXT,title TEXT,query TEXT,last_seen TEXT);
 CREATE VIRTUAL TABLE atom_fts USING fts5(id UNINDEXED,title,query);
-CREATE TABLE feedback(id TEXT,atom TEXT,action TEXT,text TEXT,time TEXT);
+CREATE TABLE feedback(seq INTEGER PRIMARY KEY AUTOINCREMENT,id TEXT NOT NULL UNIQUE,atom TEXT,action TEXT,text TEXT,time TEXT);
 CREATE TABLE atom_days(atom TEXT,session TEXT);") .unwrap();
         for (id, title) in [
             ("partial", "MacBook 16GB"),
@@ -1358,7 +1341,7 @@ CREATE TABLE atom_days(atom TEXT,session TEXT);") .unwrap();
         conn.execute_batch(
             "CREATE TABLE atoms(id TEXT,source TEXT,site TEXT,title TEXT,last_seen TEXT);
 CREATE VIRTUAL TABLE atom_fts USING fts5(id UNINDEXED,title,query);
-CREATE TABLE feedback(atom TEXT,action TEXT);",
+CREATE TABLE feedback(seq INTEGER PRIMARY KEY AUTOINCREMENT,id TEXT NOT NULL UNIQUE,atom TEXT,action TEXT,text TEXT,time TEXT);",
         )
         .unwrap();
         for index in 0..80 {

@@ -1,6 +1,7 @@
 use crate::algorithm;
+use crate::feedback::{self, FeedbackResolution};
 use crate::*;
-use rusqlite::{params, Connection, OptionalExtension};
+use rusqlite::{params, Connection, OptionalExtension, Transaction, TransactionBehavior};
 use serde_json::{json, Value};
 use std::{
     collections::{HashMap, HashSet},
@@ -8,11 +9,196 @@ use std::{
     time::{Duration, Instant},
 };
 
-fn memory_suppression_action(correction: &Value) -> bool {
-    matches!(
-        correction["action"].as_str(),
-        Some("do_not_use" | "wrong_topic" | "not_about_me" | "temporary_research")
-    )
+fn migration_error(message: &str) -> Error {
+    Error("DB_ERROR", message.into())
+}
+
+fn verify_index_definition(
+    conn: &Connection,
+    name: &str,
+    table: &str,
+    expected_columns: &[(&str, bool)],
+) -> Result<()> {
+    let index_table: Option<String> = conn
+        .query_row(
+            "SELECT tbl_name FROM sqlite_master WHERE type='index' AND name=?",
+            [name],
+            |row| row.get(0),
+        )
+        .optional()?;
+    if index_table.as_deref() != Some(table) {
+        return Err(migration_error(
+            "A required database index has an unexpected definition.",
+        ));
+    }
+
+    let flags: Option<(i64, String, i64)> = conn
+        .query_row(
+            "SELECT \"unique\",origin,partial FROM pragma_index_list(?1) WHERE name=?2",
+            params![table, name],
+            |row| Ok((row.get(0)?, row.get(1)?, row.get(2)?)),
+        )
+        .optional()?;
+    if flags
+        .as_ref()
+        .is_none_or(|(unique, origin, partial)| *unique != 0 || origin != "c" || *partial != 0)
+    {
+        return Err(migration_error(
+            "A required database index has an unexpected definition.",
+        ));
+    }
+
+    // The index names are fixed constants at the call sites, so the PRAGMA
+    // identifier is not derived from database contents.
+    let sql = format!("PRAGMA index_xinfo(\"{name}\")");
+    let actual = conn
+        .prepare(&sql)?
+        .query_map([], |row| {
+            Ok((
+                row.get::<_, Option<String>>(2)?,
+                row.get::<_, i64>(3)? != 0,
+                row.get::<_, Option<String>>(4)?,
+                row.get::<_, i64>(5)?,
+            ))
+        })?
+        .filter_map(|row| match row {
+            Ok((column, descending, collation, is_key)) if is_key != 0 => {
+                Some(Ok((column, descending, collation)))
+            }
+            Ok(_) => None,
+            Err(error) => Some(Err(error)),
+        })
+        .collect::<std::result::Result<Vec<_>, _>>()?;
+    let expected: Vec<_> = expected_columns
+        .iter()
+        .map(|(column, descending)| {
+            (
+                Some((*column).to_string()),
+                *descending,
+                Some("BINARY".to_string()),
+            )
+        })
+        .collect();
+    if actual != expected {
+        return Err(migration_error(
+            "A required database index has an unexpected definition.",
+        ));
+    }
+    Ok(())
+}
+
+fn create_and_verify_targeted_indexes(tx: &Transaction<'_>) -> Result<()> {
+    tx.execute_batch(
+        "CREATE INDEX IF NOT EXISTS atoms_by_source_recency
+             ON atoms(source, last_seen DESC, id);
+         CREATE INDEX IF NOT EXISTS memberships_by_topic
+             ON atom_topics(topic, atom);
+         CREATE INDEX IF NOT EXISTS feedback_by_atom_action
+             ON feedback(atom, action, seq);",
+    )?;
+    verify_index_definition(
+        tx,
+        "atoms_by_source_recency",
+        "atoms",
+        &[("source", false), ("last_seen", true), ("id", false)],
+    )?;
+    verify_index_definition(
+        tx,
+        "memberships_by_topic",
+        "atom_topics",
+        &[("topic", false), ("atom", false)],
+    )?;
+    verify_index_definition(
+        tx,
+        "feedback_by_atom_action",
+        "feedback",
+        &[("atom", false), ("action", false), ("seq", false)],
+    )?;
+    Ok(())
+}
+
+fn verify_foreign_keys(tx: &Transaction<'_>) -> Result<()> {
+    let has_violation = {
+        let mut statement = tx.prepare("PRAGMA foreign_key_check")?;
+        let violation = statement.query([])?.next()?.is_some();
+        violation
+    };
+    if has_violation {
+        return Err(migration_error(
+            "The feedback schema migration found a foreign-key violation.",
+        ));
+    }
+    Ok(())
+}
+
+fn verify_feedback_copy(tx: &Transaction<'_>) -> Result<()> {
+    let old_count: i64 = tx.query_row("SELECT count(*) FROM feedback", [], |row| row.get(0))?;
+    let new_count: i64 = tx.query_row("SELECT count(*) FROM feedback_v4", [], |row| row.get(0))?;
+    if old_count != new_count {
+        return Err(migration_error(
+            "The feedback schema migration did not preserve every row.",
+        ));
+    }
+    let mismatched_rows: i64 = tx.query_row(
+        "SELECT count(*) FROM feedback AS old
+         LEFT JOIN feedback_v4 AS new ON new.id=old.id
+         WHERE new.id IS NULL
+            OR old.atom IS NOT new.atom
+            OR old.action IS NOT new.action
+            OR old.text IS NOT new.text
+            OR old.time IS NOT new.time",
+        [],
+        |row| row.get(0),
+    )?;
+    let wrong_sequence: i64 = tx.query_row(
+        "SELECT count(*) FROM (
+             SELECT new.seq AS seq,
+                    row_number() OVER (ORDER BY old.rowid ASC) AS expected_seq
+             FROM feedback AS old
+             JOIN feedback_v4 AS new ON new.id=old.id
+         ) WHERE seq != expected_seq",
+        [],
+        |row| row.get(0),
+    )?;
+    if mismatched_rows != 0 || wrong_sequence != 0 {
+        return Err(migration_error(
+            "The feedback schema migration changed row data or sequence order.",
+        ));
+    }
+    Ok(())
+}
+
+fn migrate_feedback_3_to_4(conn: &mut Connection) -> Result<()> {
+    let tx = conn.transaction_with_behavior(TransactionBehavior::Immediate)?;
+    let version: i64 = tx.query_row("PRAGMA user_version", [], |row| row.get(0))?;
+    if version != 3 {
+        return Err(migration_error(
+            "The feedback schema migration requires schema version 3.",
+        ));
+    }
+    tx.execute_batch(
+        "CREATE TABLE feedback_v4 (
+             seq INTEGER PRIMARY KEY AUTOINCREMENT,
+             id TEXT NOT NULL UNIQUE,
+             atom TEXT NOT NULL REFERENCES atoms(id) ON DELETE CASCADE,
+             action TEXT NOT NULL,
+             text TEXT,
+             time TEXT NOT NULL
+         );
+         INSERT INTO feedback_v4(id,atom,action,text,time)
+             SELECT id,atom,action,text,time FROM feedback ORDER BY rowid ASC;",
+    )?;
+    verify_feedback_copy(&tx)?;
+    verify_foreign_keys(&tx)?;
+    tx.execute_batch(
+        "DROP TABLE feedback;
+         ALTER TABLE feedback_v4 RENAME TO feedback;",
+    )?;
+    verify_foreign_keys(&tx)?;
+    create_and_verify_targeted_indexes(&tx)?;
+    tx.execute_batch("PRAGMA user_version=4;")?;
+    tx.commit()?;
+    Ok(())
 }
 
 pub struct Vault {
@@ -24,11 +210,11 @@ impl Vault {
         if let Some(p) = path.parent() {
             install::private_dir(p)?
         }
-        let conn = Connection::open(path)?;
+        let mut conn = Connection::open(path)?;
         conn.busy_timeout(Duration::from_millis(1500))?;
         conn.execute_batch("PRAGMA foreign_keys=ON; PRAGMA journal_mode=WAL; PRAGMA synchronous=FULL; PRAGMA cache_size=-4096; PRAGMA wal_autocheckpoint=256; PRAGMA secure_delete=ON;")?;
         let ver: i64 = conn.query_row("PRAGMA user_version", [], |r| r.get(0))?;
-        if ver > 3 {
+        if ver > 4 {
             return Err(Error(
                 "SCHEMA_TOO_NEW",
                 "Update Serein before opening this vault.".into(),
@@ -59,6 +245,29 @@ PRAGMA user_version=3;
 COMMIT;")?;
         } else if ver < 3 {
             conn.execute_batch("PRAGMA user_version=3;")?;
+        }
+        let current_version: i64 = conn.query_row("PRAGMA user_version", [], |row| row.get(0))?;
+        if current_version < 4 {
+            migrate_feedback_3_to_4(&mut conn)?;
+        } else {
+            verify_index_definition(
+                &conn,
+                "atoms_by_source_recency",
+                "atoms",
+                &[("source", false), ("last_seen", true), ("id", false)],
+            )?;
+            verify_index_definition(
+                &conn,
+                "memberships_by_topic",
+                "atom_topics",
+                &[("topic", false), ("atom", false)],
+            )?;
+            verify_index_definition(
+                &conn,
+                "feedback_by_atom_action",
+                "feedback",
+                &[("atom", false), ("action", false), ("seq", false)],
+            )?;
         }
         conn.execute(
             "INSERT OR IGNORE INTO meta(key,value) VALUES('canonical_salt',?)",
@@ -465,7 +674,7 @@ ORDER BY a.first_seen,a.id LIMIT ?")?
         }
         let tx = self.conn.transaction()?;
         tx.execute(
-            "INSERT INTO feedback VALUES(?,?,?,?,?)",
+            "INSERT INTO feedback(id,atom,action,text,time) VALUES(?,?,?,?,?)",
             params![
                 id(),
                 atom,
@@ -545,11 +754,11 @@ ORDER BY a.first_seen,a.id LIMIT ?")?
             .collect();
         correction_ids.sort();
         correction_ids.dedup();
-        let corrections_by_atom = self.corrections_for_atoms(&correction_ids)?;
+        let feedback_by_atom = self.corrections_for_atoms(&correction_ids)?;
         groupable_candidates.retain(|(id, _, _, _, _, _, _, _)| {
-            !corrections_by_atom
+            !feedback_by_atom
                 .get(id)
-                .is_some_and(|corrections| corrections.iter().any(memory_suppression_action))
+                .is_some_and(|state| state.memory_excluded)
         });
 
         let mut groupable_ids: Vec<_> = groupable_candidates
@@ -560,20 +769,18 @@ ORDER BY a.first_seen,a.id LIMIT ?")?
         groupable_ids.dedup();
         let mut card_by_id = HashMap::new();
         for (id, site, title, query, kind, seconds, time, sessions) in card_rows {
-            let corrections = corrections_by_atom.get(&id).cloned().unwrap_or_default();
-            let confirmed = corrections
-                .iter()
-                .rev()
-                .find(|x| x["action"] == "confirm_constraint");
-            let prominent = importance::prominent(
-                &title,
-                query.as_deref(),
-                seconds,
-                sessions,
-                confirmed.is_some(),
-            );
-            let prominent = prominent && !corrections.iter().any(memory_suppression_action);
-            let card = json!({"id":id,"site":site,"text":confirmed.map(|x|x["text"].clone()).unwrap_or(json!(query.unwrap_or(title))),"state":if confirmed.is_some(){"confirmed"}else{"observed"},"last_seen":time,"sessions":sessions,"sites":1,"kind":kind,"prominent":prominent,"corrections":corrections});
+            let feedback = feedback_by_atom.get(&id).cloned().unwrap_or_default();
+            let confirmed = feedback.latest_confirmation.is_some();
+            let text = feedback
+                .latest_confirmation
+                .as_ref()
+                .map(|entry| json!(entry.text.clone()))
+                .unwrap_or_else(|| json!(query.as_deref().unwrap_or(&title)));
+            let corrections = feedback.corrections_json();
+            let prominent =
+                importance::prominent(&title, query.as_deref(), seconds, sessions, confirmed);
+            let prominent = prominent && !feedback.memory_excluded;
+            let card = json!({"id":id,"site":site,"text":text,"state":if confirmed{"confirmed"}else{"observed"},"last_seen":time,"sessions":sessions,"sites":1,"kind":kind,"prominent":prominent,"corrections":corrections});
             card_by_id.insert(id, card.clone());
             cards.push(card);
         }
@@ -645,19 +852,18 @@ ORDER BY a.first_seen,a.id LIMIT ?")?
             let card = if let Some(card) = card_by_id.get(&id) {
                 card.clone()
             } else {
-                let corrections = corrections_by_atom.get(&id).cloned().unwrap_or_default();
-                let confirmed = corrections
-                    .iter()
-                    .rev()
-                    .find(|x| x["action"] == "confirm_constraint");
-                let prominent = importance::prominent(
-                    &title,
-                    query.as_deref(),
-                    seconds,
-                    sessions,
-                    confirmed.is_some(),
-                );
-                json!({"id":id,"site":site,"text":confirmed.map(|x|x["text"].clone()).unwrap_or(json!(query.unwrap_or(title))),"state":if confirmed.is_some(){"confirmed"}else{"observed"},"last_seen":time,"sessions":sessions,"sites":1,"kind":kind,"prominent":prominent,"corrections":corrections})
+                let feedback = feedback_by_atom.get(&id).cloned().unwrap_or_default();
+                let confirmed = feedback.latest_confirmation.is_some();
+                let text = feedback
+                    .latest_confirmation
+                    .as_ref()
+                    .map(|entry| json!(entry.text.clone()))
+                    .unwrap_or_else(|| json!(query.as_deref().unwrap_or(&title)));
+                let corrections = feedback.corrections_json();
+                let prominent =
+                    importance::prominent(&title, query.as_deref(), seconds, sessions, confirmed);
+                let prominent = prominent && !feedback.memory_excluded;
+                json!({"id":id,"site":site,"text":text,"state":if confirmed{"confirmed"}else{"observed"},"last_seen":time,"sessions":sessions,"sites":1,"kind":kind,"prominent":prominent,"corrections":corrections})
             };
             if let Some(topic) = membership.get(&id) {
                 by_topic.entry(topic.clone()).or_default().push(card);
@@ -746,39 +952,14 @@ ORDER BY a.first_seen,a.id LIMIT ?")?
         r["memories"] = json!(memories);
         Ok(r)
     }
-    fn corrections(&self, id: &str) -> Result<Vec<Value>> {
-        Ok(self
-            .conn
-            .prepare("SELECT action,text FROM feedback WHERE atom=? ORDER BY time")?
-            .query_map([id], |r| {
-                Ok(json!({"action":r.get::<_,String>(0)?,"text":r.get::<_,Option<String>>(1)?}))
-            })?
-            .collect::<std::result::Result<Vec<_>, _>>()?)
+    fn corrections(&self, id: &str) -> Result<FeedbackResolution> {
+        let ids = [id.to_string()];
+        Ok(feedback::load_for_atoms(&self.conn, &ids)?
+            .remove(id)
+            .unwrap_or_default())
     }
-    fn corrections_for_atoms(&self, ids: &[String]) -> Result<HashMap<String, Vec<Value>>> {
-        if ids.is_empty() {
-            return Ok(HashMap::new());
-        }
-        let placeholders = vec!["?"; ids.len()].join(",");
-        let sql = format!(
-            "SELECT atom,action,text FROM feedback WHERE atom IN ({placeholders}) ORDER BY atom,time"
-        );
-        let params = ids.iter().map(String::as_str);
-        let mut by_atom = HashMap::<String, Vec<Value>>::new();
-        for row in self
-            .conn
-            .prepare(&sql)?
-            .query_map(rusqlite::params_from_iter(params), |row| {
-                Ok((
-                    row.get::<_, String>(0)?,
-                    json!({"action":row.get::<_,String>(1)?,"text":row.get::<_,Option<String>>(2)?}),
-                ))
-            })?
-        {
-            let (atom, correction) = row?;
-            by_atom.entry(atom).or_default().push(correction);
-        }
-        Ok(by_atom)
+    fn corrections_for_atoms(&self, ids: &[String]) -> Result<HashMap<String, FeedbackResolution>> {
+        feedback::load_for_atoms(&self.conn, ids)
     }
     pub fn refresh(&mut self, model_path: &Path, budget: u64) -> Result<Value> {
         let encoder = match model::Encoder::open(model_path) {
@@ -982,10 +1163,10 @@ impl Vault {
                     continue;
                 }
                 let corrections = self.corrections(id)?;
-                if corrections.iter().any(|c| c["action"] == "do_not_use") {
+                if corrections.recall_suppressed {
                     continue;
                 }
-                packet["evidence"].as_array_mut().unwrap().push(json!({"id":id,"site":site,"title":title,"search_query":query,"last_seen":time,"corrections":corrections,"source_type":"untrusted_browser_metadata"}));
+                packet["evidence"].as_array_mut().unwrap().push(json!({"id":id,"site":site,"title":title,"search_query":query,"last_seen":time,"corrections":corrections.corrections_json(),"source_type":"untrusted_browser_metadata"}));
                 if serde_json::to_vec(&packet)?.len() > max_bytes {
                     packet["evidence"].as_array_mut().unwrap().pop();
                     break;
@@ -1008,6 +1189,22 @@ mod lifecycle_tests {
         let dir = tempfile::tempdir().unwrap();
         let vault = Vault::open(&dir.path().join("vault.sqlite")).unwrap();
         (dir, vault)
+    }
+
+    fn downgrade_feedback_to_schema3(vault: &Vault) {
+        vault
+            .conn
+            .execute_batch(
+                "DROP TABLE feedback;
+                 CREATE TABLE feedback(
+                     id TEXT PRIMARY KEY,
+                     atom TEXT NOT NULL REFERENCES atoms(id) ON DELETE CASCADE,
+                     action TEXT NOT NULL,
+                     text TEXT,
+                     time TEXT NOT NULL
+                 );",
+            )
+            .unwrap();
     }
 
     fn insert_atom(v: &Vault, atom: &str, first_seen: &str, vector: &[f32], model: &str) {
@@ -1175,6 +1372,7 @@ mod lifecycle_tests {
         insert_atom(&v, "b", "2026-01-02T00:00:00Z", &axis(1), "model");
         inference::assign(&v.conn, "a", &axis(0), "A", "model").unwrap();
         inference::assign(&v.conn, "b", &axis(1), "B", "model").unwrap();
+        downgrade_feedback_to_schema3(&v);
         v.conn
             .execute_batch(
                 "DROP TRIGGER topic_invalidate;
@@ -1188,7 +1386,7 @@ PRAGMA user_version=1;",
             .conn
             .query_row("PRAGMA user_version", [], |r| r.get(0))
             .unwrap();
-        assert_eq!(version, 3);
+        assert_eq!(version, 4);
         upgraded
             .conn
             .execute("DELETE FROM atoms WHERE id='a'", [])
@@ -1208,6 +1406,7 @@ PRAGMA user_version=1;",
     fn v2_vault_adds_topic_skip_tracking_without_losing_atoms() {
         let (dir, v) = vault();
         insert_atom(&v, "a", "2026-01-01T00:00:00Z", &axis(0), "model");
+        downgrade_feedback_to_schema3(&v);
         v.conn.execute_batch("DROP TRIGGER topic_deleted_reconsider_skips; DROP TABLE topic_skips; PRAGMA user_version=2;").unwrap();
         drop(v);
         let upgraded = Vault::open(&dir.path().join("vault.sqlite")).unwrap();
@@ -1219,7 +1418,7 @@ PRAGMA user_version=1;",
             .conn
             .query_row("SELECT count(*) FROM atoms", [], |r| r.get(0))
             .unwrap();
-        assert_eq!(version, 3);
+        assert_eq!(version, 4);
         assert_eq!(atoms, 1);
         upgraded
             .conn
