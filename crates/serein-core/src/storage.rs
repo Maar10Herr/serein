@@ -1065,22 +1065,46 @@ ORDER BY a.first_seen,a.id LIMIT ?")?
             budget,
         )?;
         let mut packet = json!({"protocol":1,"request_id":r.request_id,"status":"partial","as_of":now(),"generation":{"evidence":generation.0,"privacy":generation.1},"index":{"mode":if encoder.is_some(){"hybrid"}else{"lexical"},"pending_atoms":self.status(source)?["pending_atoms"]},"context":[],"alternatives":[],"warnings":if encoder.is_none(){vec!["Semantic model unavailable; lexical matching only."]}else{vec![]}});
+        // Preserve the rank position of each duplicate group while keeping
+        // every feasible real representative in its original rank order.
+        // Confirmed records intentionally have no payload key and remain
+        // distinct by atom and confirmation provenance.
+        let mut packet_groups: Vec<Vec<crate::retrieval::RankedCandidate>> = Vec::new();
+        let mut observed_group_indices =
+            HashMap::<crate::retrieval::ObservedPayloadKey, usize>::new();
+        for candidate in candidates {
+            if let Some(key) = candidate.observed_payload_key.as_ref() {
+                if let Some(index) = observed_group_indices.get(key).copied() {
+                    packet_groups[index].push(candidate);
+                    continue;
+                }
+                let index = packet_groups.len();
+                observed_group_indices.insert(key.clone(), index);
+                packet_groups.push(vec![candidate]);
+            } else {
+                packet_groups.push(vec![candidate]);
+            }
+        }
+
         let mut counts: HashMap<String, u32> = HashMap::new();
-        let mut seen = HashSet::new();
-        for (_, site, record) in candidates {
+        for group in packet_groups {
             if packet["context"].as_array().unwrap().len() >= algorithm::MAX_CONTEXT_RECORDS {
                 break;
             }
-            if *counts.get(&site).unwrap_or(&0) >= algorithm::MAX_RECORDS_PER_SITE
-                || !seen.insert(record["text"].to_string())
-            {
-                continue;
-            }
-            packet["context"].as_array_mut().unwrap().push(record);
-            if serde_json::to_vec(&packet)?.len() + 64 > r.max_bytes {
-                packet["context"].as_array_mut().unwrap().pop();
-            } else {
-                *counts.entry(site).or_default() += 1
+            // If the highest-ranked representative cannot fit the site or
+            // byte limits, try the next real observation in the same group.
+            for candidate in group {
+                let crate::retrieval::RankedCandidate { site, record, .. } = candidate;
+                if *counts.get(&site).unwrap_or(&0) >= algorithm::MAX_RECORDS_PER_SITE {
+                    continue;
+                }
+                packet["context"].as_array_mut().unwrap().push(record);
+                if serde_json::to_vec(&packet)?.len() + 64 > r.max_bytes {
+                    packet["context"].as_array_mut().unwrap().pop();
+                    continue;
+                }
+                *counts.entry(site).or_default() += 1;
+                break;
             }
         }
         let empty = packet["context"].as_array().unwrap().is_empty();

@@ -448,7 +448,7 @@ fn relevance_admitted(
     direct_lexical || strong_semantic || exact_facet_search
 }
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
 enum EvidenceState {
     Observed,
     Confirmed,
@@ -569,6 +569,60 @@ struct ResolvedEvidence {
     correction_actions: Vec<String>,
     subject: String,
     last_seen: String,
+}
+
+/// The exact observed payload identity used for packet-level redundancy
+/// removal. This intentionally excludes site, atom identity, timestamps and
+/// ranking data so equivalent observed payloads from different sites can
+/// share one packet slot without merging their stored provenance.
+#[derive(Clone, Debug, PartialEq, Eq, Hash)]
+pub(crate) struct ObservedPayloadKey {
+    source_id: String,
+    atom_kind: String,
+    state: EvidenceState,
+    subject: String,
+    correction_actions: Vec<String>,
+    title: String,
+    query: Option<String>,
+}
+
+impl ObservedPayloadKey {
+    fn from_evidence(evidence: &ResolvedEvidence) -> Self {
+        let mut correction_actions: Vec<_> = evidence
+            .correction_actions
+            .iter()
+            .filter(|action| action.as_str() != "confirm_constraint")
+            .cloned()
+            .collect();
+        correction_actions.sort();
+        correction_actions.dedup();
+        Self {
+            source_id: evidence.source_id.clone(),
+            atom_kind: evidence.atom_kind.clone(),
+            state: evidence.state,
+            subject: evidence.subject.clone(),
+            correction_actions,
+            title: normalize_payload_whitespace(&evidence.original_title),
+            query: evidence
+                .original_query
+                .as_deref()
+                .map(normalize_payload_whitespace),
+        }
+    }
+}
+
+fn normalize_payload_whitespace(text: &str) -> String {
+    text.split_whitespace().collect::<Vec<_>>().join(" ")
+}
+
+/// A ranked, fully formatted record together with its real site and the raw
+/// structured identity needed by the final packet selector.
+pub(crate) struct RankedCandidate {
+    #[allow(dead_code)] // Retained with the typed candidate for ordered packet policies.
+    pub(crate) score: f32,
+    pub(crate) site: String,
+    pub(crate) record: Value,
+    pub(crate) observed_payload_key: Option<ObservedPayloadKey>,
 }
 
 impl ResolvedEvidence {
@@ -1178,7 +1232,7 @@ ORDER BY f.seq DESC,a.id LIMIT 1000"
 }
 
 /// Return fused candidates. All metadata is fetched after bounded ID generation.
-pub fn candidates(
+pub(crate) fn candidates(
     conn: &Connection,
     source: &str,
     policy: &crate::Policy,
@@ -1186,7 +1240,7 @@ pub fn candidates(
     encoder: Option<&model::Encoder>,
     start: Instant,
     budget: u64,
-) -> Result<Vec<(f32, String, Value)>> {
+) -> Result<Vec<RankedCandidate>> {
     candidates_with_variant(
         conn,
         source,
@@ -1222,7 +1276,7 @@ fn candidates_with_variant(
     start: Instant,
     budget: u64,
     variant: RankingVariant,
-) -> Result<Vec<(f32, String, Value)>> {
+) -> Result<Vec<RankedCandidate>> {
     if deadline_reached(start, budget) {
         return Ok(vec![]);
     }
@@ -1419,9 +1473,16 @@ WHERE source=? AND id IN ({placeholders})
         for action in &evidence.correction_actions {
             limits.push(format!("User correction: {}", action.replace('_', " ")));
         }
-        output.push((score,evidence.site,json!({"id":evidence.atom_id,"kind":if confirmed{"constraint"}else{"research_topic"},
-            "state":if confirmed{"confirmed"}else{"observed"},"text":text,"subject":evidence.subject,
-            "evidence":{"sessions":sessions.get(&id).copied().unwrap_or(0),"sites":1},"last_seen":evidence.last_seen,"limits":limits})));
+        let observed_payload_key = (evidence.state == EvidenceState::Observed)
+            .then(|| ObservedPayloadKey::from_evidence(&evidence));
+        output.push(RankedCandidate {
+            score,
+            site: evidence.site,
+            record: json!({"id":evidence.atom_id,"kind":if confirmed{"constraint"}else{"research_topic"},
+                "state":if confirmed{"confirmed"}else{"observed"},"text":text,"subject":evidence.subject,
+                "evidence":{"sessions":sessions.get(&id).copied().unwrap_or(0),"sites":1},"last_seen":evidence.last_seen,"limits":limits}),
+            observed_payload_key,
+        });
     }
     Ok(output)
 }
@@ -1619,11 +1680,11 @@ CREATE TABLE atom_days(atom TEXT,session TEXT);",
         .unwrap();
         let baseline_ids: BTreeSet<_> = baseline
             .iter()
-            .map(|(_, _, record)| record["id"].as_str().unwrap())
+            .map(|candidate| candidate.record["id"].as_str().unwrap())
             .collect();
         let proposed_ids: BTreeSet<_> = proposed
             .iter()
-            .map(|(_, _, record)| record["id"].as_str().unwrap())
+            .map(|candidate| candidate.record["id"].as_str().unwrap())
             .collect();
         assert!(baseline_ids.contains("facet-only"));
         assert_eq!(proposed_ids, baseline_ids);
@@ -1862,7 +1923,7 @@ CREATE TABLE atom_days(atom TEXT,session TEXT);") .unwrap();
         )
         .unwrap();
         assert_eq!(result.len(), 1);
-        assert_eq!(result[0].2["id"], "complete");
+        assert_eq!(result[0].record["id"], "complete");
     }
 
     #[test]
