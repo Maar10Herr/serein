@@ -798,78 +798,91 @@ fn assert_required_index_columns(conn: &Connection, name: &str, expected: &[(&st
     );
 }
 
-fn baseline_cli_path() -> PathBuf {
-    PathBuf::from(
-        std::env::var_os("SEREIN_BASELINE_BINARY")
-            .expect("set SEREIN_BASELINE_BINARY to the pinned schema-3 CLI for R02"),
-    )
+fn old_reader_cli_paths() -> [(PathBuf, &'static str); 2] {
+    [
+        (
+            PathBuf::from(
+                std::env::var_os("SEREIN_BASELINE_BINARY")
+                    .expect("set SEREIN_BASELINE_BINARY to the pinned schema-3 CLI for R02"),
+            ),
+            "schema3",
+        ),
+        (
+            PathBuf::from(
+                std::env::var_os("SEREIN_SCHEMA4_BINARY")
+                    .expect("set SEREIN_SCHEMA4_BINARY to the pinned schema-4 CLI for R02"),
+            ),
+            "schema4",
+        ),
+    ]
 }
 
-fn assert_old_reader_rejects_schema4(db_path: &Path, temp: &tempfile::TempDir) {
-    let baseline_cli = baseline_cli_path();
-    assert!(
-        baseline_cli.is_file(),
-        "pinned baseline CLI is missing at {}; set SEREIN_BASELINE_BINARY",
-        baseline_cli.display()
-    );
-    let isolated_root = temp.path().join("old-reader");
-    let vault_id = "99999999-9999-4999-8999-999999999999";
-    let vault_dir = isolated_root.join("vaults").join(vault_id);
-    fs::create_dir_all(&vault_dir).unwrap();
-    fs::copy(db_path, vault_dir.join("context.sqlite")).unwrap();
-    fs::write(
-        isolated_root.join("connections.json"),
-        serde_json::to_vec(&json!({
-            "version": 1,
-            "default_vault": vault_id,
-            "connections": [{
-                "source_id": SOURCE_ID,
-                "vault_id": vault_id,
-                "extension_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                "browser": "chrome",
-                "nonce_hash": "test-only",
-                "expires_at": 4_102_444_800_i64,
-                "paired": true,
-                "adapters": [],
-                "skill_install_requested": false,
-                "skill_repository": null,
-                "label": "Disposable migration compatibility test"
-            }]
-        }))
-        .unwrap(),
-    )
-    .unwrap();
+fn assert_old_readers_reject_schema5(db_path: &Path, temp: &tempfile::TempDir) {
+    for (reader, version) in old_reader_cli_paths() {
+        assert!(
+            reader.is_file(),
+            "pinned {version} CLI is missing at {}; set its configured reader binary",
+            reader.display()
+        );
+        let isolated_root = temp.path().join(format!("old-reader-{version}"));
+        let vault_id = "99999999-9999-4999-8999-999999999999";
+        let vault_dir = isolated_root.join("vaults").join(vault_id);
+        fs::create_dir_all(&vault_dir).unwrap();
+        fs::copy(db_path, vault_dir.join("context.sqlite")).unwrap();
+        fs::write(
+            isolated_root.join("connections.json"),
+            serde_json::to_vec(&json!({
+                "version": 1,
+                "default_vault": vault_id,
+                "connections": [{
+                    "source_id": SOURCE_ID,
+                    "vault_id": vault_id,
+                    "extension_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "browser": "chrome",
+                    "nonce_hash": "test-only",
+                    "expires_at": 4_102_444_800_i64,
+                    "paired": true,
+                    "adapters": [],
+                    "skill_install_requested": false,
+                    "skill_repository": null,
+                    "label": "Disposable migration compatibility test"
+                }]
+            }))
+            .unwrap(),
+        )
+        .unwrap();
 
-    let request = json!({
-        "protocol": 1,
-        "request_id": id(),
-        "client": "migration-test",
-        "vault": "default",
-        "query": "telescope mirror",
-        "facets": [],
-        "scope": ["research"],
-        "max_bytes": 4096,
-        "budget_ms": 1000
-    });
-    let mut child = Command::new(baseline_cli)
-        .args(["recall", "--request-stdin", "--json"])
-        .env("SEREIN_DATA_DIR", &isolated_root)
-        .env("SEREIN_INSTALL_HOME", isolated_root.join("install"))
-        .stdin(Stdio::piped())
-        .stdout(Stdio::piped())
-        .stderr(Stdio::piped())
-        .spawn()
-        .unwrap();
-    child
-        .stdin
-        .take()
-        .unwrap()
-        .write_all(&serde_json::to_vec(&request).unwrap())
-        .unwrap();
-    let output = child.wait_with_output().unwrap();
-    assert!(!output.status.success(), "schema-3 binary opened schema 4");
-    let response: Value = serde_json::from_slice(&output.stdout).unwrap();
-    assert_eq!(response["error"]["code"], "SCHEMA_TOO_NEW");
+        let request = json!({
+            "protocol": 1,
+            "request_id": id(),
+            "client": "migration-test",
+            "vault": "default",
+            "query": "telescope mirror",
+            "facets": [],
+            "scope": ["research"],
+            "max_bytes": 4096,
+            "budget_ms": 1000
+        });
+        let mut child = Command::new(reader)
+            .args(["recall", "--request-stdin", "--json"])
+            .env("SEREIN_DATA_DIR", &isolated_root)
+            .env("SEREIN_INSTALL_HOME", isolated_root.join("install"))
+            .stdin(Stdio::piped())
+            .stdout(Stdio::piped())
+            .stderr(Stdio::piped())
+            .spawn()
+            .unwrap();
+        child
+            .stdin
+            .take()
+            .unwrap()
+            .write_all(&serde_json::to_vec(&request).unwrap())
+            .unwrap();
+        let output = child.wait_with_output().unwrap();
+        assert!(!output.status.success(), "{version} binary opened schema 5");
+        let response: Value = serde_json::from_slice(&output.stdout).unwrap();
+        assert_eq!(response["error"]["code"], "SCHEMA_TOO_NEW", "{version}");
+    }
 }
 
 #[test]
@@ -956,7 +969,7 @@ fn r02_v3_migration_preserves_all_rows_sequences_and_rolls_back_on_failure() {
 
     let upgraded =
         Vault::open(&db_path).expect("valid v3 fixture migrates after removing injection");
-    assert_eq!(schema_version(&upgraded.conn), 4);
+    assert_eq!(schema_version(&upgraded.conn), 5);
     assert_eq!(foreign_key_violations(&upgraded.conn), Vec::new());
     assert_eq!(
         atom_fts_trigger_snapshot(&upgraded.conn),
@@ -1018,5 +1031,5 @@ fn r02_v3_migration_preserves_all_rows_sequences_and_rolls_back_on_failure() {
         .execute_batch("PRAGMA wal_checkpoint(TRUNCATE);")
         .unwrap();
     drop(upgraded);
-    assert_old_reader_rejects_schema4(&db_path, &temp);
+    assert_old_readers_reject_schema5(&db_path, &temp);
 }

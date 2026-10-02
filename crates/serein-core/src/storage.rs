@@ -168,6 +168,379 @@ fn verify_feedback_copy(tx: &Transaction<'_>) -> Result<()> {
     Ok(())
 }
 
+const TOPIC_CACHE_TRIGGER_DDLS: &[(&str, &str, &str)] = &[
+    (
+        "topic_cache_atom_days_insert",
+        "atom_days",
+        "CREATE TRIGGER topic_cache_atom_days_insert AFTER INSERT ON atom_days BEGIN
+             UPDATE topic_cache SET valid=0,dirty_label=1
+             WHERE topic IN (SELECT topic FROM atom_topics WHERE atom=NEW.atom);
+         END;",
+    ),
+    (
+        "topic_cache_atom_days_update",
+        "atom_days",
+        "CREATE TRIGGER topic_cache_atom_days_update AFTER UPDATE ON atom_days BEGIN
+             UPDATE topic_cache SET valid=0,dirty_label=1
+             WHERE topic IN (
+                 SELECT topic FROM atom_topics WHERE atom=OLD.atom
+                 UNION SELECT topic FROM atom_topics WHERE atom=NEW.atom
+             );
+         END;",
+    ),
+    (
+        "topic_cache_atom_days_delete",
+        "atom_days",
+        "CREATE TRIGGER topic_cache_atom_days_delete AFTER DELETE ON atom_days BEGIN
+             UPDATE topic_cache SET valid=0,dirty_label=1
+             WHERE topic IN (SELECT topic FROM atom_topics WHERE atom=OLD.atom);
+         END;",
+    ),
+    (
+        "topic_cache_atom_topics_insert",
+        "atom_topics",
+        "CREATE TRIGGER topic_cache_atom_topics_insert AFTER INSERT ON atom_topics BEGIN
+             UPDATE topic_cache SET valid=0,dirty_label=1 WHERE topic=NEW.topic;
+         END;",
+    ),
+    (
+        "topic_cache_atom_topics_update",
+        "atom_topics",
+        "CREATE TRIGGER topic_cache_atom_topics_update AFTER UPDATE ON atom_topics BEGIN
+             UPDATE topic_cache SET valid=0,dirty_label=1
+             WHERE topic IN (OLD.topic,NEW.topic);
+         END;",
+    ),
+    (
+        "topic_cache_atom_topics_delete",
+        "atom_topics",
+        "CREATE TRIGGER topic_cache_atom_topics_delete AFTER DELETE ON atom_topics BEGIN
+             UPDATE topic_cache SET valid=0,dirty_label=1 WHERE topic=OLD.topic;
+         END;",
+    ),
+    (
+        "topic_cache_vectors_insert",
+        "vectors",
+        "CREATE TRIGGER topic_cache_vectors_insert AFTER INSERT ON vectors BEGIN
+             UPDATE topic_cache SET valid=0,dirty_label=1
+             WHERE topic IN (SELECT topic FROM atom_topics WHERE atom=NEW.atom);
+         END;",
+    ),
+    (
+        "topic_cache_vectors_update",
+        "vectors",
+        "CREATE TRIGGER topic_cache_vectors_update AFTER UPDATE ON vectors BEGIN
+             UPDATE topic_cache SET valid=0,dirty_label=1
+             WHERE topic IN (
+                 SELECT topic FROM atom_topics WHERE atom=OLD.atom
+                 UNION SELECT topic FROM atom_topics WHERE atom=NEW.atom
+             );
+         END;",
+    ),
+    (
+        "topic_cache_vectors_delete",
+        "vectors",
+        "CREATE TRIGGER topic_cache_vectors_delete AFTER DELETE ON vectors BEGIN
+             UPDATE topic_cache SET valid=0,dirty_label=1
+             WHERE topic IN (SELECT topic FROM atom_topics WHERE atom=OLD.atom);
+         END;",
+    ),
+    (
+        "topic_cache_feedback_insert",
+        "feedback",
+        "CREATE TRIGGER topic_cache_feedback_insert AFTER INSERT ON feedback BEGIN
+             UPDATE topic_cache SET dirty_label=1
+             WHERE topic IN (SELECT topic FROM atom_topics WHERE atom=NEW.atom);
+         END;",
+    ),
+    (
+        "topic_cache_feedback_update",
+        "feedback",
+        "CREATE TRIGGER topic_cache_feedback_update AFTER UPDATE ON feedback BEGIN
+             UPDATE topic_cache SET dirty_label=1
+             WHERE topic IN (
+                 SELECT topic FROM atom_topics WHERE atom=OLD.atom
+                 UNION SELECT topic FROM atom_topics WHERE atom=NEW.atom
+             );
+         END;",
+    ),
+    (
+        "topic_cache_feedback_delete",
+        "feedback",
+        "CREATE TRIGGER topic_cache_feedback_delete AFTER DELETE ON feedback BEGIN
+             UPDATE topic_cache SET dirty_label=1
+             WHERE topic IN (SELECT topic FROM atom_topics WHERE atom=OLD.atom);
+         END;",
+    ),
+    (
+        "topic_cache_bucket_insert",
+        "topic_cache_buckets",
+        "CREATE TRIGGER topic_cache_bucket_insert AFTER INSERT ON topic_cache_buckets BEGIN
+             UPDATE topic_cache SET valid=0,dirty_label=1 WHERE topic=NEW.topic;
+         END;",
+    ),
+    (
+        "topic_cache_bucket_update",
+        "topic_cache_buckets",
+        "CREATE TRIGGER topic_cache_bucket_update AFTER UPDATE ON topic_cache_buckets BEGIN
+             UPDATE topic_cache SET valid=0,dirty_label=1
+             WHERE topic IN (OLD.topic,NEW.topic);
+         END;",
+    ),
+    (
+        "topic_cache_bucket_delete",
+        "topic_cache_buckets",
+        "CREATE TRIGGER topic_cache_bucket_delete AFTER DELETE ON topic_cache_buckets BEGIN
+             UPDATE topic_cache SET valid=0,dirty_label=1 WHERE topic=OLD.topic;
+         END;",
+    ),
+    (
+        "topic_cache_atoms_update",
+        "atoms",
+        "CREATE TRIGGER topic_cache_atoms_update
+         AFTER UPDATE OF site,source,title,query ON atoms BEGIN
+             UPDATE topic_cache SET valid=0,dirty_label=1
+             WHERE topic IN (SELECT topic FROM atom_topics WHERE atom=NEW.id);
+         END;",
+    ),
+];
+
+fn normalize_schema_sql(sql: &str) -> String {
+    let compact = sql
+        .to_ascii_lowercase()
+        .chars()
+        .filter(|character| !character.is_whitespace())
+        .collect::<String>();
+    compact.trim_end_matches(';').to_owned()
+}
+
+fn verify_topic_cache_schema(conn: &Connection) -> Result<()> {
+    for (table, expected_columns) in [
+        (
+            "topic_cache",
+            vec![
+                ("topic", "TEXT", 1, 1),
+                ("model", "TEXT", 1, 0),
+                ("valid", "INTEGER", 1, 0),
+                ("sum", "BLOB", 1, 0),
+                ("sum_hash", "BLOB", 1, 0),
+                ("dirty_label", "INTEGER", 1, 0),
+            ],
+        ),
+        (
+            "topic_cache_buckets",
+            vec![
+                ("topic", "TEXT", 1, 1),
+                ("site", "TEXT", 1, 2),
+                ("session", "TEXT", 1, 3),
+                ("mass", "REAL", 1, 0),
+                ("resultant", "BLOB", 1, 0),
+                ("resultant_hash", "BLOB", 1, 0),
+            ],
+        ),
+    ] {
+        let exists: i64 = conn.query_row(
+            "SELECT EXISTS(SELECT 1 FROM sqlite_master WHERE type='table' AND name=?1)",
+            [table],
+            |row| row.get(0),
+        )?;
+        if exists != 1 {
+            return Err(migration_error("The topic cache schema is incomplete."));
+        }
+        let sql = format!("PRAGMA table_info({table})");
+        let columns = conn
+            .prepare(&sql)?
+            .query_map([], |row| {
+                Ok((
+                    row.get::<_, String>(1)?,
+                    row.get::<_, String>(2)?,
+                    row.get::<_, i64>(3)?,
+                    row.get::<_, i64>(5)?,
+                ))
+            })?
+            .collect::<std::result::Result<Vec<_>, _>>()?;
+        let expected: Vec<_> = expected_columns
+            .iter()
+            .map(|(name, kind, not_null, key_order)| {
+                (
+                    (*name).to_owned(),
+                    (*kind).to_owned(),
+                    *not_null,
+                    *key_order,
+                )
+            })
+            .collect();
+        if columns != expected {
+            return Err(migration_error(
+                "The topic cache table definition is incompatible.",
+            ));
+        }
+    }
+    for (table, referenced_table, from, to) in [
+        ("topic_cache", "topics", "topic", "id"),
+        ("topic_cache_buckets", "topic_cache", "topic", "topic"),
+    ] {
+        let sql = format!("PRAGMA foreign_key_list({table})");
+        let foreign_keys = conn
+            .prepare(&sql)?
+            .query_map([], |row| {
+                Ok((
+                    row.get::<_, String>(2)?,
+                    row.get::<_, String>(3)?,
+                    row.get::<_, String>(4)?,
+                    row.get::<_, String>(6)?,
+                ))
+            })?
+            .collect::<std::result::Result<Vec<_>, _>>()?;
+        if foreign_keys
+            != vec![(
+                referenced_table.to_owned(),
+                from.to_owned(),
+                to.to_owned(),
+                "CASCADE".to_owned(),
+            )]
+        {
+            return Err(migration_error(
+                "The topic cache foreign-key definition is incompatible.",
+            ));
+        }
+    }
+    for (table, required) in [
+        (
+            "topic_cache",
+            [
+                "check(typeof(sum)='blob'andlength(sum)=2048)",
+                "check(typeof(sum_hash)='blob'andlength(sum_hash)=32)",
+                "check(validin(0,1))",
+                "check(dirty_labelin(0,1))",
+            ],
+        ),
+        (
+            "topic_cache_buckets",
+            [
+                "check(typeof(mass)in('real','integer')andmass>=0)",
+                "check(typeof(resultant)='blob'andlength(resultant)=2048)",
+                "check(typeof(resultant_hash)='blob'andlength(resultant_hash)=32)",
+                "primarykey(topic,site,session)",
+            ],
+        ),
+    ] {
+        let sql: String = conn.query_row(
+            "SELECT lower(sql) FROM sqlite_master WHERE type='table' AND name=?",
+            [table],
+            |row| row.get(0),
+        )?;
+        let compact = sql
+            .chars()
+            .filter(|character| !character.is_whitespace())
+            .collect::<String>();
+        if required.iter().any(|clause| !compact.contains(clause)) {
+            return Err(migration_error(
+                "The topic cache storage constraints are incompatible.",
+            ));
+        }
+    }
+    for (name, expected_table, expected_sql) in TOPIC_CACHE_TRIGGER_DDLS {
+        let definition: Option<(String, String)> = conn
+            .query_row(
+                "SELECT tbl_name,sql FROM sqlite_master WHERE type='trigger' AND name=?1",
+                [name],
+                |row| Ok((row.get(0)?, row.get(1)?)),
+            )
+            .optional()?;
+        if definition.as_ref().is_none_or(|(table, sql)| {
+            table != expected_table
+                || normalize_schema_sql(sql) != normalize_schema_sql(expected_sql)
+        }) {
+            return Err(migration_error(
+                "The topic cache invalidation schema is incompatible.",
+            ));
+        }
+    }
+    Ok(())
+}
+
+/// Keep derived cache growth inside the existing database-plus-WAL storage gate.
+/// Leave a small reserve for the current authoritative row changes in a refresh
+/// transaction; the cache estimator separately accounts for each SQLite page
+/// and WAL frame it may add.
+fn topic_cache_headroom_bytes(conn: &Connection, path: &Path) -> Result<u64> {
+    const STORAGE_LIMIT: u64 = 96 * 1024 * 1024;
+    const REFRESH_RESERVE: u64 = 64 * 4096;
+    let database_bytes = std::fs::metadata(path)
+        .map(|metadata| metadata.len())
+        .unwrap_or(0);
+    let mut wal_path = path.as_os_str().to_os_string();
+    wal_path.push("-wal");
+    let wal_bytes = std::fs::metadata(PathBuf::from(wal_path))
+        .map(|metadata| metadata.len())
+        .unwrap_or(0);
+    // Reading the page geometry here keeps the estimate coupled to the actual
+    // SQLite layout, while the admission gate itself continues to use file
+    // sizes exactly as it does for ordinary ingestion.
+    let page_size: i64 = conn.query_row("PRAGMA page_size", [], |row| row.get(0))?;
+    // Cache estimates assume SQLite's default 4 KiB pages. Smaller legal page
+    // sizes can overflow those estimates when a 2 KiB vector accumulator spans
+    // many B-tree pages, so leave the authoritative path uncached there.
+    if page_size < 4096 {
+        return Ok(0);
+    }
+    let page_reserve = (page_size.max(4096) as u64).saturating_mul(64);
+    Ok(STORAGE_LIMIT
+        .saturating_sub(database_bytes.saturating_add(wal_bytes))
+        .saturating_sub(REFRESH_RESERVE.max(page_reserve)))
+}
+
+fn migrate_topic_cache_4_to_5(conn: &mut Connection) -> Result<()> {
+    let tx = conn.transaction_with_behavior(TransactionBehavior::Immediate)?;
+    let version: i64 = tx.query_row("PRAGMA user_version", [], |row| row.get(0))?;
+    if version != 4 {
+        return Err(migration_error(
+            "The topic cache migration requires schema version 4.",
+        ));
+    }
+    tx.execute_batch(
+        "CREATE TABLE topic_cache (
+             topic TEXT NOT NULL PRIMARY KEY REFERENCES topics(id) ON DELETE CASCADE,
+             model TEXT NOT NULL,
+             valid INTEGER NOT NULL CHECK(valid IN (0,1)),
+             sum BLOB NOT NULL CHECK(typeof(sum)='blob' AND length(sum)=2048),
+             sum_hash BLOB NOT NULL CHECK(typeof(sum_hash)='blob' AND length(sum_hash)=32),
+             dirty_label INTEGER NOT NULL CHECK(dirty_label IN (0,1))
+         );
+         CREATE TABLE topic_cache_buckets (
+             topic TEXT NOT NULL REFERENCES topic_cache(topic) ON DELETE CASCADE,
+             site TEXT NOT NULL,
+             session TEXT NOT NULL,
+             mass REAL NOT NULL CHECK(typeof(mass) IN ('real','integer') AND mass>=0),
+             resultant BLOB NOT NULL CHECK(typeof(resultant)='blob' AND length(resultant)=2048),
+             resultant_hash BLOB NOT NULL CHECK(typeof(resultant_hash)='blob' AND length(resultant_hash)=32),
+             PRIMARY KEY(topic,site,session)
+         );",
+    )?;
+    for (_, _, trigger_ddl) in TOPIC_CACHE_TRIGGER_DDLS {
+        tx.execute_batch(trigger_ddl)?;
+    }
+
+    verify_topic_cache_schema(&tx)?;
+    let cache_rows: i64 = tx.query_row(
+        "SELECT (SELECT count(*) FROM topic_cache)
+              + (SELECT count(*) FROM topic_cache_buckets)",
+        [],
+        |row| row.get(0),
+    )?;
+    if cache_rows != 0 {
+        return Err(migration_error(
+            "The schema migration unexpectedly populated derived topic caches.",
+        ));
+    }
+    verify_foreign_keys(&tx)?;
+    tx.execute_batch("PRAGMA user_version=5;")?;
+    verify_foreign_keys(&tx)?;
+    tx.commit()?;
+    Ok(())
+}
+
 fn migrate_feedback_3_to_4(conn: &mut Connection) -> Result<()> {
     let tx = conn.transaction_with_behavior(TransactionBehavior::Immediate)?;
     let version: i64 = tx.query_row("PRAGMA user_version", [], |row| row.get(0))?;
@@ -238,7 +611,7 @@ impl Vault {
         conn.busy_timeout(Duration::from_millis(1500))?;
         conn.execute_batch("PRAGMA foreign_keys=ON; PRAGMA journal_mode=WAL; PRAGMA synchronous=FULL; PRAGMA cache_size=-4096; PRAGMA wal_autocheckpoint=256; PRAGMA secure_delete=ON;")?;
         let ver: i64 = conn.query_row("PRAGMA user_version", [], |r| r.get(0))?;
-        if ver > 4 {
+        if ver > 5 {
             return Err(Error(
                 "SCHEMA_TOO_NEW",
                 "Update Serein before opening this vault.".into(),
@@ -292,6 +665,16 @@ COMMIT;")?;
                 "feedback",
                 &[("atom", false), ("action", false), ("seq", false)],
             )?;
+        }
+        let migrated_version: i64 = conn.query_row("PRAGMA user_version", [], |row| row.get(0))?;
+        if migrated_version == 4 {
+            migrate_topic_cache_4_to_5(&mut conn)?;
+        } else if migrated_version == 5 {
+            verify_topic_cache_schema(&conn)?;
+        } else {
+            return Err(migration_error(
+                "The database did not reach a supported schema version.",
+            ));
         }
         conn.execute(
             "INSERT OR IGNORE INTO meta(key,value) VALUES('canonical_salt',?)",
@@ -815,6 +1198,26 @@ COMMIT;")?;
         Ok(json!({"status":"ok"}))
     }
     pub fn dashboard(&self, source: &str) -> Result<Value> {
+        if !self.conn.is_autocommit() {
+            return self.dashboard_with_snapshot(source);
+        }
+        // Keep the evidence, policy, activity-label refresh, and grouped
+        // dashboard view on one writer-serialized snapshot. A concurrent
+        // policy narrowing must not leave old-site candidates in the response.
+        let tx = Transaction::new_unchecked(&self.conn, TransactionBehavior::Immediate)?;
+        match self.dashboard_with_snapshot(source) {
+            Ok(value) => {
+                tx.commit()?;
+                Ok(value)
+            }
+            Err(error) => {
+                drop(tx);
+                Err(error)
+            }
+        }
+    }
+
+    fn dashboard_with_snapshot(&self, source: &str) -> Result<Value> {
         const DASHBOARD_CARD_LIMIT: i64 = 60;
         // The vault refuses new atoms at 10,000, so this fixed bound covers
         // every retained current-model candidate without an unbounded read.
@@ -861,10 +1264,20 @@ COMMIT;")?;
             Vec::new()
         };
 
+        let dashboard_policy = self.policy(source)?;
         let mut groupable_candidates: Vec<_> = candidate_rows
             .into_iter()
-            .filter(|(_, _, title, query, _, _, _, _)| {
+            .filter(|(_, site, title, query, _, _, _, _)| {
                 importance::groupable(title, query.as_deref())
+                    && !dashboard_policy
+                        .excluded_sites
+                        .iter()
+                        .any(|rule| policy::matches(site, rule))
+                    && (!dashboard_policy.selected_only
+                        || dashboard_policy
+                            .selected_sites
+                            .iter()
+                            .any(|rule| policy::matches(site, rule)))
             })
             .collect();
         let mut correction_ids: Vec<_> = card_rows
@@ -909,11 +1322,19 @@ COMMIT;")?;
             cards.push(card);
         }
         let mut r = self.status(source)?;
-        let topics = inference::activity(&self.conn, model_hash.as_deref())?;
+        let cache_headroom = topic_cache_headroom_bytes(&self.conn, &self.path)?;
+        let mut topics = inference::activity_with_cache_headroom_for_atoms(
+            &self.conn,
+            model_hash.as_deref(),
+            cache_headroom,
+            &groupable_ids,
+        )?;
         let mut membership = HashMap::<String, String>::new();
         if let Some(model_hash) = model_hash.filter(|_| !groupable_ids.is_empty()) {
             let placeholders = vec!["?"; groupable_ids.len()].join(",");
-            let sql = format!("SELECT m.atom,m.topic,m.mass FROM atom_topics m JOIN topics t ON t.id=m.topic WHERE t.model=? AND m.atom IN ({placeholders}) ORDER BY m.atom,m.mass DESC,m.topic");
+            let sql = format!(
+                "SELECT m.atom,m.topic,m.mass FROM atom_topics m JOIN topics t ON t.id=m.topic WHERE t.model=? AND m.atom IN ({placeholders}) ORDER BY m.atom,m.mass DESC,m.topic"
+            );
             let params = std::iter::once(model_hash.as_str())
                 .chain(groupable_ids.iter().map(String::as_str));
             for row in self
@@ -993,6 +1414,40 @@ COMMIT;")?;
                 by_topic.entry(topic.clone()).or_default().push(card);
             }
         }
+        let source_topic_labels: HashMap<_, _> = by_topic
+            .iter()
+            .map(|(topic, items)| {
+                let label = items
+                    .iter()
+                    .filter_map(|item| item["text"].as_str())
+                    .find(|text| importance::groupable(text, None))
+                    .or_else(|| {
+                        items
+                            .iter()
+                            .filter(|item| item["state"] == "observed")
+                            .filter_map(|item| item["id"].as_str())
+                            .filter_map(|id| eligible_titles.get(id))
+                            .find(|title| importance::groupable(title, None))
+                            .map(String::as_str)
+                    })
+                    .unwrap_or("Research")
+                    .chars()
+                    .take(72)
+                    .collect::<String>();
+                (topic.clone(), label)
+            })
+            .collect();
+        if let Some(topics) = topics.as_array_mut() {
+            for topic in topics {
+                let Some(topic_id) = topic["id"].as_str() else {
+                    continue;
+                };
+                topic["label"] = json!(source_topic_labels
+                    .get(topic_id)
+                    .cloned()
+                    .unwrap_or_else(|| "Research".to_owned()));
+            }
+        }
         let mut memories = Vec::new();
         if let Some(topic_list) = topics.as_array() {
             for topic in topic_list {
@@ -1037,21 +1492,10 @@ COMMIT;")?;
                 // A topic's stored label may have come from an observation the
                 // user later corrected. Derive display text only from the
                 // still-eligible evidence in this memory.
-                let label = items
-                    .iter()
-                    .filter_map(|item| item["text"].as_str())
-                    .find(|text| importance::groupable(text, None))
-                    .map(str::to_owned)
-                    .or_else(|| {
-                        items
-                            .iter()
-                            .filter_map(|item| item["id"].as_str())
-                            .filter_map(|id| eligible_titles.get(id))
-                            .find(|title| importance::groupable(title, None))
-                            .cloned()
-                    })
+                let label = source_topic_labels
+                    .get(topic_id)
+                    .cloned()
                     .unwrap_or_else(|| "Research".to_owned());
-                let label = label.chars().take(72).collect::<String>();
                 items.truncate(5);
                 memories.push(json!({
                     "id": topic_id,
@@ -1091,7 +1535,7 @@ COMMIT;")?;
             Err(_) => {
                 return Ok(
                     json!({"status":"partial","mode":"lexical","reason":"MODEL_UNAVAILABLE"}),
-                )
+                );
             }
         };
         self.refresh_with_encoder(&encoder, budget)
@@ -1201,12 +1645,14 @@ COMMIT;")?;
                     params![row.id, model_hash, bytes],
                 )?;
             }
-            inference::assign(
+            let cache_headroom = topic_cache_headroom_bytes(&tx, &self.path)?;
+            inference::assign_with_cache_headroom(
                 &tx,
                 &row.id,
                 &vector,
                 row.query.as_deref().unwrap_or(&row.title),
                 model_hash,
+                cache_headroom,
             )?;
             tx.commit()?;
             processed += 1;
@@ -1351,7 +1797,9 @@ COMMIT;")?;
             packet["context"][0]["limits"]
                 .as_array_mut()
                 .expect("recall records include limits")
-                .push(json!("Comparison evidence covers only one requested model."));
+                .push(json!(
+                    "Comparison evidence covers only one requested model."
+                ));
         }
         let empty = packet["context"].as_array().unwrap().is_empty();
         let deadline_reached = start.elapsed().as_millis() as u64 >= budget;
@@ -1461,11 +1909,154 @@ mod lifecycle_tests {
         (dir, vault)
     }
 
+    #[test]
+    fn cache_headroom_counts_database_and_wal_inside_existing_96_mib_gate() {
+        const STORAGE_LIMIT: u64 = 96 * 1024 * 1024;
+        const RESERVE: u64 = 64 * 4096;
+        let (dir, vault) = vault();
+        let database = dir.path().join("sized-database.sqlite");
+        std::fs::File::create(&database)
+            .unwrap()
+            .set_len(STORAGE_LIMIT - RESERVE - 1024)
+            .unwrap();
+        assert_eq!(
+            topic_cache_headroom_bytes(&vault.conn, &database).unwrap(),
+            1024
+        );
+
+        let mut wal_name = database.as_os_str().to_os_string();
+        wal_name.push("-wal");
+        std::fs::File::create(PathBuf::from(wal_name))
+            .unwrap()
+            .set_len(2048)
+            .unwrap();
+        assert_eq!(
+            topic_cache_headroom_bytes(&vault.conn, &database).unwrap(),
+            0,
+            "database and WAL together must not exceed 96 MiB minus the existing reserve"
+        );
+    }
+
+    #[test]
+    fn small_page_vault_uses_reference_refresh_without_changing_page_geometry() {
+        let dir = tempfile::tempdir().unwrap();
+        let database = dir.path().join("small-pages.sqlite");
+        {
+            let bootstrap = Connection::open(&database).unwrap();
+            bootstrap
+                .execute_batch("PRAGMA page_size=512; CREATE TABLE page_size_bootstrap(id INTEGER PRIMARY KEY);")
+                .unwrap();
+            let page_size: i64 = bootstrap
+                .query_row("PRAGMA page_size", [], |row| row.get(0))
+                .unwrap();
+            assert_eq!(page_size, 512);
+        }
+
+        let mut vault = Vault::open(&database).unwrap();
+        let page_size: i64 = vault
+            .conn
+            .query_row("PRAGMA page_size", [], |row| row.get(0))
+            .unwrap();
+        assert_eq!(page_size, 512);
+        assert_eq!(
+            topic_cache_headroom_bytes(&vault.conn, &database).unwrap(),
+            0
+        );
+        vault
+            .set_policy(
+                "source",
+                &Policy {
+                    consent: true,
+                    recall_enabled: true,
+                    capture_epoch: 1,
+                    ..Policy::default()
+                },
+            )
+            .unwrap();
+        let events = (0..2)
+            .map(|index| Event {
+                event_id: id(),
+                visit_id: id(),
+                site_key: "example.com".to_owned(),
+                site_epoch: 0,
+                observed_at: now(),
+                kind: "visit".to_owned(),
+                title: format!("Desk lamp installation {index}"),
+                search_query: None,
+                foreground_seconds: 30,
+            })
+            .collect();
+        let ingest = vault.ingest("source", 1, events).unwrap();
+        assert_eq!(ingest["acknowledged_ids"].as_array().unwrap().len(), 2);
+
+        let refreshed = vault
+            .refresh_with_encode_fn("model", 60_000, |_| Some(axis(0)))
+            .unwrap();
+        assert_eq!(refreshed["processed"], 2);
+        assert_eq!(refreshed["pending_atoms"], 0);
+        for (table, expected) in [
+            ("vectors", 2),
+            ("topics", 1),
+            ("atom_topics", 2),
+            ("topic_cache", 0),
+            ("topic_cache_buckets", 0),
+        ] {
+            let count: i64 = vault
+                .conn
+                .query_row(&format!("SELECT count(*) FROM {table}"), [], |row| {
+                    row.get(0)
+                })
+                .unwrap();
+            assert_eq!(count, expected, "unexpected {table} rows before reopen");
+        }
+        drop(vault);
+
+        let reopened = Vault::open(&database).unwrap();
+        let page_size: i64 = reopened
+            .conn
+            .query_row("PRAGMA page_size", [], |row| row.get(0))
+            .unwrap();
+        assert_eq!(page_size, 512);
+        for (table, expected) in [
+            ("vectors", 2),
+            ("topics", 1),
+            ("atom_topics", 2),
+            ("topic_cache", 0),
+            ("topic_cache_buckets", 0),
+        ] {
+            let count: i64 = reopened
+                .conn
+                .query_row(&format!("SELECT count(*) FROM {table}"), [], |row| {
+                    row.get(0)
+                })
+                .unwrap();
+            assert_eq!(count, expected, "unexpected {table} rows after reopen");
+        }
+    }
+
     fn downgrade_feedback_to_schema3(vault: &Vault) {
         vault
             .conn
             .execute_batch(
-                "DROP TABLE feedback;
+                "DROP TRIGGER IF EXISTS topic_cache_atom_days_insert;
+                 DROP TRIGGER IF EXISTS topic_cache_atom_days_update;
+                 DROP TRIGGER IF EXISTS topic_cache_atom_days_delete;
+                 DROP TRIGGER IF EXISTS topic_cache_atom_topics_insert;
+                 DROP TRIGGER IF EXISTS topic_cache_atom_topics_update;
+                 DROP TRIGGER IF EXISTS topic_cache_atom_topics_delete;
+                 DROP TRIGGER IF EXISTS topic_cache_vectors_insert;
+                 DROP TRIGGER IF EXISTS topic_cache_vectors_update;
+                 DROP TRIGGER IF EXISTS topic_cache_vectors_delete;
+                 DROP TRIGGER IF EXISTS topic_cache_feedback_insert;
+                 DROP TRIGGER IF EXISTS topic_cache_feedback_update;
+                 DROP TRIGGER IF EXISTS topic_cache_feedback_delete;
+                 DROP TRIGGER IF EXISTS topic_cache_bucket_insert;
+                 DROP TRIGGER IF EXISTS topic_cache_bucket_update;
+                 DROP TRIGGER IF EXISTS topic_cache_bucket_delete;
+                 DROP TRIGGER IF EXISTS topic_cache_atoms_update;
+                 DROP TABLE IF EXISTS topic_cache_buckets;
+                 DROP TABLE IF EXISTS topic_cache;
+                 DROP TABLE feedback;
                  CREATE TABLE feedback(
                      id TEXT PRIMARY KEY,
                      atom TEXT NOT NULL REFERENCES atoms(id) ON DELETE CASCADE,
@@ -1545,7 +2136,13 @@ mod lifecycle_tests {
             .unwrap()
             .is_empty());
         v.activate_model("new").unwrap();
-        for table in ["topics", "atom_topics", "vectors"] {
+        for table in [
+            "topics",
+            "atom_topics",
+            "vectors",
+            "topic_cache",
+            "topic_cache_buckets",
+        ] {
             let count: i64 = v
                 .conn
                 .query_row(&format!("SELECT count(*) FROM {table}"), [], |r| r.get(0))
@@ -1624,6 +2221,7 @@ mod lifecycle_tests {
         v.conn
             .execute("DELETE FROM atoms WHERE id='a'", [])
             .unwrap();
+        inference::activity(&v.conn, Some("model")).unwrap();
         let labels: Vec<String> = v
             .conn
             .prepare("SELECT label FROM topics ORDER BY label")
@@ -1656,11 +2254,12 @@ PRAGMA user_version=1;",
             .conn
             .query_row("PRAGMA user_version", [], |r| r.get(0))
             .unwrap();
-        assert_eq!(version, 4);
+        assert_eq!(version, 5);
         upgraded
             .conn
             .execute("DELETE FROM atoms WHERE id='a'", [])
             .unwrap();
+        inference::activity(&upgraded.conn, Some("model")).unwrap();
         let labels: Vec<String> = upgraded
             .conn
             .prepare("SELECT label FROM topics ORDER BY label")
@@ -1688,12 +2287,57 @@ PRAGMA user_version=1;",
             .conn
             .query_row("SELECT count(*) FROM atoms", [], |r| r.get(0))
             .unwrap();
-        assert_eq!(version, 4);
+        assert_eq!(version, 5);
         assert_eq!(atoms, 1);
         upgraded
             .conn
             .execute("INSERT INTO topic_skips VALUES('a','model')", [])
             .unwrap();
+    }
+
+    #[test]
+    fn schema_five_rejects_misbound_cache_triggers_without_mutating_user_rows() {
+        let replacements = [
+            "CREATE TRIGGER topic_cache_feedback_update AFTER UPDATE ON feedback BEGIN SELECT 1; END;",
+            "CREATE TRIGGER topic_cache_feedback_update AFTER UPDATE ON atoms BEGIN SELECT 1; END;",
+        ];
+        for replacement in replacements {
+            let (_dir, v) = vault();
+            insert_atom(
+                &v,
+                "trigger-user-row",
+                "2026-10-01T00:00:00Z",
+                &axis(0),
+                "model",
+            );
+            let path = v.path.clone();
+            v.conn
+                .execute_batch(&format!(
+                    "DROP TRIGGER topic_cache_feedback_update; {replacement}"
+                ))
+                .unwrap();
+            drop(v);
+
+            assert!(
+                Vault::open(&path).is_err(),
+                "schema verification accepted trigger: {replacement}"
+            );
+            let unchanged = Connection::open(&path).unwrap();
+            assert_eq!(
+                unchanged
+                    .query_row("PRAGMA user_version", [], |row| row.get::<_, i64>(0))
+                    .unwrap(),
+                5
+            );
+            for table in ["atoms", "atom_days", "vectors"] {
+                let count: i64 = unchanged
+                    .query_row(&format!("SELECT count(*) FROM {table}"), [], |row| {
+                        row.get(0)
+                    })
+                    .unwrap();
+                assert_eq!(count, 1, "{table} changed after rejected schema open");
+            }
+        }
     }
 
     #[test]
@@ -1708,6 +2352,7 @@ PRAGMA user_version=1;",
             insert_atom(&v, atom, "2026-01-01T00:00:00Z", vector, "model");
             inference::assign(&v.conn, atom, vector, &format!("Title {atom}"), "model").unwrap();
         }
+        inference::activity(&v.conn, Some("model")).unwrap();
         let label: String = v
             .conn
             .query_row("SELECT label FROM topics", [], |r| r.get(0))
@@ -1771,6 +2416,75 @@ PRAGMA user_version=1;",
         assert_eq!(result["processed"], 1);
         assert_eq!(result["pending_atoms"], 0);
         assert_eq!(vector_blob(&v, atom), before);
+    }
+
+    #[test]
+    fn incremental_refresh_updates_cache_without_reference_or_label_scans() {
+        const BATCH: usize = 32;
+        let (_dir, mut v) = vault();
+        v.set_policy(
+            "source",
+            &Policy {
+                consent: true,
+                recall_enabled: true,
+                capture_epoch: 1,
+                ..Policy::default()
+            },
+        )
+        .unwrap();
+
+        let make_batch = |start: usize| {
+            (start..start + BATCH)
+                .map(|index| Event {
+                    event_id: id(),
+                    visit_id: id(),
+                    site_key: "example.com".to_owned(),
+                    site_epoch: 0,
+                    observed_at: now(),
+                    kind: "visit".to_owned(),
+                    title: format!("Desk lamp installation {index:03}"),
+                    search_query: None,
+                    foreground_seconds: 30,
+                })
+                .collect::<Vec<_>>()
+        };
+        for start in [0, BATCH] {
+            let response = v.ingest("source", 1, make_batch(start)).unwrap();
+            assert_eq!(
+                response["acknowledged_ids"].as_array().unwrap().len(),
+                BATCH
+            );
+            let mut encode_calls = 0;
+            if start == BATCH {
+                inference::reset_work_counters();
+            }
+            let result = v
+                .refresh_with_encode_fn("model", 60_000, |_| {
+                    encode_calls += 1;
+                    Some(axis(0))
+                })
+                .unwrap();
+            assert_eq!(encode_calls, BATCH);
+            assert_eq!(result["processed"], BATCH);
+            assert_eq!(result["pending_atoms"], 0);
+            if start == 0 {
+                let topic_count: i64 = v
+                    .conn
+                    .query_row("SELECT count(*) FROM topics", [], |row| row.get(0))
+                    .unwrap();
+                assert_eq!(topic_count, 1);
+            }
+        }
+
+        let (reference_rows, delta_rows, label_rows) = inference::work_counters();
+        assert_eq!(reference_rows, 0, "incremental refresh rescanned members");
+        assert_eq!(delta_rows, BATCH as u64);
+        assert_eq!(label_rows, 0, "incremental refresh scanned representatives");
+        let cache_valid: i64 = v
+            .conn
+            .query_row("SELECT valid FROM topic_cache", [], |row| row.get(0))
+            .unwrap();
+        assert_eq!(cache_valid, 1);
     }
 
     #[test]
