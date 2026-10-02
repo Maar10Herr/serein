@@ -449,7 +449,25 @@ fn r12_site_and_byte_rejections_try_the_next_feasible_group_representative() {
         "Desk lamp installation guide",
         None,
     );
-    let byte_packet = recall_lexical(&mut byte_vault, "desk lamp", &["research"], 1200);
+    // Size the narrow request from the current wire metadata. Required limits
+    // text can grow without changing the case: the compact representative must
+    // fit, while the whitespace-heavy representative must remain infeasible.
+    let wide_packet = recall_lexical(&mut byte_vault, "desk lamp", &["research"], 4096);
+    let mut compact_packet = wide_packet.clone();
+    let representative = compact_packet["context"]
+        .as_array_mut()
+        .unwrap()
+        .iter_mut()
+        .find(|record| record["id"] == long_whitespace)
+        .expect("the wider request must include the first duplicate representative");
+    representative["id"] = serde_json::json!(compact_duplicate);
+    representative["text"] = serde_json::json!(
+        "Observed page title on compact.example.org: Desk lamp installation guide"
+    );
+    let byte_budget = serde_json::to_vec(&compact_packet).unwrap().len() + 64;
+    assert!(byte_budget < serde_json::to_vec(&wide_packet).unwrap().len());
+    assert!(byte_budget < 4096);
+    let byte_packet = recall_lexical(&mut byte_vault, "desk lamp", &["research"], byte_budget);
     let byte_ids = context_ids(&byte_packet);
     assert!(
         byte_ids.contains(&byte_filler),
@@ -463,5 +481,5 @@ fn r12_site_and_byte_rejections_try_the_next_feasible_group_representative() {
         byte_ids.contains(&compact_duplicate),
         "byte rejection must not consume the duplicate group: {byte_packet}"
     );
-    assert!(serde_json::to_vec(&byte_packet).unwrap().len() <= 1200);
+    assert!(serde_json::to_vec(&byte_packet).unwrap().len() <= byte_budget);
 }

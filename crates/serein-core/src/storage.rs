@@ -1460,7 +1460,7 @@ COMMIT;")?;
                 if items.len() < 2 {
                     continue;
                 }
-                let independent_sessions = sessions_by_topic
+                let multiple_activity_windows = sessions_by_topic
                     .get(topic_id)
                     .is_some_and(|sessions| sessions.len() >= 2);
                 let coherent_search_session = items_by_topic_session.iter().any(
@@ -1473,7 +1473,7 @@ COMMIT;")?;
                                 })
                     },
                 );
-                if !independent_sessions && !coherent_search_session {
+                if !multiple_activity_windows && !coherent_search_session {
                     continue;
                 }
                 let sites: HashSet<_> = items

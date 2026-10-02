@@ -922,6 +922,8 @@ fn format_ranked_candidate(
     };
     let mut limits = vec![
         "Browsing does not establish endorsement, ownership, or a settled preference.".to_owned(),
+        "Activity counts use fixed 30-minute windows; they are not independent confirmations."
+            .to_owned(),
     ];
     for action in &evidence.correction_actions {
         limits.push(format!("User correction: {}", action.replace('_', " ")));

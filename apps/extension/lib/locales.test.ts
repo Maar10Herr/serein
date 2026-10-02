@@ -71,6 +71,56 @@ describe("locale catalogs", () => {
     }
   });
 
+  it("describes legacy session counts as activity windows", () => {
+    expect(messages.en["context.distinctSessions"]).toBe("Activity windows");
+    expect(messages.en["context.sessionSingular"]).toBe(
+      "{count} activity window",
+    );
+    expect(messages.en["context.sessionsPlural"]).toBe(
+      "{count} activity windows",
+    );
+    expect(messages.en["context.activityCount"]).toBe(
+      "{sessions} activity windows · {sites} sites",
+    );
+    expect(messages.en["context.evidenceCount"]).toBe(
+      "{count} observations · {sessions} activity windows · {sites} sites",
+    );
+    expect(messages.en["modal.sessionSummary"]).toBe(
+      "{sessions} activity windows · last seen {time}",
+    );
+    expect(placeholders(messages.en["context.activityCount"])).toEqual([
+      "sessions",
+      "sites",
+    ]);
+    expect(placeholders(messages.en["modal.sessionSummary"])).toEqual([
+      "sessions",
+      "time",
+    ]);
+    expect(messages.en["context.memoriesDescription"]).toBe(
+      "Related observations are grouped into provisional research themes. Groups may change as observations arrive; they describe activity, not beliefs or confirmed intentions.",
+    );
+  });
+
+  it.each(translatedLocales)(
+    "localizes activity window counts and provisional groups in %s",
+    (locale) => {
+      for (const key of [
+        "context.distinctSessions",
+        "context.sessionSingular",
+        "context.sessionsPlural",
+        "context.activityCount",
+        "context.evidenceCount",
+        "modal.sessionSummary",
+        "context.memoriesDescription",
+      ] as const) {
+        expect(messages[locale][key].trim(), `${locale}: ${key}`).not.toBe("");
+        expect(messages[locale][key], `${locale}: ${key}`).not.toBe(
+          messages.en[key],
+        );
+      }
+    },
+  );
+
   it("resolves simplified Chinese locale aliases", () => {
     expect(t("zh-CN", "dashboard.language")).toBe("语言");
     expect(t("zh-Hans", "dashboard.language")).toBe("语言");

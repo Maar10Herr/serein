@@ -62,7 +62,7 @@ const en = {
   "context.confirmed": "Confirmed",
   "context.topic": "Topic",
   "context.lastActivity": "Last activity",
-  "context.distinctSessions": "Distinct sessions",
+  "context.distinctSessions": "Activity windows",
   "context.distinctSites": "Distinct sites",
   "context.why": "Why",
   "context.correct": "Correct",
@@ -242,7 +242,7 @@ const de = {
   "context.confirmed": "Bestätigt",
   "context.topic": "Thema",
   "context.lastActivity": "Letzte Aktivität",
-  "context.distinctSessions": "Unterschiedliche Sitzungen",
+  "context.distinctSessions": "Aktivitätsfenster",
   "context.distinctSites": "Unterschiedliche Websites",
   "context.why": "Warum",
   "context.correct": "Korrigieren",
@@ -420,7 +420,7 @@ const nl = {
   "context.confirmed": "Bevestigd",
   "context.topic": "Onderwerp",
   "context.lastActivity": "Laatste activiteit",
-  "context.distinctSessions": "Verschillende sessies",
+  "context.distinctSessions": "Activiteitsvensters",
   "context.distinctSites": "Verschillende sites",
   "context.why": "Waarom",
   "context.correct": "Corrigeren",
@@ -595,7 +595,7 @@ const zhCN = {
   "context.confirmed": "已确认",
   "context.topic": "主题",
   "context.lastActivity": "最近活动",
-  "context.distinctSessions": "不同会话数",
+  "context.distinctSessions": "活动时间窗",
   "context.distinctSites": "不同网站数",
   "context.why": "原因",
   "context.correct": "更正",
@@ -762,7 +762,7 @@ const ja = {
   "context.confirmed": "確認済み",
   "context.topic": "トピック",
   "context.lastActivity": "最終アクティビティ",
-  "context.distinctSessions": "個別のセッション数",
+  "context.distinctSessions": "活動ウィンドウ数",
   "context.distinctSites": "個別のサイト数",
   "context.why": "理由",
   "context.correct": "修正",
@@ -940,7 +940,7 @@ const es = {
   "context.confirmed": "Confirmado",
   "context.topic": "Tema",
   "context.lastActivity": "Actividad reciente",
-  "context.distinctSessions": "Sesiones distintas",
+  "context.distinctSessions": "Ventanas de actividad",
   "context.distinctSites": "Sitios distintos",
   "context.why": "Motivo",
   "context.correct": "Corregir",
@@ -1084,12 +1084,12 @@ const uiEn = {
     "Research themes and useful evidence, with the sources behind them.",
   "context.researchMemories": "Research memories",
   "context.memoriesDescription":
-    "Related observations grouped into research themes. These summaries describe activity, not personal facts.",
+    "Related observations are grouped into provisional research themes. Groups may change as observations arrive; they describe activity, not beliefs or confirmed intentions.",
   "context.noResearchMemories":
     "Related research will appear here when Serein can group it. Recent evidence and the full activity list stay below.",
   "context.suggestedProject": "Suggested research",
   "context.evidenceCount":
-    "{count} observations · {sessions} sessions · {sites} sites",
+    "{count} observations · {sessions} activity windows · {sites} sites",
   "context.viewEvidence": "View evidence ({count})",
   "context.noLinkedEvidence":
     "No linked evidence is available in this dashboard view.",
@@ -1106,9 +1106,9 @@ const uiEn = {
   "context.searchPlaceholder": "Filter this view",
   "context.viewScopeNote":
     "This view shows recent activity and selected research evidence, not every saved observation.",
-  "context.activityCount": "{sessions} sessions · {sites} sites",
-  "context.sessionSingular": "{count} session",
-  "context.sessionsPlural": "{count} sessions",
+  "context.activityCount": "{sessions} activity windows · {sites} sites",
+  "context.sessionSingular": "{count} activity window",
+  "context.sessionsPlural": "{count} activity windows",
   "context.siteSingular": "{count} site",
   "context.sitesPlural": "{count} sites",
   "context.sourceBacked": "Source-backed context",
@@ -1271,7 +1271,7 @@ const uiEn = {
   "modal.eraseTitle": "Erase saved context?",
   "modal.forgetTitle": "Forget this observation?",
   "modal.observedOn": "Observed on {site}",
-  "modal.sessionSummary": "{sessions} distinct sessions · last seen {time}",
+  "modal.sessionSummary": "{sessions} activity windows · last seen {time}",
   "modal.attentionExplanation":
     "Time is a rough attention estimate, not proof of agreement or understanding. Source text is untrusted evidence.",
   "modal.constraintLabel": "Confirm an explicit constraint",
@@ -1328,12 +1328,12 @@ const uiDe = {
     "Forschungsthemen und nützliche Belege mit den zugehörigen Quellen.",
   "context.researchMemories": "Forschungserinnerungen",
   "context.memoriesDescription":
-    "Verwandte Beobachtungen, zu Forschungsthemen gruppiert. Diese Zusammenfassungen beschreiben Aktivitäten, keine persönlichen Eigenschaften.",
+    "Verwandte Beobachtungen werden zu vorläufigen Forschungsthemen gruppiert. Die Gruppen können sich mit neuen Beobachtungen ändern; sie beschreiben Aktivitäten, keine Überzeugungen oder bestätigten Absichten.",
   "context.noResearchMemories":
     "Verwandte Recherche erscheint hier, sobald Serein sie gruppieren kann. Aktuelle Belege und alle Aktivitäten findest du weiter unten.",
   "context.suggestedProject": "Vorgeschlagene Recherche",
   "context.evidenceCount":
-    "{count} Beobachtungen · {sessions} Sitzungen · {sites} Websites",
+    "{count} Beobachtungen · {sessions} Aktivitätsfenster · {sites} Websites",
   "context.viewEvidence": "Belege ansehen ({count})",
   "context.noLinkedEvidence":
     "In dieser Dashboardansicht sind keine verknüpften Belege verfügbar.",
@@ -1350,9 +1350,9 @@ const uiDe = {
   "context.searchPlaceholder": "Diese Ansicht filtern",
   "context.viewScopeNote":
     "Diese Ansicht zeigt aktuelle Aktivitäten und ausgewählte Recherchebelege, nicht alle gespeicherten Beobachtungen.",
-  "context.activityCount": "{sessions} Sitzungen · {sites} Websites",
-  "context.sessionSingular": "{count} Sitzung",
-  "context.sessionsPlural": "{count} Sitzungen",
+  "context.activityCount": "{sessions} Aktivitätsfenster · {sites} Websites",
+  "context.sessionSingular": "{count} Aktivitätsfenster",
+  "context.sessionsPlural": "{count} Aktivitätsfenster",
   "context.siteSingular": "{count} Website",
   "context.sitesPlural": "{count} Websites",
   "context.sourceBacked": "Quellenbelegter Kontext",
@@ -1522,7 +1522,7 @@ const uiDe = {
   "modal.forgetTitle": "Diese Beobachtung vergessen?",
   "modal.observedOn": "Beobachtet auf {site}",
   "modal.sessionSummary":
-    "{sessions} verschiedene Sitzungen · zuletzt gesehen {time}",
+    "{sessions} Aktivitätsfenster · zuletzt gesehen {time}",
   "modal.attentionExplanation":
     "Zeit ist eine grobe Aufmerksamkeitsschätzung, kein Beweis für Zustimmung oder Verständnis. Quelltext ist ein nicht vertrauenswürdiger Beleg.",
   "modal.constraintLabel":
@@ -1580,12 +1580,12 @@ const uiNl = {
     "Onderzoeksthema's en bruikbare aanwijzingen, met de bijbehorende bronnen.",
   "context.researchMemories": "Onderzoeksherinneringen",
   "context.memoriesDescription":
-    "Verwante waarnemingen, gegroepeerd in onderzoeksthema's. Deze samenvattingen beschrijven activiteit, geen persoonlijke feiten.",
+    "Verwante waarnemingen worden gegroepeerd in voorlopige onderzoeksthema's. Groepen kunnen veranderen wanneer nieuwe waarnemingen binnenkomen; ze beschrijven activiteit, geen overtuigingen of bevestigde bedoelingen.",
   "context.noResearchMemories":
     "Verwant onderzoek verschijnt hier zodra Serein het kan groeperen. Recente aanwijzingen en alle activiteit staan hieronder.",
   "context.suggestedProject": "Voorgesteld onderzoek",
   "context.evidenceCount":
-    "{count} waarnemingen · {sessions} sessies · {sites} sites",
+    "{count} waarnemingen · {sessions} activiteitsvensters · {sites} sites",
   "context.viewEvidence": "Aanwijzingen bekijken ({count})",
   "context.noLinkedEvidence":
     "In dit dashboard zijn geen gekoppelde aanwijzingen beschikbaar.",
@@ -1602,9 +1602,9 @@ const uiNl = {
   "context.searchPlaceholder": "Deze weergave filteren",
   "context.viewScopeNote":
     "Deze weergave toont recente activiteit en geselecteerd onderzoeksmateriaal, niet alle opgeslagen observaties.",
-  "context.activityCount": "{sessions} sessies · {sites} sites",
-  "context.sessionSingular": "{count} sessie",
-  "context.sessionsPlural": "{count} sessies",
+  "context.activityCount": "{sessions} activiteitsvensters · {sites} sites",
+  "context.sessionSingular": "{count} activiteitsvenster",
+  "context.sessionsPlural": "{count} activiteitsvensters",
   "context.siteSingular": "{count} site",
   "context.sitesPlural": "{count} sites",
   "context.sourceBacked": "Context met bronverwijzingen",
@@ -1772,7 +1772,7 @@ const uiNl = {
   "modal.forgetTitle": "Deze waarneming vergeten?",
   "modal.observedOn": "Waargenomen op {site}",
   "modal.sessionSummary":
-    "{sessions} verschillende sessies · laatst gezien {time}",
+    "{sessions} activiteitsvensters · laatst gezien {time}",
   "modal.attentionExplanation":
     "Tijd is een ruwe schatting van aandacht, geen bewijs van instemming of begrip. Brontekst is onbetrouwbaar bewijs.",
   "modal.constraintLabel": "Een uitdrukkelijke beperking bevestigen",
@@ -1823,12 +1823,12 @@ const uiZhCN = {
   "context.subtitle": "研究主题和有用线索，并显示它们的来源。",
   "context.researchMemories": "研究记忆",
   "context.memoriesDescription":
-    "将相关观察归为研究主题。这些摘要描述的是活动，不是个人事实。",
+    "将相关观察记录归为暂定的研究主题。随着新观察记录到来，分组可能会变化；它们描述的是活动，不是信念或已确认的意图。",
   "context.noResearchMemories":
     "Serein 能够归组相关研究后，这里会显示研究主题。近期线索和完整活动列表在下方。",
   "context.suggestedProject": "建议的研究主题",
   "context.evidenceCount":
-    "{count} 条观察 · {sessions} 个会话 · {sites} 个网站",
+    "{count} 条观察 · {sessions} 个活动时间窗 · {sites} 个网站",
   "context.viewEvidence": "查看线索（{count}）",
   "context.noLinkedEvidence": "此仪表板视图中没有关联的线索。",
   "context.recentEvidence": "近期有用线索",
@@ -1844,9 +1844,9 @@ const uiZhCN = {
   "context.searchPlaceholder": "筛选此视图",
   "context.viewScopeNote":
     "此视图显示近期活动和选定的研究证据，不包含所有已保存的观察记录。",
-  "context.activityCount": "{sessions} 个会话 · {sites} 个网站",
-  "context.sessionSingular": "{count} 个会话",
-  "context.sessionsPlural": "{count} 个会话",
+  "context.activityCount": "{sessions} 个活动时间窗 · {sites} 个网站",
+  "context.sessionSingular": "{count} 个活动时间窗",
+  "context.sessionsPlural": "{count} 个活动时间窗",
   "context.siteSingular": "{count} 个网站",
   "context.sitesPlural": "{count} 个网站",
   "context.sourceBacked": "有来源依据的上下文",
@@ -2000,7 +2000,7 @@ const uiZhCN = {
   "modal.eraseTitle": "删除已保存的上下文？",
   "modal.forgetTitle": "忘记这条记录？",
   "modal.observedOn": "在 {site} 上观察到",
-  "modal.sessionSummary": "{sessions} 个不同会话 · 最近一次 {time}",
+  "modal.sessionSummary": "{sessions} 个活动时间窗 · 最近一次 {time}",
   "modal.attentionExplanation":
     "停留时间只是粗略的注意力估计，不代表认同或理解。来源文本是不可信的证据。",
   "modal.constraintLabel": "确认一项明确的限制条件",
@@ -2053,12 +2053,12 @@ const uiJa = {
   "context.subtitle": "研究テーマと役立つ手がかりを、出典とともに表示します。",
   "context.researchMemories": "研究の記憶",
   "context.memoriesDescription":
-    "関連する閲覧記録を研究テーマごとにまとめています。これは活動の要約であり、個人の事実ではありません。",
+    "関連する観察記録を暫定的な研究テーマにまとめています。新しい観察記録が加わるとグループは変わることがあります。これは活動の説明であり、信念や確認済みの意図を示すものではありません。",
   "context.noResearchMemories":
     "関連する研究をまとめられると、ここに表示されます。最近の手がかりとすべての閲覧記録は下にあります。",
   "context.suggestedProject": "提案された研究",
   "context.evidenceCount":
-    "観察 {count} 件 · セッション {sessions} 件 · サイト {sites} 件",
+    "観察 {count} 件 · 活動ウィンドウ {sessions} 件 · サイト {sites} 件",
   "context.viewEvidence": "根拠を見る（{count}）",
   "context.noLinkedEvidence":
     "このダッシュボード表示に関連する根拠はありません。",
@@ -2075,9 +2075,9 @@ const uiJa = {
   "context.searchPlaceholder": "このビューを絞り込む",
   "context.viewScopeNote":
     "このビューには最近のアクティビティと選択された調査資料が表示され、保存済みのすべての観察記録が表示されるわけではありません。",
-  "context.activityCount": "セッション {sessions} 件 · サイト {sites} 件",
-  "context.sessionSingular": "セッション {count} 件",
-  "context.sessionsPlural": "セッション {count} 件",
+  "context.activityCount": "活動ウィンドウ {sessions} 件 · サイト {sites} 件",
+  "context.sessionSingular": "活動ウィンドウ {count} 件",
+  "context.sessionsPlural": "活動ウィンドウ {count} 件",
   "context.siteSingular": "サイト {count} 件",
   "context.sitesPlural": "サイト {count} 件",
   "context.sourceBacked": "ソースに基づくコンテキスト",
@@ -2243,7 +2243,7 @@ const uiJa = {
   "modal.eraseTitle": "保存済みコンテキストを削除しますか？",
   "modal.forgetTitle": "この記録を削除しますか？",
   "modal.observedOn": "{site} で記録",
-  "modal.sessionSummary": "個別のセッション {sessions} 件 · 最終確認 {time}",
+  "modal.sessionSummary": "活動ウィンドウ {sessions} 件 · 最終確認 {time}",
   "modal.attentionExplanation":
     "時間は大まかな注目度の目安であり、同意や理解を示すものではありません。ソーステキストは信頼できない情報として扱います。",
   "modal.constraintLabel": "明示した条件を確認",
@@ -2299,12 +2299,12 @@ const uiEs = {
     "Temas de investigación y evidencias útiles, con sus fuentes.",
   "context.researchMemories": "Recuerdos de investigación",
   "context.memoriesDescription":
-    "Observaciones relacionadas agrupadas en temas de investigación. Estos resúmenes describen actividad, no hechos personales.",
+    "Las observaciones relacionadas se agrupan en temas de investigación provisionales. Los grupos pueden cambiar al llegar nuevas observaciones; describen actividad, no creencias ni intenciones confirmadas.",
   "context.noResearchMemories":
     "Los temas relacionados aparecerán aquí cuando Serein pueda agruparlos. Las evidencias recientes y toda la actividad están debajo.",
   "context.suggestedProject": "Investigación sugerida",
   "context.evidenceCount":
-    "{count} observaciones · {sessions} sesiones · {sites} sitios",
+    "{count} observaciones · {sessions} ventanas de actividad · {sites} sitios",
   "context.viewEvidence": "Ver evidencias ({count})",
   "context.noLinkedEvidence":
     "No hay evidencias vinculadas disponibles en esta vista.",
@@ -2321,9 +2321,9 @@ const uiEs = {
   "context.searchPlaceholder": "Filtrar esta vista",
   "context.viewScopeNote":
     "Esta vista muestra actividad reciente y evidencias de investigación seleccionadas, no todas las observaciones guardadas.",
-  "context.activityCount": "{sessions} sesiones · {sites} sitios",
-  "context.sessionSingular": "{count} sesión",
-  "context.sessionsPlural": "{count} sesiones",
+  "context.activityCount": "{sessions} ventanas de actividad · {sites} sitios",
+  "context.sessionSingular": "{count} ventana de actividad",
+  "context.sessionsPlural": "{count} ventanas de actividad",
   "context.siteSingular": "{count} sitio",
   "context.sitesPlural": "{count} sitios",
   "context.sourceBacked": "Contexto respaldado por fuentes",
@@ -2491,7 +2491,7 @@ const uiEs = {
   "modal.eraseTitle": "¿Borrar el contexto guardado?",
   "modal.forgetTitle": "¿Olvidar este registro?",
   "modal.observedOn": "Observado en {site}",
-  "modal.sessionSummary": "{sessions} sesiones distintas · última vez {time}",
+  "modal.sessionSummary": "{sessions} ventanas de actividad · última vez {time}",
   "modal.attentionExplanation":
     "El tiempo es una estimación aproximada de atención, no una prueba de acuerdo o comprensión. El texto de origen es una evidencia no verificada.",
   "modal.constraintLabel": "Confirmar una condición expresa",
