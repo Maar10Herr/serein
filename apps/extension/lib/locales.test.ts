@@ -6,6 +6,8 @@ const placeholders = (message: string) =>
   [...message.matchAll(/\{([A-Za-z0-9_]+)\}/gu)]
     .map((match) => match[1])
     .sort();
+const bracketedExamples = (message: string) =>
+  [...message.matchAll(/\[[^\]]+\]/gu)].map(() => "topic");
 
 describe("locale catalogs", () => {
   it.each(translatedLocales)("covers every English message in %s", (locale) => {
@@ -18,6 +20,53 @@ describe("locale catalogs", () => {
     for (const key of Object.keys(messages.en) as MessageKey[]) {
       expect(placeholders(messages[locale][key]), `${locale}: ${key}`).toEqual(
         placeholders(messages.en[key]),
+      );
+      expect(
+        bracketedExamples(messages[locale][key]),
+        `${locale}: ${key} bracketed examples`,
+      ).toEqual(bracketedExamples(messages.en[key]));
+    }
+  });
+
+  it("uses the specified English filtering and first-use copy", () => {
+    expect(messages.en["context.searchLabel"]).toBe("Filter this view");
+    expect(messages.en["context.searchPlaceholder"]).toBe("Filter this view");
+    expect(messages.en["context.noMatch"]).toBe(
+      "No matches in the displayed context.",
+    );
+    expect(messages.en["context.viewScopeNote"]).toBe(
+      "This view shows recent activity and selected research evidence, not every saved observation.",
+    );
+    expect(messages.en["context.refresh"]).toBe("Refresh");
+    expect(messages.en["context.stale"]).toBe(
+      "Showing the last available context. Refresh to check for updates.",
+    );
+    expect(messages.en["context.unavailable"]).toBe(
+      "Context is unavailable. Check the local connection and try Refresh.",
+    );
+    expect(messages.en["context.privacyUnconfirmed"]).toBe(
+      "This privacy change is not confirmed. Affected context stays hidden until it is confirmed.",
+    );
+    expect(messages.en["journey.question"]).toBe(
+      "What did I find about [the topic I researched]?",
+    );
+    expect(messages.en["journey.questionHelp"]).toBe(
+      "Replace the bracketed text with a topic you researched after enabling collection.",
+    );
+    expect(messages.en["context.wrongTopicHelp"]).toBe(
+      "This hides the observation from all assistant recall; it does not move it to another research group.",
+    );
+  });
+
+  it.each(translatedLocales)("translates context status copy in %s", (locale) => {
+    for (const key of [
+      "context.stale",
+      "context.unavailable",
+      "context.privacyUnconfirmed",
+    ] as const) {
+      expect(messages[locale][key].trim(), `${locale}: ${key}`).not.toBe("");
+      expect(messages[locale][key], `${locale}: ${key}`).not.toBe(
+        messages.en[key],
       );
     }
   });

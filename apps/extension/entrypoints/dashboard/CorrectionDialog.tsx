@@ -87,6 +87,7 @@ export function CorrectionDialog({
             {translate(key)}
           </button>
         ))}
+        <small>{translate("context.wrongTopicHelp")}</small>
         <label class="small">
           {translate("modal.constraintLabel")}
           <textarea

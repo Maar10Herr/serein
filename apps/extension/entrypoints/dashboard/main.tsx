@@ -11,6 +11,7 @@ import {
 } from "./CorrectionDialog";
 import { t, type Locale, type MessageKey } from "../../lib/locales";
 import { validSite } from "../../lib/policy";
+import { dashboardRefresh } from "../../lib/dashboard-refresh";
 import type {
   DashboardCard,
   DashboardMemory,
@@ -48,20 +49,29 @@ const correctionLabels: Record<string, MessageKey> = {
   confirm_constraint: "correction.confirmConstraint",
   do_not_use: "correction.doNotUse",
 };
+type StateResponse = { state: State; queued: number; controls: number };
+class PendingPrivacyError extends Error {
+  constructor(readonly response: StateResponse) {
+    super("Privacy changes have not been confirmed.");
+  }
+}
 function Toggle({
   checked,
   onChange,
   label,
+  disabled = false,
 }: {
   checked: boolean;
   onChange: () => void;
   label: string;
+  disabled?: boolean;
 }) {
   return (
     <label class="toggle">
       <input
         type="checkbox"
         checked={checked}
+        disabled={disabled}
         onChange={onChange}
         aria-label={label}
       />
@@ -110,11 +120,22 @@ function App() {
     topics: [],
   });
   const [dashboardLoaded, setDashboardLoaded] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const [loadFailed, setLoadFailed] = useState(false);
+  const [privacyWithheld, setPrivacyWithheld] = useState(false);
+  const withheld = useRef(false);
+  const acceptedGeneration = useRef<{
+    path?: string;
+    evidence: number;
+    privacy: number;
+  }>();
+  const refreshController = useRef<ReturnType<typeof dashboardRefresh>>();
   const [queue, setQueue] = useState(0);
   const [pending, setPending] = useState(0);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [busy, setBusy] = useState(false);
+  const mutationActive = useRef(false);
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState(["codex"]);
@@ -152,11 +173,16 @@ function App() {
     return generation === modalGeneration.current;
   }
   async function submitCorrection(submission: CorrectionSubmission) {
-    await host("feedback", {
-      atom_id: submission.atom_id,
-      action: submission.action,
-      text: submission.text,
-    });
+    refreshController.current?.beginMutation();
+    try {
+      await host("feedback", {
+        atom_id: submission.atom_id,
+        action: submission.action,
+        text: submission.text,
+      });
+    } finally {
+      refreshController.current?.endMutation();
+    }
   }
   function refreshAfterCorrection() {
     void load().catch((cause) => setError((cause as Error).message));
@@ -174,28 +200,87 @@ function App() {
       ? `npx --yes skills add ${skillRepository} --skill serein-context ${skillTargets.map((id) => `--agent ${id}`).join(" ")} --global --yes --copy`
       : "";
   async function load() {
-    const r = await call({ type: "state" });
-    setS(r.state);
-    if (r.state.lastError?.startsWith("Pairing ticket expired"))
-      setError(r.state.lastError);
-    setQueue(r.queued);
-    setPending(r.controls);
-    if (r.state.paired) {
-      try {
-        setData(await host("dashboard"));
-        setDashboardLoaded(true);
-      } catch (e) {
-        setDashboardLoaded(false);
-        setData({ cards: [], memories: [], topics: [] });
-        setError((e as Error).message);
-      }
-    } else {
-      setDashboardLoaded(false);
-      setData({ cards: [], memories: [], topics: [] });
-    }
+    refreshController.current?.request();
   }
   useEffect(() => {
-    load().catch((e) => setError(e.message));
+    const controller = dashboardRefresh({
+      visible: () => document.visibilityState !== "hidden",
+      load: async () => {
+        const response = await call<StateResponse>({ type: "state" });
+        if (response.controls > 0) throw new PendingPrivacyError(response);
+        const dashboard = response.state.paired
+          ? ((await host("dashboard")) as DashboardResponse)
+          : undefined;
+        return { response, dashboard };
+      },
+      apply: ({ response, dashboard }) => {
+        const previous = acceptedGeneration.current;
+        if (
+          dashboard &&
+          previous &&
+          previous.path === dashboard.database_path &&
+          (typeof dashboard.evidence_generation !== "number" ||
+            typeof dashboard.privacy_generation !== "number")
+        ) {
+          setLoadFailed(true);
+          return;
+        }
+        if (
+          dashboard &&
+          typeof dashboard.evidence_generation === "number" &&
+          typeof dashboard.privacy_generation === "number"
+        ) {
+          if (
+            previous &&
+            previous.path === dashboard.database_path &&
+            (dashboard.evidence_generation < previous.evidence ||
+              dashboard.privacy_generation < previous.privacy)
+          ) {
+            setLoadFailed(true);
+            return;
+          }
+          acceptedGeneration.current = {
+            path: dashboard.database_path,
+            evidence: dashboard.evidence_generation,
+            privacy: dashboard.privacy_generation,
+          };
+        }
+        setS(response.state);
+        setQueue(response.queued);
+        setPending(response.controls);
+        setLoadFailed(false);
+        if (withheld.current) return;
+        setData(dashboard ?? { cards: [], memories: [], topics: [] });
+        setDashboardLoaded(Boolean(dashboard));
+        setError(
+          response.state.lastError?.startsWith("Pairing ticket expired")
+            ? response.state.lastError
+            : "",
+        );
+      },
+      error: (cause) => {
+        if (cause instanceof PendingPrivacyError) {
+          withheld.current = true;
+          setPrivacyWithheld(true);
+          setData({ cards: [], memories: [], topics: [] });
+          setDashboardLoaded(false);
+          setReceipt([]);
+          closeModal();
+          setS(cause.response.state);
+          setQueue(cause.response.queued);
+          setPending(cause.response.controls);
+        }
+        setLoadFailed(true);
+        setError(cause instanceof Error ? cause.message : String(cause));
+      },
+      loading: setRefreshing,
+    });
+    refreshController.current = controller;
+    const focus = () => controller.request(150);
+    const visibility = () => controller.visibilityChanged();
+    window.addEventListener("focus", focus);
+    document.addEventListener("visibilitychange", visibility);
+    controller.request();
     browser.storage.local
       .get(["locale", "theme", "themeMode"])
       .then((v) => {
@@ -212,12 +297,13 @@ function App() {
       })
       .catch(() => {})
       .finally(() => setPrefsLoaded(true));
+    return () => {
+      controller.dispose();
+      refreshController.current = undefined;
+      window.removeEventListener("focus", focus);
+      document.removeEventListener("visibilitychange", visibility);
+    };
   }, []);
-  useEffect(() => {
-    if (!s?.ticket) return;
-    const timer = window.setInterval(() => void load().catch(() => {}), 3000);
-    return () => window.clearInterval(timer);
-  }, [s?.ticket?.nonce, s?.paired]);
   useEffect(() => {
     document.documentElement.lang = locale;
     if (theme === "system")
@@ -230,56 +316,108 @@ function App() {
     window.addEventListener("hashchange", syncSection);
     return () => window.removeEventListener("hashchange", syncSection);
   }, []);
+  useEffect(() => {
+    if (section === "context") refreshController.current?.request(150);
+  }, [section]);
   function go(v: string) {
     setSection(v);
     location.hash = v;
     setNotice("");
     setError("");
   }
-  async function run(action: () => Promise<unknown>, success = "") {
+  async function run(
+    action: () => Promise<unknown>,
+    success = "",
+    privacy = false,
+  ) {
+    // Serialize user actions before Preact renders the disabled controls. A
+    // successful privacy change must not clear another unresolved change.
+    if (mutationActive.current) return;
+    mutationActive.current = true;
+    const controller = refreshController.current;
+    controller?.beginMutation();
+    if (privacy) {
+      withheld.current = true;
+      setPrivacyWithheld(true);
+      setData({ cards: [], memories: [], topics: [] });
+      setDashboardLoaded(false);
+      setReceipt([]);
+      closeModal();
+    }
     setBusy(true);
     setError("");
     try {
       await action();
-      await load();
+      if (privacy) {
+        const confirmation = await call<{ controls: number; state: State }>({
+          type: "state",
+        });
+        if (confirmation.controls || !confirmation.state.paired)
+          throw new Error(tr("dashboard.pendingPrivacy"));
+      }
+      if (privacy) {
+        withheld.current = false;
+        setPrivacyWithheld(false);
+      }
       if (success) setNotice(success);
     } catch (e) {
       setError((e as Error).message);
     } finally {
+      mutationActive.current = false;
       setBusy(false);
+      controller?.endMutation();
     }
   }
   async function policy(patch: any) {
-    await run(() => call({ type: "policy", patch }));
+    const restricts =
+      patch.consent === false ||
+      patch.recall_enabled === false ||
+      patch.selected_only === true ||
+      (Array.isArray(patch.selected_sites) &&
+        s?.policy.selected_sites.some(
+          (site) => !patch.selected_sites.includes(site),
+        )) ||
+      (Array.isArray(patch.excluded_sites) &&
+        patch.excluded_sites.some(
+          (site: string) => !s?.policy.excluded_sites.includes(site),
+        ));
+    await run(
+      () => call({ type: "policy", patch }),
+      "",
+      Boolean(restricts || withheld.current),
+    );
   }
   async function copySetup() {
     if (!s?.paired && (!consent || !disclosure)) return;
-    if (!s?.paired)
-      await call({
-        type: "policy",
-        patch: {
-          consent: true,
-          recall_enabled: true,
-          selected_only: selectedOnly,
-        },
+    await run(async () => {
+      if (!s?.paired) {
+        await call({
+          type: "policy",
+          patch: {
+            consent: true,
+            recall_enabled: true,
+            selected_only: selectedOnly,
+          },
+        });
+      }
+      const ticket = await call({
+        type: "ticket",
+        adapters: selected,
+        install_skills: false,
+        label:
+          "Personal · " +
+          (import.meta.env.BROWSER === "firefox" ? "Firefox" : "Chrome"),
       });
-    const ticket = await call({
-      type: "ticket",
-      adapters: selected,
-      install_skills: false,
-      label:
-        "Personal · " +
-        (import.meta.env.BROWSER === "firefox" ? "Firefox" : "Chrome"),
+      const text = tr("setup.assistantInstructions", {
+        ticket: JSON.stringify(ticket, null, 2),
+      });
+      setSetupText(text);
+      await navigator.clipboard.writeText(text);
+      setNotice(
+        `${tr("setup.instructionsCopied")} ${tr("setup.instructionsPasteHint")}`,
+      );
+      await load();
     });
-    const text = tr("setup.assistantInstructions", {
-      ticket: JSON.stringify(ticket, null, 2),
-    });
-    setSetupText(text);
-    await navigator.clipboard.writeText(text);
-    setNotice(
-      `${tr("setup.instructionsCopied")} ${tr("setup.instructionsPasteHint")}`,
-    );
-    await load();
   }
   async function copySkillInstallCommand() {
     if (!skillRepository) return;
@@ -516,6 +654,24 @@ function App() {
             {tr("dashboard.pendingPrivacy")}
           </div>
         )}
+        {privacyWithheld && (
+          <div role="alert" class="notice error" style={{ marginBottom: 20 }}>
+            {tr("context.privacyUnconfirmed")}
+            <button
+              disabled={busy}
+              onClick={() =>
+                run(() => call({ type: "policy", patch: {} }), "", true)
+              }
+            >
+              {tr("context.retryPrivacy")}
+            </button>
+          </div>
+        )}
+        {loadFailed && !privacyWithheld && dashboardLoaded && (
+          <div role="status" class="notice" style={{ marginBottom: 20 }}>
+            {tr("context.stale")}
+          </div>
+        )}
         {section === "context" && (
           <>
             <div class="row between page-heading">
@@ -523,11 +679,27 @@ function App() {
                 <h1>{tr("context.heading")}</h1>
                 <p>{tr("context.subtitle")}</p>
               </div>
-              <span class="badge">
-                <Icon name="device" size={14} />
-                {tr("context.savedDevice")}
-              </span>
+              <div class="row">
+                <span class="badge">
+                  <Icon name="device" size={14} />
+                  {tr("context.savedDevice")}
+                </span>
+                <button
+                  onClick={() => refreshController.current?.request()}
+                  aria-busy={refreshing}
+                >
+                  {tr("context.refresh")}
+                </button>
+              </div>
             </div>
+            <p class="small" style={{ marginBottom: 16 }}>
+              {tr("context.viewScopeNote")}
+            </p>
+            {refreshing && (
+              <p role="status" class="small">
+                {tr("context.refreshing")}
+              </p>
+            )}
             <div class="toolbar">
               <div class="tabs" aria-label={tr("context.filterLabel")}>
                 {["all", "observed", "confirmed"].map((f) => (
@@ -624,21 +796,29 @@ function App() {
                     <Icon name="mark" size={42} />
                   </div>
                   <h2>
-                    {search ? tr("context.noMatch") : tr("context.emptyTitle")}
+                    {loadFailed || privacyWithheld
+                      ? tr("context.unavailable")
+                      : search
+                        ? tr("context.noMatch")
+                        : tr("context.emptyTitle")}
                   </h2>
                   <p>
-                    {s?.paired
-                      ? tr("context.emptyConnected")
-                      : tr("context.emptyDisconnected")}
+                    {loadFailed || privacyWithheld
+                      ? error
+                      : s?.paired
+                        ? tr("context.emptyConnected")
+                        : tr("context.emptyDisconnected")}
                   </p>
-                  <button
-                    class="primary"
-                    disabled={busy}
-                    onClick={() => (s?.paired ? run(load) : go("connections"))}
-                  >
-                    {s?.paired ? tr("context.refresh") : tr("context.connect")}
-                    <Icon name="arrow" size={16} />
-                  </button>
+                  {!s?.paired && (
+                    <button
+                      class="primary"
+                      disabled={busy}
+                      onClick={() => go("connections")}
+                    >
+                      {tr("context.connect")}
+                      <Icon name="arrow" size={16} />
+                    </button>
+                  )}
                 </div>
               ) : (
                 <p class="small evidence-empty">
@@ -755,6 +935,7 @@ function App() {
                       <blockquote class="first-run-question">
                         “{tr("journey.question")}”
                       </blockquote>
+                      <small>{tr("journey.questionHelp")}</small>
                       {!s.policy.recall_enabled && (
                         <small>{tr("journey.recallDisabled")}</small>
                       )}
@@ -920,7 +1101,7 @@ function App() {
                       (!s?.paired && (!consent || !disclosure)) ||
                       !selected.length
                     }
-                    onClick={() => run(copySetup)}
+                      onClick={() => void copySetup()}
                   >
                     <Icon name="copy" size={16} />
                     {tr("setup.copyInstructions")}
@@ -980,6 +1161,7 @@ function App() {
               >
                 <Toggle
                   label={tr("privacy.capture")}
+                  disabled={busy}
                   checked={!!s?.policy.consent && !s?.policy.paused}
                   onChange={() =>
                     run(() =>
@@ -994,6 +1176,7 @@ function App() {
               >
                 <Toggle
                   label={tr("privacy.assistantRecall")}
+                  disabled={busy}
                   checked={!!s?.policy.recall_enabled}
                   onChange={() =>
                     policy({ recall_enabled: !s?.policy.recall_enabled })
@@ -1006,6 +1189,7 @@ function App() {
               >
                 <Toggle
                   label={tr("privacy.selectedSitesOnly")}
+                  disabled={busy}
                   checked={!!s?.policy.selected_only}
                   onChange={() =>
                     policy({ selected_only: !s?.policy.selected_only })
@@ -1035,14 +1219,18 @@ function App() {
                 <button
                   disabled={!validSite(site) || busy}
                   onClick={() =>
-                    run(async () => {
-                      await call({
-                        type: s?.policy.selected_only ? "include" : "exclude",
-                        site,
-                        forget: false,
-                      });
-                      setSite("");
-                    })
+                    run(
+                      async () => {
+                        await call({
+                          type: s?.policy.selected_only ? "include" : "exclude",
+                          site,
+                          forget: false,
+                        });
+                        setSite("");
+                      },
+                      "",
+                      !s?.policy.selected_only,
+                    )
                   }
                 >
                   {s?.policy.selected_only
@@ -1057,6 +1245,7 @@ function App() {
                 <div class="setting">
                   <span>{hostname}</span>
                   <button
+                    disabled={busy}
                     onClick={() =>
                       policy(
                         s?.policy.selected_only
@@ -1090,9 +1279,17 @@ function App() {
                 <button
                   disabled={!s?.paired}
                   onClick={() =>
-                    run(async () =>
-                      setReceipt((await host("receipts")).receipts),
-                    )
+                    run(async () => {
+                      const revision =
+                        refreshController.current?.currentRevision();
+                      const result = await host("receipts");
+                      if (
+                        !withheld.current &&
+                        revision ===
+                          refreshController.current?.currentRevision()
+                      )
+                        setReceipt(result.receipts);
+                    })
                   }
                 >
                   {tr("privacy.viewReceipts")}
@@ -1234,9 +1431,11 @@ function App() {
         <footer class="footer-note row between">
           <span>{tr("dashboard.footer")}</span>
           <span>
-            {s?.paired
-              ? tr("dashboard.localHelperConnected")
-              : tr("dashboard.finishSetup")}
+            {loadFailed || privacyWithheld
+              ? tr("context.unavailable")
+              : s?.paired
+                ? tr("dashboard.localHelperConnected")
+                : tr("dashboard.finishSetup")}
           </span>
         </footer>
       </main>
@@ -1333,16 +1532,20 @@ function App() {
                   class="danger"
                   disabled={busy}
                   onClick={() =>
-                    run(async () => {
-                      if (modal.kind === "erase")
-                        await call({ type: "pause", paused: true });
-                      await host("forget", {
-                        site: null,
-                        atom_id: modal.card?.id || null,
-                        site_epoch: (s?.policy.capture_epoch || 0) + 1,
-                      });
-                      closeModal(modal.generation);
-                    }, tr("modal.savedEvidenceRemoved"))
+                    run(
+                      async () => {
+                        if (modal.kind === "erase")
+                          await call({ type: "pause", paused: true });
+                        await host("forget", {
+                          site: null,
+                          atom_id: modal.card?.id || null,
+                          site_epoch: (s?.policy.capture_epoch || 0) + 1,
+                        });
+                        closeModal(modal.generation);
+                      },
+                      tr("modal.savedEvidenceRemoved"),
+                      true,
+                    )
                   }
                 >
                   {modal.kind === "erase"
