@@ -166,6 +166,158 @@ fn comparison_arm_requests(request: &Recall) -> Option<[Recall; 2]> {
     Some([arm_request(&identifiers[0]), arm_request(&identifiers[1])])
 }
 
+#[derive(Clone, Debug, PartialEq, Eq)]
+struct OrderedDirection {
+    from: String,
+    to: String,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
+enum DirectionRelation {
+    Aligned,
+    Neutral,
+    Reversed,
+}
+
+fn direction_word_spans(text: &str) -> Vec<(String, usize, usize)> {
+    let mut words = Vec::new();
+    let mut start = None;
+    for (index, character) in text.char_indices() {
+        if character.is_alphanumeric() {
+            start.get_or_insert(index);
+            continue;
+        }
+        if character == '-' && start.is_some() {
+            let next_is_alphanumeric = text[index + character.len_utf8()..]
+                .chars()
+                .next()
+                .is_some_and(char::is_alphanumeric);
+            if next_is_alphanumeric {
+                continue;
+            }
+        }
+        if let Some(word_start) = start.take() {
+            words.push((text[word_start..index].to_owned(), word_start, index));
+        }
+    }
+    if let Some(word_start) = start {
+        words.push((text[word_start..].to_owned(), word_start, text.len()));
+    }
+    words
+}
+
+fn separated_by_whitespace(text: &str) -> bool {
+    !text.is_empty() && text.chars().all(char::is_whitespace)
+}
+
+fn has_direction_prefix_boundary(text: &str, start: usize) -> bool {
+    text[..start].chars().last().is_none_or(|character| {
+        character.is_whitespace() || matches!(character, '(' | '[' | '{' | '\'' | '"')
+    })
+}
+
+/// After the destination, accept only terminal punctuation or a whitespace-
+/// delimited fixed auxiliary (`is`, `are`, `was`, `were`, `does`, `can`). This
+/// keeps a multiword destination from being shortened to its first word while
+/// allowing clauses such as “Windows is not supported”; that clause does not
+/// change candidate eligibility.
+fn has_unambiguous_direction_suffix(text: &str, start: usize) -> bool {
+    let suffix = &text[start..];
+    let words = direction_word_spans(suffix);
+    let Some((first_word, first_start, _)) = words.first() else {
+        return suffix.chars().all(|character| {
+            character.is_whitespace()
+                || matches!(
+                    character,
+                    '.' | '?'
+                        | '!'
+                        | ','
+                        | ';'
+                        | ':'
+                        | ')'
+                        | ']'
+                        | '}'
+                        | '\''
+                        | '"'
+                        | '…'
+                        | '。'
+                        | '？'
+                        | '！'
+                        | '）'
+                        | '］'
+                        | '｝'
+                        | '」'
+                        | '』'
+                        | '”'
+                        | '’'
+                        | '»'
+                        | '›'
+                )
+        });
+    };
+
+    const CLAUSE_BOUNDARIES: &[&str] = &["is", "are", "was", "were", "does", "can"];
+    CLAUSE_BOUNDARIES
+        .iter()
+        .any(|boundary| first_word.eq_ignore_ascii_case(boundary))
+        && separated_by_whitespace(&suffix[..*first_start])
+}
+
+/// Recognize one narrow, ordered `from <token> to <token>` phrase. The request
+/// caller passes its raw query; candidate classification passes resolved
+/// evidence text. Trailing words leave the phrase ambiguous except after a
+/// small fixed auxiliary boundary; negation remains ordinary evidence and
+/// does not affect eligibility.
+fn ordered_direction(text: &str) -> Option<OrderedDirection> {
+    let words = direction_word_spans(text);
+    let from_positions: Vec<_> = words
+        .iter()
+        .enumerate()
+        .filter_map(|(index, (word, _, _))| word.eq_ignore_ascii_case("from").then_some(index))
+        .collect();
+    let to_positions: Vec<_> = words
+        .iter()
+        .enumerate()
+        .filter_map(|(index, (word, _, _))| word.eq_ignore_ascii_case("to").then_some(index))
+        .collect();
+    if from_positions.len() != 1 || to_positions.len() != 1 {
+        return None;
+    }
+    let from_index = from_positions[0];
+    let to_index = to_positions[0];
+    if from_index + 2 != to_index || to_index + 1 >= words.len() {
+        return None;
+    }
+    let from_span = &words[from_index];
+    let from_endpoint = &words[from_index + 1];
+    let to_span = &words[to_index];
+    let to_endpoint = &words[to_index + 1];
+    if !has_direction_prefix_boundary(text, from_span.1)
+        || !separated_by_whitespace(&text[from_span.2..from_endpoint.1])
+        || !separated_by_whitespace(&text[from_endpoint.2..to_span.1])
+        || !separated_by_whitespace(&text[to_span.2..to_endpoint.1])
+        || !has_unambiguous_direction_suffix(text, to_endpoint.2)
+    {
+        return None;
+    }
+    let from = from_endpoint.0.to_lowercase();
+    let to = to_endpoint.0.to_lowercase();
+    (from != to).then_some(OrderedDirection { from, to })
+}
+
+fn direction_relation(request: &OrderedDirection, evidence_text: &str) -> DirectionRelation {
+    let Some(evidence) = ordered_direction(evidence_text) else {
+        return DirectionRelation::Neutral;
+    };
+    if evidence == *request {
+        DirectionRelation::Aligned
+    } else if evidence.from == request.to && evidence.to == request.from {
+        DirectionRelation::Reversed
+    } else {
+        DirectionRelation::Neutral
+    }
+}
+
 fn tokens(request: &Recall) -> Vec<String> {
     const STOP: &[&str] = &[
         "what",
@@ -2164,7 +2316,9 @@ WHERE source=? AND id IN ({placeholders})
             .collect();
         fused = bounded_temporal_rerank(fused, &last_seen, &sessions, plan.now);
     }
+    let direction = ordered_direction(&request.query);
     let mut output = vec![];
+    let mut direction_ranked = Vec::<(DirectionRelation, f32, String, RankedCandidate)>::new();
     for (id, score) in fused {
         if deadline_reached(start, budget) {
             break;
@@ -2223,12 +2377,29 @@ WHERE source=? AND id IN ({placeholders})
         {
             continue;
         }
-        output.push(format_ranked_candidate(
-            score,
-            evidence,
-            sessions.get(&id).copied().unwrap_or(0),
-            0,
-        ));
+        let relation = direction
+            .as_ref()
+            .map(|direction| direction_relation(direction, &evidence.effective_text));
+        let ranked_candidate =
+            format_ranked_candidate(score, evidence, sessions.get(&id).copied().unwrap_or(0), 0);
+        if let Some(relation) = relation {
+            direction_ranked.push((relation, score, id, ranked_candidate));
+        } else {
+            output.push(ranked_candidate);
+        }
+    }
+    if direction.is_some() {
+        direction_ranked.sort_by(|left, right| {
+            left.0
+                .cmp(&right.0)
+                .then_with(|| right.1.total_cmp(&left.1))
+                .then_with(|| left.2.cmp(&right.2))
+        });
+        output.extend(
+            direction_ranked
+                .into_iter()
+                .map(|(_, _, _, candidate)| candidate),
+        );
     }
     Ok(output)
 }
@@ -2298,6 +2469,70 @@ mod tests {
                 "unsupported comparison form was activated: {unsupported}"
             );
         }
+    }
+
+    #[test]
+    fn ordered_direction_accepts_one_unicode_hyphenated_pair_only() {
+        let parsed = ordered_direction("Weekend travel from Åland-2 to 東京").unwrap();
+        assert_eq!(parsed.from, "åland-2");
+        assert_eq!(parsed.to, "東京");
+        assert_eq!(
+            ordered_direction("Not from north to south.").unwrap(),
+            OrderedDirection {
+                from: "north".into(),
+                to: "south".into(),
+            }
+        );
+        let linux_to_windows = ordered_direction("migration from Linux to Windows").unwrap();
+        assert_eq!(
+            direction_relation(
+                &linux_to_windows,
+                "migration from Linux to Windows is not supported"
+            ),
+            DirectionRelation::Aligned
+        );
+
+        for unsupported in [
+            "travel from New York to Berlin",
+            "travel from Berlin to New York",
+            "travel from north to south from east to west",
+            "travel from north to south to east",
+            "travel from north to North",
+            "travel from A to B/C",
+            "travel from A to B_C",
+            "travel from A to B+",
+            "travel from A/B to C",
+            "travel from A_B to C",
+            "travel from A+ to C",
+            "travel from north to south tomorrow",
+            "travel_from north to south",
+            "buy apple, not buy pear",
+            "shipping-from warehouse to customer",
+            "shipping from warehouse to-customer",
+        ] {
+            assert!(
+                ordered_direction(unsupported).is_none(),
+                "unsupported directional form was activated: {unsupported}"
+            );
+        }
+    }
+
+    #[test]
+    fn comparison_mode_precedes_ordered_direction() {
+        let request = recall("Compare Alpha1 and Beta1 from north to south", &[]);
+        let conn = Connection::open_in_memory().unwrap();
+        let batch = candidates(
+            &conn,
+            "source",
+            &Policy::default(),
+            &request,
+            None,
+            Instant::now(),
+            0,
+        )
+        .unwrap();
+        assert!(batch.compare_models);
+        assert!(batch.candidates.is_empty());
     }
 
     #[test]

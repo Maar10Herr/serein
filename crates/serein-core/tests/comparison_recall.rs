@@ -606,3 +606,260 @@ fn r15_joint_page_is_one_result_and_byte_rejection_keeps_truthful_gap() {
     assert!(serde_json::to_vec(&byte_packet).unwrap().len() <= 1800);
     assert!(byte_packet.get("comparison").is_none());
 }
+
+#[test]
+fn r16_hybrid_direction_orders_eligible_forward_and_reverse_evidence() {
+    let _lock = lock_data_dir();
+    let temp = tempfile::tempdir().unwrap();
+    let (_data_dir, mut vault) = new_vault(temp.path(), "r16-direction.sqlite");
+    let reversed = fixture_id(2101);
+    let neutral = fixture_id(2102);
+    let negated_aligned = fixture_id(2103);
+    let aligned = fixture_id(2104);
+    add_observation(
+        &vault,
+        &reversed,
+        "route-reversed.example.org",
+        "travel route from south to north.",
+    );
+    add_observation(
+        &vault,
+        &neutral,
+        "route-neutral.example.org",
+        "travel route north south overview",
+    );
+    add_observation(
+        &vault,
+        &negated_aligned,
+        "route-negated.example.org",
+        "travel route is not from north to south.",
+    );
+    add_observation(
+        &vault,
+        &aligned,
+        "route-aligned.example.org",
+        "travel route from north to south.",
+    );
+
+    let model_path = Path::new(env!("CARGO_MANIFEST_DIR")).join("../../models/pack");
+    let refresh = vault.refresh(&model_path, 120_000).unwrap();
+    assert_eq!(refresh["pending_atoms"], 0);
+
+    // Give the opposite-direction record the exact same stored vector so the
+    // test exercises direction ordering when semantic similarity is tied.
+    let reversed_vector: Vec<u8> = vault
+        .conn
+        .query_row(
+            "SELECT vector FROM vectors WHERE atom=?1",
+            [&reversed],
+            |row| row.get(0),
+        )
+        .unwrap();
+    vault
+        .conn
+        .execute(
+            "UPDATE vectors SET vector=?1 WHERE atom=?2",
+            params![&reversed_vector, &aligned],
+        )
+        .unwrap();
+    let aligned_vector: Vec<u8> = vault
+        .conn
+        .query_row(
+            "SELECT vector FROM vectors WHERE atom=?1",
+            [&aligned],
+            |row| row.get(0),
+        )
+        .unwrap();
+    assert_eq!(aligned_vector, reversed_vector);
+
+    for query in [
+        "travel route from north to south",
+        "travel route from south to north",
+    ] {
+        let (expected_aligned, expected_reversed) = if query.ends_with("north to south") {
+            (&aligned, vec![&reversed])
+        } else {
+            (&reversed, vec![&aligned, &negated_aligned])
+        };
+        for hybrid_mode in [true, false] {
+            let packet = if hybrid_mode {
+                hybrid(&mut vault, query, 16_384, &model_path)
+            } else {
+                lexical(&mut vault, query, &["research"], 16_384)
+            };
+            assert_eq!(
+                packet["index"]["mode"],
+                if hybrid_mode { "hybrid" } else { "lexical" },
+                "{packet}"
+            );
+            let ids = context_ids(&packet);
+            let position = |atom: &str| ids.iter().position(|id| id == atom).unwrap();
+            assert_eq!(
+                ids.len(),
+                4,
+                "all eligible direction evidence remains: {packet}"
+            );
+            assert!(
+                ids.contains(expected_aligned),
+                "aligned evidence missing: {packet}"
+            );
+            assert!(ids.contains(&neutral), "neutral evidence missing: {packet}");
+            for reversed_id in &expected_reversed {
+                assert!(
+                    ids.contains(reversed_id),
+                    "reverse evidence missing: {packet}"
+                );
+            }
+            assert!(position(expected_aligned) < position(&neutral), "{packet}");
+            if query.ends_with("north to south") {
+                assert!(position(&negated_aligned) < position(&neutral), "{packet}");
+            }
+            for reversed_id in &expected_reversed {
+                assert!(position(&neutral) < position(reversed_id), "{packet}");
+            }
+            assert!(
+                ids.contains(&negated_aligned),
+                "negated same-direction evidence must remain eligible: {packet}"
+            );
+        }
+    }
+}
+
+#[test]
+fn r17_direction_uses_latest_confirmation_text_for_ordering() {
+    let _lock = lock_data_dir();
+    let temp = tempfile::tempdir().unwrap();
+    let (_data_dir, mut vault) = new_vault(temp.path(), "r17-confirmed-direction.sqlite");
+    let replaced = fixture_id(2201);
+    let neutral = fixture_id(2202);
+    let aligned = fixture_id(2203);
+    add_observation(
+        &vault,
+        &replaced,
+        "confirmed-replaced.example.org",
+        "travel route from north to south.",
+    );
+    add_observation(
+        &vault,
+        &neutral,
+        "confirmed-neutral.example.org",
+        "travel route from south to north.",
+    );
+    add_observation(
+        &vault,
+        &aligned,
+        "confirmed-aligned.example.org",
+        "travel route from south to north.",
+    );
+    for (atom, text) in [
+        (&replaced, "travel route from south to north."),
+        (&neutral, "travel route north south."),
+        (&aligned, "travel route from north to south."),
+    ] {
+        vault
+            .feedback(SOURCE, atom, "confirm_constraint", Some(text))
+            .unwrap();
+    }
+
+    let packet = lexical(
+        &mut vault,
+        "travel route from north to south",
+        &["confirmed_preferences"],
+        16_384,
+    );
+    let ids = context_ids(&packet);
+    assert_eq!(
+        ids,
+        vec![aligned.clone(), neutral.clone(), replaced.clone()],
+        "{packet}"
+    );
+    let replaced_record = packet["context"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|record| record["id"] == replaced)
+        .unwrap();
+    assert_eq!(replaced_record["text"], "travel route from south to north.");
+    assert!(
+        packet["context"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .all(|record| record["state"] == "confirmed")
+    );
+}
+
+#[test]
+fn r17_direction_phrase_in_a_facet_does_not_reorder_main_query_results() {
+    let _lock = lock_data_dir();
+    let temp = tempfile::tempdir().unwrap();
+    let (_data_dir, mut vault) = new_vault(temp.path(), "r17-facet-direction.sqlite");
+    let reversed = fixture_id(2301);
+    let aligned = fixture_id(2302);
+    add_observation(
+        &vault,
+        &reversed,
+        "facet-reversed.example.org",
+        "travel route from south to north overview",
+    );
+    add_observation(
+        &vault,
+        &aligned,
+        "facet-aligned.example.org",
+        "travel route from north to south overview",
+    );
+    let timestamp = now();
+    vault
+        .conn
+        .execute(
+            "UPDATE atoms SET last_seen=?1 WHERE id IN (?2,?3)",
+            params![timestamp, &reversed, &aligned],
+        )
+        .unwrap();
+
+    let mut recall = request("travel route", &["research"], 16_384);
+    recall.facets.push("from north to south".into());
+    let packet = vault
+        .recall(&recall, SOURCE, Path::new("/no/model/for/direction-test"))
+        .unwrap();
+    let ids = context_ids(&packet);
+    assert_eq!(ids, vec![reversed, aligned], "{packet}");
+}
+
+#[test]
+fn r17_unsupported_multiple_to_query_keeps_fused_id_order() {
+    let _lock = lock_data_dir();
+    let temp = tempfile::tempdir().unwrap();
+    let (_data_dir, mut vault) = new_vault(temp.path(), "r17-unsupported-direction.sqlite");
+    let lower_id_reverse = fixture_id(2401);
+    let higher_id_forward = fixture_id(2402);
+    add_observation(
+        &vault,
+        &lower_id_reverse,
+        "unsupported-reverse.example.org",
+        "travel route from south to north to east.",
+    );
+    add_observation(
+        &vault,
+        &higher_id_forward,
+        "unsupported-forward.example.org",
+        "travel route from north to south to east.",
+    );
+    let timestamp = now();
+    vault
+        .conn
+        .execute(
+            "UPDATE atoms SET last_seen=?1 WHERE id IN (?2,?3)",
+            params![timestamp, &lower_id_reverse, &higher_id_forward],
+        )
+        .unwrap();
+
+    let packet = lexical(
+        &mut vault,
+        "travel route from north to south to east",
+        &["research"],
+        16_384,
+    );
+    let ids = context_ids(&packet);
+    assert_eq!(ids, vec![lower_id_reverse, higher_id_forward], "{packet}");
+}
