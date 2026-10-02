@@ -60,6 +60,112 @@ fn exact_constraints(text: &str) -> BTreeSet<ExactConstraint> {
         .collect()
 }
 
+#[derive(Clone, Debug)]
+struct IdentifierSpan {
+    start: usize,
+    end: usize,
+    raw: String,
+    normalized: String,
+}
+
+fn standalone_word_spans(text: &str) -> Vec<(String, usize, usize)> {
+    let mut words = Vec::new();
+    let mut start = None;
+    for (index, character) in text.char_indices() {
+        if character.is_alphanumeric() {
+            start.get_or_insert(index);
+        } else if let Some(word_start) = start.take() {
+            words.push((text[word_start..index].to_owned(), word_start, index));
+        }
+    }
+    if let Some(word_start) = start {
+        words.push((text[word_start..].to_owned(), word_start, text.len()));
+    }
+    words
+}
+
+/// Recognize only the fixed two-identifier comparison form. Each arm gets the
+/// shared qualifiers and its own identifier, with facets excluded from the
+/// plan so another facet cannot become a hard requirement.
+fn comparison_arm_requests(request: &Recall) -> Option<[Recall; 2]> {
+    let query = request.query.as_str();
+    let words = standalone_word_spans(query);
+    let first_word = words.first()?;
+    let leading_whitespace = query.len() - query.trim_start().len();
+    if !first_word.0.eq_ignore_ascii_case("compare")
+        || query[..first_word.1].trim().len() != 0
+        || first_word.1 != leading_whitespace
+    {
+        return None;
+    }
+
+    let and_words: Vec<_> = words
+        .iter()
+        .filter(|(word, _, _)| word.eq_ignore_ascii_case("and"))
+        .collect();
+    if and_words.len() != 1
+        || words
+            .iter()
+            .any(|(word, _, _)| word.eq_ignore_ascii_case("or"))
+    {
+        return None;
+    }
+    let and_word = and_words[0];
+
+    let mut identifiers: Vec<_> = EXACT_PATTERN
+        .captures_iter(query)
+        .filter_map(|capture| {
+            let matched = capture.name("identifier")?;
+            let normalized = exact_constraints(matched.as_str())
+                .into_iter()
+                .find(|constraint| constraint.kind == ExactKind::Identifier)?
+                .normalized;
+            Some(IdentifierSpan {
+                start: matched.start(),
+                end: matched.end(),
+                raw: matched.as_str().to_owned(),
+                normalized,
+            })
+        })
+        .collect();
+    if identifiers.len() != 2 {
+        return None;
+    }
+    identifiers.sort_by_key(|identifier| identifier.start);
+    if identifiers[0].normalized == identifiers[1].normalized
+        || identifiers[0].end >= and_word.1
+        || identifiers[1].start <= and_word.2
+    {
+        return None;
+    }
+
+    let mut removals = vec![
+        (first_word.1, first_word.2),
+        (and_word.1, and_word.2),
+        (identifiers[0].start, identifiers[0].end),
+        (identifiers[1].start, identifiers[1].end),
+    ];
+    removals.sort_by(|left, right| right.0.cmp(&left.0));
+    let mut shared = query.to_owned();
+    for (start, end) in removals {
+        shared.replace_range(start..end, " ");
+    }
+    let shared = shared.split_whitespace().collect::<Vec<_>>().join(" ");
+    identifiers.sort_by(|left, right| left.normalized.cmp(&right.normalized));
+
+    let arm_request = |identifier: &IdentifierSpan| {
+        let mut arm = request.clone();
+        arm.query = if shared.is_empty() {
+            identifier.raw.clone()
+        } else {
+            format!("{shared} {}", identifier.raw)
+        };
+        arm.facets.clear();
+        arm
+    };
+    Some([arm_request(&identifiers[0]), arm_request(&identifiers[1])])
+}
+
 fn tokens(request: &Recall) -> Vec<String> {
     const STOP: &[&str] = &[
         "what",
@@ -617,12 +723,68 @@ fn normalize_payload_whitespace(text: &str) -> String {
 
 /// A ranked, fully formatted record together with its real site and the raw
 /// structured identity needed by the final packet selector.
+#[derive(Clone)]
 pub(crate) struct RankedCandidate {
     #[allow(dead_code)] // Retained with the typed candidate for ordered packet policies.
     pub(crate) score: f32,
     pub(crate) site: String,
     pub(crate) record: Value,
     pub(crate) observed_payload_key: Option<ObservedPayloadKey>,
+    pub(crate) comparison_arms: u8,
+}
+
+pub(crate) struct CandidateBatch {
+    pub(crate) candidates: Vec<RankedCandidate>,
+    pub(crate) compare_models: bool,
+}
+
+impl std::ops::Deref for CandidateBatch {
+    type Target = [RankedCandidate];
+
+    fn deref(&self) -> &Self::Target {
+        &self.candidates
+    }
+}
+
+fn format_ranked_candidate(
+    score: f32,
+    evidence: ResolvedEvidence,
+    sessions: i64,
+    comparison_arms: u8,
+) -> RankedCandidate {
+    let confirmed = evidence.state == EvidenceState::Confirmed;
+    let raw = evidence.effective_text.as_str();
+    let text = if confirmed {
+        raw.to_owned()
+    } else {
+        format!(
+            "Observed {} on {}: {}",
+            if evidence.original_query.is_some() {
+                "search"
+            } else {
+                "page title"
+            },
+            evidence.site,
+            raw
+        )
+    };
+    let mut limits = vec![
+        "Browsing does not establish endorsement, ownership, or a settled preference.".to_owned(),
+    ];
+    for action in &evidence.correction_actions {
+        limits.push(format!("User correction: {}", action.replace('_', " ")));
+    }
+    let observed_payload_key = (evidence.state == EvidenceState::Observed)
+        .then(|| ObservedPayloadKey::from_evidence(&evidence));
+    RankedCandidate {
+        score,
+        site: evidence.site,
+        record: json!({"id":evidence.atom_id,"kind":if confirmed{"constraint"}else{"research_topic"},
+            "state":if confirmed{"confirmed"}else{"observed"},"text":text,"subject":evidence.subject,
+            "evidence":{"sessions":sessions,"sites":1},"last_seen":evidence.last_seen,"limits":limits}),
+        observed_payload_key,
+        comparison_arms,
+    }
 }
 
 impl ResolvedEvidence {
@@ -691,9 +853,28 @@ impl<'a> EligibilityPlan<'a> {
         start: Instant,
         budget: u64,
     ) -> Self {
-        let now = chrono::Utc::now();
-        let retention_cutoff =
-            (now - chrono::Duration::days(90)).to_rfc3339_opts(chrono::SecondsFormat::Secs, true);
+        Self::new_at(
+            source,
+            policy,
+            request,
+            encoder,
+            start,
+            budget,
+            chrono::Utc::now(),
+        )
+    }
+
+    fn new_at(
+        source: &'a str,
+        policy: &'a crate::Policy,
+        request: &'a Recall,
+        encoder: Option<&model::Encoder>,
+        start: Instant,
+        budget: u64,
+        now: chrono::DateTime<chrono::Utc>,
+    ) -> Self {
+        let retention_cutoff = (now.clone() - chrono::Duration::days(90))
+            .to_rfc3339_opts(chrono::SecondsFormat::Secs, true);
         Self {
             source,
             policy,
@@ -1231,6 +1412,580 @@ ORDER BY f.seq DESC,a.id LIMIT 1000"
         .collect())
 }
 
+const COMPARISON_LEXICAL_CANDIDATES_PER_ARM: usize =
+    algorithm::RETRIEVAL_CANDIDATES_PER_CHANNEL / 2;
+const COMPARISON_SEMANTIC_CANDIDATES_PER_ARM: usize =
+    algorithm::RETRIEVAL_CANDIDATES_PER_CHANNEL / 2;
+const COMPARISON_CONFIRMED_CANDIDATES_PER_ARM: usize = algorithm::CONFIRMED_FEEDBACK_CANDIDATES / 2;
+
+#[derive(Default)]
+struct ComparisonSemanticMatches {
+    ranks: [HashMap<String, usize>; 2],
+    main_scores: [HashMap<String, f32>; 2],
+}
+
+#[derive(Default)]
+struct ComparisonConfirmedMatches {
+    ranks: [HashMap<String, usize>; 2],
+    sequences: HashMap<String, i64>,
+}
+
+struct MergedArmRanks {
+    ranks: HashMap<String, usize>,
+    arm_masks: HashMap<String, u8>,
+}
+
+fn merge_arm_ranks(arm_ranks: &[HashMap<String, usize>; 2]) -> MergedArmRanks {
+    let mut merged = HashMap::<String, (usize, u8)>::new();
+    for (arm, ranks) in arm_ranks.iter().enumerate() {
+        let bit = 1 << arm;
+        for (id, rank) in ranks {
+            let entry = merged.entry(id.clone()).or_insert((*rank, 0));
+            entry.0 = entry.0.min(*rank);
+            entry.1 |= bit;
+        }
+    }
+    let mut ordered: Vec<_> = merged
+        .into_iter()
+        .map(|(id, (best_rank, arms))| (best_rank, id, arms))
+        .collect();
+    ordered.sort_by(|a, b| a.0.cmp(&b.0).then(a.1.cmp(&b.1)));
+    let mut ranks = HashMap::with_capacity(ordered.len());
+    let mut arm_masks = HashMap::with_capacity(ordered.len());
+    for (index, (_, id, arms)) in ordered.into_iter().enumerate() {
+        ranks.insert(id.clone(), index + 1);
+        arm_masks.insert(id, arms);
+    }
+    MergedArmRanks { ranks, arm_masks }
+}
+
+fn comparison_lexical_ranks(
+    conn: &Connection,
+    plans: &[EligibilityPlan<'_>; 2],
+    start: Instant,
+    budget: u64,
+) -> Result<[HashMap<String, usize>; 2]> {
+    let mut ranks = std::array::from_fn(|_| HashMap::new());
+    if deadline_reached(start, budget) {
+        return Ok(ranks);
+    }
+    let terms: BTreeSet<_> = plans
+        .iter()
+        .flat_map(|plan| plan.main_terms.iter().cloned())
+        .collect();
+    if terms.is_empty() {
+        return Ok(ranks);
+    }
+    let query = terms
+        .iter()
+        .map(|term| format!("\"{}\"", term.replace('"', "\"\"")))
+        .collect::<Vec<_>>()
+        .join(" OR ");
+    let mut args = vec![
+        query,
+        plans[0].source.to_string(),
+        plans[0].retention_cutoff.clone(),
+    ];
+    let filter = site_filter_sql(plans[0].policy, &mut args);
+    if deadline_reached(start, budget) {
+        return Ok(ranks);
+    }
+    let sql = format!(
+        "SELECT a.id,a.site,a.kind,a.title,a.query,a.last_seen FROM atom_fts JOIN atoms a ON a.id=atom_fts.id
+WHERE atom_fts MATCH ? AND a.source=?
+  AND a.last_seen>=?
+  {filter}
+  AND NOT EXISTS (SELECT 1 FROM feedback f WHERE f.atom=a.id AND f.action IN ('do_not_use','wrong_topic'))
+  AND NOT EXISTS (SELECT 1 FROM feedback f WHERE f.atom=a.id AND f.action='confirm_constraint')
+ORDER BY bm25(atom_fts),a.id LIMIT {RETRIEVAL_ATOM_SCAN_LIMIT}"
+    );
+    let mut stmt = conn.prepare(&sql)?;
+    if deadline_reached(start, budget) {
+        return Ok(ranks);
+    }
+    let rows = stmt.query_map(params_from_iter(args.iter()), |row| {
+        Ok((
+            row.get::<_, String>(0)?,
+            row.get::<_, String>(1)?,
+            row.get::<_, String>(2)?,
+            row.get::<_, String>(3)?,
+            row.get::<_, Option<String>>(4)?,
+            row.get::<_, String>(5)?,
+        ))
+    })?;
+    for row in rows {
+        if deadline_reached(start, budget)
+            || ranks
+                .iter()
+                .all(|arm| arm.len() >= COMPARISON_LEXICAL_CANDIDATES_PER_ARM)
+        {
+            break;
+        }
+        let (id, site, kind, title, query, last_seen) = row?;
+        let evidence = CandidateEvidence::observed(
+            id.clone(),
+            plans[0].source,
+            site.clone(),
+            kind,
+            title,
+            query,
+            last_seen,
+            plans[0].site_allowed(&site),
+        );
+        for arm in 0..2 {
+            if ranks[arm].len() >= COMPARISON_LEXICAL_CANDIDATES_PER_ARM {
+                continue;
+            }
+            if plans[arm].observed_supported(&evidence, Some(1), None) {
+                let next_rank = ranks[arm].len() + 1;
+                ranks[arm].insert(id.clone(), next_rank);
+            }
+        }
+    }
+    Ok(ranks)
+}
+
+fn comparison_semantic_ranks(
+    conn: &Connection,
+    plans: &[EligibilityPlan<'_>; 2],
+    encoder: Option<&model::Encoder>,
+    start: Instant,
+    budget: u64,
+) -> Result<ComparisonSemanticMatches> {
+    let mut matches = ComparisonSemanticMatches::default();
+    if deadline_reached(start, budget) {
+        return Ok(matches);
+    }
+    let Some(encoder) = encoder else {
+        return Ok(matches);
+    };
+    let Some(query_a) = encoder.encode(&plans[0].request.query) else {
+        return Ok(matches);
+    };
+    if deadline_reached(start, budget) {
+        return Ok(matches);
+    }
+    let Some(query_b) = encoder.encode(&plans[1].request.query) else {
+        return Ok(matches);
+    };
+    if deadline_reached(start, budget) {
+        return Ok(matches);
+    }
+    let query_vectors = [query_a, query_b];
+    let mut scored: [Vec<(String, f32)>; 2] = std::array::from_fn(|_| Vec::new());
+    let mut args = vec![
+        plans[0].source.to_owned(),
+        encoder.manifest.model_hash.clone(),
+        plans[0].retention_cutoff.clone(),
+    ];
+    let filter = site_filter_sql(plans[0].policy, &mut args);
+    if deadline_reached(start, budget) {
+        return Ok(matches);
+    }
+    let sql = format!(
+        "SELECT a.id,a.site,a.kind,a.title,a.query,a.last_seen,v.vector FROM vectors v JOIN atoms a ON a.id=v.atom
+WHERE a.source=? AND v.model=?
+  AND a.last_seen>=?
+  {filter}
+  AND NOT EXISTS (SELECT 1 FROM feedback f WHERE f.atom=a.id AND f.action IN ('do_not_use','wrong_topic'))
+  AND NOT EXISTS (SELECT 1 FROM feedback f WHERE f.atom=a.id AND f.action='confirm_constraint')
+ORDER BY a.last_seen DESC,a.id LIMIT {RETRIEVAL_ATOM_SCAN_LIMIT}"
+    );
+    let mut stmt = conn.prepare(&sql)?;
+    if deadline_reached(start, budget) {
+        return Ok(matches);
+    }
+    let rows = stmt.query_map(params_from_iter(args.iter()), |row| {
+        Ok((
+            row.get::<_, String>(0)?,
+            row.get::<_, String>(1)?,
+            row.get::<_, String>(2)?,
+            row.get::<_, String>(3)?,
+            row.get::<_, Option<String>>(4)?,
+            row.get::<_, String>(5)?,
+            row.get::<_, Vec<u8>>(6)?,
+        ))
+    })?;
+    for row in rows {
+        if deadline_reached(start, budget) {
+            break;
+        }
+        let (id, site, kind, title, query, last_seen, bytes) = row?;
+        if bytes.len() != encoder.manifest.dimensions * 4 {
+            continue;
+        }
+        let evidence = CandidateEvidence::observed(
+            id.clone(),
+            plans[0].source,
+            site.clone(),
+            kind,
+            title,
+            query,
+            last_seen,
+            plans[0].site_allowed(&site),
+        );
+        if !plans
+            .iter()
+            .any(|plan| plan.observed_hard_eligible(&evidence))
+        {
+            continue;
+        }
+        let vector: Vec<f32> = bytes
+            .chunks_exact(4)
+            .map(|part| f32::from_le_bytes(part.try_into().unwrap()))
+            .collect();
+        for arm in 0..2 {
+            let main = model::cosine(&query_vectors[arm], &vector);
+            if semantic_candidate_admitted(main)
+                && plans[arm].observed_supported(&evidence, None, Some(main))
+            {
+                scored[arm].push((id.clone(), main));
+            }
+        }
+    }
+    if deadline_reached(start, budget) {
+        return Ok(matches);
+    }
+    for arm in 0..2 {
+        scored[arm].sort_by(|left, right| right.1.total_cmp(&left.1).then(left.0.cmp(&right.0)));
+        if deadline_reached(start, budget) {
+            return Ok(ComparisonSemanticMatches::default());
+        }
+        scored[arm].truncate(COMPARISON_SEMANTIC_CANDIDATES_PER_ARM);
+        for (index, (id, score)) in scored[arm].drain(..).enumerate() {
+            matches.ranks[arm].insert(id.clone(), index + 1);
+            matches.main_scores[arm].insert(id, score);
+        }
+    }
+    Ok(matches)
+}
+
+fn comparison_confirmed_ranks(
+    conn: &Connection,
+    plans: &[EligibilityPlan<'_>; 2],
+    start: Instant,
+    budget: u64,
+) -> Result<ComparisonConfirmedMatches> {
+    let mut matches = ComparisonConfirmedMatches::default();
+    if deadline_reached(start, budget)
+        || plans
+            .iter()
+            .all(|plan| plan.main_terms.is_empty() || !plan.in_scope(EvidenceState::Confirmed))
+    {
+        return Ok(matches);
+    }
+    let mut args = vec![plans[0].source.to_owned()];
+    let filter = site_filter_sql(plans[0].policy, &mut args);
+    if deadline_reached(start, budget) {
+        return Ok(matches);
+    }
+    let sql = format!(
+        "SELECT f.seq,f.atom,f.text,a.site,a.kind,a.title,a.query,a.last_seen
+FROM feedback f JOIN atoms a ON a.id=f.atom
+WHERE a.source=? AND f.action='confirm_constraint'
+  AND f.seq=(SELECT max(latest.seq) FROM feedback latest
+             WHERE latest.atom=f.atom AND latest.action='confirm_constraint')
+  AND NOT EXISTS (SELECT 1 FROM feedback suppressed
+                  WHERE suppressed.atom=a.id
+                    AND suppressed.action IN ('do_not_use','wrong_topic'))
+  {filter}
+ORDER BY f.seq DESC,a.id LIMIT 1000"
+    );
+    let mut stmt = conn.prepare(&sql)?;
+    if deadline_reached(start, budget) {
+        return Ok(matches);
+    }
+    let rows = stmt.query_map(params_from_iter(args.iter()), |row| {
+        Ok((
+            row.get::<_, i64>(0)?,
+            row.get::<_, String>(1)?,
+            row.get::<_, Option<String>>(2)?,
+            row.get::<_, String>(3)?,
+            row.get::<_, String>(4)?,
+            row.get::<_, String>(5)?,
+            row.get::<_, Option<String>>(6)?,
+            row.get::<_, String>(7)?,
+        ))
+    })?;
+    let mut ranked: [Vec<(String, usize, i64)>; 2] = std::array::from_fn(|_| Vec::new());
+    for row in rows {
+        if deadline_reached(start, budget) {
+            break;
+        }
+        let (seq, id, text, site, kind, title, query, last_seen) = row?;
+        let evidence = CandidateEvidence::confirmed(
+            id.clone(),
+            plans[0].source,
+            site.clone(),
+            kind,
+            title,
+            query,
+            last_seen,
+            seq,
+            text,
+            plans[0].site_allowed(&site),
+        );
+        for arm in 0..2 {
+            if let Some(matched) = plans[arm].confirmed_eligible(&evidence) {
+                ranked[arm].push((id.clone(), matched, seq));
+            }
+        }
+    }
+    if deadline_reached(start, budget) {
+        return Ok(ComparisonConfirmedMatches::default());
+    }
+    for arm in 0..2 {
+        ranked[arm].sort_by(|left, right| right.1.cmp(&left.1).then(left.0.cmp(&right.0)));
+        if deadline_reached(start, budget) {
+            return Ok(ComparisonConfirmedMatches::default());
+        }
+        ranked[arm].truncate(COMPARISON_CONFIRMED_CANDIDATES_PER_ARM);
+        for (index, (id, _, seq)) in ranked[arm].drain(..).enumerate() {
+            matches.ranks[arm].insert(id.clone(), index + 1);
+            matches.sequences.insert(id, seq);
+        }
+    }
+    Ok(matches)
+}
+
+fn comparison_candidates(
+    conn: &Connection,
+    source: &str,
+    policy: &crate::Policy,
+    arm_requests: &[Recall; 2],
+    encoder: Option<&model::Encoder>,
+    start: Instant,
+    budget: u64,
+    variant: RankingVariant,
+) -> Result<Vec<RankedCandidate>> {
+    if deadline_reached(start, budget) {
+        return Ok(Vec::new());
+    }
+    let now = chrono::Utc::now();
+    let plans = [
+        EligibilityPlan::new_at(
+            source,
+            policy,
+            &arm_requests[0],
+            encoder,
+            start,
+            budget,
+            now.clone(),
+        ),
+        EligibilityPlan::new_at(
+            source,
+            policy,
+            &arm_requests[1],
+            encoder,
+            start,
+            budget,
+            now,
+        ),
+    ];
+    if deadline_reached(start, budget) {
+        return Ok(Vec::new());
+    }
+
+    // Each channel traverses the shared eligible source once, evaluates both
+    // arm plans during that traversal, and applies the fixed per-arm slots
+    // before merging. All work uses the one original request clock/deadline.
+    let lexical_by_arm = comparison_lexical_ranks(conn, &plans, start, budget)?;
+    let semantic_by_arm = comparison_semantic_ranks(conn, &plans, encoder, start, budget)?;
+    let confirmed_by_arm = comparison_confirmed_ranks(conn, &plans, start, budget)?;
+    if deadline_reached(start, budget) {
+        return Ok(Vec::new());
+    }
+    let lexical = merge_arm_ranks(&lexical_by_arm);
+    let semantic = merge_arm_ranks(&semantic_by_arm.ranks);
+    let confirmed = merge_arm_ranks(&confirmed_by_arm.ranks);
+    let mut supported_arms = HashMap::<String, u8>::new();
+    for channel in [&lexical, &semantic, &confirmed] {
+        for (id, arms) in &channel.arm_masks {
+            *supported_arms.entry(id.clone()).or_default() |= *arms;
+        }
+    }
+    let mut fused = rrf(&[
+        lexical.ranks.clone(),
+        semantic.ranks.clone(),
+        confirmed.ranks.clone(),
+    ]);
+    if fused.is_empty() {
+        return Ok(Vec::new());
+    }
+    let ids: Vec<_> = fused.iter().map(|(id, _)| id.as_str()).collect();
+    let placeholders = vec!["?"; ids.len()].join(",");
+    let sql = format!(
+        "SELECT id,site,kind,title,query,last_seen FROM atoms
+WHERE source=? AND id IN ({placeholders})
+  AND (last_seen>=? OR EXISTS (SELECT 1 FROM feedback f
+                               WHERE f.atom=atoms.id AND f.action='confirm_constraint'))"
+    );
+    if deadline_reached(start, budget) {
+        return Ok(Vec::new());
+    }
+    let mut metadata_stmt = conn.prepare(&sql)?;
+    if deadline_reached(start, budget) {
+        return Ok(Vec::new());
+    }
+    let metadata_rows = metadata_stmt.query_map(
+        params_from_iter(
+            std::iter::once(source)
+                .chain(ids.iter().copied())
+                .chain(std::iter::once(plans[0].retention_cutoff.as_str())),
+        ),
+        |row| {
+            Ok((
+                row.get::<_, String>(0)?,
+                row.get::<_, String>(1)?,
+                row.get::<_, String>(2)?,
+                row.get::<_, String>(3)?,
+                row.get::<_, Option<String>>(4)?,
+                row.get::<_, String>(5)?,
+            ))
+        },
+    )?;
+    let mut metadata = HashMap::new();
+    for row in metadata_rows {
+        if deadline_reached(start, budget) {
+            break;
+        }
+        let (id, site, kind, title, query, last_seen) = row?;
+        metadata.insert(id, (site, kind, title, query, last_seen));
+    }
+    if deadline_reached(start, budget) {
+        return Ok(Vec::new());
+    }
+    let feedback_ids: Vec<_> = ids.iter().map(|id| (*id).to_owned()).collect();
+    let mut feedback_by_atom = feedback::load_for_atoms(conn, &feedback_ids)?;
+    if deadline_reached(start, budget) {
+        return Ok(Vec::new());
+    }
+    let mut sessions = HashMap::<String, i64>::new();
+    let sessions_sql = format!(
+        "SELECT atom,count(DISTINCT session) FROM atom_days WHERE atom IN ({placeholders}) GROUP BY atom"
+    );
+    if deadline_reached(start, budget) {
+        return Ok(Vec::new());
+    }
+    let mut sessions_stmt = conn.prepare(&sessions_sql)?;
+    if deadline_reached(start, budget) {
+        return Ok(Vec::new());
+    }
+    let sessions_rows = sessions_stmt.query_map(params_from_iter(ids.iter().copied()), |row| {
+        Ok((row.get::<_, String>(0)?, row.get::<_, i64>(1)?))
+    })?;
+    for row in sessions_rows {
+        if deadline_reached(start, budget) {
+            break;
+        }
+        let (id, count) = row?;
+        sessions.insert(id, count);
+    }
+    if deadline_reached(start, budget) {
+        return Ok(Vec::new());
+    }
+    if variant == RankingVariant::BoundedTemporal {
+        let last_seen: HashMap<String, i64> = metadata
+            .iter()
+            .filter_map(|(id, (_, _, _, _, time))| {
+                chrono::DateTime::parse_from_rfc3339(time)
+                    .ok()
+                    .map(|parsed| (id.clone(), parsed.timestamp()))
+            })
+            .collect();
+        fused = bounded_temporal_rerank(fused, &last_seen, &sessions, plans[0].now);
+    }
+
+    let mut output = Vec::new();
+    for (id, score) in fused {
+        if deadline_reached(start, budget) {
+            break;
+        }
+        let Some((site, kind, title, query, last_seen)) = metadata.remove(&id) else {
+            continue;
+        };
+        let feedback = feedback_by_atom.remove(&id).unwrap_or_default();
+        let site_allowed = plans[0].site_allowed(&site);
+        let candidate = if let Some(confirmation) = feedback.latest_confirmation.as_ref() {
+            CandidateEvidence::confirmed(
+                id.clone(),
+                source,
+                site,
+                kind,
+                title,
+                query,
+                last_seen,
+                confirmation.seq,
+                confirmation.text.clone(),
+                site_allowed,
+            )
+        } else {
+            CandidateEvidence::observed(
+                id.clone(),
+                source,
+                site,
+                kind,
+                title,
+                query,
+                last_seen,
+                site_allowed,
+            )
+        };
+        let expected_confirmation = confirmed_by_arm.sequences.get(&id).copied();
+        let mut candidate = candidate;
+        candidate.recall_suppressed = feedback.recall_suppressed;
+        let Some(evidence) = ResolvedEvidence::hydrate(candidate.clone(), feedback) else {
+            continue;
+        };
+        let confirmation_sequence_matches = if evidence.state == EvidenceState::Confirmed {
+            expected_confirmation == evidence.latest_confirmation_seq
+        } else {
+            expected_confirmation.is_none()
+        };
+        if evidence.source_id != source
+            || !evidence.retained
+            || !evidence.site_allowed
+            || evidence.recall_suppressed
+            || !confirmation_sequence_matches
+        {
+            continue;
+        }
+
+        let channel_arms = supported_arms.get(&id).copied().unwrap_or_default();
+        let mut candidate_arms = 0u8;
+        for arm in 0..2 {
+            let arm_bit = 1 << arm;
+            if channel_arms & arm_bit == 0 {
+                continue;
+            }
+            let eligible = match evidence.state {
+                EvidenceState::Observed => plans[arm].observed_supported(
+                    &candidate,
+                    lexical_by_arm[arm].get(&id).copied(),
+                    semantic_by_arm.main_scores[arm].get(&id).copied(),
+                ),
+                EvidenceState::Confirmed => {
+                    confirmed_by_arm.ranks[arm].contains_key(&id)
+                        && plans[arm].confirmed_eligible(&candidate).is_some()
+                }
+            };
+            if eligible {
+                candidate_arms |= arm_bit;
+            }
+        }
+        if candidate_arms == 0 {
+            continue;
+        }
+        output.push(format_ranked_candidate(
+            score,
+            evidence,
+            sessions.get(&id).copied().unwrap_or_default(),
+            candidate_arms,
+        ));
+    }
+    Ok(output)
+}
+
 /// Return fused candidates. All metadata is fetched after bounded ID generation.
 pub(crate) fn candidates(
     conn: &Connection,
@@ -1240,17 +1995,35 @@ pub(crate) fn candidates(
     encoder: Option<&model::Encoder>,
     start: Instant,
     budget: u64,
-) -> Result<Vec<RankedCandidate>> {
-    candidates_with_variant(
-        conn,
-        source,
-        policy,
-        request,
-        encoder,
-        start,
-        budget,
-        configured_variant(),
-    )
+) -> Result<CandidateBatch> {
+    if let Some(arms) = comparison_arm_requests(request) {
+        return Ok(CandidateBatch {
+            candidates: comparison_candidates(
+                conn,
+                source,
+                policy,
+                &arms,
+                encoder,
+                start,
+                budget,
+                configured_variant(),
+            )?,
+            compare_models: true,
+        });
+    }
+    Ok(CandidateBatch {
+        candidates: candidates_with_variant(
+            conn,
+            source,
+            policy,
+            request,
+            encoder,
+            start,
+            budget,
+            configured_variant(),
+        )?,
+        compare_models: false,
+    })
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -1450,39 +2223,12 @@ WHERE source=? AND id IN ({placeholders})
         {
             continue;
         }
-        let confirmed = evidence.state == EvidenceState::Confirmed;
-        let raw = evidence.effective_text.as_str();
-        let text = if confirmed {
-            raw.to_owned()
-        } else {
-            format!(
-                "Observed {} on {}: {}",
-                if evidence.original_query.is_some() {
-                    "search"
-                } else {
-                    "page title"
-                },
-                evidence.site,
-                raw
-            )
-        };
-        let mut limits = vec![
-            "Browsing does not establish endorsement, ownership, or a settled preference."
-                .to_string(),
-        ];
-        for action in &evidence.correction_actions {
-            limits.push(format!("User correction: {}", action.replace('_', " ")));
-        }
-        let observed_payload_key = (evidence.state == EvidenceState::Observed)
-            .then(|| ObservedPayloadKey::from_evidence(&evidence));
-        output.push(RankedCandidate {
+        output.push(format_ranked_candidate(
             score,
-            site: evidence.site,
-            record: json!({"id":evidence.atom_id,"kind":if confirmed{"constraint"}else{"research_topic"},
-                "state":if confirmed{"confirmed"}else{"observed"},"text":text,"subject":evidence.subject,
-                "evidence":{"sessions":sessions.get(&id).copied().unwrap_or(0),"sites":1},"last_seen":evidence.last_seen,"limits":limits}),
-            observed_payload_key,
-        });
+            evidence,
+            sessions.get(&id).copied().unwrap_or(0),
+            0,
+        ));
     }
     Ok(output)
 }
@@ -1505,6 +2251,103 @@ mod tests {
             max_bytes: 4096,
             budget_ms: 1500,
         }
+    }
+
+    #[test]
+    fn comparison_parser_canonicalizes_only_the_explicit_two_identifier_form() {
+        let normal = comparison_arm_requests(&recall(
+            "Compare Sony RX100 and ZV1 16GB cameras USB-C",
+            &["ignored facet ZV1"],
+        ))
+        .expect("explicit two-model comparison parses");
+        assert_eq!(normal[0].query, "Sony 16GB cameras USB-C RX100");
+        assert_eq!(normal[1].query, "Sony 16GB cameras USB-C ZV1");
+        assert!(normal.iter().all(|arm| arm.facets.is_empty()));
+        assert_eq!(
+            exact_constraints(&normal[0].query),
+            BTreeSet::from([
+                ExactConstraint {
+                    kind: ExactKind::Identifier,
+                    normalized: "rx100".into(),
+                },
+                ExactConstraint {
+                    kind: ExactKind::Measurement,
+                    normalized: "16gb".into(),
+                },
+            ])
+        );
+
+        let swapped = comparison_arm_requests(&recall(
+            " compare sony zv1 and rx100 16GB cameras USB-C ",
+            &[],
+        ))
+        .expect("lowercase and swapped wording still parses");
+        assert_eq!(swapped[0].query, "sony 16GB cameras USB-C rx100");
+        assert_eq!(swapped[1].query, "sony 16GB cameras USB-C zv1");
+
+        for unsupported in [
+            "What about Sony RX100 and ZV1 cameras",
+            "Compare Sony RX100 or ZV1 cameras",
+            "Compare Sony RX100 and ZV1 and A6700 cameras",
+            "Compare RX100 and RX100 cameras",
+            "Compare v2.1 and v2.2 software",
+            "Compare 16GB and 512GB MacBook models",
+        ] {
+            assert!(
+                comparison_arm_requests(&recall(unsupported, &[])).is_none(),
+                "unsupported comparison form was activated: {unsupported}"
+            );
+        }
+    }
+
+    #[test]
+    fn comparison_channel_reservations_and_expired_start_are_bounded() {
+        assert_eq!(COMPARISON_LEXICAL_CANDIDATES_PER_ARM, 32);
+        assert_eq!(COMPARISON_SEMANTIC_CANDIDATES_PER_ARM, 32);
+        assert_eq!(COMPARISON_CONFIRMED_CANDIDATES_PER_ARM, 16);
+
+        // An expired request must return before preparing any channel query.
+        // The connection intentionally has no schema, so touching SQLite would
+        // turn this regression into an error instead of an empty candidate set.
+        let conn = Connection::open_in_memory().unwrap();
+        let policy = Policy {
+            consent: true,
+            recall_enabled: true,
+            ..Policy::default()
+        };
+        let arms = comparison_arm_requests(&recall("Compare RX100 and ZV1 cameras", &[]))
+            .expect("fixed comparison form");
+        let expired = Instant::now() - std::time::Duration::from_secs(1);
+        let candidates = comparison_candidates(
+            &conn,
+            "source",
+            &policy,
+            &arms,
+            None,
+            expired,
+            1,
+            RankingVariant::BoundedTemporal,
+        )
+        .unwrap();
+        assert!(candidates.is_empty());
+    }
+
+    #[test]
+    fn comparison_joint_hit_has_one_rank_and_one_vote_per_channel() {
+        let first_arm = HashMap::from([("joint-page".to_owned(), 1)]);
+        let second_arm = HashMap::from([("joint-page".to_owned(), 1)]);
+        let merged = merge_arm_ranks(&[first_arm, second_arm]);
+        assert_eq!(merged.ranks.len(), 1);
+        assert_eq!(merged.ranks["joint-page"], 1);
+        assert_eq!(merged.arm_masks["joint-page"], 0b11);
+
+        let fused = rrf(&[merged.ranks.clone(), merged.ranks.clone()]);
+        assert_eq!(fused.len(), 1);
+        assert_eq!(
+            fused[0].1,
+            2.0 / (algorithm::RRF_OFFSET + 1) as f32,
+            "the joint atom contributes once to each channel, not once per arm"
+        );
     }
 
     fn retrieval_conn() -> Connection {

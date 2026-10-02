@@ -1238,7 +1238,7 @@ COMMIT;")?;
         let encoder =
             encoder.filter(|_| (start.elapsed().as_millis() as u64) < budget.saturating_sub(25));
         let generation = self.generation()?;
-        let candidates = crate::retrieval::candidates(
+        let candidate_batch = crate::retrieval::candidates(
             &self.conn,
             source,
             &p,
@@ -1247,6 +1247,8 @@ COMMIT;")?;
             start,
             budget,
         )?;
+        let compare_models = candidate_batch.compare_models;
+        let candidates = candidate_batch.candidates;
         let mut packet = json!({"protocol":1,"request_id":r.request_id,"status":"partial","as_of":now(),"generation":{"evidence":generation.0,"privacy":generation.1},"index":{"mode":if encoder.is_some(){"hybrid"}else{"lexical"},"pending_atoms":self.status(source)?["pending_atoms"]},"context":[],"alternatives":[],"warnings":if encoder.is_none(){vec!["Semantic model unavailable; lexical matching only."]}else{vec![]}});
         // Preserve the rank position of each duplicate group while keeping
         // every feasible real representative in its original rank order.
@@ -1269,26 +1271,87 @@ COMMIT;")?;
             }
         }
 
+        let try_add_candidate = |packet: &mut Value,
+                                 counts: &mut HashMap<String, u32>,
+                                 candidate: &crate::retrieval::RankedCandidate|
+         -> Result<bool> {
+            if *counts.get(&candidate.site).unwrap_or(&0) >= algorithm::MAX_RECORDS_PER_SITE {
+                return Ok(false);
+            }
+            let record = candidate.record.clone();
+            packet["context"].as_array_mut().unwrap().push(record);
+            if serde_json::to_vec(packet)?.len() + 64 > r.max_bytes {
+                packet["context"].as_array_mut().unwrap().pop();
+                return Ok(false);
+            }
+            *counts.entry(candidate.site.clone()).or_default() += 1;
+            Ok(true)
+        };
+
         let mut counts: HashMap<String, u32> = HashMap::new();
-        for group in packet_groups {
+        let mut selected_groups = HashSet::new();
+        let mut emitted_arms = 0u8;
+        if compare_models {
+            // Allocate one feasible distinct payload to each still-uncovered
+            // comparison arm before filling in global rank order. Group and
+            // representative iteration retain the fused score/ID ordering.
+            loop {
+                if packet["context"].as_array().unwrap().len() >= algorithm::MAX_CONTEXT_RECORDS {
+                    break;
+                }
+                let uncovered = 0b11 & !emitted_arms;
+                let mut selected = None;
+                'groups: for (group_index, group) in packet_groups.iter().enumerate() {
+                    if selected_groups.contains(&group_index) {
+                        continue;
+                    }
+                    for candidate in group {
+                        if candidate.comparison_arms & uncovered == 0 {
+                            continue;
+                        }
+                        if try_add_candidate(&mut packet, &mut counts, candidate)? {
+                            selected = Some((group_index, candidate.comparison_arms));
+                            break 'groups;
+                        }
+                    }
+                }
+                let Some((group_index, arms)) = selected else {
+                    break;
+                };
+                selected_groups.insert(group_index);
+                emitted_arms |= arms;
+                if emitted_arms == 0b11 {
+                    break;
+                }
+            }
+        }
+
+        // Once arm coverage is exhausted (or for a single-target request),
+        // fill the remaining packet slots in the ordinary global rank order.
+        for (group_index, group) in packet_groups.iter().enumerate() {
+            if selected_groups.contains(&group_index) {
+                continue;
+            }
             if packet["context"].as_array().unwrap().len() >= algorithm::MAX_CONTEXT_RECORDS {
                 break;
             }
-            // If the highest-ranked representative cannot fit the site or
-            // byte limits, try the next real observation in the same group.
             for candidate in group {
-                let crate::retrieval::RankedCandidate { site, record, .. } = candidate;
-                if *counts.get(&site).unwrap_or(&0) >= algorithm::MAX_RECORDS_PER_SITE {
-                    continue;
+                if try_add_candidate(&mut packet, &mut counts, candidate)? {
+                    selected_groups.insert(group_index);
+                    emitted_arms |= candidate.comparison_arms;
+                    break;
                 }
-                packet["context"].as_array_mut().unwrap().push(record);
-                if serde_json::to_vec(&packet)?.len() + 64 > r.max_bytes {
-                    packet["context"].as_array_mut().unwrap().pop();
-                    continue;
-                }
-                *counts.entry(site).or_default() += 1;
-                break;
             }
+        }
+
+        if compare_models
+            && !packet["context"].as_array().unwrap().is_empty()
+            && emitted_arms != 0b11
+        {
+            packet["context"][0]["limits"]
+                .as_array_mut()
+                .expect("recall records include limits")
+                .push(json!("Comparison evidence covers only one requested model."));
         }
         let empty = packet["context"].as_array().unwrap().is_empty();
         let deadline_reached = start.elapsed().as_millis() as u64 >= budget;
