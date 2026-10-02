@@ -738,25 +738,29 @@ export async function runDashboardRefreshTests({
       1,
     );
     await searchInput.fill("");
+    const recallRequest = JSON.stringify({
+      protocol: 1,
+      request_id: crypto.randomUUID(),
+      client: "generic",
+      vault: "default",
+      query: "What did I find about telescope mirror collimation?",
+      facets: [],
+      scope: ["research"],
+      max_bytes: 4096,
+      budget_ms: 1500,
+    });
     const recall = JSON.parse(
-      execFileSync(
-        path.join(runtimeDir || path.join(root, "target/release"), "serein"),
-        ["recall"],
-        {
-          input: JSON.stringify({
-            protocol: 1,
-            request_id: crypto.randomUUID(),
-            client: "generic",
-            vault: "default",
-            query: "What did I find about telescope mirror collimation?",
-            facets: [],
-            scope: ["research"],
-            max_bytes: 4096,
-            budget_ms: 1500,
-          }),
-          env: nativeEnv,
-          cwd: runtimeDir || root,
-        },
+      (runtimeDir
+        ? execFileSync(path.join(runtimeDir, "serein"), ["recall"], {
+            input: recallRequest,
+            env: nativeEnv,
+            cwd: runtimeDir,
+          })
+        : execFileSync(
+            "sh",
+            [path.join(root, "skills/serein-context/scripts/recall.sh")],
+            { input: recallRequest, env: nativeEnv, cwd: root },
+          )
       ).toString(),
     );
     assert.ok(

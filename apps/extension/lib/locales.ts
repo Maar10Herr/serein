@@ -1250,7 +1250,7 @@ const uiEn = {
   "about.quieterContext": "A quieter kind of context.",
   "about.description":
     "Serein remembers the useful pieces, so you can pick up where you left off.",
-  "about.developmentVersion": "0.1.3",
+  "about.developmentVersion": "0.2.0",
   "about.filesAtRest": "Files at rest. Programs on demand.",
   "about.filesDescription":
     "Serein uses your browser’s tab metadata, a short-lived native helper, and a local SQLite vault. There is no resident Serein service, cloud sync, or telemetry.",
@@ -1500,7 +1500,7 @@ const uiDe = {
   "about.quieterContext": "Eine ruhigere Art von Kontext.",
   "about.description":
     "Serein merkt sich Nützliches, damit du dort weitermachen kannst, wo du aufgehört hast.",
-  "about.developmentVersion": "0.1.3",
+  "about.developmentVersion": "0.2.0",
   "about.filesAtRest": "Dateien ruhen. Programme starten bei Bedarf.",
   "about.filesDescription":
     "Serein nutzt Tab-Metadaten deines Browsers, einen kurzlebigen nativen Helfer und einen lokalen SQLite-Tresor. Es gibt keinen dauerhaften Serein-Dienst, keine Cloud-Synchronisierung und keine Telemetrie.",
@@ -1750,7 +1750,7 @@ const uiNl = {
   "about.quieterContext": "Een rustigere vorm van context.",
   "about.description":
     "Serein onthoudt de nuttige onderdelen, zodat je verder kunt waar je gebleven was.",
-  "about.developmentVersion": "0.1.3",
+  "about.developmentVersion": "0.2.0",
   "about.filesAtRest": "Bestanden in rust. Programma's op aanvraag.",
   "about.filesDescription":
     "Serein gebruikt tabmetadata van je browser, een kortstondige native hulp en een lokale SQLite-kluis. Er is geen blijvende Serein-dienst, cloudsynchronisatie of telemetrie.",
@@ -1979,7 +1979,7 @@ const uiZhCN = {
     "逻辑删除无法清除 SSD 残留、备份或已发送给助手模型提供商的上下文。达到存储上限后，已丢弃 {count} 个排队事件。",
   "about.quieterContext": "更安静、更从容的上下文。",
   "about.description": "Serein 会记住有用的信息，让你轻松接续之前的工作。",
-  "about.developmentVersion": "0.1.3",
+  "about.developmentVersion": "0.2.0",
   "about.filesAtRest": "文件静态存储，程序按需运行。",
   "about.filesDescription":
     "Serein 使用浏览器标签页元数据、短时运行的本地助手程序和本地 SQLite 数据库。没有常驻服务、云同步或遥测。",
@@ -2222,7 +2222,7 @@ const uiJa = {
   "about.quieterContext": "控えめなコンテキスト。",
   "about.description":
     "Serein が役立つ情報を覚えておくので、前回の続きから始められます。",
-  "about.developmentVersion": "0.1.3",
+  "about.developmentVersion": "0.2.0",
   "about.filesAtRest": "ファイルは保管し、プログラムは必要なときだけ実行。",
   "about.filesDescription":
     "Serein はブラウザーのタブメタデータ、短時間だけ動作するネイティブヘルパー、ローカル SQLite 保管庫を使用します。常駐サービス、クラウド同期、テレメトリーはありません。",
@@ -2470,7 +2470,7 @@ const uiEs = {
   "about.quieterContext": "Un contexto más discreto.",
   "about.description":
     "Serein recuerda lo útil para que puedas retomar lo que estabas haciendo.",
-  "about.developmentVersion": "0.1.3",
+  "about.developmentVersion": "0.2.0",
   "about.filesAtRest": "Archivos almacenados. Programas bajo demanda.",
   "about.filesDescription":
     "Serein usa metadatos de las pestañas del navegador, un asistente nativo de corta duración y un almacén SQLite local. No hay ningún servicio permanente de Serein, sincronización en la nube ni telemetría.",

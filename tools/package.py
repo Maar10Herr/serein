@@ -4,14 +4,28 @@
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 import os
 import pathlib
 import re
 import subprocess
+import sys
 import tarfile
 import zipfile
 from datetime import datetime, timezone
+
+try:
+    from . import bundle_skill
+except ImportError:  # Running as a script or loading this file directly.
+    _bundle_spec = importlib.util.spec_from_file_location(
+        "serein_bundle_skill", pathlib.Path(__file__).with_name("bundle_skill.py")
+    )
+    if _bundle_spec is None or _bundle_spec.loader is None:
+        raise ImportError("Unable to load tools/bundle_skill.py")
+    bundle_skill = importlib.util.module_from_spec(_bundle_spec)
+    sys.modules[_bundle_spec.name] = bundle_skill
+    _bundle_spec.loader.exec_module(bundle_skill)
 
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -116,10 +130,22 @@ SENSITIVE_TEXT_PATTERNS = {
     "openai_style_key": re.compile(rb"\bsk-[A-Za-z0-9_-]{24,}"),
     "aws_access_key": re.compile(rb"\bAKIA[0-9A-Z]{16}\b"),
     "user_home_path": re.compile(rb"/(?:Users/[^/\s]+|home/(?!\.)[^/\s]+)/"),
-    "mac_temp_path": re.compile(rb"/(?:private/)?tmp/|/" + rb"var" + rb"/folders/"),
+    # A bare `/tmp/` is a generic OS constant. Require a concrete directory
+    # below it, or the per-user temporary directory shape used by macOS.
+    "mac_temp_path": re.compile(
+        rb"/(?:private/)?tmp/[^/\s\x00]{1,128}/|"
+        rb"/(?:private/)?var/folders/[A-Za-z0-9._-]{1,64}/"
+        rb"[A-Za-z0-9._-]{1,64}/T/"
+    ),
     "homebrew_prefix": re.compile(rb"/opt/" + rb"homebrew/"),
     "windows_user_path": re.compile(rb"[A-Za-z]:\\Users\\[^\\\s]+\\"),
 }
+BINARY_PATH_PATTERNS = (
+    "user_home_path",
+    "windows_user_path",
+    "mac_temp_path",
+    "homebrew_prefix",
+)
 
 
 def excluded(relative: pathlib.PurePath) -> bool:
@@ -159,7 +185,7 @@ def scan_file(path: pathlib.Path, display_name: str) -> list[dict[str, str]]:
     if path.suffix.lower() not in TEXT_SUFFIXES and not binary:
         return []
     data = path.read_bytes()
-    patterns = ("user_home_path", "windows_user_path") if binary else SENSITIVE_TEXT_PATTERNS
+    patterns = BINARY_PATH_PATTERNS if binary else SENSITIVE_TEXT_PATTERNS
     return [
         {"file": display_name, "rule": rule}
         for rule in patterns
@@ -190,7 +216,7 @@ def scan_zip(path: pathlib.Path) -> tuple[list[dict[str, str]], int, int]:
                 )
             elif name.name in {"serein", "serein-host"} and "runtime" in name.parts:
                 data = archive.read(member)
-                for rule in ("user_home_path", "windows_user_path"):
+                for rule in BINARY_PATH_PATTERNS:
                     if SENSITIVE_TEXT_PATTERNS[rule].search(data):
                         findings.append({"file": f"{path.name}:{member.filename}", "rule": rule})
     return findings, count, excluded_count
@@ -223,7 +249,7 @@ def scan_tar(path: pathlib.Path) -> tuple[list[dict[str, str]], int, int]:
                 # Rust binaries can retain dependency source paths even in release mode.
                 stream = archive.extractfile(member)
                 data = stream.read() if stream else b""
-                for rule in ("user_home_path", "windows_user_path"):
+                for rule in BINARY_PATH_PATTERNS:
                     if SENSITIVE_TEXT_PATTERNS[rule].search(data):
                         findings.append({"file": f"{path.name}:{member.name}", "rule": rule})
     return findings, count, excluded_count
@@ -259,28 +285,99 @@ def sha256(path: pathlib.Path) -> str:
     return digest.hexdigest()
 
 
-def validate_skill_runtime() -> None:
-    runtime = ROOT / "skills/serein-context/runtime/macos-arm64"
+def validate_skill_runtime(
+    runtime: pathlib.Path | None = None,
+    *,
+    binary: pathlib.Path | None = None,
+    host: pathlib.Path | None = None,
+    model_source: pathlib.Path | None = None,
+    license_source: pathlib.Path | None = None,
+    third_party_licenses: pathlib.Path | None = None,
+) -> None:
+    runtime = pathlib.Path(runtime or ROOT / "skills/serein-context/runtime/macos-arm64")
+    bundle_skill.assert_no_runtime_workdirs(runtime)
+    sources = bundle_skill.runtime_source_files(
+        root=ROOT,
+        binary=binary,
+        host=host,
+        model_source=model_source,
+        license_source=license_source,
+        third_party_licenses=third_party_licenses,
+    )
+    if runtime.is_symlink() or not runtime.is_dir():
+        raise SystemExit(f"Missing regular skill runtime directory: {runtime}")
+
+    actual_files: set[str] = set()
+    actual_directories: set[str] = set()
+    for path in runtime.rglob("*"):
+        relative = path.relative_to(runtime).as_posix()
+        if path.is_symlink():
+            raise SystemExit(f"Unexpected symlink in skill runtime: {relative}")
+        if path.is_dir():
+            actual_directories.add(relative)
+        elif path.is_file():
+            if relative != "SHA256SUMS":
+                actual_files.add(relative)
+        else:
+            raise SystemExit(f"Unexpected non-file in skill runtime: {relative}")
+
+    expected_files = set(sources)
+    expected_directories: set[str] = set()
+    for relative in expected_files:
+        parent = pathlib.PurePosixPath(relative).parent
+        while parent != pathlib.PurePosixPath("."):
+            expected_directories.add(parent.as_posix())
+            parent = parent.parent
+    missing = sorted(expected_files - actual_files)
+    unexpected = sorted(actual_files - expected_files)
+    unexpected_directories = sorted(actual_directories - expected_directories)
+    if missing or unexpected or unexpected_directories:
+        details = []
+        if missing:
+            details.append("missing: " + ", ".join(missing[:8]))
+        if unexpected:
+            details.append("unexpected files: " + ", ".join(unexpected[:8]))
+        if unexpected_directories:
+            details.append("unexpected directories: " + ", ".join(unexpected_directories[:8]))
+        raise SystemExit(
+            "Skill runtime differs from the current build inputs ("
+            + "; ".join(details)
+            + "). Run tools/bundle_skill.py."
+        )
+
     checksum_file = runtime / "SHA256SUMS"
-    expected = {}
+    if checksum_file.is_symlink() or not checksum_file.is_file():
+        raise SystemExit("Skill runtime checksum manifest is missing or not a regular file.")
+    checksums: dict[str, str] = {}
     for line in checksum_file.read_text(encoding="utf-8").splitlines():
-        digest, relative = line.split("  ", 1)
+        digest_value, separator, relative = line.partition("  ")
         path = pathlib.PurePosixPath(relative)
-        if path.is_absolute() or ".." in path.parts or relative in expected:
+        if (
+            not separator
+            or not re.fullmatch(r"[0-9a-f]{64}", digest_value)
+            or not relative
+            or "\\" in relative
+            or path.is_absolute()
+            or ".." in path.parts
+            or path.as_posix() != relative
+            or relative == "SHA256SUMS"
+            or relative in checksums
+        ):
             raise SystemExit("Invalid skill runtime checksum manifest.")
-        expected[relative] = digest
-    actual = {
-        path.relative_to(runtime).as_posix()
-        for path in runtime.rglob("*")
-        if path.is_file() and path.name != "SHA256SUMS"
-    }
-    if actual != set(expected):
-        raise SystemExit("Skill runtime files differ from checksum manifest. Run tools/bundle_skill.py.")
-    if any(sha256(runtime / path) != digest for path, digest in expected.items()):
-        raise SystemExit("Skill runtime checksum mismatch. Run tools/bundle_skill.py.")
-    for required in ("serein", "serein-host", "model/manifest.json", "model/weights.i8", "model/tokenizer.json", "THIRD_PARTY_LICENSES.json"):
-        if required not in expected:
-            raise SystemExit(f"Missing skill runtime file: {required}")
+        checksums[relative] = digest_value
+    if set(checksums) != expected_files:
+        raise SystemExit("Skill runtime checksum manifest differs from current build inputs.")
+
+    for relative, source in sources.items():
+        bundled_digest = sha256(runtime / relative)
+        if bundled_digest != checksums[relative]:
+            raise SystemExit(f"Skill runtime checksum mismatch: {relative}.")
+        if bundled_digest != sha256(source):
+            raise SystemExit(
+                f"Skill runtime does not match its current build input: {relative}. "
+                "Run tools/bundle_skill.py."
+            )
+
     built = json.loads(subprocess.check_output([runtime / "serein", "--version"], timeout=5))
     if built.get("version") != VERSION:
         raise SystemExit("Bundled helper version differs from package version. Run tools/bundle_skill.py.")
@@ -365,6 +462,7 @@ def main() -> None:
         "limitations": [
             "This scan covers packaged source files and generated archives; it does not inspect Git history.",
             "A clean automated scan is not a substitute for reviewing the files and release notes.",
+            "Runtime binaries are checked for user, Homebrew, and concrete macOS temporary paths; a bare /tmp/ OS constant is not treated as a private path.",
             "The bundled helper currently supports macOS Apple silicon only.",
             "Unsigned artifacts have platform and validation limits described in the test report.",
         ],

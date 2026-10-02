@@ -1,27 +1,30 @@
-# Serein v0.1.3
+# Serein v0.2.0
 
-Serein brings browser research you chose to save back into a conversation with a local AI assistant. This release makes the dashboard quieter: related research appears together, useful standalone observations remain visible, and the full activity list stays available when you need to inspect it.
-
-![Serein v0.1.3 dashboard with constructed public-site research](https://github.com/Maar10Herr/serein/releases/download/v0.1.3/research-preview-light.png)
-
-This preview shows the real dashboard using invented visits built from public-site metadata; it is not a live capture or user history. [Dark preview](https://github.com/Maar10Herr/serein/releases/download/v0.1.3/research-preview-dark.png) · [Capture method](https://github.com/Maar10Herr/serein/blob/main/docs/TEST_REPORT.md#constructed-v013-dashboard-preview)
+Bring the research you saved back into the conversation. Serein keeps selected browser metadata locally and gives a paired assistant a small, source-linked answer to the current question.
 
 ## Install on a Mac with Apple silicon
 
-1. Download the [Chrome extension ZIP](https://github.com/Maar10Herr/serein/releases/download/v0.1.3/serein-chrome-0.1.3-unsigned.zip) or [Firefox extension ZIP](https://github.com/Maar10Herr/serein/releases/download/v0.1.3/serein-firefox-0.1.3-unsigned.zip) and extract it. In Chrome, open `chrome://extensions`, turn on **Developer mode**, and choose **Load unpacked**. In Firefox, open `about:debugging#/runtime/this-firefox`, choose **Load Temporary Add-on**, and select the extracted `manifest.json`.
-2. Install the `serein-context` skill from [Maar10Herr/serein](https://github.com/Maar10Herr/serein) with your local assistant's skill installer. For Codex, use `npx --yes skills add Maar10Herr/serein --skill serein-context --agent codex --global --yes --copy`. The [skill ZIP](https://github.com/Maar10Herr/serein/releases/download/v0.1.3/serein-skills-0.1.3.zip) is also available for archive-based installers.
-3. In the extension, open **Connections**, choose your assistant, and select **Copy link instruction**. Paste it into that assistant. The installed skill registers the included helper and Serein checks the connection automatically. No database path or separate runtime download is needed.
+1. Download the [Chrome extension ZIP](https://github.com/Maar10Herr/serein/releases/download/v0.2.0/serein-chrome-0.2.0-unsigned.zip) or [Firefox extension ZIP](https://github.com/Maar10Herr/serein/releases/download/v0.2.0/serein-firefox-0.2.0-unsigned.zip) and extract it. In Chrome, open `chrome://extensions`, enable **Developer mode**, and choose **Load unpacked**. In Firefox, open `about:debugging#/runtime/this-firefox`, choose **Load Temporary Add-on**, and select `manifest.json`.
+2. Install `serein-context` from [Maar10Herr/serein](https://github.com/Maar10Herr/serein) with your assistant's skill installer. For Codex: `npx --yes skills add Maar10Herr/serein --skill serein-context --agent codex --global --yes --copy`. The [skill ZIP](https://github.com/Maar10Herr/serein/releases/download/v0.2.0/serein-skills-0.2.0.zip) is available for archive-based installers.
+3. Open **Connections** in the extension, choose your assistant, and select **Copy link instruction**. Paste it into that assistant on this Mac. The installed skill registers its bundled helper and Serein checks the connection automatically.
 
-Firefox temporary add-ons need to be reloaded after a browser restart. The extensions and macOS helper are unsigned. See the [installation guide](https://github.com/Maar10Herr/serein/blob/main/docs/INSTALL.md) for details.
+No separate runtime download or database path is needed. The helper starts for a request and exits after replying. Firefox temporary add-ons must be reloaded after a restart. The extensions and helper are unsigned. [Installation guide](https://github.com/Maar10Herr/serein/blob/main/docs/INSTALL.md).
 
 ## What changed
 
-- Research groups and selected observations now lead the dashboard; raw activity is one click away. Corrections and forgetting update what can appear in groups and assistant recall.
-- Retrieval combines exact terms, a multilingual local model, and source-specific evidence. A bounded recency signal can reorder close matches but cannot make unrelated activity relevant.
-- English, German, Dutch, Spanish, Japanese, and Simplified Chinese interface text is included. The settings view follows the system light or dark theme until you choose an override.
+- Recall applies eligibility before candidate limits, avoids redundant packet entries, and can retain evidence for both models in a supported comparison.
+- Dashboard refresh preserves newer corrections and hides context while a privacy change is unconfirmed. Filters clearly describe the displayed view.
+- Correction drafts belong to the card that opened them. Dialogs contain keyboard focus and restore it when closed.
+- Topic refresh reuses valid vectors and maintains bounded centroid caches with reference recomputation as a fallback.
+- Activity counts are labeled as fixed 30-minute windows. Research groups remain provisional summaries of activity.
+- SHA verification uses hardware acceleration while still rejecting corrupted model files.
+
+The vault upgrades to schema 5. Older readers refuse to open it; keep the updated skill with an upgraded vault.
 
 ## Verification and limits
 
-Chrome and Firefox end-to-end browser checks passed on isolated profiles, including native pairing, ingestion, privacy controls, and theme behavior. On a fresh **constructed** 35-question retrieval holdout, macro Recall@6 was **0.6522** for the 23 questions with expected evidence; all **12/12** expected-empty questions returned no context. A separate constructed dashboard holdout had 24 true positives, one false positive, 12 true negatives, and five false negatives. These are synthetic labels, not measurements of real-user accuracy. Some non-empty retrieval questions still miss evidence or include extra results.
+Chrome and Firefox passed the isolated end-to-end checks with the packaged helper. The 10,000-record synthetic test completed all recalls within budget; warm recall measured 155 ms median and 161 ms p95 on the tested Mac. The [test report](https://github.com/Maar10Herr/serein/blob/main/docs/TEST_REPORT.md) includes raw results, retained retrieval misses, and the [light](https://github.com/Maar10Herr/serein/blob/main/docs/screenshots/research-preview-light.png) and [dark](https://github.com/Maar10Herr/serein/blob/main/docs/screenshots/research-preview-dark.png) constructed previews. Synthetic results do not establish real-user accuracy. Broader multilingual query tuning, general negation and word-order understanding remain open.
 
-The skill targets Claude Code, Codex, OpenCode, Hermes, OpenClaw, and generic local execution. Codex skill installation and the generic setup/reader path have been checked; automatic discovery and triggered recall inside those assistant clients have not been verified. The [test report](https://github.com/Maar10Herr/serein/blob/main/docs/TEST_REPORT.md) records the exact scope.
+The skill targets Claude Code, Codex, OpenCode, Hermes, OpenClaw and generic local execution. Packaged integration paths and local setup checks are distinct from discovery and triggered recall inside each assistant client. Remote executors cannot access this local vault.
+
+Serein is [GPL-3.0-only](https://github.com/Maar10Herr/serein/blob/main/LICENSE). Artifact checksums are included with the release.

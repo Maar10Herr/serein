@@ -1,0 +1,125 @@
+{
+  "cause": {
+    "bm25": {
+      "equal": true,
+      "f64_bits_hex": "c015d8f5f8aacfa3",
+      "value": -5.461875806260568
+    },
+    "channel": "lexical FTS",
+    "lexical_ranks": {
+      "run3": {
+        "ev012": 8,
+        "ev043": 7,
+        "uuid_order": "ev043 atom ID < ev012 atom ID"
+      },
+      "run4": {
+        "ev012": 7,
+        "ev043": 8,
+        "uuid_order": "ev012 atom ID < ev043 atom ID"
+      }
+    },
+    "records": [
+      "ev012",
+      "ev043"
+    ],
+    "rrf": {
+      "ev012_run3": {
+        "confirmed_rank": null,
+        "lexical_rank": 8,
+        "score": 0.030330881,
+        "semantic_rank": 4
+      },
+      "ev012_run4": {
+        "confirmed_rank": null,
+        "lexical_rank": 7,
+        "score": 0.030550372,
+        "semantic_rank": 4
+      },
+      "exact_rank_term_delta": "1/67 - 1/68 = 0.000219490781...",
+      "formula": "sum(1 / (offset + channel_rank))",
+      "offset": 60,
+      "score_delta_from_lexical_step": 0.000219491
+    },
+    "semantic_rank_for_ev012": {
+      "run3": 4,
+      "run4": 4,
+      "score_f32_bits_hex": "3f55f02c"
+    },
+    "sort_key": "bm25(atom_fts) ascending, then atom id ascending",
+    "tie_breaker": "freshly ingested atom IDs are UUIDv4; their order can change between isolated fixture runs"
+  },
+  "diagnostic": {
+    "model_pack_file_sha256": {
+      "models/pack/LICENSE-2.0.txt": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "models/pack/NOTICE.md": "f4dd8621a35f467c365fbd7ebd06b1b820818413379285b58b8227e8478ae31f",
+      "models/pack/manifest.json": "8661322502cf2881aec0b935e92b802c0538cbb397bd8b5f36fa2253bdec9e16",
+      "models/pack/parity.json": "b665ed1ea3735442a43e2ea604dbe9d01bbc40549dff234919c6294dfe2e7928",
+      "models/pack/scales.f32": "2b42e8dedf1b2b5e45a5cac326ea17d3d9b1e07e12d571f6a09181d73d72c1ee",
+      "models/pack/tokenizer.json": "11aaf894a4ccf3d95e8830e27c0f8152791fbbff2b988e29a265580b86edd216",
+      "models/pack/weights.i8": "ea6daccc4c4fdf27eecfcd2716f5408142947622b5e3dcc356231ea8ddade15e"
+    },
+    "production_source_modified": false,
+    "repeated_runs": 4,
+    "separate_build_target": true,
+    "source_mode": "diagnostic-source-isolated",
+    "source_sha256": {
+      "crates/serein-core/src/algorithm.rs": "a3c023b170de40f11c4dfb14a90359b4cbe679752784b8804694315e3fec0616",
+      "crates/serein-core/src/inference.rs": "1938b468e311dd53117f7d3027873e9a41784f56b9a9cdc3953598ba0cd4f2a9",
+      "crates/serein-core/src/retrieval.rs": "0eac5e5bdd451286f784a78d64c53a8b5dacbe92604b8b89113fc17abe7a0c24",
+      "crates/serein-core/src/storage.rs": "d2150e5aeb9cca9a1942865334ba9c1ce99c31bd65ff1fb315f21578d5e2887e",
+      "crates/serein-core/tests/calibration.rs": "c6bad4edeabfd09b17a7d321c070ed5453a7dd5ef1fdd48e8a6939b8b4890f87"
+    },
+    "test": "calibration_fixture_reports_metrics_and_checks_invariants",
+    "toolchain": {
+      "cargo": "1.98.1",
+      "rustc": "1.98.1"
+    }
+  },
+  "fixture": {
+    "fixture_id": "serein-calibration-dev-relevance-noise-v1",
+    "fixture_sha256": "578a9d828df1c98094c51f07bb70f3ba7e76db8d25b836cc4f7b250311c8d1f8",
+    "query_id": "q015",
+    "query_label": "heat-pump-water-heater-tax-credit",
+    "split": "development"
+  },
+  "fixture_status": "fixture-seen",
+  "interpretation": "The q015 unsupported-item identity at the six-record boundary is nondeterministic across fresh fixture ingestions because an exact lexical BM25 tie is ordered by random atom ID. This does not establish a stable quality change.",
+  "reproduced_top_six_tails": [
+    {
+      "matches_saved_reference": "T04 baseline",
+      "runs": [
+        1,
+        3
+      ],
+      "tail": [
+        "ev015",
+        "ev014"
+      ]
+    },
+    {
+      "matches_saved_reference": "candidate report",
+      "runs": [
+        2,
+        4
+      ],
+      "tail": [
+        "ev012",
+        "ev015"
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "temporal_check": {
+    "bonus_approximately_stable_across_runs3_and4": {
+      "ev012": 0.00101133,
+      "ev014": 0.00109821,
+      "ev015": 0.00114512
+    },
+    "cause_of_swap": false,
+    "session_counts_runs3_and4": {
+      "ev012": 1,
+      "ev014": 1,
+      "ev015": 1
+    }
+  }
+}

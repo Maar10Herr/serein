@@ -246,7 +246,6 @@ def prepare_fixture(cli: pathlib.Path, host: pathlib.Path, data_root: pathlib.Pa
     if len(dbs) != 1:
         raise RuntimeError(f"Expected one synthetic vault database, found {dbs}")
     return {
-        "env": env,
         "source_id": source,
         "event_count": len(events),
         "fixture_sha256": hashlib.sha256(

@@ -1,0 +1,260 @@
+{
+  "gate": "P01",
+  "status": "PASS",
+  "source_commit": "035bc3b71a0a6484a46f39925621fffd14c5739f",
+  "source_tree_fingerprint": {
+    "files": [
+      "Cargo.lock",
+      "crates/serein-core/src/storage.rs",
+      "crates/serein-core/src/retrieval.rs",
+      "crates/serein-core/src/feedback.rs",
+      "crates/serein-core/tests/feedback_sequence.rs",
+      "tests/handoff_indexes.py"
+    ],
+    "combined_sha256": "d632179bfe303b0659bf7f7c65d5f6f77ea4479ff50826d382630cbb9f54050d",
+    "cargo_lock_sha256": "3203b2d8f87631fe85261d7a3391a4e2c74456e01f7e9744b990847dfc705c93"
+  },
+  "working_tree_changes_included": true,
+  "platform": "macOS-15.7.3-arm64-arm-64bit-Mach-O",
+  "architecture": "arm64",
+  "python": "3.14.7",
+  "sqlite": "3.53.4",
+  "fixture": {
+    "atoms": 10000,
+    "source_a_atoms": 9000,
+    "sources": 2,
+    "sites": 97,
+    "topics": 128,
+    "confirmations": 1000,
+    "feedback_rows": 10093,
+    "membership_rows": 12500,
+    "events": 10000,
+    "sha256": "d2a6ab2de8b2ae20e66c161b7cd7f9f46c24b298a53deaae80c36838f7c59840",
+    "database_schema": "schema-4 logical layout; only the three T01 secondary indexes vary",
+    "scope": "deterministic generated rows; SQLite write transaction only, not end-to-end native ingestion"
+  },
+  "samples": 5,
+  "query_plans": {
+    "without_targeted_indexes": {
+      "atoms_by_source_recency": [
+        "SCAN atoms",
+        "USE TEMP B-TREE FOR ORDER BY"
+      ],
+      "memberships_by_topic": [
+        "SCAN atom_topics USING INDEX sqlite_autoindex_atom_topics_1"
+      ],
+      "feedback_by_atom_action": [
+        "SCAN feedback"
+      ]
+    },
+    "with_targeted_indexes": {
+      "atoms_by_source_recency": [
+        "SEARCH atoms USING INDEX atoms_by_source_recency (source=?)"
+      ],
+      "memberships_by_topic": [
+        "SEARCH atom_topics USING INDEX memberships_by_topic (topic=?)"
+      ],
+      "feedback_by_atom_action": [
+        "SEARCH feedback USING INDEX feedback_by_atom_action (atom=? AND action=?)"
+      ]
+    }
+  },
+  "ordered_packets": {
+    "10000000-0000-4000-8000-000000000001": [
+      {
+        "id": "00000002-0000-4000-8000-000000000002",
+        "site": "site-001.example.org",
+        "text": "Research item 00001 has explicit confirmed detail 1.",
+        "state": "confirmed",
+        "last_seen": "2026-09-29T00:05:00Z"
+      },
+      {
+        "id": "00000016-0000-4000-8000-000000000016",
+        "site": "site-021.example.org",
+        "text": "Research item 00021 has explicit confirmed detail 4.",
+        "state": "confirmed",
+        "last_seen": "2026-09-29T00:04:10Z"
+      },
+      {
+        "id": "0000002a-0000-4000-8000-00000000002a",
+        "site": "site-041.example.org",
+        "text": "Research item 00041 has explicit confirmed detail 7.",
+        "state": "confirmed",
+        "last_seen": "2026-09-29T00:03:20Z"
+      },
+      {
+        "id": "00000003-0000-4000-8000-000000000003",
+        "site": "site-002.example.org",
+        "text": "topic 002 reference item 00002",
+        "state": "observed",
+        "last_seen": "2026-09-29T00:02:30Z"
+      },
+      {
+        "id": "00000004-0000-4000-8000-000000000004",
+        "site": "site-003.example.org",
+        "text": "topic 003 reference item 00003",
+        "state": "observed",
+        "last_seen": "2026-09-29T00:01:40Z"
+      },
+      {
+        "id": "00000007-0000-4000-8000-000000000007",
+        "site": "site-006.example.org",
+        "text": "topic 006 reference item 00006",
+        "state": "observed",
+        "last_seen": "2026-09-29T00:00:50Z"
+      }
+    ],
+    "10000000-0000-4000-8000-000000000002": [
+      {
+        "id": "00000001-0000-4000-8000-000000000001",
+        "site": "site-000.example.org",
+        "text": "Research item 00000 has explicit confirmed detail 0.",
+        "state": "confirmed",
+        "last_seen": "2026-09-29T00:06:40Z"
+      },
+      {
+        "id": "000003c1-0000-4000-8000-0000000003c1",
+        "site": "site-087.example.org",
+        "text": "Research item 00960 has explicit confirmed detail 8.",
+        "state": "confirmed",
+        "last_seen": "2026-09-27T23:44:00Z"
+      },
+      {
+        "id": "00000781-0000-4000-8000-000000000781",
+        "site": "site-077.example.org",
+        "text": "Research item 01920 has explicit confirmed detail 16.",
+        "state": "confirmed",
+        "last_seen": "2026-09-27T23:28:00Z"
+      },
+      {
+        "id": "00000b41-0000-4000-8000-000000000b41",
+        "site": "site-067.example.org",
+        "text": "Research item 02880 has explicit confirmed detail 7.",
+        "state": "confirmed",
+        "last_seen": "2026-09-27T23:12:00Z"
+      },
+      {
+        "id": "00000f01-0000-4000-8000-000000000f01",
+        "site": "site-057.example.org",
+        "text": "Research item 03840 has explicit confirmed detail 15.",
+        "state": "confirmed",
+        "last_seen": "2026-09-27T22:56:00Z"
+      },
+      {
+        "id": "000012c1-0000-4000-8000-0000000012c1",
+        "site": "site-047.example.org",
+        "text": "Research item 04800 has explicit confirmed detail 6.",
+        "state": "confirmed",
+        "last_seen": "2026-09-27T22:40:00Z"
+      }
+    ]
+  },
+  "index_output_equal": true,
+  "membership_probe_equal": true,
+  "ingest_timings": {
+    "unindexed": {
+      "samples": 5,
+      "values_ms": [
+        183.95,
+        180.34,
+        183.28,
+        175.68,
+        173.13
+      ],
+      "median_ms": 180.34,
+      "p95_ms": 183.95
+    },
+    "indexed": {
+      "samples": 5,
+      "values_ms": [
+        337.83,
+        339.18,
+        345.44,
+        347.7,
+        323.18
+      ],
+      "median_ms": 339.18,
+      "p95_ms": 347.7
+    }
+  },
+  "database_and_wal_sizes": {
+    "unindexed": [
+      {
+        "database_bytes": 4096,
+        "wal_bytes": 12718472,
+        "database_plus_wal_bytes": 12722568,
+        "page_count": 3056,
+        "page_size": 4096
+      },
+      {
+        "database_bytes": 4096,
+        "wal_bytes": 12718472,
+        "database_plus_wal_bytes": 12722568,
+        "page_count": 3056,
+        "page_size": 4096
+      },
+      {
+        "database_bytes": 4096,
+        "wal_bytes": 12718472,
+        "database_plus_wal_bytes": 12722568,
+        "page_count": 3056,
+        "page_size": 4096
+      },
+      {
+        "database_bytes": 4096,
+        "wal_bytes": 12718472,
+        "database_plus_wal_bytes": 12722568,
+        "page_count": 3056,
+        "page_size": 4096
+      },
+      {
+        "database_bytes": 4096,
+        "wal_bytes": 12718472,
+        "database_plus_wal_bytes": 12722568,
+        "page_count": 3056,
+        "page_size": 4096
+      }
+    ],
+    "indexed": [
+      {
+        "database_bytes": 4096,
+        "wal_bytes": 15466512,
+        "database_plus_wal_bytes": 15470608,
+        "page_count": 3717,
+        "page_size": 4096
+      },
+      {
+        "database_bytes": 4096,
+        "wal_bytes": 15466512,
+        "database_plus_wal_bytes": 15470608,
+        "page_count": 3717,
+        "page_size": 4096
+      },
+      {
+        "database_bytes": 4096,
+        "wal_bytes": 15466512,
+        "database_plus_wal_bytes": 15470608,
+        "page_count": 3717,
+        "page_size": 4096
+      },
+      {
+        "database_bytes": 4096,
+        "wal_bytes": 15466512,
+        "database_plus_wal_bytes": 15470608,
+        "page_count": 3717,
+        "page_size": 4096
+      },
+      {
+        "database_bytes": 4096,
+        "wal_bytes": 15466512,
+        "database_plus_wal_bytes": 15470608,
+        "page_count": 3717,
+        "page_size": 4096
+      }
+    ]
+  },
+  "limitations": [
+    "This is a populated SQLite access-path and write-cost probe, not a product-level latency claim.",
+    "The fixture preserves feedback sequence order in both variants; migration correctness is covered by feedback_sequence.rs."
+  ]
+}

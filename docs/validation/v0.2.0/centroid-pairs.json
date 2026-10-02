@@ -1,0 +1,5161 @@
+{
+  "task": "P02 schema4 versus schema5 unaccelerated benchmark",
+  "generated_at": "2026-10-02",
+  "formal": true,
+  "fixture": {
+    "initial_atoms": 1024,
+    "incremental_batches": 5,
+    "atoms_per_incremental_batch": 32,
+    "hybrid_recall_samples_per_run": 10,
+    "lexical_recall_samples_per_run": 10,
+    "seed": "t11-p02-fixed-2026-10-02-v1",
+    "observed_at": "2026-10-02T10:15:00Z",
+    "deterministic_atom_ids": true,
+    "normalization": "Test-harness-only SQLite transaction renumbers unindexed generated atoms before refresh; it preserves indexed IDs and verifies foreign keys before commit.",
+    "corpora": {
+      "growing": "one-topic synthetic fixture",
+      "mixed": "ten-category synthetic fixture"
+    }
+  },
+  "run_order": [
+    "growing-r1 schema4, schema5",
+    "growing-r2 schema5, schema4",
+    "growing-r3 schema4, schema5",
+    "mixed-r1 schema4, schema5",
+    "mixed-r2 schema5, schema4",
+    "mixed-r3 schema4, schema5"
+  ],
+  "binaries": {
+    "schema4": {
+      "serein": {
+        "path": "<validation-artifact:serein>",
+        "sha256": "24e2de4c8031f2108f2decc6a167d78e0b805c82cd307f58ff1557e50bbfd0fe"
+      },
+      "serein-host": {
+        "path": "<validation-artifact:serein-host>",
+        "sha256": "8bfd6da6257bd6a10b0c14d59741a3d3e98b2458521c59016234ad33b3efff5b"
+      }
+    },
+    "schema5-unaccelerated": {
+      "serein": {
+        "path": "<validation-artifact:serein>",
+        "sha256": "18251be31f1fefe9f446acde98afa98084826579e791a7fdd1f884ee5714e149"
+      },
+      "serein-host": {
+        "path": "<validation-artifact:serein-host>",
+        "sha256": "f423d5a964b1b346100385c630dcf51d35d5d7e3497edad3e5b8cee93bfa5f1d"
+      }
+    }
+  },
+  "method_notes": [
+    "Each benchmark invocation creates an isolated temporary vault, ingests generated metadata, then measures refresh and recall in child processes.",
+    "Storage snapshots are taken after child exit; WAL is normally zero at those points. Transient peak WAL size is not sampled.",
+    "RSS is the maximum of sequential helper and CLI child processes during that run, not recall-only RSS.",
+    "No performance claim is based on the earlier unnormalized exploratory runs; all 12 formal runs use deterministic IDs."
+  ],
+  "production_unit_work_counter_witness": {
+    "source_test": "crates/serein-core/src/storage.rs::tests::incremental_refresh_updates_cache_without_reference_or_label_scans",
+    "batch_shape": "initial ingest/refresh 32 atoms, then second 32-atom incremental ingest/refresh on the same topic",
+    "incremental_encoder_calls": 32,
+    "incremental_reference_member_rows_read": 0,
+    "incremental_delta_rows_read": 32,
+    "incremental_label_rows_read": 0,
+    "cache_valid_after_refresh": 1,
+    "validation_record": "Already passed in the focused release --locked --offline library test lane before benchmark execution."
+  },
+  "aggregates": {
+    "growing": {
+      "schema4": {
+        "repetitions": 3,
+        "initial_ingestion_ms": {
+          "median": 2607.34,
+          "min": 2523.29,
+          "max": 2920.1,
+          "per_run": [
+            2523.29,
+            2607.34,
+            2920.1
+          ]
+        },
+        "full_backfill_ms": {
+          "median": 1950.33,
+          "min": 1903.46,
+          "max": 1990.68,
+          "per_run": [
+            1950.33,
+            1990.68,
+            1903.46
+          ]
+        },
+        "incremental_total_ingestion_ms": {
+          "median": 401.18,
+          "min": 396.84,
+          "max": 411.43,
+          "per_run": [
+            396.84,
+            401.18,
+            411.43
+          ]
+        },
+        "incremental_total_refresh_ms": {
+          "median": 1062.9,
+          "min": 1050.62,
+          "max": 1068.74,
+          "per_run": [
+            1050.62,
+            1062.9,
+            1068.74
+          ]
+        },
+        "incremental_batches": [
+          {
+            "batch": 1,
+            "ingest_ms": {
+              "median": 80.81,
+              "min": 78.79866601433605,
+              "max": 81.32220900733955,
+              "per_run": [
+                78.79866601433605,
+                81.32220900733955,
+                80.80520798102953
+              ]
+            },
+            "refresh_ms": {
+              "median": 204.86,
+              "min": 201.85791698168032,
+              "max": 208.90808300464414,
+              "per_run": [
+                201.85791698168032,
+                208.90808300464414,
+                204.86445902497508
+              ]
+            },
+            "refresh_process_calls": [
+              1,
+              1,
+              1
+            ],
+            "rows_after_batch": [
+              {
+                "atoms": 1056,
+                "vectors": 1056,
+                "topics": 1,
+                "atom_topics": 1056
+              },
+              {
+                "atoms": 1056,
+                "vectors": 1056,
+                "topics": 1,
+                "atom_topics": 1056
+              },
+              {
+                "atoms": 1056,
+                "vectors": 1056,
+                "topics": 1,
+                "atom_topics": 1056
+              }
+            ]
+          },
+          {
+            "batch": 2,
+            "ingest_ms": {
+              "median": 79.74,
+              "min": 78.84829098475166,
+              "max": 81.75174999632873,
+              "per_run": [
+                78.84829098475166,
+                79.74400001694448,
+                81.75174999632873
+              ]
+            },
+            "refresh_ms": {
+              "median": 207.14,
+              "min": 206.47116701002233,
+              "max": 208.5887909925077,
+              "per_run": [
+                206.47116701002233,
+                207.1439999854192,
+                208.5887909925077
+              ]
+            },
+            "refresh_process_calls": [
+              1,
+              1,
+              1
+            ],
+            "rows_after_batch": [
+              {
+                "atoms": 1088,
+                "vectors": 1088,
+                "topics": 1,
+                "atom_topics": 1088
+              },
+              {
+                "atoms": 1088,
+                "vectors": 1088,
+                "topics": 1,
+                "atom_topics": 1088
+              },
+              {
+                "atoms": 1088,
+                "vectors": 1088,
+                "topics": 1,
+                "atom_topics": 1088
+              }
+            ]
+          },
+          {
+            "batch": 3,
+            "ingest_ms": {
+              "median": 79.64,
+              "min": 78.9357080066111,
+              "max": 84.18183299363591,
+              "per_run": [
+                78.9357080066111,
+                79.64241702575237,
+                84.18183299363591
+              ]
+            },
+            "refresh_ms": {
+              "median": 211.94,
+              "min": 210.46520897652954,
+              "max": 213.04370800498873,
+              "per_run": [
+                211.94104198366404,
+                210.46520897652954,
+                213.04370800498873
+              ]
+            },
+            "refresh_process_calls": [
+              1,
+              1,
+              1
+            ],
+            "rows_after_batch": [
+              {
+                "atoms": 1120,
+                "vectors": 1120,
+                "topics": 1,
+                "atom_topics": 1120
+              },
+              {
+                "atoms": 1120,
+                "vectors": 1120,
+                "topics": 1,
+                "atom_topics": 1120
+              },
+              {
+                "atoms": 1120,
+                "vectors": 1120,
+                "topics": 1,
+                "atom_topics": 1120
+              }
+            ]
+          },
+          {
+            "batch": 4,
+            "ingest_ms": {
+              "median": 80.56,
+              "min": 78.38970798184164,
+              "max": 81.61258301697671,
+              "per_run": [
+                78.38970798184164,
+                80.5625410284847,
+                81.61258301697671
+              ]
+            },
+            "refresh_ms": {
+              "median": 219.02,
+              "min": 216.47929100436158,
+              "max": 224.9519169854466,
+              "per_run": [
+                216.47929100436158,
+                219.0235419839155,
+                224.9519169854466
+              ]
+            },
+            "refresh_process_calls": [
+              1,
+              1,
+              1
+            ],
+            "rows_after_batch": [
+              {
+                "atoms": 1152,
+                "vectors": 1152,
+                "topics": 1,
+                "atom_topics": 1152
+              },
+              {
+                "atoms": 1152,
+                "vectors": 1152,
+                "topics": 1,
+                "atom_topics": 1152
+              },
+              {
+                "atoms": 1152,
+                "vectors": 1152,
+                "topics": 1,
+                "atom_topics": 1152
+              }
+            ]
+          },
+          {
+            "batch": 5,
+            "ingest_ms": {
+              "median": 81.87,
+              "min": 79.91262499126606,
+              "max": 83.0828339967411,
+              "per_run": [
+                81.87191700562835,
+                79.91262499126606,
+                83.0828339967411
+              ]
+            },
+            "refresh_ms": {
+              "median": 217.29,
+              "min": 213.87145901098847,
+              "max": 217.3549169965554,
+              "per_run": [
+                213.87145901098847,
+                217.3549169965554,
+                217.2931660024915
+              ]
+            },
+            "refresh_process_calls": [
+              1,
+              1,
+              1
+            ],
+            "rows_after_batch": [
+              {
+                "atoms": 1184,
+                "vectors": 1184,
+                "topics": 1,
+                "atom_topics": 1184
+              },
+              {
+                "atoms": 1184,
+                "vectors": 1184,
+                "topics": 1,
+                "atom_topics": 1184
+              },
+              {
+                "atoms": 1184,
+                "vectors": 1184,
+                "topics": 1,
+                "atom_topics": 1184
+              }
+            ]
+          }
+        ],
+        "peak_child_process_rss_bytes": {
+          "median": 79495168,
+          "min": 77299712,
+          "max": 79953920,
+          "per_run": [
+            79953920,
+            79495168,
+            77299712
+          ]
+        },
+        "storage_after_ingestion": {
+          "rows": {
+            "atom_topics": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            },
+            "atoms": {
+              "median": 1024,
+              "min": 1024,
+              "max": 1024,
+              "per_run": [
+                1024,
+                1024,
+                1024
+              ]
+            },
+            "topics": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            },
+            "vectors": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "bytes": {
+            "database": {
+              "median": 1814528,
+              "min": 1802240,
+              "max": 1822720,
+              "per_run": [
+                1802240,
+                1822720,
+                1814528
+              ]
+            },
+            "shm": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            },
+            "wal": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "database_and_wal_bytes": {
+            "median": 1814528,
+            "min": 1802240,
+            "max": 1822720,
+            "per_run": [
+              1802240,
+              1822720,
+              1814528
+            ]
+          }
+        },
+        "storage_after_backfill": {
+          "rows": {
+            "atom_topics": {
+              "median": 1024,
+              "min": 1024,
+              "max": 1024,
+              "per_run": [
+                1024,
+                1024,
+                1024
+              ]
+            },
+            "atoms": {
+              "median": 1024,
+              "min": 1024,
+              "max": 1024,
+              "per_run": [
+                1024,
+                1024,
+                1024
+              ]
+            },
+            "topics": {
+              "median": 1,
+              "min": 1,
+              "max": 1,
+              "per_run": [
+                1,
+                1,
+                1
+              ]
+            },
+            "vectors": {
+              "median": 1024,
+              "min": 1024,
+              "max": 1024,
+              "per_run": [
+                1024,
+                1024,
+                1024
+              ]
+            }
+          },
+          "bytes": {
+            "database": {
+              "median": 3321856,
+              "min": 3309568,
+              "max": 3330048,
+              "per_run": [
+                3309568,
+                3330048,
+                3321856
+              ]
+            },
+            "shm": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            },
+            "wal": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "database_and_wal_bytes": {
+            "median": 3321856,
+            "min": 3309568,
+            "max": 3330048,
+            "per_run": [
+              3309568,
+              3330048,
+              3321856
+            ]
+          }
+        },
+        "storage_final": {
+          "rows": {
+            "atom_topics": {
+              "median": 1184,
+              "min": 1184,
+              "max": 1184,
+              "per_run": [
+                1184,
+                1184,
+                1184
+              ]
+            },
+            "atoms": {
+              "median": 1184,
+              "min": 1184,
+              "max": 1184,
+              "per_run": [
+                1184,
+                1184,
+                1184
+              ]
+            },
+            "topics": {
+              "median": 1,
+              "min": 1,
+              "max": 1,
+              "per_run": [
+                1,
+                1,
+                1
+              ]
+            },
+            "vectors": {
+              "median": 1184,
+              "min": 1184,
+              "max": 1184,
+              "per_run": [
+                1184,
+                1184,
+                1184
+              ]
+            }
+          },
+          "bytes": {
+            "database": {
+              "median": 3788800,
+              "min": 3772416,
+              "max": 3796992,
+              "per_run": [
+                3772416,
+                3796992,
+                3788800
+              ]
+            },
+            "shm": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            },
+            "wal": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "database_and_wal_bytes": {
+            "median": 3788800,
+            "min": 3772416,
+            "max": 3796992,
+            "per_run": [
+              3772416,
+              3796992,
+              3788800
+            ]
+          }
+        },
+        "hybrid_recall_median_ms": {
+          "median": 127.34,
+          "min": 126.4,
+          "max": 128.31,
+          "per_run": [
+            127.34,
+            128.31,
+            126.4
+          ]
+        },
+        "lexical_recall_median_ms": {
+          "median": 7.88,
+          "min": 7.82,
+          "max": 8.26,
+          "per_run": [
+            7.82,
+            7.88,
+            8.26
+          ]
+        },
+        "no_op_refresh_median_ms": {
+          "median": 114.38,
+          "min": 112.73,
+          "max": 117.53,
+          "per_run": [
+            112.73,
+            114.38,
+            117.53
+          ]
+        },
+        "topics_after_backfill": [
+          1,
+          1,
+          1
+        ],
+        "atom_topic_rows_after_backfill": [
+          1024,
+          1024,
+          1024
+        ],
+        "recall_statuses": [
+          [
+            "ok"
+          ],
+          [
+            "ok"
+          ],
+          [
+            "ok"
+          ]
+        ]
+      },
+      "schema5": {
+        "repetitions": 3,
+        "initial_ingestion_ms": {
+          "median": 2550.22,
+          "min": 2541.64,
+          "max": 2597.3,
+          "per_run": [
+            2541.64,
+            2550.22,
+            2597.3
+          ]
+        },
+        "full_backfill_ms": {
+          "median": 690.52,
+          "min": 681.2,
+          "max": 705.4,
+          "per_run": [
+            681.2,
+            690.52,
+            705.4
+          ]
+        },
+        "incremental_total_ingestion_ms": {
+          "median": 411.5,
+          "min": 408.48,
+          "max": 413.72,
+          "per_run": [
+            408.48,
+            411.5,
+            413.72
+          ]
+        },
+        "incremental_total_refresh_ms": {
+          "median": 624.43,
+          "min": 612.71,
+          "max": 629.45,
+          "per_run": [
+            612.71,
+            624.43,
+            629.45
+          ]
+        },
+        "incremental_batches": [
+          {
+            "batch": 1,
+            "ingest_ms": {
+              "median": 80.53,
+              "min": 79.9797500076238,
+              "max": 82.84204101073556,
+              "per_run": [
+                79.9797500076238,
+                80.5313749879133,
+                82.84204101073556
+              ]
+            },
+            "refresh_ms": {
+              "median": 122.07,
+              "min": 121.97025000932626,
+              "max": 130.29075000667945,
+              "per_run": [
+                122.06737499218434,
+                121.97025000932626,
+                130.29075000667945
+              ]
+            },
+            "refresh_process_calls": [
+              1,
+              1,
+              1
+            ],
+            "rows_after_batch": [
+              {
+                "atoms": 1056,
+                "vectors": 1056,
+                "topics": 1,
+                "atom_topics": 1056,
+                "topic_cache": 1,
+                "topic_cache_buckets": 21
+              },
+              {
+                "atoms": 1056,
+                "vectors": 1056,
+                "topics": 1,
+                "atom_topics": 1056,
+                "topic_cache": 1,
+                "topic_cache_buckets": 21
+              },
+              {
+                "atoms": 1056,
+                "vectors": 1056,
+                "topics": 1,
+                "atom_topics": 1056,
+                "topic_cache": 1,
+                "topic_cache_buckets": 21
+              }
+            ]
+          },
+          {
+            "batch": 2,
+            "ingest_ms": {
+              "median": 82.59,
+              "min": 80.3865420166403,
+              "max": 83.17158400313929,
+              "per_run": [
+                83.17158400313929,
+                80.3865420166403,
+                82.58691598894075
+              ]
+            },
+            "refresh_ms": {
+              "median": 122.49,
+              "min": 122.31504201190546,
+              "max": 125.28895799187012,
+              "per_run": [
+                122.4853330058977,
+                125.28895799187012,
+                122.31504201190546
+              ]
+            },
+            "refresh_process_calls": [
+              1,
+              1,
+              1
+            ],
+            "rows_after_batch": [
+              {
+                "atoms": 1088,
+                "vectors": 1088,
+                "topics": 1,
+                "atom_topics": 1088,
+                "topic_cache": 1,
+                "topic_cache_buckets": 21
+              },
+              {
+                "atoms": 1088,
+                "vectors": 1088,
+                "topics": 1,
+                "atom_topics": 1088,
+                "topic_cache": 1,
+                "topic_cache_buckets": 21
+              },
+              {
+                "atoms": 1088,
+                "vectors": 1088,
+                "topics": 1,
+                "atom_topics": 1088,
+                "topic_cache": 1,
+                "topic_cache_buckets": 21
+              }
+            ]
+          },
+          {
+            "batch": 3,
+            "ingest_ms": {
+              "median": 83.38,
+              "min": 80.60650000697933,
+              "max": 83.51462500286289,
+              "per_run": [
+                80.60650000697933,
+                83.38070899480954,
+                83.51462500286289
+              ]
+            },
+            "refresh_ms": {
+              "median": 127.63,
+              "min": 122.5478750129696,
+              "max": 131.44399999873713,
+              "per_run": [
+                122.5478750129696,
+                127.62845802353695,
+                131.44399999873713
+              ]
+            },
+            "refresh_process_calls": [
+              1,
+              1,
+              1
+            ],
+            "rows_after_batch": [
+              {
+                "atoms": 1120,
+                "vectors": 1120,
+                "topics": 1,
+                "atom_topics": 1120,
+                "topic_cache": 1,
+                "topic_cache_buckets": 21
+              },
+              {
+                "atoms": 1120,
+                "vectors": 1120,
+                "topics": 1,
+                "atom_topics": 1120,
+                "topic_cache": 1,
+                "topic_cache_buckets": 21
+              },
+              {
+                "atoms": 1120,
+                "vectors": 1120,
+                "topics": 1,
+                "atom_topics": 1120,
+                "topic_cache": 1,
+                "topic_cache_buckets": 21
+              }
+            ]
+          },
+          {
+            "batch": 4,
+            "ingest_ms": {
+              "median": 83.2,
+              "min": 82.45083299698308,
+              "max": 84.00879098917358,
+              "per_run": [
+                83.2044999988284,
+                84.00879098917358,
+                82.45083299698308
+              ]
+            },
+            "refresh_ms": {
+              "median": 123.04,
+              "min": 122.25812498945743,
+              "max": 123.425290978048,
+              "per_run": [
+                123.425290978048,
+                123.0408750125207,
+                122.25812498945743
+              ]
+            },
+            "refresh_process_calls": [
+              1,
+              1,
+              1
+            ],
+            "rows_after_batch": [
+              {
+                "atoms": 1152,
+                "vectors": 1152,
+                "topics": 1,
+                "atom_topics": 1152,
+                "topic_cache": 1,
+                "topic_cache_buckets": 21
+              },
+              {
+                "atoms": 1152,
+                "vectors": 1152,
+                "topics": 1,
+                "atom_topics": 1152,
+                "topic_cache": 1,
+                "topic_cache_buckets": 21
+              },
+              {
+                "atoms": 1152,
+                "vectors": 1152,
+                "topics": 1,
+                "atom_topics": 1152,
+                "topic_cache": 1,
+                "topic_cache_buckets": 21
+              }
+            ]
+          },
+          {
+            "batch": 5,
+            "ingest_ms": {
+              "median": 82.32,
+              "min": 81.5164580126293,
+              "max": 83.193416998256,
+              "per_run": [
+                81.5164580126293,
+                83.193416998256,
+                82.32454099925235
+              ]
+            },
+            "refresh_ms": {
+              "median": 123.14,
+              "min": 122.1794159791898,
+              "max": 126.50208300328813,
+              "per_run": [
+                122.1794159791898,
+                126.50208300328813,
+                123.13787499442697
+              ]
+            },
+            "refresh_process_calls": [
+              1,
+              1,
+              1
+            ],
+            "rows_after_batch": [
+              {
+                "atoms": 1184,
+                "vectors": 1184,
+                "topics": 1,
+                "atom_topics": 1184,
+                "topic_cache": 1,
+                "topic_cache_buckets": 21
+              },
+              {
+                "atoms": 1184,
+                "vectors": 1184,
+                "topics": 1,
+                "atom_topics": 1184,
+                "topic_cache": 1,
+                "topic_cache_buckets": 21
+              },
+              {
+                "atoms": 1184,
+                "vectors": 1184,
+                "topics": 1,
+                "atom_topics": 1184,
+                "topic_cache": 1,
+                "topic_cache_buckets": 21
+              }
+            ]
+          }
+        ],
+        "peak_child_process_rss_bytes": {
+          "median": 79511552,
+          "min": 79020032,
+          "max": 80543744,
+          "per_run": [
+            79511552,
+            80543744,
+            79020032
+          ]
+        },
+        "storage_after_ingestion": {
+          "rows": {
+            "atom_topics": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            },
+            "atoms": {
+              "median": 1024,
+              "min": 1024,
+              "max": 1024,
+              "per_run": [
+                1024,
+                1024,
+                1024
+              ]
+            },
+            "topic_cache": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            },
+            "topic_cache_buckets": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            },
+            "topics": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            },
+            "vectors": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "bytes": {
+            "database": {
+              "median": 1830912,
+              "min": 1810432,
+              "max": 1839104,
+              "per_run": [
+                1830912,
+                1810432,
+                1839104
+              ]
+            },
+            "shm": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            },
+            "wal": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "database_and_wal_bytes": {
+            "median": 1830912,
+            "min": 1810432,
+            "max": 1839104,
+            "per_run": [
+              1830912,
+              1810432,
+              1839104
+            ]
+          }
+        },
+        "storage_after_backfill": {
+          "rows": {
+            "atom_topics": {
+              "median": 1024,
+              "min": 1024,
+              "max": 1024,
+              "per_run": [
+                1024,
+                1024,
+                1024
+              ]
+            },
+            "atoms": {
+              "median": 1024,
+              "min": 1024,
+              "max": 1024,
+              "per_run": [
+                1024,
+                1024,
+                1024
+              ]
+            },
+            "topic_cache": {
+              "median": 1,
+              "min": 1,
+              "max": 1,
+              "per_run": [
+                1,
+                1,
+                1
+              ]
+            },
+            "topic_cache_buckets": {
+              "median": 20,
+              "min": 20,
+              "max": 20,
+              "per_run": [
+                20,
+                20,
+                20
+              ]
+            },
+            "topics": {
+              "median": 1,
+              "min": 1,
+              "max": 1,
+              "per_run": [
+                1,
+                1,
+                1
+              ]
+            },
+            "vectors": {
+              "median": 1024,
+              "min": 1024,
+              "max": 1024,
+              "per_run": [
+                1024,
+                1024,
+                1024
+              ]
+            }
+          },
+          "bytes": {
+            "database": {
+              "median": 3420160,
+              "min": 3399680,
+              "max": 3428352,
+              "per_run": [
+                3420160,
+                3399680,
+                3428352
+              ]
+            },
+            "shm": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            },
+            "wal": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "database_and_wal_bytes": {
+            "median": 3420160,
+            "min": 3399680,
+            "max": 3428352,
+            "per_run": [
+              3420160,
+              3399680,
+              3428352
+            ]
+          }
+        },
+        "storage_final": {
+          "rows": {
+            "atom_topics": {
+              "median": 1184,
+              "min": 1184,
+              "max": 1184,
+              "per_run": [
+                1184,
+                1184,
+                1184
+              ]
+            },
+            "atoms": {
+              "median": 1184,
+              "min": 1184,
+              "max": 1184,
+              "per_run": [
+                1184,
+                1184,
+                1184
+              ]
+            },
+            "topic_cache": {
+              "median": 1,
+              "min": 1,
+              "max": 1,
+              "per_run": [
+                1,
+                1,
+                1
+              ]
+            },
+            "topic_cache_buckets": {
+              "median": 21,
+              "min": 21,
+              "max": 21,
+              "per_run": [
+                21,
+                21,
+                21
+              ]
+            },
+            "topics": {
+              "median": 1,
+              "min": 1,
+              "max": 1,
+              "per_run": [
+                1,
+                1,
+                1
+              ]
+            },
+            "vectors": {
+              "median": 1184,
+              "min": 1184,
+              "max": 1184,
+              "per_run": [
+                1184,
+                1184,
+                1184
+              ]
+            }
+          },
+          "bytes": {
+            "database": {
+              "median": 3891200,
+              "min": 3887104,
+              "max": 3891200,
+              "per_run": [
+                3891200,
+                3887104,
+                3891200
+              ]
+            },
+            "shm": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            },
+            "wal": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "database_and_wal_bytes": {
+            "median": 3891200,
+            "min": 3887104,
+            "max": 3891200,
+            "per_run": [
+              3891200,
+              3887104,
+              3891200
+            ]
+          }
+        },
+        "hybrid_recall_median_ms": {
+          "median": 129.69,
+          "min": 128.45,
+          "max": 130.48,
+          "per_run": [
+            128.45,
+            129.69,
+            130.48
+          ]
+        },
+        "lexical_recall_median_ms": {
+          "median": 8.22,
+          "min": 8.18,
+          "max": 8.49,
+          "per_run": [
+            8.18,
+            8.22,
+            8.49
+          ]
+        },
+        "no_op_refresh_median_ms": {
+          "median": 114.51,
+          "min": 113.6,
+          "max": 117.18,
+          "per_run": [
+            114.51,
+            113.6,
+            117.18
+          ]
+        },
+        "topics_after_backfill": [
+          1,
+          1,
+          1
+        ],
+        "atom_topic_rows_after_backfill": [
+          1024,
+          1024,
+          1024
+        ],
+        "recall_statuses": [
+          [
+            "ok"
+          ],
+          [
+            "ok"
+          ],
+          [
+            "ok"
+          ]
+        ]
+      }
+    },
+    "mixed": {
+      "schema4": {
+        "repetitions": 3,
+        "initial_ingestion_ms": {
+          "median": 2658.6,
+          "min": 2569.18,
+          "max": 2812.83,
+          "per_run": [
+            2569.18,
+            2812.83,
+            2658.6
+          ]
+        },
+        "full_backfill_ms": {
+          "median": 841.8,
+          "min": 822.07,
+          "max": 944.32,
+          "per_run": [
+            822.07,
+            944.32,
+            841.8
+          ]
+        },
+        "incremental_total_ingestion_ms": {
+          "median": 443.62,
+          "min": 413.91,
+          "max": 450.25,
+          "per_run": [
+            413.91,
+            450.25,
+            443.62
+          ]
+        },
+        "incremental_total_refresh_ms": {
+          "median": 732.93,
+          "min": 681.38,
+          "max": 741.09,
+          "per_run": [
+            681.38,
+            741.09,
+            732.93
+          ]
+        },
+        "incremental_batches": [
+          {
+            "batch": 1,
+            "ingest_ms": {
+              "median": 87.22,
+              "min": 81.75120799569413,
+              "max": 89.36466599698178,
+              "per_run": [
+                81.75120799569413,
+                89.36466599698178,
+                87.21787499962375
+              ]
+            },
+            "refresh_ms": {
+              "median": 143.58,
+              "min": 139.7264169936534,
+              "max": 146.91241600667126,
+              "per_run": [
+                139.7264169936534,
+                146.91241600667126,
+                143.58095900388435
+              ]
+            },
+            "refresh_process_calls": [
+              1,
+              1,
+              1
+            ],
+            "rows_after_batch": [
+              {
+                "atoms": 1056,
+                "vectors": 1056,
+                "topics": 11,
+                "atom_topics": 1157
+              },
+              {
+                "atoms": 1056,
+                "vectors": 1056,
+                "topics": 11,
+                "atom_topics": 1157
+              },
+              {
+                "atoms": 1056,
+                "vectors": 1056,
+                "topics": 11,
+                "atom_topics": 1157
+              }
+            ]
+          },
+          {
+            "batch": 2,
+            "ingest_ms": {
+              "median": 88.6,
+              "min": 83.2537499954924,
+              "max": 92.50733299995773,
+              "per_run": [
+                83.2537499954924,
+                88.59549998305738,
+                92.50733299995773
+              ]
+            },
+            "refresh_ms": {
+              "median": 144.88,
+              "min": 132.18575000064448,
+              "max": 153.54312499403022,
+              "per_run": [
+                132.18575000064448,
+                144.8789999994915,
+                153.54312499403022
+              ]
+            },
+            "refresh_process_calls": [
+              1,
+              1,
+              1
+            ],
+            "rows_after_batch": [
+              {
+                "atoms": 1088,
+                "vectors": 1088,
+                "topics": 11,
+                "atom_topics": 1192
+              },
+              {
+                "atoms": 1088,
+                "vectors": 1088,
+                "topics": 11,
+                "atom_topics": 1192
+              },
+              {
+                "atoms": 1088,
+                "vectors": 1088,
+                "topics": 11,
+                "atom_topics": 1192
+              }
+            ]
+          },
+          {
+            "batch": 3,
+            "ingest_ms": {
+              "median": 91.48,
+              "min": 82.24466600222513,
+              "max": 93.50116699351929,
+              "per_run": [
+                82.24466600222513,
+                91.4815410214942,
+                93.50116699351929
+              ]
+            },
+            "refresh_ms": {
+              "median": 143.6,
+              "min": 133.01016698824242,
+              "max": 147.3792909819167,
+              "per_run": [
+                133.01016698824242,
+                143.60133299487643,
+                147.3792909819167
+              ]
+            },
+            "refresh_process_calls": [
+              1,
+              1,
+              1
+            ],
+            "rows_after_batch": [
+              {
+                "atoms": 1120,
+                "vectors": 1120,
+                "topics": 11,
+                "atom_topics": 1227
+              },
+              {
+                "atoms": 1120,
+                "vectors": 1120,
+                "topics": 11,
+                "atom_topics": 1227
+              },
+              {
+                "atoms": 1120,
+                "vectors": 1120,
+                "topics": 11,
+                "atom_topics": 1227
+              }
+            ]
+          },
+          {
+            "batch": 4,
+            "ingest_ms": {
+              "median": 86.03,
+              "min": 82.7001659781672,
+              "max": 89.44133299519308,
+              "per_run": [
+                82.7001659781672,
+                89.44133299519308,
+                86.03045900235884
+              ]
+            },
+            "refresh_ms": {
+              "median": 144.14,
+              "min": 135.54283400299028,
+              "max": 158.37291697971523,
+              "per_run": [
+                135.54283400299028,
+                158.37291697971523,
+                144.14108399068937
+              ]
+            },
+            "refresh_process_calls": [
+              1,
+              1,
+              1
+            ],
+            "rows_after_batch": [
+              {
+                "atoms": 1152,
+                "vectors": 1152,
+                "topics": 11,
+                "atom_topics": 1262
+              },
+              {
+                "atoms": 1152,
+                "vectors": 1152,
+                "topics": 11,
+                "atom_topics": 1262
+              },
+              {
+                "atoms": 1152,
+                "vectors": 1152,
+                "topics": 11,
+                "atom_topics": 1262
+              }
+            ]
+          },
+          {
+            "batch": 5,
+            "ingest_ms": {
+              "median": 84.37,
+              "min": 83.95737499813549,
+              "max": 91.37041697977111,
+              "per_run": [
+                83.95737499813549,
+                91.37041697977111,
+                84.36583398724906
+              ]
+            },
+            "refresh_ms": {
+              "median": 144.28,
+              "min": 140.91254101367667,
+              "max": 147.32812499278225,
+              "per_run": [
+                140.91254101367667,
+                147.32812499278225,
+                144.2828340223059
+              ]
+            },
+            "refresh_process_calls": [
+              1,
+              1,
+              1
+            ],
+            "rows_after_batch": [
+              {
+                "atoms": 1184,
+                "vectors": 1184,
+                "topics": 11,
+                "atom_topics": 1297
+              },
+              {
+                "atoms": 1184,
+                "vectors": 1184,
+                "topics": 11,
+                "atom_topics": 1297
+              },
+              {
+                "atoms": 1184,
+                "vectors": 1184,
+                "topics": 11,
+                "atom_topics": 1297
+              }
+            ]
+          }
+        ],
+        "peak_child_process_rss_bytes": {
+          "median": 79937536,
+          "min": 77414400,
+          "max": 86999040,
+          "per_run": [
+            77414400,
+            86999040,
+            79937536
+          ]
+        },
+        "storage_after_ingestion": {
+          "rows": {
+            "atom_topics": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            },
+            "atoms": {
+              "median": 1024,
+              "min": 1024,
+              "max": 1024,
+              "per_run": [
+                1024,
+                1024,
+                1024
+              ]
+            },
+            "topics": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            },
+            "vectors": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "bytes": {
+            "database": {
+              "median": 1740800,
+              "min": 1736704,
+              "max": 1757184,
+              "per_run": [
+                1736704,
+                1757184,
+                1740800
+              ]
+            },
+            "shm": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            },
+            "wal": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "database_and_wal_bytes": {
+            "median": 1740800,
+            "min": 1736704,
+            "max": 1757184,
+            "per_run": [
+              1736704,
+              1757184,
+              1740800
+            ]
+          }
+        },
+        "storage_after_backfill": {
+          "rows": {
+            "atom_topics": {
+              "median": 1122,
+              "min": 1122,
+              "max": 1122,
+              "per_run": [
+                1122,
+                1122,
+                1122
+              ]
+            },
+            "atoms": {
+              "median": 1024,
+              "min": 1024,
+              "max": 1024,
+              "per_run": [
+                1024,
+                1024,
+                1024
+              ]
+            },
+            "topics": {
+              "median": 11,
+              "min": 11,
+              "max": 11,
+              "per_run": [
+                11,
+                11,
+                11
+              ]
+            },
+            "vectors": {
+              "median": 1024,
+              "min": 1024,
+              "max": 1024,
+              "per_run": [
+                1024,
+                1024,
+                1024
+              ]
+            }
+          },
+          "bytes": {
+            "database": {
+              "median": 3301376,
+              "min": 3297280,
+              "max": 3317760,
+              "per_run": [
+                3297280,
+                3317760,
+                3301376
+              ]
+            },
+            "shm": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            },
+            "wal": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "database_and_wal_bytes": {
+            "median": 3301376,
+            "min": 3297280,
+            "max": 3317760,
+            "per_run": [
+              3297280,
+              3317760,
+              3301376
+            ]
+          }
+        },
+        "storage_final": {
+          "rows": {
+            "atom_topics": {
+              "median": 1297,
+              "min": 1297,
+              "max": 1297,
+              "per_run": [
+                1297,
+                1297,
+                1297
+              ]
+            },
+            "atoms": {
+              "median": 1184,
+              "min": 1184,
+              "max": 1184,
+              "per_run": [
+                1184,
+                1184,
+                1184
+              ]
+            },
+            "topics": {
+              "median": 11,
+              "min": 11,
+              "max": 11,
+              "per_run": [
+                11,
+                11,
+                11
+              ]
+            },
+            "vectors": {
+              "median": 1184,
+              "min": 1184,
+              "max": 1184,
+              "per_run": [
+                1184,
+                1184,
+                1184
+              ]
+            }
+          },
+          "bytes": {
+            "database": {
+              "median": 3768320,
+              "min": 3756032,
+              "max": 3784704,
+              "per_run": [
+                3768320,
+                3784704,
+                3756032
+              ]
+            },
+            "shm": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            },
+            "wal": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "database_and_wal_bytes": {
+            "median": 3768320,
+            "min": 3756032,
+            "max": 3784704,
+            "per_run": [
+              3768320,
+              3784704,
+              3756032
+            ]
+          }
+        },
+        "hybrid_recall_median_ms": {
+          "median": 127.59,
+          "min": 122.83,
+          "max": 130.91,
+          "per_run": [
+            122.83,
+            130.91,
+            127.59
+          ]
+        },
+        "lexical_recall_median_ms": {
+          "median": 6.16,
+          "min": 6.02,
+          "max": 7.26,
+          "per_run": [
+            6.02,
+            7.26,
+            6.16
+          ]
+        },
+        "no_op_refresh_median_ms": {
+          "median": 122.96,
+          "min": 114.42,
+          "max": 126.77,
+          "per_run": [
+            114.42,
+            122.96,
+            126.77
+          ]
+        },
+        "topics_after_backfill": [
+          11,
+          11,
+          11
+        ],
+        "atom_topic_rows_after_backfill": [
+          1122,
+          1122,
+          1122
+        ],
+        "recall_statuses": [
+          [
+            "ok"
+          ],
+          [
+            "ok"
+          ],
+          [
+            "ok"
+          ]
+        ]
+      },
+      "schema5": {
+        "repetitions": 3,
+        "initial_ingestion_ms": {
+          "median": 2609.99,
+          "min": 2607.93,
+          "max": 2723.87,
+          "per_run": [
+            2607.93,
+            2609.99,
+            2723.87
+          ]
+        },
+        "full_backfill_ms": {
+          "median": 801.69,
+          "min": 789.6,
+          "max": 843.27,
+          "per_run": [
+            789.6,
+            801.69,
+            843.27
+          ]
+        },
+        "incremental_total_ingestion_ms": {
+          "median": 419.23,
+          "min": 417.46,
+          "max": 436.28,
+          "per_run": [
+            417.46,
+            419.23,
+            436.28
+          ]
+        },
+        "incremental_total_refresh_ms": {
+          "median": 667.1,
+          "min": 638.18,
+          "max": 702.86,
+          "per_run": [
+            638.18,
+            667.1,
+            702.86
+          ]
+        },
+        "incremental_batches": [
+          {
+            "batch": 1,
+            "ingest_ms": {
+              "median": 83.84,
+              "min": 83.59204200678505,
+              "max": 86.19999999064021,
+              "per_run": [
+                83.59204200678505,
+                86.19999999064021,
+                83.84008400025778
+              ]
+            },
+            "refresh_ms": {
+              "median": 127.49,
+              "min": 126.04379199910909,
+              "max": 136.43179097562097,
+              "per_run": [
+                126.04379199910909,
+                127.48858399572782,
+                136.43179097562097
+              ]
+            },
+            "refresh_process_calls": [
+              1,
+              1,
+              1
+            ],
+            "rows_after_batch": [
+              {
+                "atoms": 1056,
+                "vectors": 1056,
+                "topics": 11,
+                "atom_topics": 1157,
+                "topic_cache": 11,
+                "topic_cache_buckets": 231
+              },
+              {
+                "atoms": 1056,
+                "vectors": 1056,
+                "topics": 11,
+                "atom_topics": 1157,
+                "topic_cache": 11,
+                "topic_cache_buckets": 231
+              },
+              {
+                "atoms": 1056,
+                "vectors": 1056,
+                "topics": 11,
+                "atom_topics": 1157,
+                "topic_cache": 11,
+                "topic_cache_buckets": 231
+              }
+            ]
+          },
+          {
+            "batch": 2,
+            "ingest_ms": {
+              "median": 84.11,
+              "min": 83.29416700871661,
+              "max": 87.8702079935465,
+              "per_run": [
+                84.11249998607673,
+                83.29416700871661,
+                87.8702079935465
+              ]
+            },
+            "refresh_ms": {
+              "median": 132.92,
+              "min": 128.6120840231888,
+              "max": 147.67462498275563,
+              "per_run": [
+                128.6120840231888,
+                132.91820799349807,
+                147.67462498275563
+              ]
+            },
+            "refresh_process_calls": [
+              1,
+              1,
+              1
+            ],
+            "rows_after_batch": [
+              {
+                "atoms": 1088,
+                "vectors": 1088,
+                "topics": 11,
+                "atom_topics": 1192,
+                "topic_cache": 11,
+                "topic_cache_buckets": 231
+              },
+              {
+                "atoms": 1088,
+                "vectors": 1088,
+                "topics": 11,
+                "atom_topics": 1192,
+                "topic_cache": 11,
+                "topic_cache_buckets": 231
+              },
+              {
+                "atoms": 1088,
+                "vectors": 1088,
+                "topics": 11,
+                "atom_topics": 1192,
+                "topic_cache": 11,
+                "topic_cache_buckets": 231
+              }
+            ]
+          },
+          {
+            "batch": 3,
+            "ingest_ms": {
+              "median": 82.93,
+              "min": 82.86937500815839,
+              "max": 91.77783300401643,
+              "per_run": [
+                82.93004200095311,
+                82.86937500815839,
+                91.77783300401643
+              ]
+            },
+            "refresh_ms": {
+              "median": 132.41,
+              "min": 126.9721659773495,
+              "max": 142.70083300652914,
+              "per_run": [
+                126.9721659773495,
+                132.40616698749363,
+                142.70083300652914
+              ]
+            },
+            "refresh_process_calls": [
+              1,
+              1,
+              1
+            ],
+            "rows_after_batch": [
+              {
+                "atoms": 1120,
+                "vectors": 1120,
+                "topics": 11,
+                "atom_topics": 1227,
+                "topic_cache": 11,
+                "topic_cache_buckets": 231
+              },
+              {
+                "atoms": 1120,
+                "vectors": 1120,
+                "topics": 11,
+                "atom_topics": 1227,
+                "topic_cache": 11,
+                "topic_cache_buckets": 231
+              },
+              {
+                "atoms": 1120,
+                "vectors": 1120,
+                "topics": 11,
+                "atom_topics": 1227,
+                "topic_cache": 11,
+                "topic_cache_buckets": 231
+              }
+            ]
+          },
+          {
+            "batch": 4,
+            "ingest_ms": {
+              "median": 83.31,
+              "min": 82.69808301702142,
+              "max": 89.05166698968969,
+              "per_run": [
+                83.30983298947103,
+                82.69808301702142,
+                89.05166698968969
+              ]
+            },
+            "refresh_ms": {
+              "median": 133.27,
+              "min": 128.25920901377685,
+              "max": 136.8014169856906,
+              "per_run": [
+                128.25920901377685,
+                133.27395799569786,
+                136.8014169856906
+              ]
+            },
+            "refresh_process_calls": [
+              1,
+              1,
+              1
+            ],
+            "rows_after_batch": [
+              {
+                "atoms": 1152,
+                "vectors": 1152,
+                "topics": 11,
+                "atom_topics": 1262,
+                "topic_cache": 11,
+                "topic_cache_buckets": 231
+              },
+              {
+                "atoms": 1152,
+                "vectors": 1152,
+                "topics": 11,
+                "atom_topics": 1262,
+                "topic_cache": 11,
+                "topic_cache_buckets": 231
+              },
+              {
+                "atoms": 1152,
+                "vectors": 1152,
+                "topics": 11,
+                "atom_topics": 1262,
+                "topic_cache": 11,
+                "topic_cache_buckets": 231
+              }
+            ]
+          },
+          {
+            "batch": 5,
+            "ingest_ms": {
+              "median": 83.74,
+              "min": 83.51170798414387,
+              "max": 84.16579201002605,
+              "per_run": [
+                83.51170798414387,
+                84.16579201002605,
+                83.73745900462382
+              ]
+            },
+            "refresh_ms": {
+              "median": 139.25,
+              "min": 128.2895420154091,
+              "max": 141.01204101461917,
+              "per_run": [
+                128.2895420154091,
+                141.01204101461917,
+                139.25258300150745
+              ]
+            },
+            "refresh_process_calls": [
+              1,
+              1,
+              1
+            ],
+            "rows_after_batch": [
+              {
+                "atoms": 1184,
+                "vectors": 1184,
+                "topics": 11,
+                "atom_topics": 1297,
+                "topic_cache": 11,
+                "topic_cache_buckets": 231
+              },
+              {
+                "atoms": 1184,
+                "vectors": 1184,
+                "topics": 11,
+                "atom_topics": 1297,
+                "topic_cache": 11,
+                "topic_cache_buckets": 231
+              },
+              {
+                "atoms": 1184,
+                "vectors": 1184,
+                "topics": 11,
+                "atom_topics": 1297,
+                "topic_cache": 11,
+                "topic_cache_buckets": 231
+              }
+            ]
+          }
+        ],
+        "peak_child_process_rss_bytes": {
+          "median": 79593472,
+          "min": 79233024,
+          "max": 82132992,
+          "per_run": [
+            79233024,
+            79593472,
+            82132992
+          ]
+        },
+        "storage_after_ingestion": {
+          "rows": {
+            "atom_topics": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            },
+            "atoms": {
+              "median": 1024,
+              "min": 1024,
+              "max": 1024,
+              "per_run": [
+                1024,
+                1024,
+                1024
+              ]
+            },
+            "topic_cache": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            },
+            "topic_cache_buckets": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            },
+            "topics": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            },
+            "vectors": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "bytes": {
+            "database": {
+              "median": 1765376,
+              "min": 1765376,
+              "max": 1769472,
+              "per_run": [
+                1765376,
+                1765376,
+                1769472
+              ]
+            },
+            "shm": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            },
+            "wal": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "database_and_wal_bytes": {
+            "median": 1765376,
+            "min": 1765376,
+            "max": 1769472,
+            "per_run": [
+              1765376,
+              1765376,
+              1769472
+            ]
+          }
+        },
+        "storage_after_backfill": {
+          "rows": {
+            "atom_topics": {
+              "median": 1122,
+              "min": 1122,
+              "max": 1122,
+              "per_run": [
+                1122,
+                1122,
+                1122
+              ]
+            },
+            "atoms": {
+              "median": 1024,
+              "min": 1024,
+              "max": 1024,
+              "per_run": [
+                1024,
+                1024,
+                1024
+              ]
+            },
+            "topic_cache": {
+              "median": 11,
+              "min": 11,
+              "max": 11,
+              "per_run": [
+                11,
+                11,
+                11
+              ]
+            },
+            "topic_cache_buckets": {
+              "median": 220,
+              "min": 220,
+              "max": 220,
+              "per_run": [
+                220,
+                220,
+                220
+              ]
+            },
+            "topics": {
+              "median": 11,
+              "min": 11,
+              "max": 11,
+              "per_run": [
+                11,
+                11,
+                11
+              ]
+            },
+            "vectors": {
+              "median": 1024,
+              "min": 1024,
+              "max": 1024,
+              "per_run": [
+                1024,
+                1024,
+                1024
+              ]
+            }
+          },
+          "bytes": {
+            "database": {
+              "median": 4300800,
+              "min": 4300800,
+              "max": 4304896,
+              "per_run": [
+                4300800,
+                4300800,
+                4304896
+              ]
+            },
+            "shm": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            },
+            "wal": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "database_and_wal_bytes": {
+            "median": 4300800,
+            "min": 4300800,
+            "max": 4304896,
+            "per_run": [
+              4300800,
+              4300800,
+              4304896
+            ]
+          }
+        },
+        "storage_final": {
+          "rows": {
+            "atom_topics": {
+              "median": 1297,
+              "min": 1297,
+              "max": 1297,
+              "per_run": [
+                1297,
+                1297,
+                1297
+              ]
+            },
+            "atoms": {
+              "median": 1184,
+              "min": 1184,
+              "max": 1184,
+              "per_run": [
+                1184,
+                1184,
+                1184
+              ]
+            },
+            "topic_cache": {
+              "median": 11,
+              "min": 11,
+              "max": 11,
+              "per_run": [
+                11,
+                11,
+                11
+              ]
+            },
+            "topic_cache_buckets": {
+              "median": 231,
+              "min": 231,
+              "max": 231,
+              "per_run": [
+                231,
+                231,
+                231
+              ]
+            },
+            "topics": {
+              "median": 11,
+              "min": 11,
+              "max": 11,
+              "per_run": [
+                11,
+                11,
+                11
+              ]
+            },
+            "vectors": {
+              "median": 1184,
+              "min": 1184,
+              "max": 1184,
+              "per_run": [
+                1184,
+                1184,
+                1184
+              ]
+            }
+          },
+          "bytes": {
+            "database": {
+              "median": 4816896,
+              "min": 4812800,
+              "max": 4825088,
+              "per_run": [
+                4816896,
+                4812800,
+                4825088
+              ]
+            },
+            "shm": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            },
+            "wal": {
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "per_run": [
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "database_and_wal_bytes": {
+            "median": 4816896,
+            "min": 4812800,
+            "max": 4825088,
+            "per_run": [
+              4816896,
+              4812800,
+              4825088
+            ]
+          }
+        },
+        "hybrid_recall_median_ms": {
+          "median": 127.97,
+          "min": 124.76,
+          "max": 130.68,
+          "per_run": [
+            124.76,
+            130.68,
+            127.97
+          ]
+        },
+        "lexical_recall_median_ms": {
+          "median": 6.55,
+          "min": 6.54,
+          "max": 7.49,
+          "per_run": [
+            6.55,
+            7.49,
+            6.54
+          ]
+        },
+        "no_op_refresh_median_ms": {
+          "median": 119.92,
+          "min": 116.64,
+          "max": 121.02,
+          "per_run": [
+            116.64,
+            119.92,
+            121.02
+          ]
+        },
+        "topics_after_backfill": [
+          11,
+          11,
+          11
+        ],
+        "atom_topic_rows_after_backfill": [
+          1122,
+          1122,
+          1122
+        ],
+        "recall_statuses": [
+          [
+            "ok"
+          ],
+          [
+            "ok"
+          ],
+          [
+            "ok"
+          ]
+        ]
+      }
+    }
+  },
+  "cross_version_differential": {
+    "topics_after_backfill_equal_by_corpus_and_repetition": true,
+    "atom_topic_membership_rows_equal_after_backfill_by_corpus_and_repetition": true,
+    "topics_final_equal_by_corpus_and_repetition": true,
+    "atom_topic_membership_rows_final_equal_by_corpus_and_repetition": true,
+    "observed_topic_count_differences": [],
+    "growing_topic_counts": {
+      "schema4": [
+        1,
+        1,
+        1
+      ],
+      "schema5": [
+        1,
+        1,
+        1
+      ]
+    },
+    "mixed_topic_counts": {
+      "schema4": [
+        11,
+        11,
+        11
+      ],
+      "schema5": [
+        11,
+        11,
+        11
+      ]
+    }
+  },
+  "raw_runs": [
+    {
+      "name": "p02-growing-r1-schema4-deterministic",
+      "json": "<validation-artifact:p02-growing-r1-schema4-deterministic.json>",
+      "stdout_log": "<validation-artifact:p02-growing-r1-schema4-deterministic.stdout.log>",
+      "stderr_log": "<validation-artifact:p02-growing-r1-schema4-deterministic.stderr.log>",
+      "fixture_atoms": 1024,
+      "incremental_atoms": 160,
+      "ingest_ms": 2523.29,
+      "full_index_ms": 1950.33,
+      "incremental_batches": [
+        {
+          "ingest_ms": 78.79866601433605,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 201.85791698168032,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 201.85791698168032,
+          "storage": {
+            "rows": {
+              "atoms": 1056,
+              "vectors": 1056,
+              "topics": 1,
+              "atom_topics": 1056
+            },
+            "bytes": {
+              "database": 3391488,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3391488
+          }
+        },
+        {
+          "ingest_ms": 78.84829098475166,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 206.47116701002233,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 206.47116701002233,
+          "storage": {
+            "rows": {
+              "atoms": 1088,
+              "vectors": 1088,
+              "topics": 1,
+              "atom_topics": 1088
+            },
+            "bytes": {
+              "database": 3473408,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3473408
+          }
+        },
+        {
+          "ingest_ms": 78.9357080066111,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 211.94104198366404,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 211.94104198366404,
+          "storage": {
+            "rows": {
+              "atoms": 1120,
+              "vectors": 1120,
+              "topics": 1,
+              "atom_topics": 1120
+            },
+            "bytes": {
+              "database": 3563520,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3563520
+          }
+        },
+        {
+          "ingest_ms": 78.38970798184164,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 216.47929100436158,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 216.47929100436158,
+          "storage": {
+            "rows": {
+              "atoms": 1152,
+              "vectors": 1152,
+              "topics": 1,
+              "atom_topics": 1152
+            },
+            "bytes": {
+              "database": 3649536,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3649536
+          }
+        },
+        {
+          "ingest_ms": 81.87191700562835,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 213.87145901098847,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 213.87145901098847,
+          "storage": {
+            "rows": {
+              "atoms": 1184,
+              "vectors": 1184,
+              "topics": 1,
+              "atom_topics": 1184
+            },
+            "bytes": {
+              "database": 3764224,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3764224
+          }
+        }
+      ],
+      "peak_child_process_rss_bytes": 79953920,
+      "storage_after_ingest": {
+        "rows": {
+          "atoms": 1024,
+          "vectors": 0,
+          "topics": 0,
+          "atom_topics": 0
+        },
+        "bytes": {
+          "database": 1802240,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 1802240
+      },
+      "storage_after_backfill": {
+        "rows": {
+          "atoms": 1024,
+          "vectors": 1024,
+          "topics": 1,
+          "atom_topics": 1024
+        },
+        "bytes": {
+          "database": 3309568,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 3309568
+      },
+      "storage_final": {
+        "rows": {
+          "atoms": 1184,
+          "vectors": 1184,
+          "topics": 1,
+          "atom_topics": 1184
+        },
+        "bytes": {
+          "database": 3772416,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 3772416
+      },
+      "hybrid_recall": {
+        "samples": 10,
+        "median_ms": 127.34,
+        "p95_ms": 130.48,
+        "min_ms": 124.42,
+        "max_ms": 130.48
+      },
+      "lexical_recall": {
+        "samples": 10,
+        "median_ms": 7.82,
+        "p95_ms": 8.85,
+        "min_ms": 7.66,
+        "max_ms": 8.85
+      },
+      "recall_statuses": [
+        "ok"
+      ]
+    },
+    {
+      "name": "p02-growing-r1-schema5-deterministic",
+      "json": "<validation-artifact:p02-growing-r1-schema5-deterministic.json>",
+      "stdout_log": "<validation-artifact:p02-growing-r1-schema5-deterministic.stdout.log>",
+      "stderr_log": "<validation-artifact:p02-growing-r1-schema5-deterministic.stderr.log>",
+      "fixture_atoms": 1024,
+      "incremental_atoms": 160,
+      "ingest_ms": 2541.64,
+      "full_index_ms": 681.2,
+      "incremental_batches": [
+        {
+          "ingest_ms": 79.9797500076238,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 122.06737499218434,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 122.06737499218434,
+          "storage": {
+            "rows": {
+              "atoms": 1056,
+              "vectors": 1056,
+              "topics": 1,
+              "atom_topics": 1056,
+              "topic_cache": 1,
+              "topic_cache_buckets": 21
+            },
+            "bytes": {
+              "database": 3514368,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3514368
+          }
+        },
+        {
+          "ingest_ms": 83.17158400313929,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 122.4853330058977,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 122.4853330058977,
+          "storage": {
+            "rows": {
+              "atoms": 1088,
+              "vectors": 1088,
+              "topics": 1,
+              "atom_topics": 1088,
+              "topic_cache": 1,
+              "topic_cache_buckets": 21
+            },
+            "bytes": {
+              "database": 3596288,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3596288
+          }
+        },
+        {
+          "ingest_ms": 80.60650000697933,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 122.5478750129696,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 122.5478750129696,
+          "storage": {
+            "rows": {
+              "atoms": 1120,
+              "vectors": 1120,
+              "topics": 1,
+              "atom_topics": 1120,
+              "topic_cache": 1,
+              "topic_cache_buckets": 21
+            },
+            "bytes": {
+              "database": 3678208,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3678208
+          }
+        },
+        {
+          "ingest_ms": 83.2044999988284,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 123.425290978048,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 123.425290978048,
+          "storage": {
+            "rows": {
+              "atoms": 1152,
+              "vectors": 1152,
+              "topics": 1,
+              "atom_topics": 1152,
+              "topic_cache": 1,
+              "topic_cache_buckets": 21
+            },
+            "bytes": {
+              "database": 3768320,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3768320
+          }
+        },
+        {
+          "ingest_ms": 81.5164580126293,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 122.1794159791898,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 122.1794159791898,
+          "storage": {
+            "rows": {
+              "atoms": 1184,
+              "vectors": 1184,
+              "topics": 1,
+              "atom_topics": 1184,
+              "topic_cache": 1,
+              "topic_cache_buckets": 21
+            },
+            "bytes": {
+              "database": 3883008,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3883008
+          }
+        }
+      ],
+      "peak_child_process_rss_bytes": 79511552,
+      "storage_after_ingest": {
+        "rows": {
+          "atoms": 1024,
+          "vectors": 0,
+          "topics": 0,
+          "atom_topics": 0,
+          "topic_cache": 0,
+          "topic_cache_buckets": 0
+        },
+        "bytes": {
+          "database": 1830912,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 1830912
+      },
+      "storage_after_backfill": {
+        "rows": {
+          "atoms": 1024,
+          "vectors": 1024,
+          "topics": 1,
+          "atom_topics": 1024,
+          "topic_cache": 1,
+          "topic_cache_buckets": 20
+        },
+        "bytes": {
+          "database": 3420160,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 3420160
+      },
+      "storage_final": {
+        "rows": {
+          "atoms": 1184,
+          "vectors": 1184,
+          "topics": 1,
+          "atom_topics": 1184,
+          "topic_cache": 1,
+          "topic_cache_buckets": 21
+        },
+        "bytes": {
+          "database": 3891200,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 3891200
+      },
+      "hybrid_recall": {
+        "samples": 10,
+        "median_ms": 128.45,
+        "p95_ms": 130.4,
+        "min_ms": 125.62,
+        "max_ms": 130.4
+      },
+      "lexical_recall": {
+        "samples": 10,
+        "median_ms": 8.18,
+        "p95_ms": 8.97,
+        "min_ms": 7.94,
+        "max_ms": 8.97
+      },
+      "recall_statuses": [
+        "ok"
+      ]
+    },
+    {
+      "name": "p02-growing-r2-schema4-deterministic",
+      "json": "<validation-artifact:p02-growing-r2-schema4-deterministic.json>",
+      "stdout_log": "<validation-artifact:p02-growing-r2-schema4-deterministic.stdout.log>",
+      "stderr_log": "<validation-artifact:p02-growing-r2-schema4-deterministic.stderr.log>",
+      "fixture_atoms": 1024,
+      "incremental_atoms": 160,
+      "ingest_ms": 2607.34,
+      "full_index_ms": 1990.68,
+      "incremental_batches": [
+        {
+          "ingest_ms": 81.32220900733955,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 208.90808300464414,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 208.90808300464414,
+          "storage": {
+            "rows": {
+              "atoms": 1056,
+              "vectors": 1056,
+              "topics": 1,
+              "atom_topics": 1056
+            },
+            "bytes": {
+              "database": 3416064,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3416064
+          }
+        },
+        {
+          "ingest_ms": 79.74400001694448,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 207.1439999854192,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 207.1439999854192,
+          "storage": {
+            "rows": {
+              "atoms": 1088,
+              "vectors": 1088,
+              "topics": 1,
+              "atom_topics": 1088
+            },
+            "bytes": {
+              "database": 3497984,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3497984
+          }
+        },
+        {
+          "ingest_ms": 79.64241702575237,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 210.46520897652954,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 210.46520897652954,
+          "storage": {
+            "rows": {
+              "atoms": 1120,
+              "vectors": 1120,
+              "topics": 1,
+              "atom_topics": 1120
+            },
+            "bytes": {
+              "database": 3600384,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3600384
+          }
+        },
+        {
+          "ingest_ms": 80.5625410284847,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 219.0235419839155,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 219.0235419839155,
+          "storage": {
+            "rows": {
+              "atoms": 1152,
+              "vectors": 1152,
+              "topics": 1,
+              "atom_topics": 1152
+            },
+            "bytes": {
+              "database": 3682304,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3682304
+          }
+        },
+        {
+          "ingest_ms": 79.91262499126606,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 217.3549169965554,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 217.3549169965554,
+          "storage": {
+            "rows": {
+              "atoms": 1184,
+              "vectors": 1184,
+              "topics": 1,
+              "atom_topics": 1184
+            },
+            "bytes": {
+              "database": 3788800,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3788800
+          }
+        }
+      ],
+      "peak_child_process_rss_bytes": 79495168,
+      "storage_after_ingest": {
+        "rows": {
+          "atoms": 1024,
+          "vectors": 0,
+          "topics": 0,
+          "atom_topics": 0
+        },
+        "bytes": {
+          "database": 1822720,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 1822720
+      },
+      "storage_after_backfill": {
+        "rows": {
+          "atoms": 1024,
+          "vectors": 1024,
+          "topics": 1,
+          "atom_topics": 1024
+        },
+        "bytes": {
+          "database": 3330048,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 3330048
+      },
+      "storage_final": {
+        "rows": {
+          "atoms": 1184,
+          "vectors": 1184,
+          "topics": 1,
+          "atom_topics": 1184
+        },
+        "bytes": {
+          "database": 3796992,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 3796992
+      },
+      "hybrid_recall": {
+        "samples": 10,
+        "median_ms": 128.31,
+        "p95_ms": 131.27,
+        "min_ms": 125.42,
+        "max_ms": 131.27
+      },
+      "lexical_recall": {
+        "samples": 10,
+        "median_ms": 7.88,
+        "p95_ms": 8.54,
+        "min_ms": 7.68,
+        "max_ms": 8.54
+      },
+      "recall_statuses": [
+        "ok"
+      ]
+    },
+    {
+      "name": "p02-growing-r2-schema5-deterministic",
+      "json": "<validation-artifact:p02-growing-r2-schema5-deterministic.json>",
+      "stdout_log": "<validation-artifact:p02-growing-r2-schema5-deterministic.stdout.log>",
+      "stderr_log": "<validation-artifact:p02-growing-r2-schema5-deterministic.stderr.log>",
+      "fixture_atoms": 1024,
+      "incremental_atoms": 160,
+      "ingest_ms": 2550.22,
+      "full_index_ms": 690.52,
+      "incremental_batches": [
+        {
+          "ingest_ms": 80.5313749879133,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 121.97025000932626,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 121.97025000932626,
+          "storage": {
+            "rows": {
+              "atoms": 1056,
+              "vectors": 1056,
+              "topics": 1,
+              "atom_topics": 1056,
+              "topic_cache": 1,
+              "topic_cache_buckets": 21
+            },
+            "bytes": {
+              "database": 3481600,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3481600
+          }
+        },
+        {
+          "ingest_ms": 80.3865420166403,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 125.28895799187012,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 125.28895799187012,
+          "storage": {
+            "rows": {
+              "atoms": 1088,
+              "vectors": 1088,
+              "topics": 1,
+              "atom_topics": 1088,
+              "topic_cache": 1,
+              "topic_cache_buckets": 21
+            },
+            "bytes": {
+              "database": 3563520,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3563520
+          }
+        },
+        {
+          "ingest_ms": 83.38070899480954,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 127.62845802353695,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 127.62845802353695,
+          "storage": {
+            "rows": {
+              "atoms": 1120,
+              "vectors": 1120,
+              "topics": 1,
+              "atom_topics": 1120,
+              "topic_cache": 1,
+              "topic_cache_buckets": 21
+            },
+            "bytes": {
+              "database": 3661824,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3661824
+          }
+        },
+        {
+          "ingest_ms": 84.00879098917358,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 123.0408750125207,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 123.0408750125207,
+          "storage": {
+            "rows": {
+              "atoms": 1152,
+              "vectors": 1152,
+              "topics": 1,
+              "atom_topics": 1152,
+              "topic_cache": 1,
+              "topic_cache_buckets": 21
+            },
+            "bytes": {
+              "database": 3764224,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3764224
+          }
+        },
+        {
+          "ingest_ms": 83.193416998256,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 126.50208300328813,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 126.50208300328813,
+          "storage": {
+            "rows": {
+              "atoms": 1184,
+              "vectors": 1184,
+              "topics": 1,
+              "atom_topics": 1184,
+              "topic_cache": 1,
+              "topic_cache_buckets": 21
+            },
+            "bytes": {
+              "database": 3878912,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3878912
+          }
+        }
+      ],
+      "peak_child_process_rss_bytes": 80543744,
+      "storage_after_ingest": {
+        "rows": {
+          "atoms": 1024,
+          "vectors": 0,
+          "topics": 0,
+          "atom_topics": 0,
+          "topic_cache": 0,
+          "topic_cache_buckets": 0
+        },
+        "bytes": {
+          "database": 1810432,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 1810432
+      },
+      "storage_after_backfill": {
+        "rows": {
+          "atoms": 1024,
+          "vectors": 1024,
+          "topics": 1,
+          "atom_topics": 1024,
+          "topic_cache": 1,
+          "topic_cache_buckets": 20
+        },
+        "bytes": {
+          "database": 3399680,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 3399680
+      },
+      "storage_final": {
+        "rows": {
+          "atoms": 1184,
+          "vectors": 1184,
+          "topics": 1,
+          "atom_topics": 1184,
+          "topic_cache": 1,
+          "topic_cache_buckets": 21
+        },
+        "bytes": {
+          "database": 3887104,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 3887104
+      },
+      "hybrid_recall": {
+        "samples": 10,
+        "median_ms": 129.69,
+        "p95_ms": 134.99,
+        "min_ms": 124.86,
+        "max_ms": 134.99
+      },
+      "lexical_recall": {
+        "samples": 10,
+        "median_ms": 8.22,
+        "p95_ms": 8.87,
+        "min_ms": 8.03,
+        "max_ms": 8.87
+      },
+      "recall_statuses": [
+        "ok"
+      ]
+    },
+    {
+      "name": "p02-growing-r3-schema4-deterministic",
+      "json": "<validation-artifact:p02-growing-r3-schema4-deterministic.json>",
+      "stdout_log": "<validation-artifact:p02-growing-r3-schema4-deterministic.stdout.log>",
+      "stderr_log": "<validation-artifact:p02-growing-r3-schema4-deterministic.stderr.log>",
+      "fixture_atoms": 1024,
+      "incremental_atoms": 160,
+      "ingest_ms": 2920.1,
+      "full_index_ms": 1903.46,
+      "incremental_batches": [
+        {
+          "ingest_ms": 80.80520798102953,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 204.86445902497508,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 204.86445902497508,
+          "storage": {
+            "rows": {
+              "atoms": 1056,
+              "vectors": 1056,
+              "topics": 1,
+              "atom_topics": 1056
+            },
+            "bytes": {
+              "database": 3403776,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3403776
+          }
+        },
+        {
+          "ingest_ms": 81.75174999632873,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 208.5887909925077,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 208.5887909925077,
+          "storage": {
+            "rows": {
+              "atoms": 1088,
+              "vectors": 1088,
+              "topics": 1,
+              "atom_topics": 1088
+            },
+            "bytes": {
+              "database": 3497984,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3497984
+          }
+        },
+        {
+          "ingest_ms": 84.18183299363591,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 213.04370800498873,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 213.04370800498873,
+          "storage": {
+            "rows": {
+              "atoms": 1120,
+              "vectors": 1120,
+              "topics": 1,
+              "atom_topics": 1120
+            },
+            "bytes": {
+              "database": 3584000,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3584000
+          }
+        },
+        {
+          "ingest_ms": 81.61258301697671,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 224.9519169854466,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 224.9519169854466,
+          "storage": {
+            "rows": {
+              "atoms": 1152,
+              "vectors": 1152,
+              "topics": 1,
+              "atom_topics": 1152
+            },
+            "bytes": {
+              "database": 3674112,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3674112
+          }
+        },
+        {
+          "ingest_ms": 83.0828339967411,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 217.2931660024915,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 217.2931660024915,
+          "storage": {
+            "rows": {
+              "atoms": 1184,
+              "vectors": 1184,
+              "topics": 1,
+              "atom_topics": 1184
+            },
+            "bytes": {
+              "database": 3780608,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3780608
+          }
+        }
+      ],
+      "peak_child_process_rss_bytes": 77299712,
+      "storage_after_ingest": {
+        "rows": {
+          "atoms": 1024,
+          "vectors": 0,
+          "topics": 0,
+          "atom_topics": 0
+        },
+        "bytes": {
+          "database": 1814528,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 1814528
+      },
+      "storage_after_backfill": {
+        "rows": {
+          "atoms": 1024,
+          "vectors": 1024,
+          "topics": 1,
+          "atom_topics": 1024
+        },
+        "bytes": {
+          "database": 3321856,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 3321856
+      },
+      "storage_final": {
+        "rows": {
+          "atoms": 1184,
+          "vectors": 1184,
+          "topics": 1,
+          "atom_topics": 1184
+        },
+        "bytes": {
+          "database": 3788800,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 3788800
+      },
+      "hybrid_recall": {
+        "samples": 10,
+        "median_ms": 126.4,
+        "p95_ms": 130.33,
+        "min_ms": 125.38,
+        "max_ms": 130.33
+      },
+      "lexical_recall": {
+        "samples": 10,
+        "median_ms": 8.26,
+        "p95_ms": 9.04,
+        "min_ms": 7.96,
+        "max_ms": 9.04
+      },
+      "recall_statuses": [
+        "ok"
+      ]
+    },
+    {
+      "name": "p02-growing-r3-schema5-deterministic",
+      "json": "<validation-artifact:p02-growing-r3-schema5-deterministic.json>",
+      "stdout_log": "<validation-artifact:p02-growing-r3-schema5-deterministic.stdout.log>",
+      "stderr_log": "<validation-artifact:p02-growing-r3-schema5-deterministic.stderr.log>",
+      "fixture_atoms": 1024,
+      "incremental_atoms": 160,
+      "ingest_ms": 2597.3,
+      "full_index_ms": 705.4,
+      "incremental_batches": [
+        {
+          "ingest_ms": 82.84204101073556,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 130.29075000667945,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 130.29075000667945,
+          "storage": {
+            "rows": {
+              "atoms": 1056,
+              "vectors": 1056,
+              "topics": 1,
+              "atom_topics": 1056,
+              "topic_cache": 1,
+              "topic_cache_buckets": 21
+            },
+            "bytes": {
+              "database": 3510272,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3510272
+          }
+        },
+        {
+          "ingest_ms": 82.58691598894075,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 122.31504201190546,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 122.31504201190546,
+          "storage": {
+            "rows": {
+              "atoms": 1088,
+              "vectors": 1088,
+              "topics": 1,
+              "atom_topics": 1088,
+              "topic_cache": 1,
+              "topic_cache_buckets": 21
+            },
+            "bytes": {
+              "database": 3600384,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3600384
+          }
+        },
+        {
+          "ingest_ms": 83.51462500286289,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 131.44399999873713,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 131.44399999873713,
+          "storage": {
+            "rows": {
+              "atoms": 1120,
+              "vectors": 1120,
+              "topics": 1,
+              "atom_topics": 1120,
+              "topic_cache": 1,
+              "topic_cache_buckets": 21
+            },
+            "bytes": {
+              "database": 3686400,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3686400
+          }
+        },
+        {
+          "ingest_ms": 82.45083299698308,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 122.25812498945743,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 122.25812498945743,
+          "storage": {
+            "rows": {
+              "atoms": 1152,
+              "vectors": 1152,
+              "topics": 1,
+              "atom_topics": 1152,
+              "topic_cache": 1,
+              "topic_cache_buckets": 21
+            },
+            "bytes": {
+              "database": 3776512,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3776512
+          }
+        },
+        {
+          "ingest_ms": 82.32454099925235,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 123.13787499442697,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 123.13787499442697,
+          "storage": {
+            "rows": {
+              "atoms": 1184,
+              "vectors": 1184,
+              "topics": 1,
+              "atom_topics": 1184,
+              "topic_cache": 1,
+              "topic_cache_buckets": 21
+            },
+            "bytes": {
+              "database": 3883008,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3883008
+          }
+        }
+      ],
+      "peak_child_process_rss_bytes": 79020032,
+      "storage_after_ingest": {
+        "rows": {
+          "atoms": 1024,
+          "vectors": 0,
+          "topics": 0,
+          "atom_topics": 0,
+          "topic_cache": 0,
+          "topic_cache_buckets": 0
+        },
+        "bytes": {
+          "database": 1839104,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 1839104
+      },
+      "storage_after_backfill": {
+        "rows": {
+          "atoms": 1024,
+          "vectors": 1024,
+          "topics": 1,
+          "atom_topics": 1024,
+          "topic_cache": 1,
+          "topic_cache_buckets": 20
+        },
+        "bytes": {
+          "database": 3428352,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 3428352
+      },
+      "storage_final": {
+        "rows": {
+          "atoms": 1184,
+          "vectors": 1184,
+          "topics": 1,
+          "atom_topics": 1184,
+          "topic_cache": 1,
+          "topic_cache_buckets": 21
+        },
+        "bytes": {
+          "database": 3891200,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 3891200
+      },
+      "hybrid_recall": {
+        "samples": 10,
+        "median_ms": 130.48,
+        "p95_ms": 134.91,
+        "min_ms": 125.81,
+        "max_ms": 134.91
+      },
+      "lexical_recall": {
+        "samples": 10,
+        "median_ms": 8.49,
+        "p95_ms": 9.53,
+        "min_ms": 8.2,
+        "max_ms": 9.53
+      },
+      "recall_statuses": [
+        "ok"
+      ]
+    },
+    {
+      "name": "p02-mixed-r1-schema4-deterministic",
+      "json": "<validation-artifact:p02-mixed-r1-schema4-deterministic.json>",
+      "stdout_log": "<validation-artifact:p02-mixed-r1-schema4-deterministic.stdout.log>",
+      "stderr_log": "<validation-artifact:p02-mixed-r1-schema4-deterministic.stderr.log>",
+      "fixture_atoms": 1024,
+      "incremental_atoms": 160,
+      "ingest_ms": 2569.18,
+      "full_index_ms": 822.07,
+      "incremental_batches": [
+        {
+          "ingest_ms": 81.75120799569413,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 139.7264169936534,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 139.7264169936534,
+          "storage": {
+            "rows": {
+              "atoms": 1056,
+              "vectors": 1056,
+              "topics": 11,
+              "atom_topics": 1157
+            },
+            "bytes": {
+              "database": 3387392,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3387392
+          }
+        },
+        {
+          "ingest_ms": 83.2537499954924,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 132.18575000064448,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 132.18575000064448,
+          "storage": {
+            "rows": {
+              "atoms": 1088,
+              "vectors": 1088,
+              "topics": 11,
+              "atom_topics": 1192
+            },
+            "bytes": {
+              "database": 3473408,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3473408
+          }
+        },
+        {
+          "ingest_ms": 82.24466600222513,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 133.01016698824242,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 133.01016698824242,
+          "storage": {
+            "rows": {
+              "atoms": 1120,
+              "vectors": 1120,
+              "topics": 11,
+              "atom_topics": 1227
+            },
+            "bytes": {
+              "database": 3551232,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3551232
+          }
+        },
+        {
+          "ingest_ms": 82.7001659781672,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 135.54283400299028,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 135.54283400299028,
+          "storage": {
+            "rows": {
+              "atoms": 1152,
+              "vectors": 1152,
+              "topics": 11,
+              "atom_topics": 1262
+            },
+            "bytes": {
+              "database": 3661824,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3661824
+          }
+        },
+        {
+          "ingest_ms": 83.95737499813549,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 140.91254101367667,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 140.91254101367667,
+          "storage": {
+            "rows": {
+              "atoms": 1184,
+              "vectors": 1184,
+              "topics": 11,
+              "atom_topics": 1297
+            },
+            "bytes": {
+              "database": 3760128,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3760128
+          }
+        }
+      ],
+      "peak_child_process_rss_bytes": 77414400,
+      "storage_after_ingest": {
+        "rows": {
+          "atoms": 1024,
+          "vectors": 0,
+          "topics": 0,
+          "atom_topics": 0
+        },
+        "bytes": {
+          "database": 1736704,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 1736704
+      },
+      "storage_after_backfill": {
+        "rows": {
+          "atoms": 1024,
+          "vectors": 1024,
+          "topics": 11,
+          "atom_topics": 1122
+        },
+        "bytes": {
+          "database": 3297280,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 3297280
+      },
+      "storage_final": {
+        "rows": {
+          "atoms": 1184,
+          "vectors": 1184,
+          "topics": 11,
+          "atom_topics": 1297
+        },
+        "bytes": {
+          "database": 3768320,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 3768320
+      },
+      "hybrid_recall": {
+        "samples": 10,
+        "median_ms": 122.83,
+        "p95_ms": 129.35,
+        "min_ms": 120.41,
+        "max_ms": 129.35
+      },
+      "lexical_recall": {
+        "samples": 10,
+        "median_ms": 6.02,
+        "p95_ms": 6.87,
+        "min_ms": 5.83,
+        "max_ms": 6.87
+      },
+      "recall_statuses": [
+        "ok"
+      ]
+    },
+    {
+      "name": "p02-mixed-r1-schema5-deterministic",
+      "json": "<validation-artifact:p02-mixed-r1-schema5-deterministic.json>",
+      "stdout_log": "<validation-artifact:p02-mixed-r1-schema5-deterministic.stdout.log>",
+      "stderr_log": "<validation-artifact:p02-mixed-r1-schema5-deterministic.stderr.log>",
+      "fixture_atoms": 1024,
+      "incremental_atoms": 160,
+      "ingest_ms": 2607.93,
+      "full_index_ms": 789.6,
+      "incremental_batches": [
+        {
+          "ingest_ms": 83.59204200678505,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 126.04379199910909,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 126.04379199910909,
+          "storage": {
+            "rows": {
+              "atoms": 1056,
+              "vectors": 1056,
+              "topics": 11,
+              "atom_topics": 1157,
+              "topic_cache": 11,
+              "topic_cache_buckets": 231
+            },
+            "bytes": {
+              "database": 4427776,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 4427776
+          }
+        },
+        {
+          "ingest_ms": 84.11249998607673,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 128.6120840231888,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 128.6120840231888,
+          "storage": {
+            "rows": {
+              "atoms": 1088,
+              "vectors": 1088,
+              "topics": 11,
+              "atom_topics": 1192,
+              "topic_cache": 11,
+              "topic_cache_buckets": 231
+            },
+            "bytes": {
+              "database": 4517888,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 4517888
+          }
+        },
+        {
+          "ingest_ms": 82.93004200095311,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 126.9721659773495,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 126.9721659773495,
+          "storage": {
+            "rows": {
+              "atoms": 1120,
+              "vectors": 1120,
+              "topics": 11,
+              "atom_topics": 1227,
+              "topic_cache": 11,
+              "topic_cache_buckets": 231
+            },
+            "bytes": {
+              "database": 4603904,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 4603904
+          }
+        },
+        {
+          "ingest_ms": 83.30983298947103,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 128.25920901377685,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 128.25920901377685,
+          "storage": {
+            "rows": {
+              "atoms": 1152,
+              "vectors": 1152,
+              "topics": 11,
+              "atom_topics": 1262,
+              "topic_cache": 11,
+              "topic_cache_buckets": 231
+            },
+            "bytes": {
+              "database": 4710400,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 4710400
+          }
+        },
+        {
+          "ingest_ms": 83.51170798414387,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 128.2895420154091,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 128.2895420154091,
+          "storage": {
+            "rows": {
+              "atoms": 1184,
+              "vectors": 1184,
+              "topics": 11,
+              "atom_topics": 1297,
+              "topic_cache": 11,
+              "topic_cache_buckets": 231
+            },
+            "bytes": {
+              "database": 4808704,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 4808704
+          }
+        }
+      ],
+      "peak_child_process_rss_bytes": 79233024,
+      "storage_after_ingest": {
+        "rows": {
+          "atoms": 1024,
+          "vectors": 0,
+          "topics": 0,
+          "atom_topics": 0,
+          "topic_cache": 0,
+          "topic_cache_buckets": 0
+        },
+        "bytes": {
+          "database": 1765376,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 1765376
+      },
+      "storage_after_backfill": {
+        "rows": {
+          "atoms": 1024,
+          "vectors": 1024,
+          "topics": 11,
+          "atom_topics": 1122,
+          "topic_cache": 11,
+          "topic_cache_buckets": 220
+        },
+        "bytes": {
+          "database": 4300800,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 4300800
+      },
+      "storage_final": {
+        "rows": {
+          "atoms": 1184,
+          "vectors": 1184,
+          "topics": 11,
+          "atom_topics": 1297,
+          "topic_cache": 11,
+          "topic_cache_buckets": 231
+        },
+        "bytes": {
+          "database": 4816896,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 4816896
+      },
+      "hybrid_recall": {
+        "samples": 10,
+        "median_ms": 124.76,
+        "p95_ms": 128.46,
+        "min_ms": 121.62,
+        "max_ms": 128.46
+      },
+      "lexical_recall": {
+        "samples": 10,
+        "median_ms": 6.55,
+        "p95_ms": 7.45,
+        "min_ms": 6.38,
+        "max_ms": 7.45
+      },
+      "recall_statuses": [
+        "ok"
+      ]
+    },
+    {
+      "name": "p02-mixed-r2-schema4-deterministic",
+      "json": "<validation-artifact:p02-mixed-r2-schema4-deterministic.json>",
+      "stdout_log": "<validation-artifact:p02-mixed-r2-schema4-deterministic.stdout.log>",
+      "stderr_log": "<validation-artifact:p02-mixed-r2-schema4-deterministic.stderr.log>",
+      "fixture_atoms": 1024,
+      "incremental_atoms": 160,
+      "ingest_ms": 2812.83,
+      "full_index_ms": 944.32,
+      "incremental_batches": [
+        {
+          "ingest_ms": 89.36466599698178,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 146.91241600667126,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 146.91241600667126,
+          "storage": {
+            "rows": {
+              "atoms": 1056,
+              "vectors": 1056,
+              "topics": 11,
+              "atom_topics": 1157
+            },
+            "bytes": {
+              "database": 3395584,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3395584
+          }
+        },
+        {
+          "ingest_ms": 88.59549998305738,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 144.8789999994915,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 144.8789999994915,
+          "storage": {
+            "rows": {
+              "atoms": 1088,
+              "vectors": 1088,
+              "topics": 11,
+              "atom_topics": 1192
+            },
+            "bytes": {
+              "database": 3481600,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3481600
+          }
+        },
+        {
+          "ingest_ms": 91.4815410214942,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 143.60133299487643,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 143.60133299487643,
+          "storage": {
+            "rows": {
+              "atoms": 1120,
+              "vectors": 1120,
+              "topics": 11,
+              "atom_topics": 1227
+            },
+            "bytes": {
+              "database": 3559424,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3559424
+          }
+        },
+        {
+          "ingest_ms": 89.44133299519308,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 158.37291697971523,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 158.37291697971523,
+          "storage": {
+            "rows": {
+              "atoms": 1152,
+              "vectors": 1152,
+              "topics": 11,
+              "atom_topics": 1262
+            },
+            "bytes": {
+              "database": 3665920,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3665920
+          }
+        },
+        {
+          "ingest_ms": 91.37041697977111,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 147.32812499278225,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 147.32812499278225,
+          "storage": {
+            "rows": {
+              "atoms": 1184,
+              "vectors": 1184,
+              "topics": 11,
+              "atom_topics": 1297
+            },
+            "bytes": {
+              "database": 3776512,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3776512
+          }
+        }
+      ],
+      "peak_child_process_rss_bytes": 86999040,
+      "storage_after_ingest": {
+        "rows": {
+          "atoms": 1024,
+          "vectors": 0,
+          "topics": 0,
+          "atom_topics": 0
+        },
+        "bytes": {
+          "database": 1757184,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 1757184
+      },
+      "storage_after_backfill": {
+        "rows": {
+          "atoms": 1024,
+          "vectors": 1024,
+          "topics": 11,
+          "atom_topics": 1122
+        },
+        "bytes": {
+          "database": 3317760,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 3317760
+      },
+      "storage_final": {
+        "rows": {
+          "atoms": 1184,
+          "vectors": 1184,
+          "topics": 11,
+          "atom_topics": 1297
+        },
+        "bytes": {
+          "database": 3784704,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 3784704
+      },
+      "hybrid_recall": {
+        "samples": 10,
+        "median_ms": 130.91,
+        "p95_ms": 141.42,
+        "min_ms": 127.42,
+        "max_ms": 141.42
+      },
+      "lexical_recall": {
+        "samples": 10,
+        "median_ms": 7.26,
+        "p95_ms": 7.92,
+        "min_ms": 6.29,
+        "max_ms": 7.92
+      },
+      "recall_statuses": [
+        "ok"
+      ]
+    },
+    {
+      "name": "p02-mixed-r2-schema5-deterministic",
+      "json": "<validation-artifact:p02-mixed-r2-schema5-deterministic.json>",
+      "stdout_log": "<validation-artifact:p02-mixed-r2-schema5-deterministic.stdout.log>",
+      "stderr_log": "<validation-artifact:p02-mixed-r2-schema5-deterministic.stderr.log>",
+      "fixture_atoms": 1024,
+      "incremental_atoms": 160,
+      "ingest_ms": 2609.99,
+      "full_index_ms": 801.69,
+      "incremental_batches": [
+        {
+          "ingest_ms": 86.19999999064021,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 127.48858399572782,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 127.48858399572782,
+          "storage": {
+            "rows": {
+              "atoms": 1056,
+              "vectors": 1056,
+              "topics": 11,
+              "atom_topics": 1157,
+              "topic_cache": 11,
+              "topic_cache_buckets": 231
+            },
+            "bytes": {
+              "database": 4423680,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 4423680
+          }
+        },
+        {
+          "ingest_ms": 83.29416700871661,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 132.91820799349807,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 132.91820799349807,
+          "storage": {
+            "rows": {
+              "atoms": 1088,
+              "vectors": 1088,
+              "topics": 11,
+              "atom_topics": 1192,
+              "topic_cache": 11,
+              "topic_cache_buckets": 231
+            },
+            "bytes": {
+              "database": 4513792,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 4513792
+          }
+        },
+        {
+          "ingest_ms": 82.86937500815839,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 132.40616698749363,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 132.40616698749363,
+          "storage": {
+            "rows": {
+              "atoms": 1120,
+              "vectors": 1120,
+              "topics": 11,
+              "atom_topics": 1227,
+              "topic_cache": 11,
+              "topic_cache_buckets": 231
+            },
+            "bytes": {
+              "database": 4595712,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 4595712
+          }
+        },
+        {
+          "ingest_ms": 82.69808301702142,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 133.27395799569786,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 133.27395799569786,
+          "storage": {
+            "rows": {
+              "atoms": 1152,
+              "vectors": 1152,
+              "topics": 11,
+              "atom_topics": 1262,
+              "topic_cache": 11,
+              "topic_cache_buckets": 231
+            },
+            "bytes": {
+              "database": 4698112,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 4698112
+          }
+        },
+        {
+          "ingest_ms": 84.16579201002605,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 141.01204101461917,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 141.01204101461917,
+          "storage": {
+            "rows": {
+              "atoms": 1184,
+              "vectors": 1184,
+              "topics": 11,
+              "atom_topics": 1297,
+              "topic_cache": 11,
+              "topic_cache_buckets": 231
+            },
+            "bytes": {
+              "database": 4804608,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 4804608
+          }
+        }
+      ],
+      "peak_child_process_rss_bytes": 79593472,
+      "storage_after_ingest": {
+        "rows": {
+          "atoms": 1024,
+          "vectors": 0,
+          "topics": 0,
+          "atom_topics": 0,
+          "topic_cache": 0,
+          "topic_cache_buckets": 0
+        },
+        "bytes": {
+          "database": 1765376,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 1765376
+      },
+      "storage_after_backfill": {
+        "rows": {
+          "atoms": 1024,
+          "vectors": 1024,
+          "topics": 11,
+          "atom_topics": 1122,
+          "topic_cache": 11,
+          "topic_cache_buckets": 220
+        },
+        "bytes": {
+          "database": 4300800,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 4300800
+      },
+      "storage_final": {
+        "rows": {
+          "atoms": 1184,
+          "vectors": 1184,
+          "topics": 11,
+          "atom_topics": 1297,
+          "topic_cache": 11,
+          "topic_cache_buckets": 231
+        },
+        "bytes": {
+          "database": 4812800,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 4812800
+      },
+      "hybrid_recall": {
+        "samples": 10,
+        "median_ms": 130.68,
+        "p95_ms": 189.33,
+        "min_ms": 126.07,
+        "max_ms": 189.33
+      },
+      "lexical_recall": {
+        "samples": 10,
+        "median_ms": 7.49,
+        "p95_ms": 9.78,
+        "min_ms": 7.09,
+        "max_ms": 9.78
+      },
+      "recall_statuses": [
+        "ok"
+      ]
+    },
+    {
+      "name": "p02-mixed-r3-schema4-deterministic",
+      "json": "<validation-artifact:p02-mixed-r3-schema4-deterministic.json>",
+      "stdout_log": "<validation-artifact:p02-mixed-r3-schema4-deterministic.stdout.log>",
+      "stderr_log": "<validation-artifact:p02-mixed-r3-schema4-deterministic.stderr.log>",
+      "fixture_atoms": 1024,
+      "incremental_atoms": 160,
+      "ingest_ms": 2658.6,
+      "full_index_ms": 841.8,
+      "incremental_batches": [
+        {
+          "ingest_ms": 87.21787499962375,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 143.58095900388435,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 143.58095900388435,
+          "storage": {
+            "rows": {
+              "atoms": 1056,
+              "vectors": 1056,
+              "topics": 11,
+              "atom_topics": 1157
+            },
+            "bytes": {
+              "database": 3391488,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3391488
+          }
+        },
+        {
+          "ingest_ms": 92.50733299995773,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 153.54312499403022,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 153.54312499403022,
+          "storage": {
+            "rows": {
+              "atoms": 1088,
+              "vectors": 1088,
+              "topics": 11,
+              "atom_topics": 1192
+            },
+            "bytes": {
+              "database": 3481600,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3481600
+          }
+        },
+        {
+          "ingest_ms": 93.50116699351929,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 147.3792909819167,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 147.3792909819167,
+          "storage": {
+            "rows": {
+              "atoms": 1120,
+              "vectors": 1120,
+              "topics": 11,
+              "atom_topics": 1227
+            },
+            "bytes": {
+              "database": 3559424,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3559424
+          }
+        },
+        {
+          "ingest_ms": 86.03045900235884,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 144.14108399068937,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 144.14108399068937,
+          "storage": {
+            "rows": {
+              "atoms": 1152,
+              "vectors": 1152,
+              "topics": 11,
+              "atom_topics": 1262
+            },
+            "bytes": {
+              "database": 3653632,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3653632
+          }
+        },
+        {
+          "ingest_ms": 84.36583398724906,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 144.2828340223059,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 144.2828340223059,
+          "storage": {
+            "rows": {
+              "atoms": 1184,
+              "vectors": 1184,
+              "topics": 11,
+              "atom_topics": 1297
+            },
+            "bytes": {
+              "database": 3747840,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 3747840
+          }
+        }
+      ],
+      "peak_child_process_rss_bytes": 79937536,
+      "storage_after_ingest": {
+        "rows": {
+          "atoms": 1024,
+          "vectors": 0,
+          "topics": 0,
+          "atom_topics": 0
+        },
+        "bytes": {
+          "database": 1740800,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 1740800
+      },
+      "storage_after_backfill": {
+        "rows": {
+          "atoms": 1024,
+          "vectors": 1024,
+          "topics": 11,
+          "atom_topics": 1122
+        },
+        "bytes": {
+          "database": 3301376,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 3301376
+      },
+      "storage_final": {
+        "rows": {
+          "atoms": 1184,
+          "vectors": 1184,
+          "topics": 11,
+          "atom_topics": 1297
+        },
+        "bytes": {
+          "database": 3756032,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 3756032
+      },
+      "hybrid_recall": {
+        "samples": 10,
+        "median_ms": 127.59,
+        "p95_ms": 131.98,
+        "min_ms": 123.1,
+        "max_ms": 131.98
+      },
+      "lexical_recall": {
+        "samples": 10,
+        "median_ms": 6.16,
+        "p95_ms": 6.92,
+        "min_ms": 5.92,
+        "max_ms": 6.92
+      },
+      "recall_statuses": [
+        "ok"
+      ]
+    },
+    {
+      "name": "p02-mixed-r3-schema5-deterministic",
+      "json": "<validation-artifact:p02-mixed-r3-schema5-deterministic.json>",
+      "stdout_log": "<validation-artifact:p02-mixed-r3-schema5-deterministic.stdout.log>",
+      "stderr_log": "<validation-artifact:p02-mixed-r3-schema5-deterministic.stderr.log>",
+      "fixture_atoms": 1024,
+      "incremental_atoms": 160,
+      "ingest_ms": 2723.87,
+      "full_index_ms": 843.27,
+      "incremental_batches": [
+        {
+          "ingest_ms": 83.84008400025778,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 136.43179097562097,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 136.43179097562097,
+          "storage": {
+            "rows": {
+              "atoms": 1056,
+              "vectors": 1056,
+              "topics": 11,
+              "atom_topics": 1157,
+              "topic_cache": 11,
+              "topic_cache_buckets": 231
+            },
+            "bytes": {
+              "database": 4427776,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 4427776
+          }
+        },
+        {
+          "ingest_ms": 87.8702079935465,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 147.67462498275563,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 147.67462498275563,
+          "storage": {
+            "rows": {
+              "atoms": 1088,
+              "vectors": 1088,
+              "topics": 11,
+              "atom_topics": 1192,
+              "topic_cache": 11,
+              "topic_cache_buckets": 231
+            },
+            "bytes": {
+              "database": 4534272,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 4534272
+          }
+        },
+        {
+          "ingest_ms": 91.77783300401643,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 142.70083300652914,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 142.70083300652914,
+          "storage": {
+            "rows": {
+              "atoms": 1120,
+              "vectors": 1120,
+              "topics": 11,
+              "atom_topics": 1227,
+              "topic_cache": 11,
+              "topic_cache_buckets": 231
+            },
+            "bytes": {
+              "database": 4624384,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 4624384
+          }
+        },
+        {
+          "ingest_ms": 89.05166698968969,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 136.8014169856906,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 136.8014169856906,
+          "storage": {
+            "rows": {
+              "atoms": 1152,
+              "vectors": 1152,
+              "topics": 11,
+              "atom_topics": 1262,
+              "topic_cache": 11,
+              "topic_cache_buckets": 231
+            },
+            "bytes": {
+              "database": 4722688,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 4722688
+          }
+        },
+        {
+          "ingest_ms": 83.73745900462382,
+          "refresh_calls": [
+            {
+              "elapsed_ms": 139.25258300150745,
+              "processed": 32,
+              "pending_atoms": 0
+            }
+          ],
+          "total_refresh_ms": 139.25258300150745,
+          "storage": {
+            "rows": {
+              "atoms": 1184,
+              "vectors": 1184,
+              "topics": 11,
+              "atom_topics": 1297,
+              "topic_cache": 11,
+              "topic_cache_buckets": 231
+            },
+            "bytes": {
+              "database": 4816896,
+              "wal": 0,
+              "shm": 0
+            },
+            "database_and_wal_bytes": 4816896
+          }
+        }
+      ],
+      "peak_child_process_rss_bytes": 82132992,
+      "storage_after_ingest": {
+        "rows": {
+          "atoms": 1024,
+          "vectors": 0,
+          "topics": 0,
+          "atom_topics": 0,
+          "topic_cache": 0,
+          "topic_cache_buckets": 0
+        },
+        "bytes": {
+          "database": 1769472,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 1769472
+      },
+      "storage_after_backfill": {
+        "rows": {
+          "atoms": 1024,
+          "vectors": 1024,
+          "topics": 11,
+          "atom_topics": 1122,
+          "topic_cache": 11,
+          "topic_cache_buckets": 220
+        },
+        "bytes": {
+          "database": 4304896,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 4304896
+      },
+      "storage_final": {
+        "rows": {
+          "atoms": 1184,
+          "vectors": 1184,
+          "topics": 11,
+          "atom_topics": 1297,
+          "topic_cache": 11,
+          "topic_cache_buckets": 231
+        },
+        "bytes": {
+          "database": 4825088,
+          "wal": 0,
+          "shm": 0
+        },
+        "database_and_wal_bytes": 4825088
+      },
+      "hybrid_recall": {
+        "samples": 10,
+        "median_ms": 127.97,
+        "p95_ms": 128.63,
+        "min_ms": 124.05,
+        "max_ms": 128.63
+      },
+      "lexical_recall": {
+        "samples": 10,
+        "median_ms": 6.54,
+        "p95_ms": 7.32,
+        "min_ms": 6.34,
+        "max_ms": 7.32
+      },
+      "recall_statuses": [
+        "ok"
+      ]
+    }
+  ]
+}

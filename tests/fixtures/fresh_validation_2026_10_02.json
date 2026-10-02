@@ -1,0 +1,1132 @@
+{
+  "fixture_id": "fresh-2026-10-02-98b41f15",
+  "seed": "98b41f15ed0268b34c30beec773cbcf9d588baffe70a5cdb66e1c224c376b4ab18201b0c3c48efd07cef6c1fe3c433eb5ea61de393b87117ab665e02c0aae16e",
+  "authoring": {
+    "independent_subagent": true,
+    "execution_before_labels": false
+  },
+  "episodes": [
+    {
+      "id": "fresh-98b41f15-cmp-01",
+      "slice": "comparison_direction",
+      "observations": [
+        {
+          "id": "bert-base",
+          "title": "bert-base-uncased model notes: lowercase tokenization; maximum sequence length 512",
+          "host": "huggingface.co",
+          "query": "bert-base-uncased lowercase sequence length",
+          "kind": "visit",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "roberta-base",
+          "title": "roberta-base model notes: preserves case with byte-level BPE; maximum positions 512",
+          "host": "huggingface.co",
+          "query": "roberta-base case byte-level BPE",
+          "kind": "search",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "bert-large",
+          "title": "bert-large-uncased model notes: larger encoder configuration",
+          "host": "huggingface.co",
+          "query": null,
+          "kind": "visit",
+          "dwell_seconds": 30
+        }
+      ],
+      "feedback": [],
+      "question": "Compare bert-base-uncased and roberta-base constraints",
+      "facets": [
+        "case handling",
+        "sequence length"
+      ],
+      "useful_ids": [
+        "bert-base",
+        "roberta-base"
+      ],
+      "forbidden_ids": [
+        "bert-large"
+      ],
+      "expected_empty": false,
+      "expected_states": {},
+      "notes": "Comparison grammar: exactly two public compact model identifiers; both sides have distinct evidence. Labels and invariants were fixed before execution; the seed affects episode order only."
+    },
+    {
+      "id": "fresh-98b41f15-op-04",
+      "slice": "ordinary_positive",
+      "observations": [
+        {
+          "id": "tide-note",
+          "title": "Tidepool field guide: ochre sea stars commonly have five arms",
+          "host": "www.nps.gov",
+          "query": "ochre sea star arm count",
+          "kind": "visit",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "sunflower-note",
+          "title": "Sunflower morphology guide: a flower head contains many florets",
+          "host": "www.britannica.com",
+          "query": "sunflower morphology",
+          "kind": "search",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "starfish-note",
+          "title": "Sea star overview: tube feet are used for movement",
+          "host": "ocean.si.edu",
+          "query": null,
+          "kind": "visit",
+          "dwell_seconds": 30
+        }
+      ],
+      "feedback": [],
+      "question": "How many arms does the synthetic tidepool guide say an ochre sea star commonly has?",
+      "facets": [],
+      "useful_ids": [
+        "tide-note"
+      ],
+      "forbidden_ids": [
+        "sunflower-note",
+        "starfish-note"
+      ],
+      "expected_empty": false,
+      "expected_states": {},
+      "notes": "Ordinary positive: a simple, explicit count with a semantically adjacent distractor. Labels and invariants were fixed before execution; the seed affects episode order only."
+    },
+    {
+      "id": "fresh-98b41f15-cmp-03",
+      "slice": "comparison_direction",
+      "observations": [
+        {
+          "id": "gpt2",
+          "title": "gpt2 model notes: decoder-only language model with 1024-token context",
+          "host": "huggingface.co",
+          "query": "gpt2 context length",
+          "kind": "visit",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "distilgpt2",
+          "title": "distilgpt2 model notes: distilled decoder-only model with 1024-token context",
+          "host": "huggingface.co",
+          "query": "distilgpt2 context length",
+          "kind": "search",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "gptneo",
+          "title": "EleutherAI/gpt-neo-125M notes: decoder-only transformer checkpoint",
+          "host": "huggingface.co",
+          "query": null,
+          "kind": "visit",
+          "dwell_seconds": 30
+        }
+      ],
+      "feedback": [],
+      "question": "Compare gpt2 and distilgpt2 constraints",
+      "facets": [
+        "architecture",
+        "context length"
+      ],
+      "useful_ids": [
+        "gpt2",
+        "distilgpt2"
+      ],
+      "forbidden_ids": [
+        "gptneo"
+      ],
+      "expected_empty": false,
+      "expected_states": {},
+      "notes": "Comparison grammar: exactly two short model IDs; evidence separates shared and model-specific limits. Labels and invariants were fixed before execution; the seed affects episode order only."
+    },
+    {
+      "id": "fresh-98b41f15-cmp-04",
+      "slice": "comparison_direction",
+      "observations": [
+        {
+          "id": "t5-small",
+          "title": "t5-small model card: text-to-text encoder-decoder checkpoint",
+          "host": "huggingface.co",
+          "query": "t5-small task format",
+          "kind": "visit",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "mt5-small",
+          "title": "mt5-small model card: multilingual text-to-text encoder-decoder checkpoint",
+          "host": "huggingface.co",
+          "query": "mt5-small multilingual",
+          "kind": "search",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "byt5-small",
+          "title": "google/byt5-small model card: byte-level text-to-text model",
+          "host": "huggingface.co",
+          "query": null,
+          "kind": "visit",
+          "dwell_seconds": 30
+        }
+      ],
+      "feedback": [],
+      "question": "Compare t5-small and mt5-small constraints",
+      "facets": [
+        "language coverage",
+        "task format"
+      ],
+      "useful_ids": [
+        "t5-small",
+        "mt5-small"
+      ],
+      "forbidden_ids": [
+        "byt5-small"
+      ],
+      "expected_empty": false,
+      "expected_states": {},
+      "notes": "Comparison grammar: exactly two compact model IDs, with language coverage as the distinguishing constraint. Labels and invariants were fixed before execution; the seed affects episode order only."
+    },
+    {
+      "id": "fresh-98b41f15-ml-01",
+      "slice": "multilingual",
+      "observations": [
+        {
+          "id": "cn-glaze",
+          "title": "瓷釉实验记录：青绿色釉料在 1220°C 烧成",
+          "host": "www.vam.ac.uk",
+          "query": "青绿色 瓷釉 烧成温度",
+          "kind": "search",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "cn-clay",
+          "title": "陶土说明：石器陶土适合高温烧制",
+          "host": "www.britannica.com",
+          "query": null,
+          "kind": "visit",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "cn-color",
+          "title": "釉色指南：氧化铜会产生绿色调",
+          "host": "www.metmuseum.org",
+          "query": "氧化铜 釉色",
+          "kind": "search",
+          "dwell_seconds": 30
+        }
+      ],
+      "feedback": [],
+      "question": "青绿色瓷釉的合成实验记录写了多少烧成温度？",
+      "facets": [],
+      "useful_ids": [
+        "cn-glaze"
+      ],
+      "forbidden_ids": [
+        "cn-clay",
+        "cn-color"
+      ],
+      "expected_empty": false,
+      "expected_states": {},
+      "notes": "Chinese case: answer-bearing title and query are Chinese; distractors share ceramics vocabulary. Labels and invariants were fixed before execution; the seed affects episode order only."
+    },
+    {
+      "id": "fresh-98b41f15-cor-01",
+      "slice": "correction_state",
+      "observations": [
+        {
+          "id": "jade-guide",
+          "title": "Jade plant guide: let the potting mix dry between waterings, often every 2–3 weeks",
+          "host": "www.rhs.org.uk",
+          "query": "jade plant watering interval",
+          "kind": "visit",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "weekly-note",
+          "title": "Houseplant note: water every Tuesday",
+          "host": "www.gardeningknowhow.com",
+          "query": "weekly houseplant watering",
+          "kind": "search",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "succulent-guide",
+          "title": "Succulent care: use a pot with a drainage hole",
+          "host": "www.botanicgardens.org",
+          "query": null,
+          "kind": "visit",
+          "dwell_seconds": 30
+        }
+      ],
+      "feedback": [
+        {
+          "observation_id": "weekly-note",
+          "action": "not_about_me",
+          "text": null
+        }
+      ],
+      "question": "What watering interval does the synthetic jade plant guide recommend?",
+      "facets": [],
+      "useful_ids": [
+        "jade-guide"
+      ],
+      "forbidden_ids": [
+        "weekly-note",
+        "succulent-guide"
+      ],
+      "expected_empty": false,
+      "expected_states": {
+        "jade-guide": "observed"
+      },
+      "notes": "Correction: a not_about_me label removes the tempting weekly claim; the separate jade guide remains observed evidence. Labels and invariants were fixed before execution; the seed affects episode order only."
+    },
+    {
+      "id": "fresh-98b41f15-dup-03",
+      "slice": "duplicate_contamination",
+      "observations": [
+        {
+          "id": "moon-distance-a",
+          "title": "Moon facts: average Earth–Moon distance is about 384,400 km",
+          "host": "science.nasa.gov",
+          "query": "average Earth Moon distance",
+          "kind": "visit",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "moon-distance-b",
+          "title": "Earth and Moon overview: mean separation is approximately 384,400 km",
+          "host": "www.rmg.co.uk",
+          "query": "mean distance Earth Moon",
+          "kind": "search",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "moon-eclipse",
+          "title": "Lunar eclipse guide: Earth’s shadow falls across the Moon",
+          "host": "www.timeanddate.com",
+          "query": null,
+          "kind": "visit",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "moon-period",
+          "title": "Moon orbit reference: one sidereal orbit takes about 27.3 days",
+          "host": "science.nasa.gov",
+          "query": null,
+          "kind": "visit",
+          "dwell_seconds": 30
+        }
+      ],
+      "feedback": [],
+      "question": "What mean distance and sidereal orbital period does the synthetic Moon reference give?",
+      "facets": [],
+      "useful_ids": [
+        "moon-distance-a",
+        "moon-period"
+      ],
+      "forbidden_ids": [
+        "moon-eclipse"
+      ],
+      "expected_empty": false,
+      "expected_states": {},
+      "notes": "Duplicate invariant: one of two equivalent distance pages plus the distinct orbital-period item meets the requirement. Labels and invariants were fixed before execution; the seed affects episode order only.",
+      "useful_groups": [
+        [
+          "moon-distance-a",
+          "moon-distance-b"
+        ],
+        [
+          "moon-period"
+        ]
+      ],
+      "minimum_useful_groups": 2
+    },
+    {
+      "id": "fresh-98b41f15-dup-04",
+      "slice": "duplicate_contamination",
+      "observations": [
+        {
+          "id": "blue-whale-a",
+          "title": "Blue whale guide: adults can reach about 30 m in length",
+          "host": "ocean.si.edu",
+          "query": "blue whale adult length",
+          "kind": "visit",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "blue-whale-b",
+          "title": "Blue whale profile: maximum length is roughly 30 meters",
+          "host": "www.nationalgeographic.com",
+          "query": "blue whale length",
+          "kind": "search",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "whale-food",
+          "title": "Blue whale feeding: baleen filters krill from seawater",
+          "host": "ocean.si.edu",
+          "query": null,
+          "kind": "visit",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "humpback-song",
+          "title": "Humpback whale guide: songs contain repeating patterns",
+          "host": "www.fisheries.noaa.gov",
+          "query": null,
+          "kind": "visit",
+          "dwell_seconds": 30
+        }
+      ],
+      "feedback": [],
+      "question": "What maximum length and feeding method does the synthetic blue whale guide describe?",
+      "facets": [],
+      "useful_ids": [
+        "blue-whale-a",
+        "whale-food"
+      ],
+      "forbidden_ids": [
+        "humpback-song"
+      ],
+      "expected_empty": false,
+      "expected_states": {},
+      "notes": "Duplicate invariant: either length copy is acceptable; the unique feeding-method record forms the second useful group. Labels and invariants were fixed before execution; the seed affects episode order only.",
+      "useful_groups": [
+        [
+          "blue-whale-a",
+          "blue-whale-b"
+        ],
+        [
+          "whale-food"
+        ]
+      ],
+      "minimum_useful_groups": 2
+    },
+    {
+      "id": "fresh-98b41f15-dup-02",
+      "slice": "duplicate_contamination",
+      "observations": [
+        {
+          "id": "path-wiki",
+          "title": "Philosopher’s Path in Kyoto: walking route is about 2 km",
+          "host": "www.japan-guide.com",
+          "query": "Philosophers Path length Kyoto",
+          "kind": "visit",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "path-city",
+          "title": "Kyoto walk notes: Philosopher’s Path extends for roughly two kilometers",
+          "host": "kyoto.travel",
+          "query": "Philosopher Path distance",
+          "kind": "search",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "path-season",
+          "title": "Kyoto spring guide: cherry blossoms line the canal in early April",
+          "host": "www.japan-guide.com",
+          "query": null,
+          "kind": "visit",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "path-tea",
+          "title": "Tea ceremony overview: matcha is whisked with hot water",
+          "host": "www.urasenke.or.jp",
+          "query": null,
+          "kind": "visit",
+          "dwell_seconds": 30
+        }
+      ],
+      "feedback": [],
+      "question": "How long is the synthetic Kyoto walking route, and what seasonal feature is noted along it?",
+      "facets": [],
+      "useful_ids": [
+        "path-wiki",
+        "path-season"
+      ],
+      "forbidden_ids": [
+        "path-tea"
+      ],
+      "expected_empty": false,
+      "expected_states": {},
+      "notes": "Duplicate invariant: either route-length copy is acceptable, and the distinct blossom item is also required. Labels and invariants were fixed before execution; the seed affects episode order only.",
+      "useful_groups": [
+        [
+          "path-wiki",
+          "path-city"
+        ],
+        [
+          "path-season"
+        ]
+      ],
+      "minimum_useful_groups": 2
+    },
+    {
+      "id": "fresh-98b41f15-empty-03",
+      "slice": "expected_empty",
+      "observations": [
+        {
+          "id": "empty-map",
+          "title": "Map projection primer: Mercator preserves local angles",
+          "host": "www.nationalgeographic.org",
+          "query": "Mercator projection angles",
+          "kind": "visit",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "empty-cello",
+          "title": "Cello strings: steel-core strings have a bright response",
+          "host": "www.daddario.com",
+          "query": "cello steel core strings",
+          "kind": "search",
+          "dwell_seconds": 30
+        }
+      ],
+      "feedback": [],
+      "question": "What is the fictional Lyrid meteor shower’s peak rate in the synthetic observatory log?",
+      "facets": [],
+      "useful_ids": [],
+      "forbidden_ids": [
+        "empty-map",
+        "empty-cello"
+      ],
+      "expected_empty": true,
+      "expected_states": {},
+      "notes": "Expected empty: no meteor observation or rate appears in the isolated episode. Labels and invariants were fixed before execution; the seed affects episode order only."
+    },
+    {
+      "id": "fresh-98b41f15-dup-01",
+      "slice": "duplicate_contamination",
+      "observations": [
+        {
+          "id": "europa-nasa",
+          "title": "Europa reference: orbital period is about 3.55 Earth days",
+          "host": "science.nasa.gov",
+          "query": "Europa orbital period",
+          "kind": "visit",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "europa-esa",
+          "title": "Europa facts: one orbit takes approximately 3.55 days",
+          "host": "www.esa.int",
+          "query": "Europa orbit duration",
+          "kind": "search",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "europa-brit",
+          "title": "Europa overview: completes an orbit in roughly 3.55 days",
+          "host": "www.britannica.com",
+          "query": null,
+          "kind": "visit",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "europa-ice",
+          "title": "Europa surface guide: water ice covers a likely subsurface ocean",
+          "host": "science.nasa.gov",
+          "query": "Europa surface ice",
+          "kind": "visit",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "mars-weather",
+          "title": "Mars climate guide: dust storms can cover large regions",
+          "host": "science.nasa.gov",
+          "query": null,
+          "kind": "visit",
+          "dwell_seconds": 30
+        }
+      ],
+      "feedback": [],
+      "question": "What orbital period and surface cover does the synthetic Europa summary report?",
+      "facets": [],
+      "useful_ids": [
+        "europa-nasa",
+        "europa-ice"
+      ],
+      "forbidden_ids": [
+        "mars-weather"
+      ],
+      "expected_empty": false,
+      "expected_states": {},
+      "notes": "Duplicate invariant: one result from the three-page orbital-period group plus the distinct surface item satisfies two useful groups. Labels and invariants were fixed before execution; the seed affects episode order only.",
+      "useful_groups": [
+        [
+          "europa-nasa",
+          "europa-esa",
+          "europa-brit"
+        ],
+        [
+          "europa-ice"
+        ]
+      ],
+      "minimum_useful_groups": 2
+    },
+    {
+      "id": "fresh-98b41f15-cor-02",
+      "slice": "correction_state",
+      "observations": [
+        {
+          "id": "paper-note",
+          "title": "Polar map projection notes and scale comparison",
+          "host": "www.loc.gov",
+          "query": "map projection notes",
+          "kind": "search",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "notebook-note",
+          "title": "Japanese notebook binding guide: use 120 gsm uncoated paper",
+          "host": "www.vam.ac.uk",
+          "query": null,
+          "kind": "visit",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "paper-types",
+          "title": "Paper reference: coated stock has a smooth surface",
+          "host": "www.paper.org",
+          "query": null,
+          "kind": "visit",
+          "dwell_seconds": 30
+        }
+      ],
+      "feedback": [
+        {
+          "observation_id": "paper-note",
+          "action": "wrong_topic",
+          "text": "Correction: this record is about Japanese notebook binding, not map projections; it recommends 120 gsm uncoated paper."
+        }
+      ],
+      "question": "What paper weight does the corrected synthetic notebook note recommend?",
+      "facets": [],
+      "useful_ids": [
+        "paper-note"
+      ],
+      "forbidden_ids": [
+        "notebook-note",
+        "paper-types"
+      ],
+      "expected_empty": false,
+      "expected_states": {
+        "paper-note": "observed"
+      },
+      "notes": "Correction: the original title is a deliberate wrong-topic hard negative; only replacement text supplies the answer. Labels and invariants were fixed before execution; the seed affects episode order only."
+    },
+    {
+      "id": "fresh-98b41f15-ml-04",
+      "slice": "multilingual",
+      "observations": [
+        {
+          "id": "de-ethanol",
+          "title": "Ethanol: Siedepunkt bei Normaldruck beträgt 78,4 °C",
+          "host": "www.chemie.de",
+          "query": "Ethanol Siedepunkt 78,4 °C",
+          "kind": "search",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "de-water",
+          "title": "Wasser: Siedepunkt auf Meereshöhe beträgt 100 °C",
+          "host": "www.britannica.com",
+          "query": null,
+          "kind": "visit",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "nl-methanol",
+          "title": "Methanol: kookpunt ligt rond 64,7 °C",
+          "host": "www.rsc.org",
+          "query": "kookpunt methanol",
+          "kind": "search",
+          "dwell_seconds": 30
+        }
+      ],
+      "feedback": [],
+      "question": "Welche Temperatur nennt der synthetische Bericht als Siedepunkt von Ethanol bei Normaldruck?",
+      "facets": [],
+      "useful_ids": [
+        "de-ethanol"
+      ],
+      "forbidden_ids": [
+        "de-water",
+        "nl-methanol"
+      ],
+      "expected_empty": false,
+      "expected_states": {},
+      "notes": "German/Dutch case: the German question asks for the ethanol value; distractors are boiling-point references. Labels and invariants were fixed before execution; the seed affects episode order only."
+    },
+    {
+      "id": "fresh-98b41f15-ml-03",
+      "slice": "multilingual",
+      "observations": [
+        {
+          "id": "es-mole",
+          "title": "Guía del mole poblano: la tradición culinaria se asocia con Puebla",
+          "host": "www.britannica.com",
+          "query": "origen mole poblano Puebla",
+          "kind": "search",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "es-cacao",
+          "title": "Historia del cacao: su cultivo se extendió por Mesoamérica",
+          "host": "www.smithsonianmag.com",
+          "query": null,
+          "kind": "visit",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "es-salsa",
+          "title": "Salsas mexicanas: el pico de gallo combina tomate, cebolla y chile",
+          "host": "www.seriouseats.com",
+          "query": "pico de gallo ingredientes",
+          "kind": "search",
+          "dwell_seconds": 30
+        }
+      ],
+      "feedback": [],
+      "question": "¿Con qué ciudad relaciona la guía sintética la tradición del mole poblano?",
+      "facets": [],
+      "useful_ids": [
+        "es-mole"
+      ],
+      "forbidden_ids": [
+        "es-cacao",
+        "es-salsa"
+      ],
+      "expected_empty": false,
+      "expected_states": {},
+      "notes": "Spanish case: the question asks for a named place and the useful title states it directly. Labels and invariants were fixed before execution; the seed affects episode order only."
+    },
+    {
+      "id": "fresh-98b41f15-empty-02",
+      "slice": "expected_empty",
+      "observations": [
+        {
+          "id": "empty-orchid",
+          "title": "Orchid care guide: roots need airflow between waterings",
+          "host": "www.aos.org",
+          "query": "orchid root airflow",
+          "kind": "visit",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "empty-piano",
+          "title": "Piano maintenance: seasonal humidity changes affect tuning",
+          "host": "www.steinway.com",
+          "query": "piano humidity tuning",
+          "kind": "search",
+          "dwell_seconds": 30
+        }
+      ],
+      "feedback": [],
+      "question": "Which alloy did the synthetic Saturn probe drill-bit design select?",
+      "facets": [],
+      "useful_ids": [],
+      "forbidden_ids": [
+        "empty-orchid",
+        "empty-piano"
+      ],
+      "expected_empty": true,
+      "expected_states": {},
+      "notes": "Expected empty: spacecraft materials are absent; no evidence item is relevant. Labels and invariants were fixed before execution; the seed affects episode order only."
+    },
+    {
+      "id": "fresh-98b41f15-cor-03",
+      "slice": "correction_state",
+      "observations": [
+        {
+          "id": "temp-scope",
+          "title": "One-night Orion demonstration: 80 mm refracting telescope",
+          "host": "skyandtelescope.org",
+          "query": "Orion telescope aperture 80 mm",
+          "kind": "search",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "blocked-scope",
+          "title": "Synthetic Orion scope selection: 130 mm reflector",
+          "host": "www.astronomy.com",
+          "query": "Orion 130 mm scope",
+          "kind": "visit",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "star-chart",
+          "title": "Seasonal star chart: Orion is prominent in winter skies",
+          "host": "stellarium.org",
+          "query": null,
+          "kind": "visit",
+          "dwell_seconds": 30
+        }
+      ],
+      "feedback": [
+        {
+          "observation_id": "temp-scope",
+          "action": "temporary_research",
+          "text": "One-night demonstration only: the borrowed refractor had an 80 mm aperture."
+        },
+        {
+          "observation_id": "blocked-scope",
+          "action": "do_not_use",
+          "text": null
+        }
+      ],
+      "question": "What aperture did the temporary synthetic Orion demonstration use?",
+      "facets": [],
+      "useful_ids": [
+        "temp-scope"
+      ],
+      "forbidden_ids": [
+        "blocked-scope",
+        "star-chart"
+      ],
+      "expected_empty": false,
+      "expected_states": {
+        "temp-scope": "observed"
+      },
+      "notes": "Correction: the one-night fact remains observed rather than confirmed; the conflicting 130 mm entry is explicitly do_not_use. Labels and invariants were fixed before execution; the seed affects episode order only."
+    },
+    {
+      "id": "fresh-98b41f15-op-03",
+      "slice": "ordinary_positive",
+      "observations": [
+        {
+          "id": "lapis-guide",
+          "title": "Lapis lazuli pigment guide: lazurite gives the stone its deep blue color",
+          "host": "www.metmuseum.org",
+          "query": "lapis lazuli blue pigment mineral",
+          "kind": "visit",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "azurite-guide",
+          "title": "Azurite mineral page: copper carbonate forms vivid blue crystals",
+          "host": "www.mindat.org",
+          "query": "blue mineral crystals",
+          "kind": "search",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "ultramarine-history",
+          "title": "Ultramarine history: traditional pigment was made from lapis lazuli",
+          "host": "www.getty.edu",
+          "query": null,
+          "kind": "visit",
+          "dwell_seconds": 30
+        }
+      ],
+      "feedback": [],
+      "question": "Which mineral gives lapis lazuli its deep blue color in the synthetic guide?",
+      "facets": [],
+      "useful_ids": [
+        "lapis-guide"
+      ],
+      "forbidden_ids": [
+        "azurite-guide",
+        "ultramarine-history"
+      ],
+      "expected_empty": false,
+      "expected_states": {},
+      "notes": "Ordinary positive: distinguish the requested mineral fact from related blue-pigment references. Labels and invariants were fixed before execution; the seed affects episode order only."
+    },
+    {
+      "id": "fresh-98b41f15-op-02",
+      "slice": "ordinary_positive",
+      "observations": [
+        {
+          "id": "glass-reference",
+          "title": "Soda-lime glass reference: annealing point is approximately 540 °C",
+          "host": "www.nist.gov",
+          "query": "soda lime glass annealing point",
+          "kind": "visit",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "borosilicate",
+          "title": "Borosilicate glass reference: low thermal expansion",
+          "host": "www.corning.com",
+          "query": "borosilicate expansion",
+          "kind": "search",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "kiln-safety",
+          "title": "Kiln safety checklist: use heat-resistant gloves",
+          "host": "www.ceramics.org",
+          "query": null,
+          "kind": "visit",
+          "dwell_seconds": 30
+        }
+      ],
+      "feedback": [],
+      "question": "What annealing point does the synthetic soda-lime glass reference give?",
+      "facets": [],
+      "useful_ids": [
+        "glass-reference"
+      ],
+      "forbidden_ids": [
+        "borosilicate",
+        "kiln-safety"
+      ],
+      "expected_empty": false,
+      "expected_states": {},
+      "notes": "Ordinary positive: retrieve the explicit temperature from a narrow public-materials topic. Labels and invariants were fixed before execution; the seed affects episode order only."
+    },
+    {
+      "id": "fresh-98b41f15-empty-04",
+      "slice": "expected_empty",
+      "observations": [
+        {
+          "id": "empty-pottery",
+          "title": "Pottery wheel basics: center the clay before opening the form",
+          "host": "www.theceramicshop.com",
+          "query": "wheel throwing center clay",
+          "kind": "visit",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "empty-butterfly",
+          "title": "Monarch migration guide: adults travel south in autumn",
+          "host": "www.fs.usda.gov",
+          "query": "monarch migration",
+          "kind": "search",
+          "dwell_seconds": 30
+        }
+      ],
+      "feedback": [],
+      "question": "Which two enzymes does the synthetic deep-sea vent note list for methane oxidation?",
+      "facets": [],
+      "useful_ids": [],
+      "forbidden_ids": [
+        "empty-pottery",
+        "empty-butterfly"
+      ],
+      "expected_empty": true,
+      "expected_states": {},
+      "notes": "Expected empty: microbial chemistry is absent and all present evidence is forbidden. Labels and invariants were fixed before execution; the seed affects episode order only."
+    },
+    {
+      "id": "fresh-98b41f15-cmp-02",
+      "slice": "comparison_direction",
+      "observations": [
+        {
+          "id": "distilbert",
+          "title": "distilbert-base-uncased notes: distilled encoder with fewer parameters than BERT base",
+          "host": "huggingface.co",
+          "query": "distilbert-base-uncased parameters",
+          "kind": "visit",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "albert",
+          "title": "albert-base-v2 notes: parameter sharing reduces stored parameter count",
+          "host": "huggingface.co",
+          "query": "albert-base-v2 parameter sharing",
+          "kind": "search",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "tinybert",
+          "title": "TinyBERT overview: compact student model for inference",
+          "host": "arxiv.org",
+          "query": null,
+          "kind": "visit",
+          "dwell_seconds": 30
+        }
+      ],
+      "feedback": [],
+      "question": "Compare distilbert-base-uncased and albert-base-v2 constraints",
+      "facets": [
+        "parameter count",
+        "model structure"
+      ],
+      "useful_ids": [
+        "distilbert",
+        "albert"
+      ],
+      "forbidden_ids": [
+        "tinybert"
+      ],
+      "expected_empty": false,
+      "expected_states": {},
+      "notes": "Comparison grammar: exactly two compact model identifiers and one irrelevant compact-model distractor. Labels and invariants were fixed before execution; the seed affects episode order only."
+    },
+    {
+      "id": "fresh-98b41f15-empty-01",
+      "slice": "expected_empty",
+      "observations": [
+        {
+          "id": "empty-violin",
+          "title": "Violin setup guide: bridge feet should sit flush on the instrument",
+          "host": "www.violinist.com",
+          "query": "violin bridge fitting",
+          "kind": "visit",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "empty-bread",
+          "title": "Sourdough schedule: allow the dough to ferment overnight",
+          "host": "www.kingarthurbaking.com",
+          "query": "sourdough fermentation",
+          "kind": "search",
+          "dwell_seconds": 30
+        }
+      ],
+      "feedback": [],
+      "question": "Which two trilobite species are named in the synthetic Cambrian reef note?",
+      "facets": [],
+      "useful_ids": [],
+      "forbidden_ids": [
+        "empty-violin",
+        "empty-bread"
+      ],
+      "expected_empty": true,
+      "expected_states": {},
+      "notes": "Expected empty: paleontology topic is absent and every unrelated observation is forbidden. Labels and invariants were fixed before execution; the seed affects episode order only."
+    },
+    {
+      "id": "fresh-98b41f15-cor-04",
+      "slice": "correction_state",
+      "observations": [
+        {
+          "id": "tile-setting",
+          "title": "Tile glaze trials: cone 5 gave a matte green surface",
+          "host": "www.ceramicartsnetwork.org",
+          "query": "tile glaze cone firing",
+          "kind": "visit",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "clay-setting",
+          "title": "Clay body reference: stoneware matures at high temperature",
+          "host": "www.ceramics.org",
+          "query": "stoneware maturation",
+          "kind": "search",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "blue-glaze",
+          "title": "Blue glaze overview: cobalt compounds can create blue color",
+          "host": "www.vam.ac.uk",
+          "query": null,
+          "kind": "visit",
+          "dwell_seconds": 30
+        }
+      ],
+      "feedback": [
+        {
+          "observation_id": "tile-setting",
+          "action": "confirm_constraint",
+          "text": "Confirmed constraint: fire the synthetic blue test tile at cone 6 (1220 °C) for a glossy finish."
+        }
+      ],
+      "question": "What firing condition is the confirmed synthetic constraint for the blue test tile?",
+      "facets": [],
+      "useful_ids": [
+        "tile-setting"
+      ],
+      "forbidden_ids": [
+        "clay-setting",
+        "blue-glaze"
+      ],
+      "expected_empty": false,
+      "expected_states": {
+        "tile-setting": "confirmed"
+      },
+      "notes": "Correction: the confirmed assertion comes from replacement text; the original cone 5 title is not answer-bearing. Labels and invariants were fixed before execution; the seed affects episode order only."
+    },
+    {
+      "id": "fresh-98b41f15-op-01",
+      "slice": "ordinary_positive",
+      "observations": [
+        {
+          "id": "plant-guide",
+          "title": "Plant imaging guide: red emission filter near 680 nm records chlorophyll fluorescence",
+          "host": "www.nature.com",
+          "query": "chlorophyll fluorescence red emission filter",
+          "kind": "visit",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "plant-camera",
+          "title": "Plant camera setup: neutral density filter for bright daylight",
+          "host": "www.nikon.com",
+          "query": "plant camera filter daylight",
+          "kind": "search",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "fern-care",
+          "title": "Fern care overview: keep potting mix evenly moist",
+          "host": "www.rhs.org.uk",
+          "query": null,
+          "kind": "visit",
+          "dwell_seconds": 30
+        }
+      ],
+      "feedback": [],
+      "question": "Which filter does the synthetic plant imaging guide use to record chlorophyll fluorescence?",
+      "facets": [],
+      "useful_ids": [
+        "plant-guide"
+      ],
+      "forbidden_ids": [
+        "plant-camera",
+        "fern-care"
+      ],
+      "expected_empty": false,
+      "expected_states": {},
+      "notes": "Ordinary positive: one answer-bearing reference and two nearby or unrelated distractors. Labels and invariants were fixed before execution; the seed affects episode order only."
+    },
+    {
+      "id": "fresh-98b41f15-ml-02",
+      "slice": "multilingual",
+      "observations": [
+        {
+          "id": "jp-moon",
+          "title": "月面鉱物ガイド：反射スペクトルの約 1 µm 帯が識別に役立つ",
+          "host": "science.nasa.gov",
+          "query": "月面 鉱物 反射スペクトル 1 µm",
+          "kind": "search",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "jp-crater",
+          "title": "月のクレーター案内：衝突で円形の地形ができる",
+          "host": "www.jaxa.jp",
+          "query": null,
+          "kind": "visit",
+          "dwell_seconds": 30
+        },
+        {
+          "id": "jp-mars",
+          "title": "火星の観測記録：赤い表面は酸化鉄を多く含む",
+          "host": "www.esa.int",
+          "query": "火星 表面 酸化鉄",
+          "kind": "search",
+          "dwell_seconds": 30
+        }
+      ],
+      "feedback": [],
+      "question": "月面鉱物の識別に役立つと合成ガイドが述べる波長帯はどれですか？",
+      "facets": [],
+      "useful_ids": [
+        "jp-moon"
+      ],
+      "forbidden_ids": [
+        "jp-crater",
+        "jp-mars"
+      ],
+      "expected_empty": false,
+      "expected_states": {},
+      "notes": "Japanese case: the question and relevant evidence use Japanese, with a nearby lunar distractor. Labels and invariants were fixed before execution; the seed affects episode order only."
+    }
+  ]
+}

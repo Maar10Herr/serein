@@ -1,0 +1,381 @@
+{
+  "fixture_atoms": 10000,
+  "incremental_atoms": 0,
+  "fixture_seed": "capacity-fixture-v1",
+  "fixture_observed_at": "2026-10-02T11:23:44.098356+00:00",
+  "deterministic_atom_ids": false,
+  "synthetic_categories": 10,
+  "target_category_atoms": 1000,
+  "indexed_atoms": 10000,
+  "all_atoms_confirmed_indexed": true,
+  "index_refresh_calls": 40,
+  "ingest_ms": 25500.17,
+  "full_index_ms": 6219.79,
+  "backfill_calls": [
+    {
+      "elapsed_ms": 134.47970899869688,
+      "processed": 256,
+      "pending_atoms": 9744
+    },
+    {
+      "elapsed_ms": 135.69437499972992,
+      "processed": 256,
+      "pending_atoms": 9488
+    },
+    {
+      "elapsed_ms": 137.22704202518798,
+      "processed": 256,
+      "pending_atoms": 9232
+    },
+    {
+      "elapsed_ms": 139.13512497674674,
+      "processed": 256,
+      "pending_atoms": 8976
+    },
+    {
+      "elapsed_ms": 139.8464159865398,
+      "processed": 256,
+      "pending_atoms": 8720
+    },
+    {
+      "elapsed_ms": 139.18699999339879,
+      "processed": 256,
+      "pending_atoms": 8464
+    },
+    {
+      "elapsed_ms": 138.73162501840852,
+      "processed": 256,
+      "pending_atoms": 8208
+    },
+    {
+      "elapsed_ms": 141.2412080098875,
+      "processed": 256,
+      "pending_atoms": 7952
+    },
+    {
+      "elapsed_ms": 146.44433298963122,
+      "processed": 256,
+      "pending_atoms": 7696
+    },
+    {
+      "elapsed_ms": 150.9632499946747,
+      "processed": 256,
+      "pending_atoms": 7440
+    },
+    {
+      "elapsed_ms": 151.51441699708812,
+      "processed": 256,
+      "pending_atoms": 7184
+    },
+    {
+      "elapsed_ms": 151.25725002144463,
+      "processed": 256,
+      "pending_atoms": 6928
+    },
+    {
+      "elapsed_ms": 150.70941700832918,
+      "processed": 256,
+      "pending_atoms": 6672
+    },
+    {
+      "elapsed_ms": 147.78583397855982,
+      "processed": 256,
+      "pending_atoms": 6416
+    },
+    {
+      "elapsed_ms": 150.77825001208112,
+      "processed": 256,
+      "pending_atoms": 6160
+    },
+    {
+      "elapsed_ms": 152.38954199594446,
+      "processed": 256,
+      "pending_atoms": 5904
+    },
+    {
+      "elapsed_ms": 154.6273749845568,
+      "processed": 256,
+      "pending_atoms": 5648
+    },
+    {
+      "elapsed_ms": 156.5044170129113,
+      "processed": 256,
+      "pending_atoms": 5392
+    },
+    {
+      "elapsed_ms": 156.38570801820606,
+      "processed": 256,
+      "pending_atoms": 5136
+    },
+    {
+      "elapsed_ms": 157.28808398125693,
+      "processed": 256,
+      "pending_atoms": 4880
+    },
+    {
+      "elapsed_ms": 161.94358401116915,
+      "processed": 256,
+      "pending_atoms": 4624
+    },
+    {
+      "elapsed_ms": 156.2360840034671,
+      "processed": 256,
+      "pending_atoms": 4368
+    },
+    {
+      "elapsed_ms": 158.5830829862971,
+      "processed": 256,
+      "pending_atoms": 4112
+    },
+    {
+      "elapsed_ms": 163.33237499929965,
+      "processed": 256,
+      "pending_atoms": 3856
+    },
+    {
+      "elapsed_ms": 162.45254199020565,
+      "processed": 256,
+      "pending_atoms": 3600
+    },
+    {
+      "elapsed_ms": 164.61995799909346,
+      "processed": 256,
+      "pending_atoms": 3344
+    },
+    {
+      "elapsed_ms": 161.66979100671597,
+      "processed": 256,
+      "pending_atoms": 3088
+    },
+    {
+      "elapsed_ms": 162.55795801407658,
+      "processed": 256,
+      "pending_atoms": 2832
+    },
+    {
+      "elapsed_ms": 166.09754200908355,
+      "processed": 256,
+      "pending_atoms": 2576
+    },
+    {
+      "elapsed_ms": 168.1520830024965,
+      "processed": 256,
+      "pending_atoms": 2320
+    },
+    {
+      "elapsed_ms": 170.21199999726377,
+      "processed": 256,
+      "pending_atoms": 2064
+    },
+    {
+      "elapsed_ms": 168.8484580081422,
+      "processed": 256,
+      "pending_atoms": 1808
+    },
+    {
+      "elapsed_ms": 169.52191598829813,
+      "processed": 256,
+      "pending_atoms": 1552
+    },
+    {
+      "elapsed_ms": 169.60524997557513,
+      "processed": 256,
+      "pending_atoms": 1296
+    },
+    {
+      "elapsed_ms": 167.28100000182167,
+      "processed": 256,
+      "pending_atoms": 1040
+    },
+    {
+      "elapsed_ms": 173.10070802341215,
+      "processed": 256,
+      "pending_atoms": 784
+    },
+    {
+      "elapsed_ms": 178.57945800642483,
+      "processed": 256,
+      "pending_atoms": 528
+    },
+    {
+      "elapsed_ms": 172.98941599437967,
+      "processed": 256,
+      "pending_atoms": 272
+    },
+    {
+      "elapsed_ms": 179.21095801284537,
+      "processed": 256,
+      "pending_atoms": 16
+    },
+    {
+      "elapsed_ms": 112.47737499070354,
+      "processed": 16,
+      "pending_atoms": 0
+    }
+  ],
+  "incremental_batches": [],
+  "storage_after_ingest": {
+    "rows": {
+      "atoms": 10000,
+      "vectors": 0,
+      "topics": 0,
+      "atom_topics": 0,
+      "topic_cache": 0,
+      "topic_cache_buckets": 0
+    },
+    "bytes": {
+      "database": 14086144,
+      "wal": 0,
+      "shm": 0
+    },
+    "database_and_wal_bytes": 14086144
+  },
+  "storage_after_backfill": {
+    "rows": {
+      "atoms": 10000,
+      "vectors": 10000,
+      "topics": 10,
+      "atom_topics": 10000,
+      "topic_cache": 10,
+      "topic_cache_buckets": 200
+    },
+    "bytes": {
+      "database": 31805440,
+      "wal": 0,
+      "shm": 0
+    },
+    "database_and_wal_bytes": 31805440
+  },
+  "storage_final": {
+    "rows": {
+      "atoms": 10000,
+      "vectors": 10000,
+      "topics": 10,
+      "atom_topics": 10000,
+      "topic_cache": 10,
+      "topic_cache_buckets": 200
+    },
+    "bytes": {
+      "database": 31821824,
+      "wal": 0,
+      "shm": 0
+    },
+    "database_and_wal_bytes": 31821824
+  },
+  "includes_process_launch": true,
+  "recall_budget_ms": 1500,
+  "recall_samples": {
+    "samples": 30,
+    "median_ms": 155.02,
+    "p95_ms": 160.96,
+    "min_ms": 153.5,
+    "max_ms": 161.16
+  },
+  "lexical_recall_samples": {
+    "samples": 10,
+    "median_ms": 10.27,
+    "p95_ms": 11.09,
+    "min_ms": 10.24,
+    "max_ms": 11.09
+  },
+  "zero_pending_refresh_samples": {
+    "samples": 10,
+    "median_ms": 105.23,
+    "p95_ms": 107.98,
+    "min_ms": 103.48,
+    "max_ms": 107.98
+  },
+  "raw_recall_ms": [
+    161.16216700174846,
+    156.0934580047615,
+    155.88049998041242,
+    155.4379579902161,
+    157.403583987616,
+    153.70404100394808,
+    154.5807920047082,
+    154.79645901359618,
+    154.97366597992368,
+    155.07804197841324,
+    154.80575000401586,
+    154.19629201642238,
+    153.49570801481605,
+    154.5197920058854,
+    156.94637497654185,
+    160.9554580063559,
+    157.00783400097862,
+    155.0082080066204,
+    153.68004198535345,
+    154.82245801831596,
+    155.02316699712537,
+    155.39770800387487,
+    156.1136670061387,
+    157.119417010108,
+    154.42529201391153,
+    155.63787499559112,
+    154.87145900260657,
+    155.8425000112038,
+    154.20604101382196,
+    154.49300000909716
+  ],
+  "raw_lexical_recall_ms": [
+    11.094916000729427,
+    10.2667500032112,
+    10.312291007721797,
+    10.245334007777274,
+    10.300500027369708,
+    10.253417014610022,
+    10.240792005788535,
+    10.27199998497963,
+    10.267584002576768,
+    10.352708020946011
+  ],
+  "raw_zero_pending_refresh_ms": [
+    105.34187499433756,
+    105.33558297902346,
+    105.53670901572332,
+    104.45270797936246,
+    105.78316598548554,
+    107.9808330105152,
+    104.9851659918204,
+    103.48225000780076,
+    105.13387501123361,
+    104.649791988777
+  ],
+  "recall_statuses": [
+    "ok"
+  ],
+  "context_records_median": 6.0,
+  "lexical_context_records_median": 6.0,
+  "elapsed_total_ms": 37863.11,
+  "platform": "Darwin",
+  "architecture": "arm64",
+  "cache_state": "warm after full index and one discarded recall call",
+  "fixture_scope": "generated metadata only; isolated temporary Serein directory",
+  "reference_machine": "Apple silicon macOS host; not the specified dual-core/4 GiB laptop",
+  "peak_rss_bytes_child_processes_during_harness": 82018304,
+  "rss_scope": "Maximum of sequential helper/CLI child processes, including ingest and backfill; not recall alone.",
+  "maintenance_work_scope": "Processed counts and persisted row counts are measured here; internal row reads and encoder calls require the targeted source tests.",
+  "storage_scope": "Database/WAL/SHM snapshots after child process exit; transient peak WAL bytes are not measured.",
+  "candidate_identity": {
+    "run_timestamp_utc": "2026-10-02T11:26:01.319423+00:00",
+    "candidate_release": "Serein 0.2.0 final schema-5 candidate",
+    "tested_bundle_runtime": "skills/serein-context/runtime/macos-arm64",
+    "binaries": {
+      "target/release/serein": "de7aeed2370ab49a97195c485787d2dce9671f3a1666e1083d1d5bc88e105040",
+      "target/release/serein-host": "9fe827b4fca4d571582dfbbe32e547b7f581b1192349a5276f9d4a2617e7f678",
+      "skills/serein-context/runtime/macos-arm64/serein": "de7aeed2370ab49a97195c485787d2dce9671f3a1666e1083d1d5bc88e105040",
+      "skills/serein-context/runtime/macos-arm64/serein-host": "9fe827b4fca4d571582dfbbe32e547b7f581b1192349a5276f9d4a2617e7f678"
+    },
+    "bundle_checksum_manifest_sha256": "6e77c2c7610482332ee8373f7b42857f63c65ea2d0c07fbf3999f5862714450c",
+    "bundled_model_manifest_sha256": "8661322502cf2881aec0b935e92b802c0538cbb397bd8b5f36fa2253bdec9e16",
+    "source_sha256": {
+      "crates/serein-core/src/inference.rs": "1938b468e311dd53117f7d3027873e9a41784f56b9a9cdc3953598ba0cd4f2a9",
+      "crates/serein-core/src/retrieval.rs": "0eac5e5bdd451286f784a78d64c53a8b5dacbe92604b8b89113fc17abe7a0c24",
+      "crates/serein-core/src/storage.rs": "d2150e5aeb9cca9a1942865334ba9c1ce99c31bd65ff1fb315f21578d5e2887e",
+      "crates/serein-core/tests/calibration.rs": "c6bad4edeabfd09b17a7d321c070ed5453a7dd5ef1fdd48e8a6939b8b4890f87",
+      "tests/benchmark_retrieval_10k.py": "fa08cb458c7696ba248fca6ebf42148e5d5afc0e69260179515710ec0f172f78",
+      "tests/performance.py": "89a25ea664f5613deef1e316d8f160fe6a562b9a6c357f669547fce564df5871",
+      "<validation-artifact:performance_final_800.py>": "5dcca002036a3306d16d074ae9b09e64f47ce0e351703dfa67baaccb1b4ad413"
+    }
+  }
+}

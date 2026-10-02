@@ -588,6 +588,12 @@
     "repository": "https://github.com/RustCrypto/hashes"
   },
   {
+    "name": "sha2-asm",
+    "version": "0.6.4",
+    "license": "MIT",
+    "repository": "https://github.com/RustCrypto/asm-hashes"
+  },
+  {
     "name": "shlex",
     "version": "2.0.1",
     "license": "MIT OR Apache-2.0",

@@ -28,11 +28,50 @@ try{
  let worker=context.serviceWorkers()[0]||await context.waitForEvent('serviceworker');
  const id=new URL(worker.url()).host;
  const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.addInitScript(()=>{
+  const probe={installed:false,enabled:false,holdPolicy:false,policyMessages:[],ticketReplies:[],releasePolicy:null};
+  Object.defineProperty(window,'__sereinCopySetupProbe',{configurable:false,value:probe});
+  const install=()=>{
+   const runtimes=[globalThis.chrome?.runtime,globalThis.browser?.runtime].filter((runtime,index,all)=>runtime&&all.indexOf(runtime)===index);
+   let installed=false;
+   for(const runtime of runtimes){
+    if(!runtime.sendMessage)continue;
+    if(runtime.sendMessage.__sereinCopySetupProbe===probe||runtime.sendMessage.__sereinRefreshProbe){installed=true;continue}
+    const original=runtime.sendMessage.bind(runtime);
+    const wrapped=(message,...args)=>{
+     if(probe.enabled&&message?.type==='policy'){
+      probe.policyMessages.push({message,at:performance.now()});
+      if(probe.holdPolicy){
+       probe.holdPolicy=false;
+       return new Promise((resolve,reject)=>{
+        probe.releasePolicy=()=>{
+         try{Promise.resolve(original(message,...args)).then(resolve,reject)}catch(error){reject(error)}
+        };
+       });
+      }
+     }
+     const response=original(message,...args);
+     if(!probe.enabled||message?.type!=='ticket')return response;
+     return Promise.resolve(response).then(value=>{probe.ticketReplies.push(value);return value});
+    };
+    Object.defineProperty(wrapped,'__sereinCopySetupProbe',{value:probe});
+    try{Object.defineProperty(runtime,'sendMessage',{configurable:true,writable:true,value:wrapped})}
+    catch{runtime.sendMessage=wrapped}
+    if(runtime.sendMessage===wrapped)installed=true;
+   }
+   probe.installed=installed;
+   return installed;
+  };
+  install();
+  const timer=setInterval(()=>{if(install())clearInterval(timer)},10);
+  setTimeout(()=>clearInterval(timer),5000);
+ });
  await page.goto(`chrome-extension://${id}/dashboard.html#connections`);await page.getByRole('heading',{name:'Connections',exact:true}).waitFor();
  await page.getByRole('link',{name:'https://github.com/Maar10Herr/serein',exact:true}).waitFor();
  await page.getByRole('button',{name:'Copy install request',exact:true}).waitFor();
  await page.screenshot({animations:'disabled',path:path.join(evidence,'onboarding-light.png'),fullPage:true});
- // Exercise consent, persisted policy and private session via real extension messaging.
+ await page.waitForFunction(()=>window.__sereinCopySetupProbe?.installed,undefined,{timeout:10000});
+ // Exercise the actual unpaired consent and setup-copy path in this disposable profile.
  const send=msg=>page.evaluate(msg=>chrome.runtime.sendMessage(msg),msg);
  const setTheme=async theme=>{
   for(let attempt=0;attempt<4;attempt++){
@@ -44,7 +83,49 @@ try{
   assert.equal(await page.evaluate(()=>document.documentElement.dataset.theme),theme);
  };
  const state=await send({type:'state'});assert.equal(state.state.policy.consent,false);assert.equal(state.queued,0);
- await send({type:'policy',patch:{consent:true,recall_enabled:true}});
+ const copySetup=page.getByRole('button',{name:'Copy link instruction',exact:true});
+ assert.equal(await copySetup.isDisabled(),true,'setup copy must require both consent disclosures');
+ await page.getByRole('checkbox',{name:'I agree to save permitted browsing metadata on this device.'}).check();
+ await page.getByRole('checkbox',{name:'I allow assistant recall. Collection and indexing stay on this device. Context returned to an assistant may be sent to that assistant’s model provider.'}).check();
+ const assistantButtons=page.locator('.assistant');
+ let codexButton,genericButton;
+ for(let index=0;index<await assistantButtons.count();index++){
+  const button=assistantButtons.nth(index),label=await button.innerText();
+  if(label.includes('Codex'))codexButton=button;
+  if(label.includes('Generic local executor'))genericButton=button;
+ }
+ assert.ok(codexButton&&genericButton,'expected Codex and generic executor choices');
+ assert.equal(await codexButton.getAttribute('aria-pressed'),'true');
+ await codexButton.click();
+ await genericButton.click();
+ assert.equal(await genericButton.getAttribute('aria-pressed'),'true');
+ assert.equal(await copySetup.isDisabled(),false);
+ await page.evaluate(()=>{const probe=window.__sereinCopySetupProbe;probe.enabled=true;probe.holdPolicy=true});
+ await page.evaluate(()=>{
+  const button=[...document.querySelectorAll('button')].find(node=>node.textContent.trim()==='Copy link instruction');
+  if(!button)throw new Error('copy setup button missing');
+  button.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true}));
+  button.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true}));
+ });
+ await page.waitForFunction(()=>window.__sereinCopySetupProbe?.releasePolicy,undefined,{timeout:10000});
+ assert.equal(await copySetup.isDisabled(),true,'copy setup must lock while its consent policy mutation is pending');
+ const pendingSetup=await page.evaluate(async()=>{
+  const probe=window.__sereinCopySetupProbe,state=await chrome.runtime.sendMessage({type:'state'});
+  return {policyCalls:probe.policyMessages.length,ticketReplies:probe.ticketReplies.length,consent:state.state.policy.consent,releaseReady:typeof probe.releasePolicy==='function'};
+ });
+ assert.deepEqual(pendingSetup,{policyCalls:1,ticketReplies:0,consent:false,releaseReady:true},'overlapping setup clicks must serialize before ticket creation');
+ await page.evaluate(()=>window.__sereinCopySetupProbe.releasePolicy());
+ await page.waitForFunction(()=>window.__sereinCopySetupProbe?.ticketReplies.length===1&&document.querySelector('textarea[readonly]')?.value,undefined,{timeout:15000});
+ const setupInstructions=await page.locator('textarea[readonly]').inputValue();
+ const ticketText=setupInstructions.slice(setupInstructions.lastIndexOf('\n\n')+2);
+ const ticket=JSON.parse(ticketText);
+ assert.equal(ticket.protocol,1);assert.equal(ticket.browser,'chrome');assert.equal(ticket.source_id,state.state.source_id);
+ assert.equal(ticket.extension_id,id);assert.ok(ticket.nonce);assert.equal(ticket.consent,true);
+ assert.equal(ticket.install_skills,false);assert.deepEqual(ticket.adapters,['generic']);
+ assert.equal((await page.evaluate(()=>window.__sereinCopySetupProbe.policyMessages[0].message.patch)).consent,true);
+ assert.equal((await page.evaluate(()=>window.__sereinCopySetupProbe.policyMessages[0].message.patch)).recall_enabled,true);
+ assert.deepEqual(await page.evaluate(()=>window.__sereinCopySetupProbe.ticketReplies.map(reply=>reply.adapters)),[['generic']]);
+ const setupState=await send({type:'state'});assert.equal(setupState.state.policy.consent,true);assert.equal(setupState.state.policy.recall_enabled,true);
  await send({type:'pause',paused:true});assert.equal((await send({type:'state'})).state.policy.paused,true);
  await page.reload();assert.equal((await send({type:'state'})).state.policy.paused,true);
  await send({type:'pause',paused:false});
@@ -52,7 +133,6 @@ try{
  await page.getByRole('button',{name:'Your context',exact:true}).click();await page.getByRole('heading',{name:'Your context',exact:true}).waitFor();await setTheme('light');await page.screenshot({animations:'disabled',path:path.join(evidence,'context-empty-light.png'),fullPage:true});
  await setTheme('dark');await page.screenshot({animations:'disabled',path:path.join(evidence,'context-empty-dark.png'),fullPage:true});
  // Real runtime.sendNativeMessage round trip with a synthetic isolated vault.
- const ticket=await send({type:'ticket',adapters:['generic'],label:'Synthetic browser fixture'});
  const nativeEnv={...process.env,SEREIN_DATA_DIR:path.join(temp,'data'),SEREIN_INSTALL_HOME:path.join(temp,'home')};
  const setup=JSON.parse(browserRuntimeDir
   ? execFileSync(path.join(browserRuntimeDir,'serein'),['setup','--request-stdin','--json'],{input:JSON.stringify(ticket),env:nativeEnv,cwd:browserRuntimeDir}).toString()

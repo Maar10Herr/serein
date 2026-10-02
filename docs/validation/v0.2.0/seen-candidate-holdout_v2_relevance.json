@@ -1,0 +1,1461 @@
+{
+  "aggregate": {
+    "evaluated_query_count": 35,
+    "expected_empty_false_positives": [],
+    "expected_empty_query_count": 12,
+    "expected_empty_specificity": 1.0,
+    "expected_empty_true_negatives": 12,
+    "latency_ms": {
+      "mean": 58.21588805714287,
+      "median": 57.744499999999995,
+      "p95": 61.886917
+    },
+    "mrr_macro_non_empty": 0.6739130434782609,
+    "ndcg_at_6_macro_non_empty": 0.6150441380295263,
+    "non_empty_query_count": 23,
+    "packet_bytes": {
+      "max": 2457,
+      "mean": 611.9714285714285
+    },
+    "precision_at_6_macro_non_empty": 0.12318840579710141,
+    "recall_at_6_macro_non_empty": 0.6086956521739131
+  },
+  "development_quality_gate": null,
+  "evaluation_split": "held-out",
+  "fixture_id": "calibration_holdout_v2_relevance",
+  "ingest": {
+    "accepted_evidence_count": 40,
+    "fixture_evidence_count": 40,
+    "ingested_event_count": 40,
+    "invalid_hostname_safe_drop_ids": [],
+    "policy_rejection_counts": {},
+    "unique_atom_count": 40
+  },
+  "invariant_checks": {
+    "checks_passed": {
+      "context_at_most_six_records": 35,
+      "observed_evidence_has_unknown_subject": 29,
+      "packet_within_requested_byte_limit": 35,
+      "request_id_preserved": 35
+    },
+    "context_limit_records": 6,
+    "failures": [],
+    "packet_limit_bytes": 4096
+  },
+  "metric_definitions": {
+    "aggregation": "Macro average across non-empty queries. Expected-empty queries are measured separately with specificity.",
+    "mrr": "Reciprocal rank of the first returned atom that supports any expected evidence ID.",
+    "ndcg_at_6": "Binary relevance nDCG over returned atoms; expected duplicate observations that share one atom count as one retrievable item.",
+    "precision_at_6": "Relevant returned atom positions divided by six, even when fewer than six atoms are returned.",
+    "recall_at_6": "Unique expected canonical atoms represented by the top six returned atoms divided by unique expected canonical atoms. Expected labels without an ingestible atom are counted as unmatched units."
+  },
+  "model_pack": "override",
+  "model_pack_available": true,
+  "queries": [
+    {
+      "expected_canonical_atom_ids": [
+        "8b1c375b-87d1-4957-b5b0-1a04101dc0fa",
+        "edfef1a4-2799-4f66-9823-e415f8b5a33f"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "drought_gov_current",
+        "drought_gov_monitor"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 69.84662499999999,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": 0.0,
+      "ndcg_at_6": -0.0,
+      "packet_bytes": 244,
+      "precision_at_6": 0.0,
+      "query": "¿Dónde puedo consultar el seguimiento de la sequía y sus efectos en Estados Unidos?",
+      "query_id": "q_drought_es",
+      "ranked_results": [],
+      "recall_at_6": 0.0,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.302291999999994,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "Where are public transit GTFS feed rules documented?",
+      "query_id": "q_empty_10",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "199e74e0-9373-4035-8b42-4111272e327a"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "usgs_wetlands_climate"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.431667,
+      "matched_canonical_atom_ids": [
+        "199e74e0-9373-4035-8b42-4111272e327a"
+      ],
+      "matched_evidence_ids": [
+        "usgs_wetlands_climate"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 686,
+      "precision_at_6": 0.16666666666666666,
+      "query": "Which USGS page links wetlands with climate change?",
+      "query_id": "q_wetlands_3",
+      "ranked_results": [
+        {
+          "atom_id": "199e74e0-9373-4035-8b42-4111272e327a",
+          "evidence_ids": [
+            "usgs_wetlands_climate"
+          ],
+          "matched_expected_evidence_ids": [
+            "usgs_wetlands_climate"
+          ],
+          "rank": 1,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "199e74e0-9373-4035-8b42-4111272e327a"
+      ],
+      "returned_evidence_ids": [
+        "usgs_wetlands_climate"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.533165999999994,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "Which source explains residential rooftop solar tax credits?",
+      "query_id": "q_empty_01",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "6ff24386-40dd-4a99-b85a-a450a34a2d48"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "doe_saf"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.227333,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": 0.0,
+      "ndcg_at_6": -0.0,
+      "packet_bytes": 244,
+      "precision_at_6": 0.0,
+      "query": "持続可能な航空燃料の原料と製造経路を説明する資料はどれですか？",
+      "query_id": "q_saf_ja",
+      "ranked_results": [],
+      "recall_at_6": 0.0,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "8b1c375b-87d1-4957-b5b0-1a04101dc0fa",
+        "edfef1a4-2799-4f66-9823-e415f8b5a33f"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "drought_gov_current",
+        "drought_gov_monitor"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "44af80c6-18f5-4b57-96b4-2b04c3bb35e1"
+      ],
+      "latency_ms": 57.577125,
+      "matched_canonical_atom_ids": [
+        "8b1c375b-87d1-4957-b5b0-1a04101dc0fa",
+        "edfef1a4-2799-4f66-9823-e415f8b5a33f"
+      ],
+      "matched_evidence_ids": [
+        "drought_gov_current",
+        "drought_gov_monitor"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 0.9197207891481876,
+      "packet_bytes": 1585,
+      "precision_at_6": 0.3333333333333333,
+      "query": "Where can I see U.S. drought monitoring and current conditions?",
+      "query_id": "q_drought_1",
+      "ranked_results": [
+        {
+          "atom_id": "8b1c375b-87d1-4957-b5b0-1a04101dc0fa",
+          "evidence_ids": [
+            "drought_gov_current"
+          ],
+          "matched_expected_evidence_ids": [
+            "drought_gov_current"
+          ],
+          "rank": 1,
+          "relevant": true
+        },
+        {
+          "atom_id": "44af80c6-18f5-4b57-96b4-2b04c3bb35e1",
+          "evidence_ids": [
+            "usdm_guide"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 2,
+          "relevant": false
+        },
+        {
+          "atom_id": "edfef1a4-2799-4f66-9823-e415f8b5a33f",
+          "evidence_ids": [
+            "drought_gov_monitor"
+          ],
+          "matched_expected_evidence_ids": [
+            "drought_gov_monitor"
+          ],
+          "rank": 3,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "8b1c375b-87d1-4957-b5b0-1a04101dc0fa",
+        "44af80c6-18f5-4b57-96b4-2b04c3bb35e1",
+        "edfef1a4-2799-4f66-9823-e415f8b5a33f"
+      ],
+      "returned_evidence_ids": [
+        "drought_gov_current",
+        "drought_gov_monitor",
+        "usdm_guide"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "513cbdad-d5e1-4ac4-9be2-12ede3d116dd",
+        "524d52fb-e8c4-4f08-8cb9-7b82f1601788"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "epa_gi_research",
+        "epa_green_infrastructure"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.090042000000004,
+      "matched_canonical_atom_ids": [
+        "524d52fb-e8c4-4f08-8cb9-7b82f1601788"
+      ],
+      "matched_evidence_ids": [
+        "epa_green_infrastructure"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 0.6131471927654584,
+      "packet_bytes": 687,
+      "precision_at_6": 0.16666666666666666,
+      "query": "Where did I read EPA’s definition of green infrastructure and its water benefits?",
+      "query_id": "q_stormwater_2",
+      "ranked_results": [
+        {
+          "atom_id": "524d52fb-e8c4-4f08-8cb9-7b82f1601788",
+          "evidence_ids": [
+            "epa_green_infrastructure"
+          ],
+          "matched_expected_evidence_ids": [
+            "epa_green_infrastructure"
+          ],
+          "rank": 1,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 0.5,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "524d52fb-e8c4-4f08-8cb9-7b82f1601788"
+      ],
+      "returned_evidence_ids": [
+        "epa_green_infrastructure"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "30b6b804-ec63-41eb-8c04-1ae7b88aaee5"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "faa_saf"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 58.414333,
+      "matched_canonical_atom_ids": [
+        "30b6b804-ec63-41eb-8c04-1ae7b88aaee5"
+      ],
+      "matched_evidence_ids": [
+        "faa_saf"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 684,
+      "precision_at_6": 0.16666666666666666,
+      "query": "Which FAA page covers aviation alternative fuels and sustainable fuel approval?",
+      "query_id": "q_saf_2",
+      "ranked_results": [
+        {
+          "atom_id": "30b6b804-ec63-41eb-8c04-1ae7b88aaee5",
+          "evidence_ids": [
+            "faa_saf"
+          ],
+          "matched_expected_evidence_ids": [
+            "faa_saf"
+          ],
+          "rank": 1,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "30b6b804-ec63-41eb-8c04-1ae7b88aaee5"
+      ],
+      "returned_evidence_ids": [
+        "faa_saf"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.701750000000004,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "Which page describes hydrothermal vents on the ocean floor?",
+      "query_id": "q_empty_03",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.661790999999994,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "What guide discusses fish passage at hydropower dams?",
+      "query_id": "q_empty_08",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.719542,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "Which agency report compares lithium-ion battery recycling methods?",
+      "query_id": "q_empty_05",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "5250a4f7-7793-4988-b965-37f782220e77",
+        "95b326bd-6bb3-4730-af46-280988264935"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "nasa_drought",
+        "nasa_earthdata_drought"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 61.886917,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": 0.0,
+      "ndcg_at_6": -0.0,
+      "packet_bytes": 244,
+      "precision_at_6": 0.0,
+      "query": "What NASA pages explain satellite observations of drought?",
+      "query_id": "q_drought_2",
+      "ranked_results": [],
+      "recall_at_6": 0.0,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 58.26475,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "Which resource explains Antarctic ozone hole measurements?",
+      "query_id": "q_empty_07",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "3c1c2529-3609-40fb-8d0c-0aa84608b7a3"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "usgs_drought"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.20741700000001,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": 0.0,
+      "ndcg_at_6": -0.0,
+      "packet_bytes": 244,
+      "precision_at_6": 0.0,
+      "query": "Which USGS resource describes drought science and water conditions?",
+      "query_id": "q_drought_3",
+      "ranked_results": [],
+      "recall_at_6": 0.0,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "d2e2119c-cae6-4ac9-ac1d-fe5cc6016a12"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "epa_wetlands"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 58.026,
+      "matched_canonical_atom_ids": [
+        "d2e2119c-cae6-4ac9-ac1d-fe5cc6016a12"
+      ],
+      "matched_evidence_ids": [
+        "epa_wetlands"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 687,
+      "precision_at_6": 0.16666666666666666,
+      "query": "哪个 EPA 资源介绍湿地的定义和保护计划？",
+      "query_id": "q_wetlands_zh",
+      "ranked_results": [
+        {
+          "atom_id": "d2e2119c-cae6-4ac9-ac1d-fe5cc6016a12",
+          "evidence_ids": [
+            "epa_wetlands"
+          ],
+          "matched_expected_evidence_ids": [
+            "epa_wetlands"
+          ],
+          "rank": 1,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "d2e2119c-cae6-4ac9-ac1d-fe5cc6016a12"
+      ],
+      "returned_evidence_ids": [
+        "epa_wetlands"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "f7b51734-c679-4528-9dba-7360d9190250"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "nsidc_permafrost"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "804b6cbc-7be0-4e02-abf6-43628e5722ef",
+        "052adc48-cb67-432e-a68b-d87469404c06",
+        "fff3d04b-ddaf-41c7-bb01-f394113efbf4",
+        "a3e4e6d4-7b59-4817-81ea-0da704425486"
+      ],
+      "latency_ms": 58.099708,
+      "matched_canonical_atom_ids": [
+        "f7b51734-c679-4528-9dba-7360d9190250"
+      ],
+      "matched_evidence_ids": [
+        "nsidc_permafrost"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 2457,
+      "precision_at_6": 0.16666666666666666,
+      "query": "Which guide defines permafrost and explains where permanently frozen ground occurs?",
+      "query_id": "q_permafrost_1",
+      "ranked_results": [
+        {
+          "atom_id": "f7b51734-c679-4528-9dba-7360d9190250",
+          "evidence_ids": [
+            "nsidc_permafrost"
+          ],
+          "matched_expected_evidence_ids": [
+            "nsidc_permafrost"
+          ],
+          "rank": 1,
+          "relevant": true
+        },
+        {
+          "atom_id": "804b6cbc-7be0-4e02-abf6-43628e5722ef",
+          "evidence_ids": [
+            "nasa_permafrost"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 2,
+          "relevant": false
+        },
+        {
+          "atom_id": "052adc48-cb67-432e-a68b-d87469404c06",
+          "evidence_ids": [
+            "usgs_permafrost"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 3,
+          "relevant": false
+        },
+        {
+          "atom_id": "fff3d04b-ddaf-41c7-bb01-f394113efbf4",
+          "evidence_ids": [
+            "frontiers_permafrost"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 4,
+          "relevant": false
+        },
+        {
+          "atom_id": "a3e4e6d4-7b59-4817-81ea-0da704425486",
+          "evidence_ids": [
+            "nps_alaska_permafrost"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 5,
+          "relevant": false
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "f7b51734-c679-4528-9dba-7360d9190250",
+        "804b6cbc-7be0-4e02-abf6-43628e5722ef",
+        "052adc48-cb67-432e-a68b-d87469404c06",
+        "fff3d04b-ddaf-41c7-bb01-f394113efbf4",
+        "a3e4e6d4-7b59-4817-81ea-0da704425486"
+      ],
+      "returned_evidence_ids": [
+        "frontiers_permafrost",
+        "nasa_permafrost",
+        "nps_alaska_permafrost",
+        "nsidc_permafrost",
+        "usgs_permafrost"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "bc53dece-fdef-4692-afda-ba3172fcb462",
+        "e6f05b9e-1de6-4359-b460-32dbc9a52e1d"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "eia_saf",
+        "iata_saf"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "1bd2d714-b9f7-4b4a-b5ba-9a899e48bb00",
+        "315c080e-a802-4734-b494-57487335df87",
+        "44b6c10a-c873-4f3c-9654-1e64733b3931"
+      ],
+      "latency_ms": 57.606249999999996,
+      "matched_canonical_atom_ids": [
+        "e6f05b9e-1de6-4359-b460-32dbc9a52e1d"
+      ],
+      "matched_evidence_ids": [
+        "eia_saf"
+      ],
+      "mrr": 0.5,
+      "ndcg_at_6": 0.38685280723454163,
+      "packet_bytes": 2061,
+      "precision_at_6": 0.16666666666666666,
+      "query": "Which airline-industry overview explains sustainable aviation fuel adoption and emissions?",
+      "query_id": "q_saf_4",
+      "ranked_results": [
+        {
+          "atom_id": "1bd2d714-b9f7-4b4a-b5ba-9a899e48bb00",
+          "evidence_ids": [
+            "nrel_saf"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 1,
+          "relevant": false
+        },
+        {
+          "atom_id": "e6f05b9e-1de6-4359-b460-32dbc9a52e1d",
+          "evidence_ids": [
+            "eia_saf"
+          ],
+          "matched_expected_evidence_ids": [
+            "eia_saf"
+          ],
+          "rank": 2,
+          "relevant": true
+        },
+        {
+          "atom_id": "315c080e-a802-4734-b494-57487335df87",
+          "evidence_ids": [
+            "afdc_saf"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 3,
+          "relevant": false
+        },
+        {
+          "atom_id": "44b6c10a-c873-4f3c-9654-1e64733b3931",
+          "evidence_ids": [
+            "icao_saf"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 4,
+          "relevant": false
+        }
+      ],
+      "recall_at_6": 0.5,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "1bd2d714-b9f7-4b4a-b5ba-9a899e48bb00",
+        "e6f05b9e-1de6-4359-b460-32dbc9a52e1d",
+        "315c080e-a802-4734-b494-57487335df87",
+        "44b6c10a-c873-4f3c-9654-1e64733b3931"
+      ],
+      "returned_evidence_ids": [
+        "afdc_saf",
+        "eia_saf",
+        "icao_saf",
+        "nrel_saf"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.293209,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "Where can I find an overview of radio telescope arrays?",
+      "query_id": "q_empty_06",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "6ff24386-40dd-4a99-b85a-a450a34a2d48"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "doe_saf"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 56.896625,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": 0.0,
+      "ndcg_at_6": -0.0,
+      "packet_bytes": 244,
+      "precision_at_6": 0.0,
+      "query": "Which DOE resource outlines feedstocks and production pathways for sustainable aviation fuel?",
+      "query_id": "q_saf_1",
+      "ranked_results": [],
+      "recall_at_6": 0.0,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.963916999999995,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "What guide covers parametrized tests in Python?",
+      "query_id": "q_empty_04",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "f2a21c09-a62c-45ce-bfcd-8913daa0cb02"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "usgs_urban_water"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.744499999999995,
+      "matched_canonical_atom_ids": [
+        "f2a21c09-a62c-45ce-bfcd-8913daa0cb02"
+      ],
+      "matched_evidence_ids": [
+        "usgs_urban_water"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 689,
+      "precision_at_6": 0.16666666666666666,
+      "query": "What source connects urban development to runoff and water quality?",
+      "query_id": "q_stormwater_4",
+      "ranked_results": [
+        {
+          "atom_id": "f2a21c09-a62c-45ce-bfcd-8913daa0cb02",
+          "evidence_ids": [
+            "usgs_urban_water"
+          ],
+          "matched_expected_evidence_ids": [
+            "usgs_urban_water"
+          ],
+          "rank": 1,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "f2a21c09-a62c-45ce-bfcd-8913daa0cb02"
+      ],
+      "returned_evidence_ids": [
+        "usgs_urban_water"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "756be648-6fb1-4f20-a562-242a3299e727"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "epa_rain_gardens"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.913833,
+      "matched_canonical_atom_ids": [
+        "756be648-6fb1-4f20-a562-242a3299e727"
+      ],
+      "matched_evidence_ids": [
+        "epa_rain_gardens"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 670,
+      "precision_at_6": 0.16666666666666666,
+      "query": "Which EPA page explains how rain gardens capture runoff from roofs and pavement?",
+      "query_id": "q_stormwater_1",
+      "ranked_results": [
+        {
+          "atom_id": "756be648-6fb1-4f20-a562-242a3299e727",
+          "evidence_ids": [
+            "epa_rain_gardens"
+          ],
+          "matched_expected_evidence_ids": [
+            "epa_rain_gardens"
+          ],
+          "rank": 1,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "756be648-6fb1-4f20-a562-242a3299e727"
+      ],
+      "returned_evidence_ids": [
+        "epa_rain_gardens"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.622708,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "What documentation explains Kubernetes pod autoscaling?",
+      "query_id": "q_empty_12",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "df1365ea-a0d6-4fb4-9542-67ec8db85d83"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "noaa_wetlands"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.867584,
+      "matched_canonical_atom_ids": [
+        "df1365ea-a0d6-4fb4-9542-67ec8db85d83"
+      ],
+      "matched_evidence_ids": [
+        "noaa_wetlands"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 676,
+      "precision_at_6": 0.16666666666666666,
+      "query": "Where does NOAA explain coastal wetlands and their benefits?",
+      "query_id": "q_wetlands_2",
+      "ranked_results": [
+        {
+          "atom_id": "df1365ea-a0d6-4fb4-9542-67ec8db85d83",
+          "evidence_ids": [
+            "noaa_wetlands"
+          ],
+          "matched_expected_evidence_ids": [
+            "noaa_wetlands"
+          ],
+          "rank": 1,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "df1365ea-a0d6-4fb4-9542-67ec8db85d83"
+      ],
+      "returned_evidence_ids": [
+        "noaa_wetlands"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "44b6c10a-c873-4f3c-9654-1e64733b3931"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "icao_saf"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 58.464666,
+      "matched_canonical_atom_ids": [
+        "44b6c10a-c873-4f3c-9654-1e64733b3931"
+      ],
+      "matched_evidence_ids": [
+        "icao_saf"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 706,
+      "precision_at_6": 0.16666666666666666,
+      "query": "Where does ICAO describe its global framework for aviation alternative fuels?",
+      "query_id": "q_saf_3",
+      "ranked_results": [
+        {
+          "atom_id": "44b6c10a-c873-4f3c-9654-1e64733b3931",
+          "evidence_ids": [
+            "icao_saf"
+          ],
+          "matched_expected_evidence_ids": [
+            "icao_saf"
+          ],
+          "rank": 1,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "44b6c10a-c873-4f3c-9654-1e64733b3931"
+      ],
+      "returned_evidence_ids": [
+        "icao_saf"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "e95fb540-b9bc-4a0b-a420-31090b0b97bf"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "noaa_arctic_permafrost"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "052adc48-cb67-432e-a68b-d87469404c06"
+      ],
+      "latency_ms": 58.022833000000006,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": 0.0,
+      "ndcg_at_6": -0.0,
+      "packet_bytes": 678,
+      "precision_at_6": 0.0,
+      "query": "Where are annual Arctic Report Card observations of permafrost summarized?",
+      "query_id": "q_permafrost_2",
+      "ranked_results": [
+        {
+          "atom_id": "052adc48-cb67-432e-a68b-d87469404c06",
+          "evidence_ids": [
+            "usgs_permafrost"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 1,
+          "relevant": false
+        }
+      ],
+      "recall_at_6": 0.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "052adc48-cb67-432e-a68b-d87469404c06"
+      ],
+      "returned_evidence_ids": [
+        "usgs_permafrost"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 58.098333000000004,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "Which source compares wildfire smoke masks for children?",
+      "query_id": "q_empty_11",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.804333,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "Where did I read about monarch butterfly migration routes?",
+      "query_id": "q_empty_02",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "db926adf-3fad-448c-93c3-30ec1158ba38"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "nacto_stormwater"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "513cbdad-d5e1-4ac4-9be2-12ede3d116dd"
+      ],
+      "latency_ms": 57.650125,
+      "matched_canonical_atom_ids": [
+        "db926adf-3fad-448c-93c3-30ec1158ba38"
+      ],
+      "matched_evidence_ids": [
+        "nacto_stormwater"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 1127,
+      "precision_at_6": 0.16666666666666666,
+      "query": "Which design guide discusses stormwater management on city streets?",
+      "query_id": "q_stormwater_3",
+      "ranked_results": [
+        {
+          "atom_id": "db926adf-3fad-448c-93c3-30ec1158ba38",
+          "evidence_ids": [
+            "nacto_stormwater"
+          ],
+          "matched_expected_evidence_ids": [
+            "nacto_stormwater"
+          ],
+          "rank": 1,
+          "relevant": true
+        },
+        {
+          "atom_id": "513cbdad-d5e1-4ac4-9be2-12ede3d116dd",
+          "evidence_ids": [
+            "epa_gi_research"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 2,
+          "relevant": false
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "db926adf-3fad-448c-93c3-30ec1158ba38",
+        "513cbdad-d5e1-4ac4-9be2-12ede3d116dd"
+      ],
+      "returned_evidence_ids": [
+        "epa_gi_research",
+        "nacto_stormwater"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "8f5b9769-fbef-4dca-980c-a7ade406dbac"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ramsar_mission"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.537833,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": 0.0,
+      "ndcg_at_6": -0.0,
+      "packet_bytes": 244,
+      "precision_at_6": 0.0,
+      "query": "Where are the Ramsar Convention’s wetland mission and goals summarized?",
+      "query_id": "q_wetlands_4",
+      "ranked_results": [],
+      "recall_at_6": 0.0,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "44af80c6-18f5-4b57-96b4-2b04c3bb35e1",
+        "f69fd738-532a-4278-8612-645e8d36d73a"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "usdm_guide",
+        "usdm_map"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "edfef1a4-2799-4f66-9823-e415f8b5a33f"
+      ],
+      "latency_ms": 58.349,
+      "matched_canonical_atom_ids": [
+        "44af80c6-18f5-4b57-96b4-2b04c3bb35e1"
+      ],
+      "matched_evidence_ids": [
+        "usdm_guide"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 0.6131471927654584,
+      "packet_bytes": 1132,
+      "precision_at_6": 0.16666666666666666,
+      "query": "Where is the U.S. Drought Monitor explained as a climate data product?",
+      "query_id": "q_drought_4",
+      "ranked_results": [
+        {
+          "atom_id": "44af80c6-18f5-4b57-96b4-2b04c3bb35e1",
+          "evidence_ids": [
+            "usdm_guide"
+          ],
+          "matched_expected_evidence_ids": [
+            "usdm_guide"
+          ],
+          "rank": 1,
+          "relevant": true
+        },
+        {
+          "atom_id": "edfef1a4-2799-4f66-9823-e415f8b5a33f",
+          "evidence_ids": [
+            "drought_gov_monitor"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 2,
+          "relevant": false
+        }
+      ],
+      "recall_at_6": 0.5,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "44af80c6-18f5-4b57-96b4-2b04c3bb35e1",
+        "edfef1a4-2799-4f66-9823-e415f8b5a33f"
+      ],
+      "returned_evidence_ids": [
+        "drought_gov_monitor",
+        "usdm_guide"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "ce4cde5e-c40d-4881-a275-4a2ff4023e2b",
+        "fff3d04b-ddaf-41c7-bb01-f394113efbf4"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "frontiers_permafrost",
+        "nasa_siberia"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "804b6cbc-7be0-4e02-abf6-43628e5722ef"
+      ],
+      "latency_ms": 57.679625,
+      "matched_canonical_atom_ids": [
+        "fff3d04b-ddaf-41c7-bb01-f394113efbf4"
+      ],
+      "matched_evidence_ids": [
+        "frontiers_permafrost"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 0.6131471927654584,
+      "packet_bytes": 1137,
+      "precision_at_6": 0.16666666666666666,
+      "query": "What source explains how thawing permafrost connects with climate change?",
+      "query_id": "q_permafrost_4",
+      "ranked_results": [
+        {
+          "atom_id": "fff3d04b-ddaf-41c7-bb01-f394113efbf4",
+          "evidence_ids": [
+            "frontiers_permafrost"
+          ],
+          "matched_expected_evidence_ids": [
+            "frontiers_permafrost"
+          ],
+          "rank": 1,
+          "relevant": true
+        },
+        {
+          "atom_id": "804b6cbc-7be0-4e02-abf6-43628e5722ef",
+          "evidence_ids": [
+            "nasa_permafrost"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 2,
+          "relevant": false
+        }
+      ],
+      "recall_at_6": 0.5,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "fff3d04b-ddaf-41c7-bb01-f394113efbf4",
+        "804b6cbc-7be0-4e02-abf6-43628e5722ef"
+      ],
+      "returned_evidence_ids": [
+        "frontiers_permafrost",
+        "nasa_permafrost"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 58.119499999999995,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "Which paper describes detecting exoplanets with transit photometry?",
+      "query_id": "q_empty_09",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "d2e2119c-cae6-4ac9-ac1d-fe5cc6016a12"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "epa_wetlands"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.866875,
+      "matched_canonical_atom_ids": [
+        "d2e2119c-cae6-4ac9-ac1d-fe5cc6016a12"
+      ],
+      "matched_evidence_ids": [
+        "epa_wetlands"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 687,
+      "precision_at_6": 0.16666666666666666,
+      "query": "Which EPA resource defines wetlands and explains their protection programs?",
+      "query_id": "q_wetlands_1",
+      "ranked_results": [
+        {
+          "atom_id": "d2e2119c-cae6-4ac9-ac1d-fe5cc6016a12",
+          "evidence_ids": [
+            "epa_wetlands"
+          ],
+          "matched_expected_evidence_ids": [
+            "epa_wetlands"
+          ],
+          "rank": 1,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "d2e2119c-cae6-4ac9-ac1d-fe5cc6016a12"
+      ],
+      "returned_evidence_ids": [
+        "epa_wetlands"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "052adc48-cb67-432e-a68b-d87469404c06"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "usgs_permafrost"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 58.063875,
+      "matched_canonical_atom_ids": [
+        "052adc48-cb67-432e-a68b-d87469404c06"
+      ],
+      "matched_evidence_ids": [
+        "usgs_permafrost"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 678,
+      "precision_at_6": 0.16666666666666666,
+      "query": "Which USGS page covers permafrost research and changing ground conditions?",
+      "query_id": "q_permafrost_3",
+      "ranked_results": [
+        {
+          "atom_id": "052adc48-cb67-432e-a68b-d87469404c06",
+          "evidence_ids": [
+            "usgs_permafrost"
+          ],
+          "matched_expected_evidence_ids": [
+            "usgs_permafrost"
+          ],
+          "rank": 1,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "052adc48-cb67-432e-a68b-d87469404c06"
+      ],
+      "returned_evidence_ids": [
+        "usgs_permafrost"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    }
+  ],
+  "retrieval_mode_counts": {
+    "hybrid": 35,
+    "lexical": 0
+  },
+  "synthetic_only": true
+}

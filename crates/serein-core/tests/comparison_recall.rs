@@ -780,13 +780,11 @@ fn r17_direction_uses_latest_confirmation_text_for_ordering() {
         .find(|record| record["id"] == replaced)
         .unwrap();
     assert_eq!(replaced_record["text"], "travel route from south to north.");
-    assert!(
-        packet["context"]
-            .as_array()
-            .unwrap()
-            .iter()
-            .all(|record| record["state"] == "confirmed")
-    );
+    assert!(packet["context"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .all(|record| record["state"] == "confirmed"));
 }
 
 #[test]

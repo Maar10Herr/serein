@@ -1,0 +1,2452 @@
+{
+  "fixture_id": "serein-calibration-dev-multilingual-v1",
+  "query_count": 48,
+  "evaluation_split": "development",
+  "baseline_role": "last recorded T04 development run",
+  "baseline_report": "<validation-artifact:t04-calibration_dev_multilingual.json>",
+  "baseline_sha256": "cdce55cfb44526d584f4c3f74f35ef84b437179532c476dfb33a8de6d711585a",
+  "candidate_report": "seen-candidate-dev_multilingual.json",
+  "candidate_report_sha256": "9c59588d82bbc258e6be5ecd33a9c77c8051226af36902feeb0b69f04c1c3efa",
+  "run_log": "<validation-artifact:candidate-dev_multilingual.log>",
+  "fixture_file": "tests/fixtures/calibration_dev_multilingual.json",
+  "fixture_sha256": "e2e5588feeba77db08d3330042973c4f8de41b552481a9dad0e040ca8fa96859",
+  "baseline_metrics": {
+    "evaluated_query_count": 48,
+    "non_empty_query_count": 24,
+    "expected_empty_query_count": 24,
+    "recall_at_6_macro_non_empty": 0.7701388888888889,
+    "precision_at_6_macro_non_empty": 0.2222222222222222,
+    "mrr_macro_non_empty": 0.8888888888888888,
+    "ndcg_at_6_macro_non_empty": 0.7957187574030266,
+    "expected_empty_specificity": 1.0,
+    "expected_empty_true_negatives": 24
+  },
+  "candidate_metrics": {
+    "evaluated_query_count": 48,
+    "non_empty_query_count": 24,
+    "expected_empty_query_count": 24,
+    "recall_at_6_macro_non_empty": 0.7701388888888889,
+    "precision_at_6_macro_non_empty": 0.2222222222222222,
+    "mrr_macro_non_empty": 0.8888888888888888,
+    "ndcg_at_6_macro_non_empty": 0.7957187574030266,
+    "expected_empty_specificity": 1.0,
+    "expected_empty_true_negatives": 24
+  },
+  "paired_aggregate_deltas_candidate_minus_baseline": {
+    "recall_at_6_macro_non_empty": 0.0,
+    "precision_at_6_macro_non_empty": 0.0,
+    "mrr_macro_non_empty": 0.0,
+    "ndcg_at_6_macro_non_empty": 0.0,
+    "expected_empty_specificity": 0.0
+  },
+  "new_unsupported_inclusion_count": 0,
+  "new_unsupported_inclusions": [],
+  "new_miss_count": 0,
+  "new_misses": [],
+  "all_candidate_queries_with_misses": [
+    {
+      "fixture": "dev_multilingual",
+      "query_id": "q003",
+      "expected_evidence_ids_missing": [
+        "ev006"
+      ]
+    },
+    {
+      "fixture": "dev_multilingual",
+      "query_id": "q008",
+      "expected_evidence_ids_missing": [
+        "ev009",
+        "ev011"
+      ]
+    },
+    {
+      "fixture": "dev_multilingual",
+      "query_id": "q014",
+      "expected_evidence_ids_missing": [
+        "ev017",
+        "ev018",
+        "ev020"
+      ]
+    },
+    {
+      "fixture": "dev_multilingual",
+      "query_id": "q015",
+      "expected_evidence_ids_missing": [
+        "ev018",
+        "ev023"
+      ]
+    },
+    {
+      "fixture": "dev_multilingual",
+      "query_id": "q016",
+      "expected_evidence_ids_missing": [
+        "ev017"
+      ]
+    },
+    {
+      "fixture": "dev_multilingual",
+      "query_id": "q019",
+      "expected_evidence_ids_missing": [
+        "ev018",
+        "ev023"
+      ]
+    },
+    {
+      "fixture": "dev_multilingual",
+      "query_id": "q020",
+      "expected_evidence_ids_missing": [
+        "ev016",
+        "ev021",
+        "ev023"
+      ]
+    },
+    {
+      "fixture": "dev_multilingual",
+      "query_id": "q021",
+      "expected_evidence_ids_missing": [
+        "ev028"
+      ]
+    },
+    {
+      "fixture": "dev_multilingual",
+      "query_id": "q026",
+      "expected_evidence_ids_missing": [
+        "ev023"
+      ]
+    },
+    {
+      "fixture": "dev_multilingual",
+      "query_id": "q041",
+      "expected_evidence_ids_missing": [
+        "ev005"
+      ]
+    }
+  ],
+  "queries": [
+    {
+      "query_id": "q001",
+      "query": "¿Qué consulté sobre paneles solares fotovoltaicos?",
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev001",
+        "ev002",
+        "ev005"
+      ],
+      "baseline_returned_evidence_ids": [
+        "ev001",
+        "ev002",
+        "ev004",
+        "ev005"
+      ],
+      "candidate_returned_evidence_ids": [
+        "ev001",
+        "ev002",
+        "ev004",
+        "ev005"
+      ],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [
+        [
+          "ev005"
+        ],
+        [
+          "ev002"
+        ],
+        [
+          "ev001",
+          "ev004"
+        ]
+      ],
+      "candidate_ranked_evidence_groups": [
+        [
+          "ev005"
+        ],
+        [
+          "ev002"
+        ],
+        [
+          "ev001",
+          "ev004"
+        ]
+      ],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [
+        "ev001",
+        "ev002",
+        "ev005"
+      ],
+      "candidate_matched_evidence_ids": [
+        "ev001",
+        "ev002",
+        "ev005"
+      ],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": 0.0,
+        "precision_at_6": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_6": 0.0,
+        "latency_ms": -50.297292,
+        "packet_bytes": 261
+      },
+      "baseline_response_status": "ok",
+      "candidate_response_status": "ok"
+    },
+    {
+      "query_id": "q002",
+      "query": "¿Volví a investigar energía solar en otra sesión?",
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev001",
+        "ev004"
+      ],
+      "baseline_returned_evidence_ids": [
+        "ev001",
+        "ev002",
+        "ev004"
+      ],
+      "candidate_returned_evidence_ids": [
+        "ev001",
+        "ev002",
+        "ev004"
+      ],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [
+        [
+          "ev001",
+          "ev004"
+        ],
+        [
+          "ev002"
+        ]
+      ],
+      "candidate_ranked_evidence_groups": [
+        [
+          "ev001",
+          "ev004"
+        ],
+        [
+          "ev002"
+        ]
+      ],
+      "baseline_unsupported_returned_evidence_ids": [
+        "ev002"
+      ],
+      "candidate_unsupported_returned_evidence_ids": [
+        "ev002"
+      ],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [
+        "ev001",
+        "ev004"
+      ],
+      "candidate_matched_evidence_ids": [
+        "ev001",
+        "ev004"
+      ],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": 0.0,
+        "precision_at_6": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_6": 0.0,
+        "latency_ms": -48.08275,
+        "packet_bytes": 174
+      },
+      "baseline_response_status": "ok",
+      "candidate_response_status": "ok"
+    },
+    {
+      "query_id": "q003",
+      "query": "¿Qué leí sobre energía eólica?",
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev003",
+        "ev006",
+        "ev047"
+      ],
+      "baseline_returned_evidence_ids": [
+        "ev001",
+        "ev003",
+        "ev004",
+        "ev047"
+      ],
+      "candidate_returned_evidence_ids": [
+        "ev001",
+        "ev003",
+        "ev004",
+        "ev047"
+      ],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [
+        [
+          "ev003",
+          "ev047"
+        ],
+        [
+          "ev001",
+          "ev004"
+        ]
+      ],
+      "candidate_ranked_evidence_groups": [
+        [
+          "ev003",
+          "ev047"
+        ],
+        [
+          "ev001",
+          "ev004"
+        ]
+      ],
+      "baseline_unsupported_returned_evidence_ids": [
+        "ev001",
+        "ev004"
+      ],
+      "candidate_unsupported_returned_evidence_ids": [
+        "ev001",
+        "ev004"
+      ],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [
+        "ev003",
+        "ev047"
+      ],
+      "candidate_matched_evidence_ids": [
+        "ev003",
+        "ev047"
+      ],
+      "candidate_missed_expected_evidence_ids": [
+        "ev006"
+      ],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": 0.0,
+        "precision_at_6": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_6": 0.0,
+        "latency_ms": -48.737291,
+        "packet_bytes": 174
+      },
+      "baseline_response_status": "ok",
+      "candidate_response_status": "ok"
+    },
+    {
+      "query_id": "q004",
+      "query": "¿Qué modelo de panel solar elegí?",
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "baseline_returned_evidence_ids": [],
+      "candidate_returned_evidence_ids": [],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [],
+      "candidate_ranked_evidence_groups": [],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [],
+      "candidate_matched_evidence_ids": [],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": null,
+        "precision_at_6": null,
+        "mrr": null,
+        "ndcg_at_6": null,
+        "latency_ms": -48.078583,
+        "packet_bytes": 0
+      },
+      "baseline_response_status": "empty",
+      "candidate_response_status": "empty"
+    },
+    {
+      "query_id": "q005",
+      "query": "¿Cuánto costaba la instalación fotovoltaica?",
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "baseline_returned_evidence_ids": [],
+      "candidate_returned_evidence_ids": [],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [],
+      "candidate_ranked_evidence_groups": [],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [],
+      "candidate_matched_evidence_ids": [],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": null,
+        "precision_at_6": null,
+        "mrr": null,
+        "ndcg_at_6": null,
+        "latency_ms": -51.590875,
+        "packet_bytes": 0
+      },
+      "baseline_response_status": "empty",
+      "candidate_response_status": "empty"
+    },
+    {
+      "query_id": "q006",
+      "query": "¿Qué investigué?",
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "baseline_returned_evidence_ids": [],
+      "candidate_returned_evidence_ids": [],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [],
+      "candidate_ranked_evidence_groups": [],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [],
+      "candidate_matched_evidence_ids": [],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": null,
+        "precision_at_6": null,
+        "mrr": null,
+        "ndcg_at_6": null,
+        "latency_ms": -55.301668,
+        "packet_bytes": 0
+      },
+      "baseline_response_status": "empty",
+      "candidate_response_status": "empty"
+    },
+    {
+      "query_id": "q007",
+      "query": "¿Qué parque nacional de Tenerife vi?",
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev007",
+        "ev008"
+      ],
+      "baseline_returned_evidence_ids": [
+        "ev007",
+        "ev008"
+      ],
+      "candidate_returned_evidence_ids": [
+        "ev007",
+        "ev008"
+      ],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [
+        [
+          "ev007",
+          "ev008"
+        ]
+      ],
+      "candidate_ranked_evidence_groups": [
+        [
+          "ev007",
+          "ev008"
+        ]
+      ],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [
+        "ev007",
+        "ev008"
+      ],
+      "candidate_matched_evidence_ids": [
+        "ev007",
+        "ev008"
+      ],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": 0.0,
+        "precision_at_6": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_6": 0.0,
+        "latency_ms": -53.783125,
+        "packet_bytes": 87
+      },
+      "baseline_response_status": "ok",
+      "candidate_response_status": "ok"
+    },
+    {
+      "query_id": "q008",
+      "query": "¿Qué visité en Granada?",
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev009",
+        "ev010",
+        "ev011"
+      ],
+      "baseline_returned_evidence_ids": [
+        "ev010"
+      ],
+      "candidate_returned_evidence_ids": [
+        "ev010"
+      ],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [
+        [
+          "ev010"
+        ]
+      ],
+      "candidate_ranked_evidence_groups": [
+        [
+          "ev010"
+        ]
+      ],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [
+        "ev010"
+      ],
+      "candidate_matched_evidence_ids": [
+        "ev010"
+      ],
+      "candidate_missed_expected_evidence_ids": [
+        "ev009",
+        "ev011"
+      ],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": 0.0,
+        "precision_at_6": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_6": 0.0,
+        "latency_ms": -54.004083,
+        "packet_bytes": 87
+      },
+      "baseline_response_status": "ok",
+      "candidate_response_status": "ok"
+    },
+    {
+      "query_id": "q009",
+      "query": "¿Qué restaurante de Granada reservé?",
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "baseline_returned_evidence_ids": [],
+      "candidate_returned_evidence_ids": [],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [],
+      "candidate_ranked_evidence_groups": [],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [],
+      "candidate_matched_evidence_ids": [],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": null,
+        "precision_at_6": null,
+        "mrr": null,
+        "ndcg_at_6": null,
+        "latency_ms": -53.441875,
+        "packet_bytes": 0
+      },
+      "baseline_response_status": "empty",
+      "candidate_response_status": "empty"
+    },
+    {
+      "query_id": "q010",
+      "query": "¿Qué receta española abrí?",
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev012",
+        "ev013",
+        "ev014"
+      ],
+      "baseline_returned_evidence_ids": [
+        "ev012",
+        "ev013",
+        "ev014"
+      ],
+      "candidate_returned_evidence_ids": [
+        "ev012",
+        "ev013",
+        "ev014"
+      ],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [
+        [
+          "ev012",
+          "ev013"
+        ],
+        [
+          "ev014"
+        ]
+      ],
+      "candidate_ranked_evidence_groups": [
+        [
+          "ev012",
+          "ev013"
+        ],
+        [
+          "ev014"
+        ]
+      ],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [
+        "ev012",
+        "ev013",
+        "ev014"
+      ],
+      "candidate_matched_evidence_ids": [
+        "ev012",
+        "ev013",
+        "ev014"
+      ],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": 0.0,
+        "precision_at_6": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_6": 0.0,
+        "latency_ms": -53.052042,
+        "packet_bytes": 174
+      },
+      "baseline_response_status": "ok",
+      "candidate_response_status": "ok"
+    },
+    {
+      "query_id": "q011",
+      "query": "¿Prefería la tortilla con cebolla?",
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "baseline_returned_evidence_ids": [],
+      "candidate_returned_evidence_ids": [],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [],
+      "candidate_ranked_evidence_groups": [],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [],
+      "candidate_matched_evidence_ids": [],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": null,
+        "precision_at_6": null,
+        "mrr": null,
+        "ndcg_at_6": null,
+        "latency_ms": -48.256416,
+        "packet_bytes": 0
+      },
+      "baseline_response_status": "empty",
+      "candidate_response_status": "empty"
+    },
+    {
+      "query_id": "q012",
+      "query": "¿Qué planetas decidí visitar?",
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "baseline_returned_evidence_ids": [],
+      "candidate_returned_evidence_ids": [],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [],
+      "candidate_ranked_evidence_groups": [],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [],
+      "candidate_matched_evidence_ids": [],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": null,
+        "precision_at_6": null,
+        "mrr": null,
+        "ndcg_at_6": null,
+        "latency_ms": -48.466833,
+        "packet_bytes": 0
+      },
+      "baseline_response_status": "empty",
+      "candidate_response_status": "empty"
+    },
+    {
+      "query_id": "q013",
+      "query": "¿Qué página abrí sobre el sistema solar?",
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev015"
+      ],
+      "baseline_returned_evidence_ids": [
+        "ev001",
+        "ev004",
+        "ev015",
+        "ev048"
+      ],
+      "candidate_returned_evidence_ids": [
+        "ev001",
+        "ev004",
+        "ev015",
+        "ev048"
+      ],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [
+        [
+          "ev015",
+          "ev048"
+        ],
+        [
+          "ev001",
+          "ev004"
+        ]
+      ],
+      "candidate_ranked_evidence_groups": [
+        [
+          "ev015",
+          "ev048"
+        ],
+        [
+          "ev001",
+          "ev004"
+        ]
+      ],
+      "baseline_unsupported_returned_evidence_ids": [
+        "ev001",
+        "ev004"
+      ],
+      "candidate_unsupported_returned_evidence_ids": [
+        "ev001",
+        "ev004"
+      ],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [
+        "ev015"
+      ],
+      "candidate_matched_evidence_ids": [
+        "ev015"
+      ],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": 0.0,
+        "precision_at_6": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_6": 0.0,
+        "latency_ms": -47.982959,
+        "packet_bytes": 174
+      },
+      "baseline_response_status": "ok",
+      "candidate_response_status": "ok"
+    },
+    {
+      "query_id": "q014",
+      "query": "¿Qué trenes japoneses estaba comparando?",
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev016",
+        "ev017",
+        "ev018",
+        "ev019",
+        "ev020",
+        "ev021"
+      ],
+      "baseline_returned_evidence_ids": [
+        "ev016",
+        "ev019",
+        "ev021",
+        "ev022",
+        "ev024",
+        "ev029"
+      ],
+      "candidate_returned_evidence_ids": [
+        "ev016",
+        "ev019",
+        "ev021",
+        "ev022",
+        "ev024",
+        "ev029"
+      ],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [
+        [
+          "ev029"
+        ],
+        [
+          "ev022"
+        ],
+        [
+          "ev016",
+          "ev021"
+        ],
+        [
+          "ev024"
+        ],
+        [
+          "ev019"
+        ]
+      ],
+      "candidate_ranked_evidence_groups": [
+        [
+          "ev029"
+        ],
+        [
+          "ev022"
+        ],
+        [
+          "ev016",
+          "ev021"
+        ],
+        [
+          "ev024"
+        ],
+        [
+          "ev019"
+        ]
+      ],
+      "baseline_unsupported_returned_evidence_ids": [
+        "ev022",
+        "ev024",
+        "ev029"
+      ],
+      "candidate_unsupported_returned_evidence_ids": [
+        "ev022",
+        "ev024",
+        "ev029"
+      ],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [
+        "ev016",
+        "ev019",
+        "ev021"
+      ],
+      "candidate_matched_evidence_ids": [
+        "ev016",
+        "ev019",
+        "ev021"
+      ],
+      "candidate_missed_expected_evidence_ids": [
+        "ev017",
+        "ev018",
+        "ev020"
+      ],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": 0.0,
+        "precision_at_6": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_6": 0.0,
+        "latency_ms": -46.911126,
+        "packet_bytes": 435
+      },
+      "baseline_response_status": "ok",
+      "candidate_response_status": "ok"
+    },
+    {
+      "query_id": "q015",
+      "query": "What does E7 refer to in my Japanese rail research?",
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev018",
+        "ev023"
+      ],
+      "baseline_returned_evidence_ids": [],
+      "candidate_returned_evidence_ids": [],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [],
+      "candidate_ranked_evidence_groups": [],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [],
+      "candidate_matched_evidence_ids": [],
+      "candidate_missed_expected_evidence_ids": [
+        "ev018",
+        "ev023"
+      ],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": 0.0,
+        "precision_at_6": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_6": 0.0,
+        "latency_ms": -48.054833,
+        "packet_bytes": 0
+      },
+      "baseline_response_status": "empty",
+      "candidate_response_status": "empty"
+    },
+    {
+      "query_id": "q016",
+      "query": "新幹線の路線図について何を見ましたか？",
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev016",
+        "ev017",
+        "ev020",
+        "ev021",
+        "ev022"
+      ],
+      "baseline_returned_evidence_ids": [
+        "ev016",
+        "ev019",
+        "ev020",
+        "ev021",
+        "ev022",
+        "ev024",
+        "ev029"
+      ],
+      "candidate_returned_evidence_ids": [
+        "ev016",
+        "ev019",
+        "ev020",
+        "ev021",
+        "ev022",
+        "ev024",
+        "ev029"
+      ],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [
+        [
+          "ev022"
+        ],
+        [
+          "ev016",
+          "ev021"
+        ],
+        [
+          "ev029"
+        ],
+        [
+          "ev020"
+        ],
+        [
+          "ev024"
+        ],
+        [
+          "ev019"
+        ]
+      ],
+      "candidate_ranked_evidence_groups": [
+        [
+          "ev022"
+        ],
+        [
+          "ev016",
+          "ev021"
+        ],
+        [
+          "ev029"
+        ],
+        [
+          "ev020"
+        ],
+        [
+          "ev024"
+        ],
+        [
+          "ev019"
+        ]
+      ],
+      "baseline_unsupported_returned_evidence_ids": [
+        "ev019",
+        "ev024",
+        "ev029"
+      ],
+      "candidate_unsupported_returned_evidence_ids": [
+        "ev019",
+        "ev024",
+        "ev029"
+      ],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [
+        "ev016",
+        "ev020",
+        "ev021",
+        "ev022"
+      ],
+      "candidate_matched_evidence_ids": [
+        "ev016",
+        "ev020",
+        "ev021",
+        "ev022"
+      ],
+      "candidate_missed_expected_evidence_ids": [
+        "ev017"
+      ],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": 0.0,
+        "precision_at_6": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_6": 0.0,
+        "latency_ms": -47.605416,
+        "packet_bytes": 522
+      },
+      "baseline_response_status": "ok",
+      "candidate_response_status": "ok"
+    },
+    {
+      "query_id": "q017",
+      "query": "新幹線の切符を買いましたか？",
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "baseline_returned_evidence_ids": [],
+      "candidate_returned_evidence_ids": [],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [],
+      "candidate_ranked_evidence_groups": [],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [],
+      "candidate_matched_evidence_ids": [],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": null,
+        "precision_at_6": null,
+        "mrr": null,
+        "ndcg_at_6": null,
+        "latency_ms": -47.338125,
+        "packet_bytes": 0
+      },
+      "baseline_response_status": "empty",
+      "candidate_response_status": "empty"
+    },
+    {
+      "query_id": "q018",
+      "query": "What exact departure time did I choose for the E7?",
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "baseline_returned_evidence_ids": [],
+      "candidate_returned_evidence_ids": [],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [],
+      "candidate_ranked_evidence_groups": [],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [],
+      "candidate_matched_evidence_ids": [],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": null,
+        "precision_at_6": null,
+        "mrr": null,
+        "ndcg_at_6": null,
+        "latency_ms": -47.497542,
+        "packet_bytes": 0
+      },
+      "baseline_response_status": "empty",
+      "candidate_response_status": "empty"
+    },
+    {
+      "query_id": "q019",
+      "query": "What did I search about E7-series trains?",
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev018",
+        "ev023"
+      ],
+      "baseline_returned_evidence_ids": [],
+      "candidate_returned_evidence_ids": [],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [],
+      "candidate_ranked_evidence_groups": [],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [],
+      "candidate_matched_evidence_ids": [],
+      "candidate_missed_expected_evidence_ids": [
+        "ev018",
+        "ev023"
+      ],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": 0.0,
+        "precision_at_6": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_6": 0.0,
+        "latency_ms": -48.507459,
+        "packet_bytes": 0
+      },
+      "baseline_response_status": "empty",
+      "candidate_response_status": "empty"
+    },
+    {
+      "query_id": "q020",
+      "query": "Which Japanese rail topic did I revisit?",
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev016",
+        "ev021",
+        "ev022",
+        "ev023"
+      ],
+      "baseline_returned_evidence_ids": [
+        "ev022"
+      ],
+      "candidate_returned_evidence_ids": [
+        "ev022"
+      ],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [
+        [
+          "ev022"
+        ]
+      ],
+      "candidate_ranked_evidence_groups": [
+        [
+          "ev022"
+        ]
+      ],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [
+        "ev022"
+      ],
+      "candidate_matched_evidence_ids": [
+        "ev022"
+      ],
+      "candidate_missed_expected_evidence_ids": [
+        "ev016",
+        "ev021",
+        "ev023"
+      ],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": 0.0,
+        "precision_at_6": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_6": 0.0,
+        "latency_ms": -47.9735,
+        "packet_bytes": 87
+      },
+      "baseline_response_status": "ok",
+      "candidate_response_status": "ok"
+    },
+    {
+      "query_id": "q021",
+      "query": "What did I research about Kyoto tourism?",
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev025",
+        "ev026",
+        "ev027",
+        "ev028"
+      ],
+      "baseline_returned_evidence_ids": [
+        "ev025",
+        "ev026",
+        "ev027",
+        "ev046"
+      ],
+      "candidate_returned_evidence_ids": [
+        "ev025",
+        "ev026",
+        "ev027",
+        "ev046"
+      ],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [
+        [
+          "ev025",
+          "ev026",
+          "ev046"
+        ],
+        [
+          "ev027"
+        ]
+      ],
+      "candidate_ranked_evidence_groups": [
+        [
+          "ev025",
+          "ev026",
+          "ev046"
+        ],
+        [
+          "ev027"
+        ]
+      ],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [
+        "ev025",
+        "ev026",
+        "ev027"
+      ],
+      "candidate_matched_evidence_ids": [
+        "ev025",
+        "ev026",
+        "ev027"
+      ],
+      "candidate_missed_expected_evidence_ids": [
+        "ev028"
+      ],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": 0.0,
+        "precision_at_6": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_6": 0.0,
+        "latency_ms": -47.655582,
+        "packet_bytes": 174
+      },
+      "baseline_response_status": "ok",
+      "candidate_response_status": "ok"
+    },
+    {
+      "query_id": "q022",
+      "query": "京都の紅葉について検索しましたか？",
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev028"
+      ],
+      "baseline_returned_evidence_ids": [
+        "ev027",
+        "ev028"
+      ],
+      "candidate_returned_evidence_ids": [
+        "ev027",
+        "ev028"
+      ],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [
+        [
+          "ev028"
+        ],
+        [
+          "ev027"
+        ]
+      ],
+      "candidate_ranked_evidence_groups": [
+        [
+          "ev028"
+        ],
+        [
+          "ev027"
+        ]
+      ],
+      "baseline_unsupported_returned_evidence_ids": [
+        "ev027"
+      ],
+      "candidate_unsupported_returned_evidence_ids": [
+        "ev027"
+      ],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [
+        "ev028"
+      ],
+      "candidate_matched_evidence_ids": [
+        "ev028"
+      ],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": 0.0,
+        "precision_at_6": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_6": 0.0,
+        "latency_ms": -47.294583,
+        "packet_bytes": 174
+      },
+      "baseline_response_status": "ok",
+      "candidate_response_status": "ok"
+    },
+    {
+      "query_id": "q023",
+      "query": "Did I make a Kyoto hotel reservation?",
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "baseline_returned_evidence_ids": [],
+      "candidate_returned_evidence_ids": [],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [],
+      "candidate_ranked_evidence_groups": [],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [],
+      "candidate_matched_evidence_ids": [],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": null,
+        "precision_at_6": null,
+        "mrr": null,
+        "ndcg_at_6": null,
+        "latency_ms": -49.220084,
+        "packet_bytes": 0
+      },
+      "baseline_response_status": "empty",
+      "candidate_response_status": "empty"
+    },
+    {
+      "query_id": "q024",
+      "query": "Where was the Japanese city guide I opened?",
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev025",
+        "ev026",
+        "ev046"
+      ],
+      "baseline_returned_evidence_ids": [
+        "ev025",
+        "ev026",
+        "ev046"
+      ],
+      "candidate_returned_evidence_ids": [
+        "ev025",
+        "ev026",
+        "ev046"
+      ],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [
+        [
+          "ev025",
+          "ev026",
+          "ev046"
+        ]
+      ],
+      "candidate_ranked_evidence_groups": [
+        [
+          "ev025",
+          "ev026",
+          "ev046"
+        ]
+      ],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [
+        "ev025",
+        "ev026",
+        "ev046"
+      ],
+      "candidate_matched_evidence_ids": [
+        "ev025",
+        "ev026",
+        "ev046"
+      ],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": 0.0,
+        "precision_at_6": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_6": 0.0,
+        "latency_ms": -54.964541,
+        "packet_bytes": 87
+      },
+      "baseline_response_status": "ok",
+      "candidate_response_status": "ok"
+    },
+    {
+      "query_id": "q025",
+      "query": "What was the exact Kyoto itinerary?",
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "baseline_returned_evidence_ids": [],
+      "candidate_returned_evidence_ids": [],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [],
+      "candidate_ranked_evidence_groups": [],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [],
+      "candidate_matched_evidence_ids": [],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": null,
+        "precision_at_6": null,
+        "mrr": null,
+        "ndcg_at_6": null,
+        "latency_ms": -55.187625,
+        "packet_bytes": 0
+      },
+      "baseline_response_status": "empty",
+      "candidate_response_status": "empty"
+    },
+    {
+      "query_id": "q026",
+      "query": "What did I search in Japanese about trains?",
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev022",
+        "ev023",
+        "ev029"
+      ],
+      "baseline_returned_evidence_ids": [
+        "ev022",
+        "ev029"
+      ],
+      "candidate_returned_evidence_ids": [
+        "ev022",
+        "ev029"
+      ],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [
+        [
+          "ev029"
+        ],
+        [
+          "ev022"
+        ]
+      ],
+      "candidate_ranked_evidence_groups": [
+        [
+          "ev029"
+        ],
+        [
+          "ev022"
+        ]
+      ],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [
+        "ev022",
+        "ev029"
+      ],
+      "candidate_matched_evidence_ids": [
+        "ev022",
+        "ev029"
+      ],
+      "candidate_missed_expected_evidence_ids": [
+        "ev023"
+      ],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": 0.0,
+        "precision_at_6": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_6": 0.0,
+        "latency_ms": -53.138167,
+        "packet_bytes": 174
+      },
+      "baseline_response_status": "ok",
+      "candidate_response_status": "ok"
+    },
+    {
+      "query_id": "q027",
+      "query": "京都について何を決めましたか？",
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "baseline_returned_evidence_ids": [],
+      "candidate_returned_evidence_ids": [],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [],
+      "candidate_ranked_evidence_groups": [],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [],
+      "candidate_matched_evidence_ids": [],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": null,
+        "precision_at_6": null,
+        "mrr": null,
+        "ndcg_at_6": null,
+        "latency_ms": -53.774125,
+        "packet_bytes": 0
+      },
+      "baseline_response_status": "empty",
+      "candidate_response_status": "empty"
+    },
+    {
+      "query_id": "q028",
+      "query": "What did I research?",
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "baseline_returned_evidence_ids": [],
+      "candidate_returned_evidence_ids": [],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [],
+      "candidate_ranked_evidence_groups": [],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [],
+      "candidate_matched_evidence_ids": [],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": null,
+        "precision_at_6": null,
+        "mrr": null,
+        "ndcg_at_6": null,
+        "latency_ms": -60.842916,
+        "packet_bytes": 0
+      },
+      "baseline_response_status": "empty",
+      "candidate_response_status": "empty"
+    },
+    {
+      "query_id": "q029",
+      "query": "What was in my X feed?",
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "baseline_returned_evidence_ids": [],
+      "candidate_returned_evidence_ids": [],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [],
+      "candidate_ranked_evidence_groups": [],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [],
+      "candidate_matched_evidence_ids": [],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": null,
+        "precision_at_6": null,
+        "mrr": null,
+        "ndcg_at_6": null,
+        "latency_ms": -55.238334,
+        "packet_bytes": 0
+      },
+      "baseline_response_status": "empty",
+      "candidate_response_status": "empty"
+    },
+    {
+      "query_id": "q030",
+      "query": "What aircraft video title did I open?",
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev035"
+      ],
+      "baseline_returned_evidence_ids": [
+        "ev035"
+      ],
+      "candidate_returned_evidence_ids": [
+        "ev035"
+      ],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [
+        [
+          "ev035"
+        ]
+      ],
+      "candidate_ranked_evidence_groups": [
+        [
+          "ev035"
+        ]
+      ],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [
+        "ev035"
+      ],
+      "candidate_matched_evidence_ids": [
+        "ev035"
+      ],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": 0.0,
+        "precision_at_6": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_6": 0.0,
+        "latency_ms": -53.824875,
+        "packet_bytes": 87
+      },
+      "baseline_response_status": "ok",
+      "candidate_response_status": "ok"
+    },
+    {
+      "query_id": "q031",
+      "query": "What was the title of the airplane video?",
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev035"
+      ],
+      "baseline_returned_evidence_ids": [
+        "ev035"
+      ],
+      "candidate_returned_evidence_ids": [
+        "ev035"
+      ],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [
+        [
+          "ev035"
+        ]
+      ],
+      "candidate_ranked_evidence_groups": [
+        [
+          "ev035"
+        ]
+      ],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [
+        "ev035"
+      ],
+      "candidate_matched_evidence_ids": [
+        "ev035"
+      ],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": 0.0,
+        "precision_at_6": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_6": 0.0,
+        "latency_ms": -53.171874,
+        "packet_bytes": 87
+      },
+      "baseline_response_status": "ok",
+      "candidate_response_status": "ok"
+    },
+    {
+      "query_id": "q032",
+      "query": "What did I see on Reddit?",
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "baseline_returned_evidence_ids": [],
+      "candidate_returned_evidence_ids": [],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [],
+      "candidate_ranked_evidence_groups": [],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [],
+      "candidate_matched_evidence_ids": [],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": null,
+        "precision_at_6": null,
+        "mrr": null,
+        "ndcg_at_6": null,
+        "latency_ms": -53.186125,
+        "packet_bytes": 0
+      },
+      "baseline_response_status": "empty",
+      "candidate_response_status": "empty"
+    },
+    {
+      "query_id": "q033",
+      "query": "What is the latest weather where I live?",
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "baseline_returned_evidence_ids": [],
+      "candidate_returned_evidence_ids": [],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [],
+      "candidate_ranked_evidence_groups": [],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [],
+      "candidate_matched_evidence_ids": [],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": null,
+        "precision_at_6": null,
+        "mrr": null,
+        "ndcg_at_6": null,
+        "latency_ms": -47.953333,
+        "packet_bytes": 0
+      },
+      "baseline_response_status": "empty",
+      "candidate_response_status": "empty"
+    },
+    {
+      "query_id": "q034",
+      "query": "Which email did I receive?",
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "baseline_returned_evidence_ids": [],
+      "candidate_returned_evidence_ids": [],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [],
+      "candidate_ranked_evidence_groups": [],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [],
+      "candidate_matched_evidence_ids": [],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": null,
+        "precision_at_6": null,
+        "mrr": null,
+        "ndcg_at_6": null,
+        "latency_ms": -48.662208,
+        "packet_bytes": 0
+      },
+      "baseline_response_status": "empty",
+      "candidate_response_status": "empty"
+    },
+    {
+      "query_id": "q035",
+      "query": "Did I browse a generic home page?",
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "baseline_returned_evidence_ids": [],
+      "candidate_returned_evidence_ids": [],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [],
+      "candidate_ranked_evidence_groups": [],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [],
+      "candidate_matched_evidence_ids": [],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": null,
+        "precision_at_6": null,
+        "mrr": null,
+        "ndcg_at_6": null,
+        "latency_ms": -48.646126,
+        "packet_bytes": 0
+      },
+      "baseline_response_status": "empty",
+      "candidate_response_status": "empty"
+    },
+    {
+      "query_id": "q036",
+      "query": "What do I generally like?",
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "baseline_returned_evidence_ids": [],
+      "candidate_returned_evidence_ids": [],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [],
+      "candidate_ranked_evidence_groups": [],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [],
+      "candidate_matched_evidence_ids": [],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": null,
+        "precision_at_6": null,
+        "mrr": null,
+        "ndcg_at_6": null,
+        "latency_ms": -48.105667,
+        "packet_bytes": 0
+      },
+      "baseline_response_status": "empty",
+      "candidate_response_status": "empty"
+    },
+    {
+      "query_id": "q037",
+      "query": "What was the identifier I searched twice?",
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev040",
+        "ev041"
+      ],
+      "baseline_returned_evidence_ids": [
+        "ev040",
+        "ev041"
+      ],
+      "candidate_returned_evidence_ids": [
+        "ev040",
+        "ev041"
+      ],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [
+        [
+          "ev040",
+          "ev041"
+        ]
+      ],
+      "candidate_ranked_evidence_groups": [
+        [
+          "ev040",
+          "ev041"
+        ]
+      ],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [
+        "ev040",
+        "ev041"
+      ],
+      "candidate_matched_evidence_ids": [
+        "ev040",
+        "ev041"
+      ],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": 0.0,
+        "precision_at_6": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_6": 0.0,
+        "latency_ms": -50.413958,
+        "packet_bytes": 87
+      },
+      "baseline_response_status": "ok",
+      "candidate_response_status": "ok"
+    },
+    {
+      "query_id": "q038",
+      "query": "What measurement appeared in my search?",
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev042",
+        "ev043"
+      ],
+      "baseline_returned_evidence_ids": [
+        "ev042",
+        "ev043"
+      ],
+      "candidate_returned_evidence_ids": [
+        "ev042",
+        "ev043"
+      ],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [
+        [
+          "ev042",
+          "ev043"
+        ]
+      ],
+      "candidate_ranked_evidence_groups": [
+        [
+          "ev042",
+          "ev043"
+        ]
+      ],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [
+        "ev042",
+        "ev043"
+      ],
+      "candidate_matched_evidence_ids": [
+        "ev042",
+        "ev043"
+      ],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": 0.0,
+        "precision_at_6": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_6": 0.0,
+        "latency_ms": -48.579001,
+        "packet_bytes": 87
+      },
+      "baseline_response_status": "ok",
+      "candidate_response_status": "ok"
+    },
+    {
+      "query_id": "q039",
+      "query": "What product did J501 identify?",
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "baseline_returned_evidence_ids": [],
+      "candidate_returned_evidence_ids": [],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [],
+      "candidate_ranked_evidence_groups": [],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [],
+      "candidate_matched_evidence_ids": [],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": null,
+        "precision_at_6": null,
+        "mrr": null,
+        "ndcg_at_6": null,
+        "latency_ms": -48.41475,
+        "packet_bytes": 0
+      },
+      "baseline_response_status": "empty",
+      "candidate_response_status": "empty"
+    },
+    {
+      "query_id": "q040",
+      "query": "Which of these did I buy: a chair, train ticket, or solar panel?",
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "baseline_returned_evidence_ids": [],
+      "candidate_returned_evidence_ids": [],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [],
+      "candidate_ranked_evidence_groups": [],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [],
+      "candidate_matched_evidence_ids": [],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": null,
+        "precision_at_6": null,
+        "mrr": null,
+        "ndcg_at_6": null,
+        "latency_ms": -49.393292,
+        "packet_bytes": 0
+      },
+      "baseline_response_status": "empty",
+      "candidate_response_status": "empty"
+    },
+    {
+      "query_id": "q041",
+      "query": "What did I research about solar energy?",
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev001",
+        "ev002",
+        "ev004",
+        "ev005"
+      ],
+      "baseline_returned_evidence_ids": [
+        "ev001",
+        "ev002",
+        "ev004"
+      ],
+      "candidate_returned_evidence_ids": [
+        "ev001",
+        "ev002",
+        "ev004"
+      ],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [
+        [
+          "ev001",
+          "ev004"
+        ],
+        [
+          "ev002"
+        ]
+      ],
+      "candidate_ranked_evidence_groups": [
+        [
+          "ev001",
+          "ev004"
+        ],
+        [
+          "ev002"
+        ]
+      ],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [
+        "ev001",
+        "ev002",
+        "ev004"
+      ],
+      "candidate_matched_evidence_ids": [
+        "ev001",
+        "ev002",
+        "ev004"
+      ],
+      "candidate_missed_expected_evidence_ids": [
+        "ev005"
+      ],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": 0.0,
+        "precision_at_6": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_6": 0.0,
+        "latency_ms": -54.002375,
+        "packet_bytes": 174
+      },
+      "baseline_response_status": "ok",
+      "candidate_response_status": "ok"
+    },
+    {
+      "query_id": "q042",
+      "query": "¿Qué página repetí sobre la Alhambra?",
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev009",
+        "ev011"
+      ],
+      "baseline_returned_evidence_ids": [
+        "ev009",
+        "ev011"
+      ],
+      "candidate_returned_evidence_ids": [
+        "ev009",
+        "ev011"
+      ],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [
+        [
+          "ev009",
+          "ev011"
+        ]
+      ],
+      "candidate_ranked_evidence_groups": [
+        [
+          "ev009",
+          "ev011"
+        ]
+      ],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [
+        "ev009",
+        "ev011"
+      ],
+      "candidate_matched_evidence_ids": [
+        "ev009",
+        "ev011"
+      ],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": 0.0,
+        "precision_at_6": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_6": 0.0,
+        "latency_ms": -54.7775,
+        "packet_bytes": 87
+      },
+      "baseline_response_status": "ok",
+      "candidate_response_status": "ok"
+    },
+    {
+      "query_id": "q043",
+      "query": "¿Qué ciudad elegí para mis vacaciones?",
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "baseline_returned_evidence_ids": [],
+      "candidate_returned_evidence_ids": [],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [],
+      "candidate_ranked_evidence_groups": [],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [],
+      "candidate_matched_evidence_ids": [],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": null,
+        "precision_at_6": null,
+        "mrr": null,
+        "ndcg_at_6": null,
+        "latency_ms": -53.746167,
+        "packet_bytes": 0
+      },
+      "baseline_response_status": "empty",
+      "candidate_response_status": "empty"
+    },
+    {
+      "query_id": "q044",
+      "query": "新幹線の料金はいくらでしたか？",
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "baseline_returned_evidence_ids": [],
+      "candidate_returned_evidence_ids": [],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [],
+      "candidate_ranked_evidence_groups": [],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [],
+      "candidate_matched_evidence_ids": [],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": null,
+        "precision_at_6": null,
+        "mrr": null,
+        "ndcg_at_6": null,
+        "latency_ms": -54.584167,
+        "packet_bytes": 0
+      },
+      "baseline_response_status": "empty",
+      "candidate_response_status": "empty"
+    },
+    {
+      "query_id": "q045",
+      "query": "京都の公式観光サイトを見ましたか？",
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev025",
+        "ev026"
+      ],
+      "baseline_returned_evidence_ids": [
+        "ev025",
+        "ev026",
+        "ev027",
+        "ev028",
+        "ev046"
+      ],
+      "candidate_returned_evidence_ids": [
+        "ev025",
+        "ev026",
+        "ev027",
+        "ev028",
+        "ev046"
+      ],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [
+        [
+          "ev025",
+          "ev026",
+          "ev046"
+        ],
+        [
+          "ev027"
+        ],
+        [
+          "ev028"
+        ]
+      ],
+      "candidate_ranked_evidence_groups": [
+        [
+          "ev025",
+          "ev026",
+          "ev046"
+        ],
+        [
+          "ev027"
+        ],
+        [
+          "ev028"
+        ]
+      ],
+      "baseline_unsupported_returned_evidence_ids": [
+        "ev027",
+        "ev028"
+      ],
+      "candidate_unsupported_returned_evidence_ids": [
+        "ev027",
+        "ev028"
+      ],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [
+        "ev025",
+        "ev026"
+      ],
+      "candidate_matched_evidence_ids": [
+        "ev025",
+        "ev026"
+      ],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": 0.0,
+        "precision_at_6": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_6": 0.0,
+        "latency_ms": -55.150583,
+        "packet_bytes": 261
+      },
+      "baseline_response_status": "ok",
+      "candidate_response_status": "ok"
+    },
+    {
+      "query_id": "q046",
+      "query": "What did I research about renewables?",
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "baseline_returned_evidence_ids": [],
+      "candidate_returned_evidence_ids": [],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [],
+      "candidate_ranked_evidence_groups": [],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [],
+      "candidate_matched_evidence_ids": [],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": null,
+        "precision_at_6": null,
+        "mrr": null,
+        "ndcg_at_6": null,
+        "latency_ms": -52.658917,
+        "packet_bytes": 0
+      },
+      "baseline_response_status": "empty",
+      "candidate_response_status": "empty"
+    },
+    {
+      "query_id": "q047",
+      "query": "¿Qué abrí después de buscar energía eólica?",
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev003",
+        "ev006",
+        "ev047"
+      ],
+      "baseline_returned_evidence_ids": [
+        "ev001",
+        "ev003",
+        "ev004",
+        "ev006",
+        "ev047"
+      ],
+      "candidate_returned_evidence_ids": [
+        "ev001",
+        "ev003",
+        "ev004",
+        "ev006",
+        "ev047"
+      ],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [
+        [
+          "ev003",
+          "ev047"
+        ],
+        [
+          "ev006"
+        ],
+        [
+          "ev001",
+          "ev004"
+        ]
+      ],
+      "candidate_ranked_evidence_groups": [
+        [
+          "ev003",
+          "ev047"
+        ],
+        [
+          "ev006"
+        ],
+        [
+          "ev001",
+          "ev004"
+        ]
+      ],
+      "baseline_unsupported_returned_evidence_ids": [
+        "ev001",
+        "ev004"
+      ],
+      "candidate_unsupported_returned_evidence_ids": [
+        "ev001",
+        "ev004"
+      ],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [
+        "ev003",
+        "ev006",
+        "ev047"
+      ],
+      "candidate_matched_evidence_ids": [
+        "ev003",
+        "ev006",
+        "ev047"
+      ],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": 0.0,
+        "precision_at_6": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_6": 0.0,
+        "latency_ms": -48.187375,
+        "packet_bytes": 261
+      },
+      "baseline_response_status": "ok",
+      "candidate_response_status": "ok"
+    },
+    {
+      "query_id": "q048",
+      "query": "Can you tell whether the short search meant strong interest?",
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "baseline_returned_evidence_ids": [],
+      "candidate_returned_evidence_ids": [],
+      "newly_returned_evidence_ids": [],
+      "no_longer_returned_evidence_ids": [],
+      "baseline_ranked_evidence_groups": [],
+      "candidate_ranked_evidence_groups": [],
+      "baseline_unsupported_returned_evidence_ids": [],
+      "candidate_unsupported_returned_evidence_ids": [],
+      "new_unsupported_inclusions_vs_baseline": [],
+      "removed_unsupported_inclusions_vs_baseline": [],
+      "baseline_matched_evidence_ids": [],
+      "candidate_matched_evidence_ids": [],
+      "candidate_missed_expected_evidence_ids": [],
+      "new_misses_vs_baseline": [],
+      "recovered_misses_vs_baseline": [],
+      "metric_deltas": {
+        "recall_at_6": null,
+        "precision_at_6": null,
+        "mrr": null,
+        "ndcg_at_6": null,
+        "latency_ms": -47.568083,
+        "packet_bytes": 0
+      },
+      "baseline_response_status": "empty",
+      "candidate_response_status": "empty"
+    }
+  ]
+}

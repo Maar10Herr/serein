@@ -1,6 +1,106 @@
-# Serein v0.1.3 test report
+# Serein test report
 
-The latest package target is v0.1.3 for macOS Apple silicon. The v0.1.2 section below preserves the previous release record; the final section records the v0.1.3 dashboard and retrieval update. Browser-path evidence is separate from labeled synthetic retrieval evaluation.
+## v0.2.0 · 2026-10-02
+
+This release targets macOS Apple silicon. The checks below use the rebuilt v0.2.0 helper and extension, except where a paired experiment names its earlier frozen build. Browser acceptance, synthetic retrieval quality, and assistant-client execution are separate results.
+
+### Release checks
+
+| Area | Result |
+| --- | --- |
+| Rust | Release workspace tests passed: 127 tests, including 64 core unit tests. Formatting and locked release build passed. |
+| Migration | Fresh schema 5, 3→4→5 and 4→5 fixtures passed row/ID/provenance and foreign-key checks. Failure injection rolled back. Pinned schema-3 and schema-4 readers rejected a newer schema in disposable copies. |
+| Extension | TypeScript, 58 Vitest tests, and Chrome/Firefox production builds passed. All six language catalogs and placeholders were checked. |
+| Contracts | 15 valid examples and 15 nested unknown-field mutations passed the contract checker. |
+| Native and installation | Native framing, pairing, idempotent ingestion, privacy epochs, forgetting, short-lived process exit, registration ownership and uninstall preservation passed. |
+| Installed skill | A relocated package with spaces in its path and lost executable bits connected, ingested and recalled through its bundled helper. On-read indexing completed. The same smoke test passed with OS-level network denial. |
+| Artifact binding | Eight package-binding tests passed. Both bundled executables and every model payload match the current build inputs; packaging rejects stale or unexpected files. |
+| Chrome | Chrome for Testing 148.0.7778.96 passed pairing, real outbox delivery, batching/alarm, recall/forget, correction races, keyboard focus, refresh and privacy masking. [Results](validation/v0.2.0/chrome.json). |
+| Firefox | Copied Firefox 156.0.1 passed temporary add-on pairing, native delivery, recall/forget, correction races, keyboard focus and refresh/privacy masking. Disposable profile and native registration were removed. [Results](validation/v0.2.0/firefox.json). |
+| Link instruction | A focused Chrome run verified both consent gates, duplicate-click serialization, a rendered setup ticket and successful clipboard completion. [Results](validation/v0.2.0/copy-setup.json). |
+
+The final CLI SHA-256 is `de7aeed2370ab49a97195c485787d2dce9671f3a1666e1083d1d5bc88e105040`; the native host is `9fe827b4fca4d571582dfbbe32e547b7f581b1192349a5276f9d4a2617e7f678`. The model manifest remains `8661322502cf2881aec0b935e92b802c0538cbb397bd8b5f36fa2253bdec9e16`. The [development guide](DEVELOPMENT.md) records the build and test commands.
+
+### Retrieval changes and remaining errors
+
+Eligibility is applied before bounded candidate limits. Packet selection collapses identical normalized evidence payloads, with feasible alternatives considered before a group consumes a slot. Supported two-model comparisons reserve candidates for each model; a narrow single-word `from X to Y` plan preserves endpoint order among already eligible evidence. These rules keep the existing six-record, two-per-site and 4,096-byte packet limits.
+
+The previously inspected fixtures contain 158 queries and are regression checks. They were not treated as new holdouts. [Per-query comparisons](validation/v0.2.0/seen-paired-deltas.json) retain every changed ID, miss and extra result.
+
+| Inspected fixture | Previous macro Recall@6 | v0.2.0 | Expected-empty specificity, v0.2.0 |
+| --- | ---: | ---: | ---: |
+| Development: relevance/noise, 40 queries | 0.6087 | 0.6087 | 1.0000 |
+| Development: multilingual, 48 queries | 0.7701 | 0.7701 | 1.0000 |
+| Earlier relevance holdout, 35 queries | 0.7347 | 0.7347 | 0.6364 |
+| Retrieval v2 holdout, 35 queries | 0.6522 | 0.6087 | 1.0000 |
+
+The earlier relevance-holdout row uses the preserved per-query report. Its historical aggregate checkpoint elsewhere in this document used a different recorded result; the paired report explains that provenance difference.
+
+The v2 recall loss is visible: `iata_saf` and `usdm_map` were missed after identical titles from different sites collapsed into one payload group. `nrel_saf` and `usdm_guide` won those groups. The freed slot also admitted the already eligible `icao_saf`, which the fixture labels irrelevant. That is a measured cost of this deduplication rule, not an accuracy gain.
+
+Development query `q015` changed one irrelevant tail result (`ev014` to `ev012`) without changing expected-evidence recall. Controlled runs of the same source and fixture reproduced both orders: `ev012` and `ev043` tie exactly on lexical BM25, and random atom UUIDs break that tie. Moving `ev012` from lexical rank 8 to 7 adds `1/67 − 1/68` to its fused score, enough to cross the six-result boundary. Semantic ranks and temporal bonuses stayed fixed. This is a nondeterministic false-positive identity in the existing fixture harness, not evidence of improved relevance. [Diagnostic](validation/v0.2.0/q015-explanation.json).
+
+#### Fresh synthetic check
+
+A separate authoring pass prepared [24 new episodes](../tests/fixtures/fresh_validation_2026_10_02.json), four each for ordinary positives, multilingual queries, comparison/direction, corrections, duplicate contamination and expected-empty questions. Labels were fixed before execution. Fixture SHA-256: `4b6f83e16f4322ab364f95b9bcc55926152edf46c4efa464008917ca7be3f387`.
+
+The baseline and candidate each made 24 recalls. The first harness stopped before two recalls when native sensitivity filtering rejected one fixture row. A hash-guarded continuation ran only those two unattempted calls; the original 46 outcomes and raw responses were preserved. The rejected `blocked-scope` row remained rejected, and its inapplicable feedback was reported as skipped. [Completed pairs](validation/v0.2.0/fresh-pairs.json), [first run](validation/v0.2.0/fresh-first-run.json), [original identity](validation/v0.2.0/fresh-first-run-identity.json).
+
+All four expected-empty episodes stayed empty in both builds. Packet shape/size/ID checks passed. There were no new unsupported inclusions or new hard violations relative to the baseline. The candidate returned both useful models for `cmp-03` and `cmp-04`, where the baseline returned nothing; other returned evidence/text/states stayed unchanged.
+
+Nine episodes still have quality issues in both builds:
+
+| Episode suffix | Remaining issue |
+| --- | --- |
+| `dup-01`, `dup-04` | Semantically similar titles consume multiple slots. Exact payload deduplication does not merge paraphrases; `dup-04` also misses complementary evidence. |
+| `dup-02`, `dup-03` | One useful item is missing. |
+| `cmp-02` | Only one of two useful models returns. |
+| `ml-02` | A Japanese positive returns no context. |
+| `cor-02` | Confirmed replacement text does not return for this query. |
+| `op-01`, `op-03` | Each returns an extra relevance-negative item. The fixture's `privacy_ok` predicate counts any forbidden label, including these ordinary relevance negatives; neither case contains a private record or a policy-suppressed item. |
+
+The raw report keeps these failed predicates. Execution completion does not mean that every quality label passed. These constructed cases do not establish overall accuracy or sensitive-topic classifier coverage.
+
+### Performance
+
+All timing runs used macOS arm64 release builds, local synthetic vaults, warm file caches and process-launch-inclusive calls. Raw samples, outliers, memory and storage checkpoints are retained. Cold-cache and dual-core/4 GiB reference-machine results were not measured.
+
+| Experiment | Result and scope |
+| --- | --- |
+| Targeted SQL indexes | Ordered output matched. Synthetic SQLite write median increased from 180.34 to 339.18 ms; DB+WAL increased from 12.72 to 15.47 MB. Query-plan improvements are not an end-to-end speed claim. [Record](validation/v0.2.0/index-write-cost.json). |
+| Centroid maintenance | 12 alternating runs, 1,024 initial atoms plus five 32-atom increments. Growing-topic backfill median: 1,950.33→690.52 ms; mixed topics: 841.80→801.69 ms. Incremental refresh totals: 1,062.90→624.43 and 732.93→667.10 ms. Topic/membership outputs matched; no repeatable warm-recall regression above 10%. [Raw paired runs](validation/v0.2.0/centroid-pairs.json). |
+| SHA acceleration | 25 alternating pairs on the same fully indexed 800-atom workload and source, differing only in SHA acceleration. Warm recall median: 118.80→71.82 ms; p95 (nearest lower rank): 124.76→72.23 ms. All ordered IDs, text, states, packets, readiness and warnings matched. Peak child RSS: 77.35→65.04 MB. [Raw pairs](validation/v0.2.0/sha-pairs.json). |
+| Final 800 atoms | All indexed. 25 warm recalls: median 71.79 ms, p95 72.02 ms. Full indexing: 399.61 ms across four bounded calls. Final DB+WAL: 3.66 MB. [Record](validation/v0.2.0/capacity-800.json). |
+| Final 10,000 atoms | All indexed. 30 hybrid recalls: median 155.02 ms, p95 160.96 ms; every status was `ok`. Backfill: 6.22 s across 40 bounded calls. Final DB+WAL: 31.82 MB; peak child RSS: 82.02 MB. [Record](validation/v0.2.0/capacity-10000.json). |
+
+The centroid comparison used frozen schema-4/schema-5 builds before later dashboard scope corrections, a small-page fallback and SHA acceleration. The final 800/10,000 checks cover the shipped helper. Storage measurements are checkpoints after child-process exit, not peak transient WAL usage. Component improvements are not multiplied into a product-wide speedup.
+
+SHA checks still reject corrupted model files. The only new locked dependency is `sha2-asm 0.6.4`, published in May 2024; its crate checksum and license are recorded with the bundle.
+
+### Integration coverage and limits
+
+| Target | Current evidence | Actual assistant discovery and triggered recall |
+| --- | --- | --- |
+| Claude Code, Codex, OpenCode, Hermes, OpenClaw | All five adapter paths and setup-state distinctions are exercised in temporary installer fixtures. An earlier Codex GitHub installer check downloaded the skill; the current relocated package passes its bundled setup/reader check. | Unverified for each client. |
+| Generic local executor | Current setup, native, browser and bounded recall harnesses pass. | Harness execution; no assistant-client run. |
+
+Broader advisory-facet/lexical tuning was attempted and deferred after it lowered multilingual development recall below the unchanged floor. It is not shipped. Existing facet-only behavior therefore remains. General negation, actor roles and word order remain unresolved beyond the narrow direction plan.
+
+Activity counts use fixed 30-minute event-time windows, so boundary artifacts remain. Research groups are provisional greedy summaries. Stable group labels, order-independent regrouping, calibrated intent, general reranking/new encoders, ANN storage, persistent dirty queues, membership-preserving deletion, vault-wide dashboard search and background broadcasts remain outside this release. Dashboard filtering applies to the displayed view; mounted views update on manual refresh or return/focus, without timer polling.
+
+Signing, permanent Firefox installation, clean-machine coverage, Windows/Linux helper builds, managed browsers, real-user retrieval accuracy and execution inside each named assistant remain unverified. The extensions and helper are unsigned. No live user vault or browser registration was migrated during these checks.
+
+### v0.2.0 browser preview
+
+The [light](screenshots/research-preview-light.png) and [dark](screenshots/research-preview-dark.png) screenshots render the actual v0.2.0 dashboard in an isolated Chrome profile. Ten invented observations in two synthetic visit batches use public-site titles from the earlier live demo. The script verifies five cards, one research group and an available model through the final bundled helper. These are constructed previews; they do not depict a user's browser history. [Method and helper hash](research-preview-results.json), [replay script](../tests/research-preview.mjs).
+
+Public evidence exports omit machine-specific paths and inherited environment variables. Fixture labels, raw recall packets, timing samples and failed quality checks are retained. Hashes naming original private reports refer to the unsanitized local files; exported report bytes differ where paths were replaced.
+
+---
+
+# Historical releases
+
+The following sections preserve the v0.1.2 and v0.1.3 results. They are not checks of v0.2.0.
 
 ## v0.1.3 gate snapshot · 2026-09-28
 
@@ -85,7 +185,7 @@ On the existing six-language development suite, the v0.1.3 rule returned **60/78
 
 ### Constructed v0.1.3 dashboard preview
 
-The [light](screenshots/research-preview-light.png) and [dark](screenshots/research-preview-dark.png) previews show the actual v0.1.3 dashboard rendered in an isolated Chrome for Testing profile. The records are **constructed**: ten invented visits over two invented sessions, using five public-site title and hostname records that were observed in the earlier live v0.1.2 demo. The preview script sends those records through the native host's normal ingest contract, then verifies five raw cards, one research group, and an available local model before taking screenshots. The browser's tabs observer was not used to capture these invented visits. No user history, account, page body, or private profile was involved. The reproducible script is [`tests/research-preview.mjs`](../tests/research-preview.mjs), and the [result record](research-preview-results.json) states the capture mode and route.
+The v0.1.3 preview used ten invented visits over two invented batches and five public-site metadata records from the earlier demo. Its screenshots and result record are preserved in the [v0.1.3 source archive](https://github.com/Maar10Herr/serein/releases/download/v0.1.3/serein-source-0.1.3.tar.gz). The preview files in the current tree were regenerated for v0.2.0; see the current preview above.
 
 ### Evaluation method
 

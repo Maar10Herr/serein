@@ -1,0 +1,182 @@
+{
+  "browser": "156.0.1",
+  "nativeMessaging": "PASS",
+  "nativeManifestRegistration": "disposable process directory-service override",
+  "nativeRuntime": "skills/serein-context/runtime/macos-arm64",
+  "nativeRuntimeCliSha256": "de7aeed2370ab49a97195c485787d2dce9671f3a1666e1083d1d5bc88e105040",
+  "nativeHostSha256": "9fe827b4fca4d571582dfbbe32e547b7f581b1192349a5276f9d4a2617e7f678",
+  "modalInitialSetup": {
+    "first": {
+      "initial": {
+        "at": 671,
+        "activeTag": "BUTTON",
+        "activeId": "",
+        "activeLabel": "Close",
+        "dialogPresent": true,
+        "dialogContainsActive": true,
+        "mainInert": true,
+        "dialogInert": false
+      },
+      "settled": {
+        "at": 671,
+        "activeTag": "BUTTON",
+        "activeId": "",
+        "activeLabel": "Close",
+        "dialogPresent": true,
+        "dialogContainsActive": true,
+        "mainInert": true,
+        "dialogInert": false
+      },
+      "delayMs": 0,
+      "timedOut": false
+    },
+    "zeroTab": {
+      "initial": {
+        "at": 779,
+        "activeTag": "BUTTON",
+        "activeId": "",
+        "activeLabel": "Close",
+        "dialogPresent": true,
+        "dialogContainsActive": true,
+        "mainInert": true,
+        "dialogInert": false
+      },
+      "settled": {
+        "at": 779,
+        "activeTag": "BUTTON",
+        "activeId": "",
+        "activeLabel": "Close",
+        "dialogPresent": true,
+        "dialogContainsActive": true,
+        "mainInert": true,
+        "dialogInert": false
+      },
+      "delayMs": 0,
+      "timedOut": false
+    },
+    "submitting": {
+      "initial": {
+        "at": 360,
+        "activeTag": "BUTTON",
+        "activeId": "",
+        "activeLabel": "Close",
+        "dialogPresent": true,
+        "dialogContainsActive": true,
+        "mainInert": true,
+        "dialogInert": false
+      },
+      "settled": {
+        "at": 360,
+        "activeTag": "BUTTON",
+        "activeId": "",
+        "activeLabel": "Close",
+        "dialogPresent": true,
+        "dialogContainsActive": true,
+        "mainInert": true,
+        "dialogInert": false
+      },
+      "delayMs": 0,
+      "timedOut": false
+    }
+  },
+  "checks": [
+    "copied Firefox.app only",
+    "fresh temporary profile and vault",
+    "temporary unsigned installation",
+    "consent off by default",
+    "actual hello pairing",
+    "ingest ACK",
+    "duplicate ACK",
+    "R18 Escape/Close/backdrop reset correction drafts",
+    "R18 exact selected atom ID and confirmed text over native messaging",
+    "R19 delayed response leaves different-card draft intact",
+    "R19 delayed response leaves reopened same-card draft intact",
+    "R19 current failure preserves draft",
+    "R20 empty and enabled candidate lists",
+    "R20 equal-positive tabindex controls preserve DOM order",
+    "R20 forward/reverse traversal and outside-focus recovery",
+    "R20 disabled fieldset, hidden and inert controls are excluded",
+    "R20 zero-tabbable fallback focuses dialog",
+    "R20 close and Escape restore usable focus or main fallback",
+    "R20 submitting disables action candidates and recomputes the last endpoint",
+    "five deliberate feedback requests only",
+    "synthetic fixtures live only in the isolated temporary vault removed during cleanup",
+    "R22 real outbox event flushes on manual refresh without page reload",
+    "R22 independent extension view correction appears on refresh while local filter/state/route persist",
+    "R23 older dashboard generation retains the last safe view",
+    "R23 focus/visibility signals debounce, coalesce, defer while hidden, and schedule one trailing read",
+    "R23 stale dashboard response cannot restore forgotten context",
+    "R21 61 real observations drain in multiple native batches capped at 32 events and 64 KiB",
+    "R21 recent dashboard view stays capped at 60 while topic-bearing recall finds older retained evidence",
+    "R21 local filter remains local and shows the scope note",
+    "R24 filter and refresh controls are labeled in all six supported locales",
+    "R23 unmounted Firefox dashboard cancels delayed refresh",
+    "T09 rapid privacy control clicks serialize and disable pending controls",
+    "R23 failed Forget stays withheld after automatic and unrelated populated refresh"
+  ],
+  "T09": {
+    "checks": [
+      "R22 real outbox event flushes on manual refresh without page reload",
+      "R22 independent extension view correction appears on refresh while local filter/state/route persist",
+      "R23 older dashboard generation retains the last safe view",
+      "R23 focus/visibility signals debounce, coalesce, defer while hidden, and schedule one trailing read",
+      "R23 stale dashboard response cannot restore forgotten context",
+      "R21 61 real observations drain in multiple native batches capped at 32 events and 64 KiB",
+      "R21 recent dashboard view stays capped at 60 while topic-bearing recall finds older retained evidence",
+      "R21 local filter remains local and shows the scope note",
+      "R24 filter and refresh controls are labeled in all six supported locales",
+      "R23 unmounted Firefox dashboard cancels delayed refresh",
+      "T09 rapid privacy control clicks serialize and disable pending controls",
+      "R23 failed Forget stays withheld after automatic and unrelated populated refresh"
+    ],
+    "overlappingPrivacy": {
+      "mutationRequestsWhileHeld": 1,
+      "heldMutations": 1,
+      "recallControlDisabled": true,
+      "selectedSitesControlDisabled": true
+    },
+    "windowFixture": {
+      "outboxEvents": 61,
+      "nativeBatches": 2,
+      "maxBatchEvents": 32,
+      "maxBatchBytes": 10616,
+      "dashboardAtoms": 61,
+      "dashboardCards": 60
+    },
+    "failedForget": {
+      "target": "T09 display-window observation 59",
+      "realNativeResponseReturnedCard": true
+    }
+  },
+  "feedbackRequests": [
+    {
+      "atom_id": "cb5aeb0b-d360-4ffa-943c-c79a6186494f",
+      "action": "confirm_constraint",
+      "text": "T07 B confirmation text only"
+    },
+    {
+      "atom_id": "040bf969-8f03-49a6-af1b-01693bd13e20",
+      "action": "confirm_constraint",
+      "text": "T07 delayed A first"
+    },
+    {
+      "atom_id": "040bf969-8f03-49a6-af1b-01693bd13e20",
+      "action": "confirm_constraint",
+      "text": "T07 delayed A second"
+    },
+    {
+      "atom_id": "cb5aeb0b-d360-4ffa-943c-c79a6186494f",
+      "action": "confirm_constraint",
+      "text": "T07 current instance failure draft"
+    },
+    {
+      "atom_id": "cb5aeb0b-d360-4ffa-943c-c79a6186494f",
+      "action": "confirm_constraint",
+      "text": "T07 delayed A R20 submitting"
+    }
+  ],
+  "firefoxBinary": "<isolated-firefox-copy>",
+  "temporaryProfileRemoved": true,
+  "temporaryNativeManifestRemoved": true,
+  "firefoxExitCode": 0
+}
