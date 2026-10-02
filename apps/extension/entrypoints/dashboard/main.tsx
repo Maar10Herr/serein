@@ -127,6 +127,7 @@ function App() {
     kind: string;
     card?: any;
     generation: number;
+    returnFocusTo: HTMLElement;
   } | null>(null);
   const modalGeneration = useRef(0);
   const [receipt, setReceipt] = useState<any[]>([]);
@@ -134,9 +135,12 @@ function App() {
     key: MessageKey,
     values?: Readonly<Record<string, string | number>>,
   ) => t(locale, key, values);
-  function openModal(next: Omit<NonNullable<typeof modal>, "generation">) {
+  function openModal(
+    next: Omit<NonNullable<typeof modal>, "generation" | "returnFocusTo">,
+    returnFocusTo: HTMLElement,
+  ) {
     const generation = ++modalGeneration.current;
-    setModal({ ...next, generation });
+    setModal({ ...next, generation, returnFocusTo });
   }
   function closeModal(generation?: number) {
     if (generation !== undefined && generation !== modalGeneration.current)
@@ -342,13 +346,25 @@ function App() {
     .slice(0, 6);
   const renderActions = (card: any) => (
     <div class="row evidence-actions">
-      <button onClick={() => openModal({ kind: "why", card })}>
+      <button
+        onClick={(event) =>
+          openModal({ kind: "why", card }, event.currentTarget)
+        }
+      >
         {tr("context.why")}
       </button>
-      <button onClick={() => openModal({ kind: "correct", card })}>
+      <button
+        onClick={(event) =>
+          openModal({ kind: "correct", card }, event.currentTarget)
+        }
+      >
         {tr("context.correct")}
       </button>
-      <button onClick={() => openModal({ kind: "forget", card })}>
+      <button
+        onClick={(event) =>
+          openModal({ kind: "forget", card }, event.currentTarget)
+        }
+      >
         {tr("context.forget")}
       </button>
     </div>
@@ -1168,14 +1184,18 @@ function App() {
               <div class="form-actions">
                 <button
                   disabled={!s?.paired}
-                  onClick={() => openModal({ kind: "export" })}
+                  onClick={(event) =>
+                    openModal({ kind: "export" }, event.currentTarget)
+                  }
                 >
                   {tr("storage.exportReviewedContext")}
                 </button>
                 <button
                   class="danger"
                   disabled={!s?.paired}
-                  onClick={() => openModal({ kind: "erase" })}
+                  onClick={(event) =>
+                    openModal({ kind: "erase" }, event.currentTarget)
+                  }
                 >
                   <Icon name="forget" size={16} />
                   {tr("storage.eraseSavedContext")}
@@ -1225,6 +1245,7 @@ function App() {
           key={`${modal.card.id}:${modal.generation}`}
           card={modal.card}
           generation={modal.generation}
+          returnFocusTo={modal.returnFocusTo}
           translate={(key) => tr(key)}
           isCurrentGeneration={isCurrentModalGeneration}
           onClose={closeModal}
@@ -1246,6 +1267,7 @@ function App() {
                     : tr("modal.forgetTitle")
           }
           onClose={() => closeModal(modal.generation)}
+          returnFocusTo={modal.returnFocusTo}
         >
           {modal.kind === "why" ? (
             <div class="stack">

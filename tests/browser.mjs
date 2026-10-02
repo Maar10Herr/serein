@@ -9,6 +9,7 @@ const require=createRequire(playwrightPackage?path.resolve(playwrightPackage):im
 const {chromium}=require('playwright');
 const root=process.cwd(), temp=await realpath(await mkdtemp(path.join(tmpdir(),'serein-browser-')));
 const extension=path.join(root,'apps/extension/.output/chrome-mv3');
+const browserRuntimeDir=process.env.SEREIN_BROWSER_RUNTIME_DIR?path.resolve(process.env.SEREIN_BROWSER_RUNTIME_DIR):null;
 const evidence=process.env.SEREIN_BROWSER_EVIDENCE_DIR
  ? path.resolve(process.env.SEREIN_BROWSER_EVIDENCE_DIR)
  : path.join(root,'docs/screenshots');await mkdir(evidence,{recursive:true});
@@ -52,7 +53,9 @@ try{
  // Real runtime.sendNativeMessage round trip with a synthetic isolated vault.
  const ticket=await send({type:'ticket',adapters:['generic'],label:'Synthetic browser fixture'});
  const nativeEnv={...process.env,SEREIN_DATA_DIR:path.join(temp,'data'),SEREIN_INSTALL_HOME:path.join(temp,'home')};
- const setup=JSON.parse(execFileSync('sh',[path.join(root,'skills/serein-context/scripts/connect.sh')],{input:JSON.stringify(ticket),env:nativeEnv}).toString());
+ const setup=JSON.parse(browserRuntimeDir
+  ? execFileSync(path.join(browserRuntimeDir,'serein'),['setup','--request-stdin','--json'],{input:JSON.stringify(ticket),env:nativeEnv,cwd:browserRuntimeDir}).toString()
+  : execFileSync('sh',[path.join(root,'skills/serein-context/scripts/connect.sh')],{input:JSON.stringify(ticket),env:nativeEnv}).toString());
  assert.equal(setup.status,'ok');
  const manifest=JSON.parse(await readFile(setup.manifest));
  const invocationLog=path.join(temp,'host-invocations.txt');
@@ -197,6 +200,45 @@ process.exit(result.status ?? 1);
   else throw new Error(`unknown correction cancellation method: ${method}`);
   await dialog.waitFor({state:'detached'});
  };
+ const inspectModalFocus=dialog=>dialog.evaluate(node=>{
+  const selector='a[href],area[href],button,input,select,textarea,iframe,object,embed,summary,audio[controls],video[controls],[contenteditable="true"],[tabindex]';
+  const usable=element=>{
+   if(!element.isConnected||element.matches(':disabled')||element.tabIndex<0)return false;
+   if(element instanceof HTMLInputElement&&element.type==='hidden')return false;
+   for(let ancestor=element;ancestor;ancestor=ancestor.parentElement){
+    if(ancestor.hidden||ancestor.inert||ancestor.getAttribute('aria-hidden')?.toLowerCase()==='true')return false;
+    const style=getComputedStyle(ancestor);
+    if(style.display==='none'||style.visibility==='hidden'||style.visibility==='collapse'||style.getPropertyValue('content-visibility')==='hidden')return false;
+    if(ancestor===node)return element.getClientRects().length>0;
+   }
+   return false;
+  };
+  const candidates=[...node.querySelectorAll(selector)].map((element,domOrder)=>({element,domOrder})).filter(({element})=>usable(element)).sort((a,b)=>{
+   const aIndex=a.element.tabIndex,bIndex=b.element.tabIndex;
+   if(aIndex>0&&bIndex>0)return aIndex-bIndex||a.domOrder-b.domOrder;
+   if(aIndex>0)return -1;
+   if(bIndex>0)return 1;
+   return a.domOrder-b.domOrder;
+  }).map(({element})=>element);
+  const active=document.activeElement;
+  return {inside:node.contains(active),activeIndex:candidates.indexOf(active),activeIsDialog:active===node,activeTag:active?.tagName??null,activeId:active?.id??'',activeLabel:active?.getAttribute?.('aria-label')||active?.textContent?.trim()||'',dialogTabIndex:node.tabIndex,candidates:candidates.map(element=>({id:element.id,label:element.getAttribute('aria-label')||element.textContent?.trim()||element.tagName,tag:element.tagName,tabIndex:element.tabIndex}))};
+ });
+ const inspectModalSetup=()=>page.evaluate(()=>{
+  const dialog=document.querySelector('[role="dialog"]');
+  const active=document.activeElement;
+  return {at:performance.now(),activeTag:active?.tagName??null,activeId:active?.id??'',activeLabel:active?.getAttribute?.('aria-label')||active?.textContent?.trim()||'',dialogPresent:!!dialog,dialogContainsActive:!!dialog?.contains(active),mainInert:document.querySelector('main')?.inert??false,dialogInert:!!dialog?.closest('[inert]')};
+ });
+ const waitForModalSetup=async()=>{
+  const initial=await inspectModalSetup();let timedOut=false;
+  try{
+   await page.waitForFunction(()=>{
+    const dialog=document.querySelector('[role="dialog"]');
+    return !!dialog&&dialog.contains(document.activeElement)&&document.querySelector('main')?.inert===true&&!dialog.closest('[inert]');
+   },undefined,{timeout:1000});
+  }catch{timedOut=true}
+  const settled=await inspectModalSetup();
+  return {initial,settled,delayMs:settled.at-initial.at,timedOut};
+ };
  const nativeRequests=async()=>{
   const text=await readFile(requestLog,'utf8').catch(()=> '');
   return text.trim()?text.trim().split('\n').map(line=>JSON.parse(line)):[];
@@ -298,13 +340,127 @@ process.exit(result.status ?? 1);
   {atom_id:cardA.id,action:'confirm_constraint',text:delayedTextA2},
   {atom_id:cardB.id,action:'confirm_constraint',text:failureText},
  ],'only the deliberate confirmations reached the native helper');
+ // R20: real dashboard Modal containment, live candidates and safe restoration.
+ const r20Card=page.locator('.raw-activity .evidence-card').filter({hasText:r18Text});
+ assert.equal(await r20Card.count(),1,'R20 target card must remain visible');
+ await r20Card.getByRole('button',{name:'Correct',exact:true}).evaluate(button=>{button.id='r20-trigger'});
+ let r20Dialog=await openCorrection(r18Text);
+ const r20Setup=await waitForModalSetup();
+ await writeFile(path.join(path.dirname(resultsPath),'r20-modal-initial-setup.json'),JSON.stringify({browser:'Chrome',setup:r20Setup},null,2)+'\n');
+ assert.equal(r20Setup.settled.dialogContainsActive,true,`initial focus must enter the dialog after setup: ${JSON.stringify(r20Setup)}`);
+ assert.equal(r20Setup.settled.mainInert,true,`the modal setup must inert the background: ${JSON.stringify(r20Setup)}`);
+ assert.equal(r20Setup.settled.dialogInert,false,`the modal must remain outside inert ancestors: ${JSON.stringify(r20Setup)}`);
+ let r20Focus=await inspectModalFocus(r20Dialog);
+ assert.equal(await r20Dialog.evaluate(dialog=>dialog.tabIndex),-1,'the dialog container must support the zero-tabbable fallback');
+ assert.equal(r20Focus.inside,true,`initial focus must be contained by the dialog: ${JSON.stringify({setup:r20Setup,focus:r20Focus})}`);
+ assert.equal(r20Focus.activeIndex,0,'opening the dialog should focus its first enabled control');
+ assert.equal(r20Focus.activeLabel,'Close');
+ assert.equal(await r20Dialog.getByRole('button',{name:'Confirm constraint',exact:true}).isDisabled(),true,'empty confirmation should be disabled');
+ assert.equal(r20Focus.candidates.some(candidate=>candidate.label==='Confirm constraint'),false,'a disabled confirmation must not be tabbable');
+ const openInertState=await page.evaluate(()=>({mainInert:document.querySelector('main')?.inert??false,dialogInert:!!document.querySelector('[role="dialog"]')?.closest('[inert]')}));
+ assert.equal(openInertState.mainInert,true,'background main content must be inert while a dialog is open');
+ assert.equal(openInertState.dialogInert,false,'the dialog must not inherit inertness from its own ancestor');
+ await r20Dialog.evaluate(dialog=>{
+  const positiveFirst=document.createElement('button');positiveFirst.id='r20-positive-first';positiveFirst.tabIndex=2;positiveFirst.textContent='Positive first';
+  const positiveSecond=document.createElement('button');positiveSecond.id='r20-positive-second';positiveSecond.tabIndex=2;positiveSecond.textContent='Positive second';
+  dialog.append(positiveFirst,positiveSecond);
+  const fieldset=document.createElement('fieldset');fieldset.disabled=true;const disabled=document.createElement('button');disabled.id='r20-disabled-fieldset';disabled.textContent='Disabled fieldset control';fieldset.append(disabled);dialog.append(fieldset);
+  const hidden=document.createElement('button');hidden.id='r20-hidden-control';hidden.hidden=true;hidden.textContent='Hidden control';dialog.append(hidden);
+  const inertParent=document.createElement('div');inertParent.inert=true;const inert=document.createElement('button');inert.id='r20-inert-control';inert.textContent='Inert control';inertParent.append(inert);dialog.append(inertParent);
+ });
+ r20Focus=await inspectModalFocus(r20Dialog);
+ assert.deepEqual(r20Focus.candidates.slice(0,2).map(candidate=>candidate.id),['r20-positive-first','r20-positive-second'],'equal positive tabindex values must retain DOM order');
+ assert.ok(!r20Focus.candidates.some(candidate=>['r20-disabled-fieldset','r20-hidden-control','r20-inert-control'].includes(candidate.id)),'disabled fieldset, hidden, and inert descendants must not be tabbable');
+ await page.evaluate(()=>{document.body.tabIndex=-1;document.body.focus()});
+ await page.keyboard.press('Tab');r20Focus=await inspectModalFocus(r20Dialog);
+ assert.equal(r20Focus.inside,true,'Tab from outside must enter the dialog');assert.equal(r20Focus.activeIndex,0);assert.equal(r20Focus.activeId,'r20-positive-first');
+ for(let expected=1;expected<r20Focus.candidates.length;expected++){
+  await page.keyboard.press('Tab');r20Focus=await inspectModalFocus(r20Dialog);
+  assert.equal(r20Focus.inside,true,`forward Tab escaped the dialog at candidate ${expected}`);assert.equal(r20Focus.activeIndex,expected,`forward Tab skipped candidate ${expected}`);
+ }
+ await page.keyboard.press('Tab');r20Focus=await inspectModalFocus(r20Dialog);assert.equal(r20Focus.activeIndex,0,'Tab from the final candidate must wrap to the first');
+ for(let expected=r20Focus.candidates.length-1;expected>=0;expected--){
+  await page.keyboard.press('Shift+Tab');r20Focus=await inspectModalFocus(r20Dialog);
+  assert.equal(r20Focus.inside,true,`reverse Tab escaped the dialog at candidate ${expected}`);assert.equal(r20Focus.activeIndex,expected,`reverse Tab skipped candidate ${expected}`);
+ }
+ await page.evaluate(()=>{document.body.focus()});await page.keyboard.press('Shift+Tab');r20Focus=await inspectModalFocus(r20Dialog);
+ assert.equal(r20Focus.inside,true,'Shift+Tab from outside must enter the dialog');assert.equal(r20Focus.activeIndex,r20Focus.candidates.length-1);
+ await r20Dialog.locator('textarea').fill('T08 enabled traversal draft');
+ assert.equal(await r20Dialog.getByRole('button',{name:'Confirm constraint',exact:true}).isEnabled(),true,'nonempty confirmation should be enabled');
+ r20Focus=await inspectModalFocus(r20Dialog);assert.equal(r20Focus.candidates.at(-1)?.label,'Confirm constraint','the enabled submit control should join the live tabbable set');
+ await page.keyboard.press('Tab');r20Focus=await inspectModalFocus(r20Dialog);assert.equal(r20Focus.activeLabel,'Confirm constraint');
+ await page.keyboard.press('Shift+Tab');r20Focus=await inspectModalFocus(r20Dialog);assert.equal(r20Focus.activeTag,'TEXTAREA');
+ await r20Dialog.getByRole('button',{name:'Close',exact:true}).click();await r20Dialog.waitFor({state:'detached'});
+ let restoredFocus=await page.evaluate(()=>({id:document.activeElement?.id??'',connected:document.activeElement?.isConnected??false,mainInert:document.querySelector('main')?.inert??false}));
+ assert.equal(restoredFocus.id,'r20-trigger','Close should restore focus to the still-usable trigger');assert.equal(restoredFocus.connected,true);assert.equal(restoredFocus.mainInert,false,'background inert state must be restored on close');
+ r20Dialog=await openCorrection(r18Text);
+ const noTabSetup=await waitForModalSetup();
+ await writeFile(path.join(path.dirname(resultsPath),'r20-modal-no-tabbable-setup.json'),JSON.stringify({browser:'Chrome',setup:noTabSetup},null,2)+'\n');
+ assert.equal(noTabSetup.settled.dialogContainsActive,true,`zero-tabbable modal setup must focus the dialog: ${JSON.stringify(noTabSetup)}`);
+ assert.equal(noTabSetup.settled.mainInert,true,`zero-tabbable modal setup must inert the background: ${JSON.stringify(noTabSetup)}`);
+ assert.equal(noTabSetup.settled.dialogInert,false,`zero-tabbable modal must remain outside inert ancestors: ${JSON.stringify(noTabSetup)}`);
+ await r20Dialog.evaluate(dialog=>{
+  for(const element of dialog.querySelectorAll('a[href],area[href],button,input,select,textarea,iframe,object,embed,summary,audio[controls],video[controls],[contenteditable="true"],[tabindex]')){
+   element.hidden=true;element.tabIndex=-1;if('disabled' in element)element.disabled=true;
+  }
+ });
+ const noTabBefore=await page.evaluate(()=>{
+  const dialog=document.querySelector('[role="dialog"]');const active=document.activeElement;
+  window.__r20NoTabKeys=[];
+  document.addEventListener('keydown',event=>window.__r20NoTabKeys.push({key:event.key,activeTag:document.activeElement?.tagName??null,activeId:document.activeElement?.id??'',defaultPrevented:event.defaultPrevented}),true);
+  return {activeTag:active?.tagName??null,activeId:active?.id??'',dialogContainsActive:!!dialog?.contains(active),mainInert:document.querySelector('main')?.inert??false,dialogInert:!!dialog?.closest('[inert]')};
+ });
+ await page.evaluate(()=>document.body.focus());
+ const noTabAfterBodyFocus=await page.evaluate(()=>({activeTag:document.activeElement?.tagName??null,activeId:document.activeElement?.id??''}));
+ await page.keyboard.press('Tab');r20Focus=await inspectModalFocus(r20Dialog);
+ const noTabDiagnostics=await page.evaluate(()=>({keys:window.__r20NoTabKeys,activeTag:document.activeElement?.tagName??null,activeId:document.activeElement?.id??'',mainInert:document.querySelector('main')?.inert??false,dialogInert:!!document.querySelector('[role="dialog"]')?.closest('[inert]')}));
+ const noTabFocus={...r20Focus};
+ await writeFile(path.join(path.dirname(resultsPath),'r20-modal-no-tabbables.json'),JSON.stringify({browser:'Chrome',noTabBefore,noTabAfterBodyFocus,noTabDiagnostics,focus:r20Focus},null,2)+'\n');
+ assert.equal(r20Focus.inside,true,`Tab with no tabbables must focus the dialog container: ${JSON.stringify({noTabBefore,noTabAfterBodyFocus,noTabDiagnostics,focus:r20Focus})}`);assert.equal(r20Focus.activeIsDialog,true,`zero-tabbable fallback did not focus the dialog: ${JSON.stringify({noTabBefore,noTabAfterBodyFocus,noTabDiagnostics,focus:r20Focus})}`);assert.equal(r20Focus.activeIndex,-1);
+ await page.locator('#r20-trigger').evaluate(trigger=>{window.__r20RemovedTrigger=trigger;trigger.remove()});
+ assert.equal(await page.evaluate(()=>window.__r20RemovedTrigger.isConnected),false,'removed-trigger fixture was not detached');
+ await cancelCorrection(r20Dialog,'Escape');
+ const fallbackFocus=await page.evaluate(()=>({insideMain:!!document.querySelector('main')?.contains(document.activeElement),tag:document.activeElement?.tagName??'',body:document.activeElement===document.body,mainInert:document.querySelector('main')?.inert??false}));
+ assert.equal(fallbackFocus.insideMain,true,'Escape after trigger removal should focus the stable main heading/container');assert.equal(fallbackFocus.body,false);assert.equal(fallbackFocus.mainInert,false);
+ await page.reload();await page.getByRole('heading',{name:'Research memories',exact:true}).waitFor();await rawActivity.waitFor();if(!(await rawActivity.evaluate(node=>node.open)))await rawActivity.locator('summary').click();
+ await unlink(releaseMarker).catch(()=>{});await writeFile(wrapperConfigPath,JSON.stringify({delayAtomId:cardB.id,failureText:null}));
+ const r20SubmitText='T07 delayed A R20 submitting';
+ r20Dialog=await openCorrection(r18Text);const submittingSetup=await waitForModalSetup();await r20Dialog.locator('textarea').fill(r20SubmitText);await r20Dialog.getByRole('button',{name:'Confirm constraint',exact:true}).click();
+ await waitForRequest(request=>request.op==='feedback'&&request.payload?.atom_id===cardB.id&&request.payload?.text===r20SubmitText);
+ assert.equal(await r20Dialog.count(),1,'the delayed submit should keep its dialog mounted');
+ const submittingButtons=await r20Dialog.locator('button').evaluateAll(buttons=>buttons.map(button=>({label:button.getAttribute('aria-label')||button.textContent.trim(),disabled:button.disabled})));
+ assert.equal(submittingButtons.find(button=>button.label==='Confirm constraint')?.disabled,true,'the confirmation control must be disabled while submitting');
+ assert.ok(submittingButtons.filter(button=>button.label!=='Close').every(button=>button.disabled),'all correction actions must be disabled while submitting');
+ assert.equal(submittingButtons.find(button=>button.label==='Close')?.disabled,false,'Close should remain available while submitting');
+ r20Focus=await inspectModalFocus(r20Dialog);assert.equal(r20Focus.candidates.length,2,'submitting state should recompute to Close and the still-enabled textarea');
+ await page.keyboard.press('Tab');r20Focus=await inspectModalFocus(r20Dialog);assert.equal(r20Focus.inside,true);assert.equal(r20Focus.activeIndex,0,'Tab after disabling the former last action should return to the first live candidate');
+ await page.keyboard.press('Shift+Tab');r20Focus=await inspectModalFocus(r20Dialog);assert.equal(r20Focus.inside,true);assert.equal(r20Focus.activeTag,'TEXTAREA','reverse traversal should use the recomputed last live candidate');
+ await writeFile(releaseMarker,'release R20 delayed confirmation');
+ await page.waitForFunction(async ({atomId,text})=>(await chrome.runtime.sendMessage({type:'host',op:'dashboard'})).cards.some(card=>card.id===atomId&&card.text===text),{atomId:cardB.id,text:r20SubmitText},{timeout:15000});
+ await r20Dialog.waitFor({state:'detached'});
+ loggedFeedback=(await nativeRequests()).filter(request=>request.op==='feedback');
+ assert.deepEqual(loggedFeedback.map(request=>({atom_id:request.payload.atom_id,action:request.payload.action,text:request.payload.text})),[
+  {atom_id:cardB.id,action:'confirm_constraint',text:r18Text},
+  {atom_id:cardA.id,action:'confirm_constraint',text:delayedTextA1},
+  {atom_id:cardA.id,action:'confirm_constraint',text:delayedTextA2},
+  {atom_id:cardB.id,action:'confirm_constraint',text:failureText},
+  {atom_id:cardB.id,action:'confirm_constraint',text:r20SubmitText},
+ ],'only the four R18/R19 confirmations and the delayed R20 submitting fixture should reach native messaging');
+ if(process.env.SEREIN_BROWSER_R20_RESULTS_PATH){
+  const r20ResultsPath=path.resolve(process.env.SEREIN_BROWSER_R20_RESULTS_PATH);
+  await mkdir(path.dirname(r20ResultsPath),{recursive:true});
+  await writeFile(r20ResultsPath,JSON.stringify({status:'PASS',scope:'R18–R20 actual Chrome browser checks completed before the dashboard refresh suite',browser:await context.browser()?.version(),extension_id:id,nativeRuntime:browserRuntimeDir||'skills/serein-context bundled helper via connect.sh and recall.sh',modalInitialSetup:{first:r20Setup,zeroTab:noTabSetup,submitting:submittingSetup},zeroTabDiagnostics:{before:noTabBefore,afterBodyFocus:noTabAfterBodyFocus,afterTab:noTabDiagnostics,focus:noTabFocus},feedbackRequests:loggedFeedback.map(request=>({atom_id:request.payload.atom_id,action:request.payload.action,text:request.payload.text})),fullLaneResultsPath:resultsPath},null,2)+'\n');
+ }
  await page.goto(`chrome-extension://${id}/dashboard.html#connections`);
  assert.equal(await page.getByRole('heading',{name:"You're connected",exact:true}).count(),0,'first-run prompt should end after the first saved observation');
  await page.goto(`chrome-extension://${id}/dashboard.html#context`);
  await setTheme('dark');await page.screenshot({animations:'disabled',path:path.join(evidence,'context-populated-dark.png'),fullPage:true});
  await setTheme('light');await page.screenshot({animations:'disabled',path:path.join(evidence,'context-populated-light.png'),fullPage:true});
  const recallRequest={protocol:1,request_id:crypto.randomUUID(),client:'generic',vault:'default',query:'desk lamp research',facets:['desk'],scope:['research'],max_bytes:4096,budget_ms:1500};
- const recalled=JSON.parse(execFileSync('sh',[path.join(root,'skills/serein-context/scripts/recall.sh')],{input:JSON.stringify(recallRequest),env:nativeEnv}).toString());assert.equal(recalled.context.length,1);
+ const recallOutput=browserRuntimeDir
+  ? execFileSync(path.join(browserRuntimeDir,'serein'),['recall','--request-stdin','--json'],{input:JSON.stringify(recallRequest),env:nativeEnv,cwd:browserRuntimeDir}).toString()
+  : execFileSync('sh',[path.join(root,'skills/serein-context/scripts/recall.sh')],{input:JSON.stringify(recallRequest),env:nativeEnv}).toString();
+ const recalled=JSON.parse(recallOutput);assert.equal(recalled.context.length,1);
  await send({type:'exclude',site:'example.com',forget:true});const forgotten=await send({type:'host',op:'dashboard'});assert.ok(!forgotten.cards.some(card=>card.text==='Desk lamp research'),'the original synthetic observation was not forgotten');
  await send({type:'exclude',site:'t07-a.example.org',forget:true});
  await send({type:'exclude',site:'t07-b.example.org',forget:true});
@@ -323,10 +479,13 @@ process.exit(result.status ?? 1);
  }
  const relinkTicket=await send({type:'ticket',adapters:['generic'],label:'Synthetic browser fixture'});
  assert.equal((await send({type:'state'})).state.paired,true,'pending relink must preserve the existing connection');
- const relinked=JSON.parse(execFileSync('sh',[path.join(root,'skills/serein-context/scripts/connect.sh')],{input:JSON.stringify(relinkTicket),env:nativeEnv}).toString());
+ const relinkOutput=browserRuntimeDir
+  ? execFileSync(path.join(browserRuntimeDir,'serein'),['setup','--request-stdin','--json'],{input:JSON.stringify(relinkTicket),env:nativeEnv,cwd:browserRuntimeDir}).toString()
+  : execFileSync('sh',[path.join(root,'skills/serein-context/scripts/connect.sh')],{input:JSON.stringify(relinkTicket),env:nativeEnv}).toString();
+ const relinked=JSON.parse(relinkOutput);
  assert.equal(relinked.database_path,setup.database_path,'relink replaced the existing vault');
  await page.waitForFunction(async ()=>{const {state}=await chrome.runtime.sendMessage({type:'state'});return state.paired&&!state.ticket;},{},{timeout:15000});
  assert.deepEqual(errors,[]);const builtManifest=JSON.parse(await readFile(path.join(extension,'manifest.json')));assert.deepEqual([...builtManifest.permissions].sort(),['alarms','idle','nativeMessaging','storage','tabs']);assert.ok(!builtManifest.content_scripts&&!builtManifest.host_permissions);
  for(const icon of Object.values(builtManifest.icons))await readFile(path.join(extension,icon));
- const result={browser:await context.browser()?.version(),extension_id:id,checks:['actual extension loaded','consent off by default','pause survives reload','exclusion persisted before helper connection','automatic native hello pairing','first-run prompt appears only before saved observations','19 queued events launch no helper','20 events launch one helper','one-minute-old event flushes','browser alarm drains queue with extension page closed','card-scoped correction drafts reset on Escape, close and backdrop','correction confirmation sends only the selected card ID and text','late response cannot mutate a different or reopened dialog','current-instance failure preserves its draft','relink preserves existing connection and vault','deletion pending exposed','popup renders','keyboard focus','light and dark screenshots','six UI languages persist across reload','no console errors','manifest exact permissions','icon paths exist'],nativeMessaging:'PASS: actual sendNativeMessage hello, policy flush, batched ingest ACK, duplicate ACK, skill reader recall, exclude-and-forget',correctionRequests:loggedFeedback.map(request=>({atom_id:request.payload.atom_id,action:request.payload.action,text:request.payload.text}))};await writeFile(resultsPath,JSON.stringify(result,null,2));console.log(result);
+ const result={browser:await context.browser()?.version(),extension_id:id,nativeRuntime:browserRuntimeDir||'skills/serein-context bundled helper via connect.sh and recall.sh',modalInitialSetup:{first:r20Setup,zeroTab:noTabSetup,submitting:submittingSetup},checks:['actual extension loaded','consent off by default','pause survives reload','exclusion persisted before helper connection','automatic native hello pairing','first-run topic-bearing recall question','19 queued events launch no helper','20 events launch one helper','one-minute-old event flushes','browser alarm drains queue with extension page closed','R18 card-scoped correction drafts reset on Escape, close and backdrop','R18 correction confirmation sends only the selected card ID and text','R19 late response cannot mutate a different or reopened dialog','R19 current-instance failure preserves its draft','R20 empty/enabled/submitting modal states and live tabbable recomputation','R20 forward/backward Tab traversal, equal-positive-index DOM order and zero-tabbable fallback','R20 disabled-fieldset, hidden and inert controls excluded','R20 close/Escape focus restoration including a removed trigger','background inertness restored after dialog closure','relink preserves existing connection and vault','popup renders','keyboard focus','light and dark screenshots','six UI languages persist across reload','no console errors','manifest exact permissions','icon paths exist'],nativeMessaging:'PASS: actual sendNativeMessage hello, policy flush, batched ingest ACK, duplicate ACK, skill reader recall, exclude-and-forget',correctionRequests:loggedFeedback.map(request=>({atom_id:request.payload.atom_id,action:request.payload.action,text:request.payload.text}))};await writeFile(resultsPath,JSON.stringify(result,null,2));console.log(result);
 }finally{if(releaseMarker)await writeFile(releaseMarker,'cleanup release').catch(()=>{});if(releaseMarker)await new Promise(resolve=>setTimeout(resolve,100));if(context)await context.close();if(registeredPath)await unlink(registeredPath).catch(()=>{});await rm(temp,{recursive:true,force:true})}

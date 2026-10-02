@@ -13,6 +13,7 @@ export type CorrectionSubmission = Readonly<{
 type CorrectionDialogProps = {
   card: DashboardCard;
   generation: number;
+  returnFocusTo?: HTMLElement | null;
   translate: (key: MessageKey) => string;
   isCurrentGeneration: (generation: number) => boolean;
   onClose: (generation: number) => void;
@@ -31,6 +32,7 @@ const actions = [
 export function CorrectionDialog({
   card,
   generation,
+  returnFocusTo,
   translate,
   isCurrentGeneration,
   onClose,
@@ -73,6 +75,7 @@ export function CorrectionDialog({
     <Modal
       title={translate("modal.correctTitle")}
       onClose={() => onClose(generation)}
+      returnFocusTo={returnFocusTo}
     >
       <div class="stack">
         {actions.map(([action, key]) => (

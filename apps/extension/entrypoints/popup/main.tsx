@@ -1,5 +1,5 @@
 import { render } from "preact";
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useRef, useState } from "preact/hooks";
 import { browser } from "wxt/browser";
 import { call, openDashboard } from "../../lib/client";
 import { Icon } from "../../lib/Icon";
@@ -17,6 +17,11 @@ function App() {
   const [s, setS] = useState<State>();
   const [site, setSite] = useState("");
   const [dialog, setDialog] = useState("");
+  const dialogTrigger = useRef<HTMLElement | null>(null);
+  function openDialog(kind: string, trigger: HTMLElement) {
+    dialogTrigger.current = trigger;
+    setDialog(kind);
+  }
   const [error, setError] = useState("");
   const [pending, setPending] = useState(0);
   const [busy, setBusy] = useState(false);
@@ -40,8 +45,11 @@ function App() {
     });
     browser.storage.local.get(["theme", "themeMode", "locale"]).then((x) => {
       if (typeof x.locale === "string") setLocale(x.locale as Locale);
-      if ((x.themeMode === "manual" && (x.theme === "light" || x.theme === "dark")) ||
-          (x.themeMode === undefined && x.theme === "dark"))
+      if (
+        (x.themeMode === "manual" &&
+          (x.theme === "light" || x.theme === "dark")) ||
+        (x.themeMode === undefined && x.theme === "dark")
+      )
         document.documentElement.dataset.theme = x.theme;
     });
   }, []);
@@ -97,8 +105,10 @@ function App() {
         </button>
         <button
           disabled={!site || busy}
-          onClick={() =>
-            excluded ? action({ type: "include", site }) : setDialog("exclude")
+          onClick={(event) =>
+            excluded
+              ? action({ type: "include", site })
+              : openDialog("exclude", event.currentTarget)
           }
         >
           <Icon name={excluded ? "include" : "exclude"} />
@@ -108,10 +118,10 @@ function App() {
         </button>
         <button
           disabled={busy}
-          onClick={() =>
+          onClick={(event) =>
             s?.policy.paused
               ? action({ type: "pause", paused: false })
-              : setDialog("pause")
+              : openDialog("pause", event.currentTarget)
           }
         >
           <Icon name={s?.policy.paused ? "resume" : "private"} />
@@ -159,6 +169,7 @@ function App() {
         <Modal
           title={tr("exclude.title", { domain: site })}
           onClose={() => setDialog("")}
+          returnFocusTo={dialogTrigger.current}
         >
           <p>{tr("popup.siteSubdomains")}</p>
           <button
@@ -180,7 +191,11 @@ function App() {
         </Modal>
       )}
       {dialog === "pause" && (
-        <Modal title={tr("popup.privacyTitle")} onClose={() => setDialog("")}>
+        <Modal
+          title={tr("popup.privacyTitle")}
+          onClose={() => setDialog("")}
+          returnFocusTo={dialogTrigger.current}
+        >
           <p>{tr("popup.pauseExplanation")}</p>
           <button
             class="choice"
