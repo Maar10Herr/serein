@@ -1,0 +1,137 @@
+{
+  "browser": "148.0.7778.96",
+  "extension_id": "leakblpkjoielijhdnbkcafdgmfbpbib",
+  "nativeRuntime": "skills/serein-context bundled helper via connect.sh and recall.sh",
+  "modalInitialSetup": {
+    "first": {
+      "initial": {
+        "at": 698.6999999880791,
+        "activeTag": "BUTTON",
+        "activeId": "",
+        "activeLabel": "Close",
+        "dialogPresent": true,
+        "dialogContainsActive": true,
+        "mainInert": true,
+        "dialogInert": false
+      },
+      "settled": {
+        "at": 699.5,
+        "activeTag": "BUTTON",
+        "activeId": "",
+        "activeLabel": "Close",
+        "dialogPresent": true,
+        "dialogContainsActive": true,
+        "mainInert": true,
+        "dialogInert": false
+      },
+      "delayMs": 0.800000011920929,
+      "timedOut": false
+    },
+    "zeroTab": {
+      "initial": {
+        "at": 789.5,
+        "activeTag": "BUTTON",
+        "activeId": "",
+        "activeLabel": "Close",
+        "dialogPresent": true,
+        "dialogContainsActive": true,
+        "mainInert": true,
+        "dialogInert": false
+      },
+      "settled": {
+        "at": 790.1999999880791,
+        "activeTag": "BUTTON",
+        "activeId": "",
+        "activeLabel": "Close",
+        "dialogPresent": true,
+        "dialogContainsActive": true,
+        "mainInert": true,
+        "dialogInert": false
+      },
+      "delayMs": 0.699999988079071,
+      "timedOut": false
+    },
+    "submitting": {
+      "initial": {
+        "at": 337.19999998807907,
+        "activeTag": "BUTTON",
+        "activeId": "",
+        "activeLabel": "Close",
+        "dialogPresent": true,
+        "dialogContainsActive": true,
+        "mainInert": true,
+        "dialogInert": false
+      },
+      "settled": {
+        "at": 338,
+        "activeTag": "BUTTON",
+        "activeId": "",
+        "activeLabel": "Close",
+        "dialogPresent": true,
+        "dialogContainsActive": true,
+        "mainInert": true,
+        "dialogInert": false
+      },
+      "delayMs": 0.800000011920929,
+      "timedOut": false
+    }
+  },
+  "checks": [
+    "actual extension loaded",
+    "consent off by default",
+    "pause survives reload",
+    "exclusion persisted before helper connection",
+    "automatic native hello pairing",
+    "first-run topic-bearing recall question",
+    "19 queued events launch no helper",
+    "20 events launch one helper",
+    "one-minute-old event flushes",
+    "browser alarm drains queue with extension page closed",
+    "R18 card-scoped correction drafts reset on Escape, close and backdrop",
+    "R18 correction confirmation sends only the selected card ID and text",
+    "R19 late response cannot mutate a different or reopened dialog",
+    "R19 current-instance failure preserves its draft",
+    "R20 empty/enabled/submitting modal states and live tabbable recomputation",
+    "R20 forward/backward Tab traversal, equal-positive-index DOM order and zero-tabbable fallback",
+    "R20 disabled-fieldset, hidden and inert controls excluded",
+    "R20 close/Escape focus restoration including a removed trigger",
+    "background inertness restored after dialog closure",
+    "relink preserves existing connection and vault",
+    "T09 dashboard refresh and stale-response suite",
+    "popup renders",
+    "keyboard focus",
+    "light and dark screenshots",
+    "six UI languages persist across reload",
+    "no console errors",
+    "manifest exact permissions",
+    "icon paths exist"
+  ],
+  "nativeMessaging": "PASS: actual sendNativeMessage hello, policy flush, batched ingest ACK, duplicate ACK, skill reader recall, exclude-and-forget",
+  "correctionRequests": [
+    {
+      "atom_id": "ecc963ab-91c4-47b4-9096-5f94c5a4fa35",
+      "action": "confirm_constraint",
+      "text": "T07 B confirmation text only"
+    },
+    {
+      "atom_id": "8c092cbb-6a40-4166-a1a2-8eee74f552b7",
+      "action": "confirm_constraint",
+      "text": "T07 delayed A first"
+    },
+    {
+      "atom_id": "8c092cbb-6a40-4166-a1a2-8eee74f552b7",
+      "action": "confirm_constraint",
+      "text": "T07 delayed A second"
+    },
+    {
+      "atom_id": "ecc963ab-91c4-47b4-9096-5f94c5a4fa35",
+      "action": "confirm_constraint",
+      "text": "T07 current instance failure draft"
+    },
+    {
+      "atom_id": "ecc963ab-91c4-47b4-9096-5f94c5a4fa35",
+      "action": "confirm_constraint",
+      "text": "T07 delayed A R20 submitting"
+    }
+  ]
+}

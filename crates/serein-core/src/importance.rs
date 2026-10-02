@@ -129,7 +129,7 @@ mod tests {
     }
 
     #[test]
-    fn descriptive_pages_need_independent_sessions_for_standalone_prominence() {
+    fn descriptive_pages_need_two_activity_windows_for_standalone_prominence() {
         let title = "Steelcase Leap seat depth and dimensions";
         assert!(!prominent(title, None, 15, 1, false));
         assert!(!prominent(title, None, 300, 1, false));

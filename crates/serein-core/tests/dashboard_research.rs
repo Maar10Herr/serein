@@ -1,8 +1,17 @@
 use rusqlite::params;
-use serein_core::{id, model, now, storage::Vault, Event, Policy};
+use serein_core::{algorithm, id, model, now, storage::Vault, Event, Policy};
 use std::fs;
 
 static DATA_DIR_LOCK: std::sync::Mutex<()> = std::sync::Mutex::new(());
+
+fn assigned_vector_blob() -> Vec<u8> {
+    let mut vector = vec![0.0_f32; algorithm::DIMENSIONS];
+    vector[0] = 1.0;
+    vector
+        .into_iter()
+        .flat_map(|component| component.to_le_bytes())
+        .collect()
+}
 
 #[test]
 fn dashboard_promotes_related_research_without_hiding_raw_activity() {
@@ -114,7 +123,7 @@ fn dashboard_promotes_related_research_without_hiding_raw_activity() {
             params![
                 topic,
                 "Stale topic label from removed evidence",
-                vec![0u8],
+                vec![0u8; algorithm::DIMENSIONS * 4],
                 model_hash
             ],
         )
@@ -128,6 +137,13 @@ fn dashboard_promotes_related_research_without_hiding_raw_activity() {
         .collect::<Result<Vec<_>, _>>()
         .unwrap();
     for atom in atoms {
+        vault
+            .conn
+            .execute(
+                "INSERT INTO vectors(atom,model,vector) VALUES(?,?,?)",
+                params![atom, model_hash, assigned_vector_blob()],
+            )
+            .unwrap();
         vault
             .conn
             .execute(
@@ -216,7 +232,12 @@ fn dashboard_keeps_corrected_activity_but_excludes_it_from_memories_and_prominen
         .conn
         .execute(
             "INSERT INTO topics(id,label,centroid,model) VALUES(?1,?2,?3,?4)",
-            params![topic, "Ergonomic office chairs", vec![0u8], model_hash],
+            params![
+                topic,
+                "Ergonomic office chairs",
+                vec![0u8; algorithm::DIMENSIONS * 4],
+                model_hash
+            ],
         )
         .unwrap();
     let atoms = vault
@@ -228,6 +249,13 @@ fn dashboard_keeps_corrected_activity_but_excludes_it_from_memories_and_prominen
         .collect::<Result<Vec<_>, _>>()
         .unwrap();
     for (atom, site) in &atoms {
+        vault
+            .conn
+            .execute(
+                "INSERT INTO vectors(atom,model,vector) VALUES(?,?,?)",
+                params![atom, model_hash, assigned_vector_blob()],
+            )
+            .unwrap();
         vault
             .conn
             .execute(

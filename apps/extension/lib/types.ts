@@ -91,4 +91,6 @@ export interface DashboardResponse {
   atoms?: number;
   database_path?: string;
   vault_bytes?: number;
+  evidence_generation?: number;
+  privacy_generation?: number;
 }

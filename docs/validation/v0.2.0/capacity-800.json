@@ -1,0 +1,195 @@
+{
+  "run_label": "final-asm-candidate",
+  "platform": "macOS",
+  "architecture": "arm64",
+  "build_profile": "release",
+  "fixture_atoms": 800,
+  "includes_process_launch": true,
+  "cache_state": "warm; no forced OS cache eviction",
+  "initial_ingest_ms": 1860.6213339953683,
+  "ingest_32": {
+    "samples": 25,
+    "median_ms": 74.05866601038724,
+    "p95_ms": 74.74104198627174
+  },
+  "raw_ingest_32_ms": [
+    73.84783300221898,
+    73.53766699088737,
+    72.97499998821877,
+    73.54645902523771,
+    73.54433299042284,
+    73.50724999560043,
+    73.59191699652001,
+    75.64200001070276,
+    74.36975001473911,
+    73.77808299497701,
+    73.83383301203139,
+    74.7220840130467,
+    73.92687501851469,
+    74.05866601038724,
+    73.90645900159143,
+    73.8943750038743,
+    74.10095797968097,
+    74.08362498972565,
+    75.16783298342489,
+    74.73479199688882,
+    74.6954999922309,
+    74.50762501684949,
+    74.74104198627174,
+    74.72083301399834,
+    74.42900000023656
+  ],
+  "full_index_ms": 399.60633401642554,
+  "index_refresh_calls": [
+    {
+      "elapsed_ms": 108.17195900017396,
+      "processed": 256,
+      "pending_atoms": 544
+    },
+    {
+      "elapsed_ms": 109.05374999856576,
+      "processed": 256,
+      "pending_atoms": 288
+    },
+    {
+      "elapsed_ms": 110.8299579937011,
+      "processed": 256,
+      "pending_atoms": 32
+    },
+    {
+      "elapsed_ms": 71.53708301484585,
+      "processed": 32,
+      "pending_atoms": 0
+    }
+  ],
+  "storage_after_ingest": {
+    "schema_version": 5,
+    "rows": {
+      "atoms": 800,
+      "vectors": 0,
+      "topics": 0,
+      "atom_topics": 0,
+      "topic_cache": 0,
+      "topic_cache_buckets": 0
+    },
+    "bytes": {
+      "database": 1224704,
+      "wal": 0,
+      "shm": 32768
+    },
+    "database_and_wal_bytes": 1224704
+  },
+  "storage_after_index": {
+    "schema_version": 5,
+    "rows": {
+      "atoms": 800,
+      "vectors": 800,
+      "topics": 1,
+      "atom_topics": 800,
+      "topic_cache": 1,
+      "topic_cache_buckets": 1
+    },
+    "bytes": {
+      "database": 2551808,
+      "wal": 1108312,
+      "shm": 32768
+    },
+    "database_and_wal_bytes": 3660120
+  },
+  "storage_final": {
+    "schema_version": 5,
+    "rows": {
+      "atoms": 800,
+      "vectors": 800,
+      "topics": 1,
+      "atom_topics": 800,
+      "topic_cache": 1,
+      "topic_cache_buckets": 1
+    },
+    "bytes": {
+      "database": 2551808,
+      "wal": 1108312,
+      "shm": 32768
+    },
+    "database_and_wal_bytes": 3660120
+  },
+  "indexed_recall": {
+    "samples": 25,
+    "median_ms": 71.78929200745188,
+    "p95_ms": 72.01912498567253
+  },
+  "raw_indexed_recall_ms": [
+    71.9749590207357,
+    71.96629198733717,
+    71.80141701246612,
+    71.73470899579115,
+    71.97466600337066,
+    71.95637500262819,
+    72.01912498567253,
+    72.05254101427272,
+    71.94466699729674,
+    71.46487501449883,
+    71.23670898727141,
+    71.67879099142738,
+    71.47220798651688,
+    71.38779200613499,
+    71.66650000726804,
+    71.7437920102384,
+    71.56091698561795,
+    71.31516697700135,
+    71.68799999635667,
+    71.78141598706134,
+    71.87225000234321,
+    71.78929200745188,
+    72.77966698165983,
+    72.014333010884,
+    72.00079198810272
+  ],
+  "one_packet": {
+    "response_bytes": 1125,
+    "max_bytes": 4096,
+    "status": "ok",
+    "mode": "hybrid",
+    "context_count": 2,
+    "context_ids": [
+      "0a01f7b3-14cb-48f5-aed8-434c2cefef39",
+      "0d9a464b-ec00-4db9-8f33-5998c6480bf3"
+    ]
+  },
+  "peak_rss_bytes_child_processes_during_harness": 77922304,
+  "rss_scope": "Maximum of sequential child processes spawned by this harness, including ingest, refresh, and recall; may exceed recall-process peak.",
+  "reference_machine": "This host is not the specified dual-core/4GiB reference laptop.",
+  "not_measured": [
+    "true cold-cache p95",
+    "10000-atom capacity/deadline acceptance",
+    "all OS/browser/assistant combinations"
+  ],
+  "binary_sha256": {
+    "target/release/serein": "de7aeed2370ab49a97195c485787d2dce9671f3a1666e1083d1d5bc88e105040",
+    "target/release/serein-host": "9fe827b4fca4d571582dfbbe32e547b7f581b1192349a5276f9d4a2617e7f678"
+  },
+  "harness_source_sha256": "89a25ea664f5613deef1e316d8f160fe6a562b9a6c357f669547fce564df5871",
+  "fixture_scope": "Generated search metadata only in an isolated temporary Serein directory.",
+  "candidate_identity": {
+    "run_timestamp_utc": "2026-10-02T11:26:01.319423+00:00",
+    "candidate_release": "Serein 0.2.0 final schema-5 candidate",
+    "tested_bundle_runtime": "skills/serein-context/runtime/macos-arm64",
+    "binaries": {
+      "target/release/serein": "de7aeed2370ab49a97195c485787d2dce9671f3a1666e1083d1d5bc88e105040",
+      "target/release/serein-host": "9fe827b4fca4d571582dfbbe32e547b7f581b1192349a5276f9d4a2617e7f678",
+      "skills/serein-context/runtime/macos-arm64/serein": "de7aeed2370ab49a97195c485787d2dce9671f3a1666e1083d1d5bc88e105040",
+      "skills/serein-context/runtime/macos-arm64/serein-host": "9fe827b4fca4d571582dfbbe32e547b7f581b1192349a5276f9d4a2617e7f678"
+    },
+    "bundle_checksum_manifest_sha256": "6e77c2c7610482332ee8373f7b42857f63c65ea2d0c07fbf3999f5862714450c",
+    "bundled_model_manifest_sha256": "8661322502cf2881aec0b935e92b802c0538cbb397bd8b5f36fa2253bdec9e16",
+    "source_sha256": {
+      "crates/serein-core/src/inference.rs": "1938b468e311dd53117f7d3027873e9a41784f56b9a9cdc3953598ba0cd4f2a9",
+      "crates/serein-core/src/retrieval.rs": "0eac5e5bdd451286f784a78d64c53a8b5dacbe92604b8b89113fc17abe7a0c24",
+      "crates/serein-core/src/storage.rs": "d2150e5aeb9cca9a1942865334ba9c1ce99c31bd65ff1fb315f21578d5e2887e",
+      "crates/serein-core/tests/calibration.rs": "c6bad4edeabfd09b17a7d321c070ed5453a7dd5ef1fdd48e8a6939b8b4890f87",
+      "tests/benchmark_retrieval_10k.py": "fa08cb458c7696ba248fca6ebf42148e5d5afc0e69260179515710ec0f172f78",
+      "tests/performance.py": "89a25ea664f5613deef1e316d8f160fe6a562b9a6c357f669547fce564df5871",
+      "<validation-artifact:performance_final_800.py>": "5dcca002036a3306d16d074ae9b09e64f47ce0e351703dfa67baaccb1b4ad413"
+    }
+  }
+}

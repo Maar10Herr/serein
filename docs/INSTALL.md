@@ -4,12 +4,12 @@ This release supports a Mac with Apple silicon. Install the browser extension an
 
 ## 1. Install the extension
 
-Download one extension from [v0.1.3](https://github.com/Maar10Herr/serein/releases/tag/v0.1.3):
+Download one extension from [v0.2.0](https://github.com/Maar10Herr/serein/releases/tag/v0.2.0):
 
 | Browser | Download | Load it |
 | --- | --- | --- |
-| Chrome | [Extension ZIP](https://github.com/Maar10Herr/serein/releases/download/v0.1.3/serein-chrome-0.1.3-unsigned.zip) | Extract it. Open `chrome://extensions`, enable **Developer mode**, click **Load unpacked**, and select the folder containing `manifest.json`. |
-| Firefox | [Extension ZIP](https://github.com/Maar10Herr/serein/releases/download/v0.1.3/serein-firefox-0.1.3-unsigned.zip) | Extract it. Open `about:debugging#/runtime/this-firefox`, click **Load Temporary Add-on**, and select `manifest.json`. |
+| Chrome | [Extension ZIP](https://github.com/Maar10Herr/serein/releases/download/v0.2.0/serein-chrome-0.2.0-unsigned.zip) | Extract it. Open `chrome://extensions`, enable **Developer mode**, click **Load unpacked**, and select the folder containing `manifest.json`. |
+| Firefox | [Extension ZIP](https://github.com/Maar10Herr/serein/releases/download/v0.2.0/serein-firefox-0.2.0-unsigned.zip) | Extract it. Open `about:debugging#/runtime/this-firefox`, click **Load Temporary Add-on**, and select `manifest.json`. |
 
 These ZIPs are unsigned. Firefox removes temporary add-ons when it restarts; load the extension again after a restart. Permanent Firefox installation requires a signed package, which this release does not provide. The macOS helper is also unsigned and not notarized.
 
@@ -31,6 +31,10 @@ The ticket expires after 15 minutes. If linking takes longer, copy a new instruc
 
 The database is stored in your user application-data directory, outside the skill folder, so updating the skill does not replace your saved context. The helper starts for a browser batch or skill recall and exits after its reply.
 
-If macOS blocks an unsigned binary, inspect the [source and checksums](https://github.com/Maar10Herr/serein/releases/tag/v0.1.3) before allowing it to run, or [build from source](DEVELOPMENT.md). The [test report](TEST_REPORT.md) distinguishes installed integrations from integrations executed inside real assistants.
+If macOS blocks an unsigned binary, inspect the [source and checksums](https://github.com/Maar10Herr/serein/releases/tag/v0.2.0) before allowing it to run, or [build from source](DEVELOPMENT.md). The [test report](TEST_REPORT.md) distinguishes installed integrations from integrations executed inside real assistants.
+
+Version 0.2.0 upgrades the local vault to schema 5. Older helpers refuse to open that schema. Keep the updated skill with an upgraded vault; replacing the extension alone does not update the helper.
+
+For the first check, ask **“What did I find about [the topic I researched]?”** Use a topic visited after collection was enabled. An empty dashboard filter does not establish that the vault has no matching context.
 
 If Serein does not connect or recall is unavailable, ask your local assistant to run **Serein Doctor** from the installed skill. It checks the browser pairing record, native host registration, local vault, model, skill detection, and recall setting, then gives a remedy for anything missing. Doctor checks local readiness; it cannot prove that a browser is currently open or that an assistant has executed the skill.

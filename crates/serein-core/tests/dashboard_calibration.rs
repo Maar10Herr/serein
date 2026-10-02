@@ -119,7 +119,7 @@ fn prominence_reports_constructed_development_labels() {
     let report = json!({
         "fixture_id":labels.fixture_id,
         "synthetic_only":true,
-        "unit":"labeled event with canonical atom's accumulated dwell and independent half-hour session buckets",
+        "unit":"labeled event with canonical atom's accumulated dwell and fixed half-hour activity windows",
         "evaluated":evaluated,
         "true_positive":tp,
         "false_positive":fp,

@@ -1,0 +1,2161 @@
+{
+  "aggregate": {
+    "evaluated_query_count": 48,
+    "expected_empty_false_positives": [],
+    "expected_empty_query_count": 24,
+    "expected_empty_specificity": 1.0,
+    "expected_empty_true_negatives": 24,
+    "latency_ms": {
+      "mean": 57.92726643749998,
+      "median": 57.688125,
+      "p95": 58.575167
+    },
+    "mrr_macro_non_empty": 0.8888888888888888,
+    "ndcg_at_6_macro_non_empty": 0.7957187574030266,
+    "non_empty_query_count": 24,
+    "packet_bytes": {
+      "max": 2880,
+      "mean": 643.5625
+    },
+    "precision_at_6_macro_non_empty": 0.2222222222222222,
+    "recall_at_6_macro_non_empty": 0.7701388888888889
+  },
+  "development_quality_gate": {
+    "minimum_empty_specificity": 1.0,
+    "minimum_recall_at_6": 0.6,
+    "passed": true
+  },
+  "evaluation_split": "development",
+  "fixture_id": "serein-calibration-dev-multilingual-v1",
+  "ingest": {
+    "accepted_evidence_count": 43,
+    "fixture_evidence_count": 48,
+    "ingested_event_count": 47,
+    "invalid_hostname_safe_drop_ids": [
+      "ev033"
+    ],
+    "policy_rejection_counts": {
+      "EXCLUDED_SITE": 1,
+      "SHORT_VISIT": 3
+    },
+    "unique_atom_count": 31
+  },
+  "invariant_checks": {
+    "checks_passed": {
+      "context_at_most_six_records": 48,
+      "observed_evidence_has_unknown_subject": 45,
+      "packet_within_requested_byte_limit": 48,
+      "request_id_preserved": 48
+    },
+    "context_limit_records": 6,
+    "failures": [],
+    "packet_limit_bytes": 4096
+  },
+  "metric_definitions": {
+    "aggregation": "Macro average across non-empty queries. Expected-empty queries are measured separately with specificity.",
+    "mrr": "Reciprocal rank of the first returned atom that supports any expected evidence ID.",
+    "ndcg_at_6": "Binary relevance nDCG over returned atoms; expected duplicate observations that share one atom count as one retrievable item.",
+    "precision_at_6": "Relevant returned atom positions divided by six, even when fewer than six atoms are returned.",
+    "recall_at_6": "Unique expected canonical atoms represented by the top six returned atoms divided by unique expected canonical atoms. Expected labels without an ingestible atom are counted as unmatched units."
+  },
+  "model_pack": "override",
+  "model_pack_available": true,
+  "queries": [
+    {
+      "expected_canonical_atom_ids": [
+        "411ca150-c7e3-4f6f-8d63-64435c14e892",
+        "ad5a19ff-5ad3-40e9-8d86-92babcb60837",
+        "efec5d16-209b-4d50-a437-4ef7f1d8932d"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev001",
+        "ev002",
+        "ev005"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 68.163083,
+      "matched_canonical_atom_ids": [
+        "411ca150-c7e3-4f6f-8d63-64435c14e892",
+        "ad5a19ff-5ad3-40e9-8d86-92babcb60837",
+        "efec5d16-209b-4d50-a437-4ef7f1d8932d"
+      ],
+      "matched_evidence_ids": [
+        "ev001",
+        "ev002",
+        "ev005"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 1533,
+      "precision_at_6": 0.5,
+      "query": "¿Qué consulté sobre paneles solares fotovoltaicos?",
+      "query_id": "q001",
+      "ranked_results": [
+        {
+          "atom_id": "411ca150-c7e3-4f6f-8d63-64435c14e892",
+          "evidence_ids": [
+            "ev005"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev005"
+          ],
+          "rank": 1,
+          "relevant": true
+        },
+        {
+          "atom_id": "efec5d16-209b-4d50-a437-4ef7f1d8932d",
+          "evidence_ids": [
+            "ev002"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev002"
+          ],
+          "rank": 2,
+          "relevant": true
+        },
+        {
+          "atom_id": "ad5a19ff-5ad3-40e9-8d86-92babcb60837",
+          "evidence_ids": [
+            "ev001",
+            "ev004"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev001"
+          ],
+          "rank": 3,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "411ca150-c7e3-4f6f-8d63-64435c14e892",
+        "efec5d16-209b-4d50-a437-4ef7f1d8932d",
+        "ad5a19ff-5ad3-40e9-8d86-92babcb60837"
+      ],
+      "returned_evidence_ids": [
+        "ev001",
+        "ev002",
+        "ev004",
+        "ev005"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "ad5a19ff-5ad3-40e9-8d86-92babcb60837"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev001",
+        "ev004"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "efec5d16-209b-4d50-a437-4ef7f1d8932d"
+      ],
+      "latency_ms": 57.952625,
+      "matched_canonical_atom_ids": [
+        "ad5a19ff-5ad3-40e9-8d86-92babcb60837"
+      ],
+      "matched_evidence_ids": [
+        "ev001",
+        "ev004"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 1097,
+      "precision_at_6": 0.16666666666666666,
+      "query": "¿Volví a investigar energía solar en otra sesión?",
+      "query_id": "q002",
+      "ranked_results": [
+        {
+          "atom_id": "ad5a19ff-5ad3-40e9-8d86-92babcb60837",
+          "evidence_ids": [
+            "ev001",
+            "ev004"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev001",
+            "ev004"
+          ],
+          "rank": 1,
+          "relevant": true
+        },
+        {
+          "atom_id": "efec5d16-209b-4d50-a437-4ef7f1d8932d",
+          "evidence_ids": [
+            "ev002"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 2,
+          "relevant": false
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "ad5a19ff-5ad3-40e9-8d86-92babcb60837",
+        "efec5d16-209b-4d50-a437-4ef7f1d8932d"
+      ],
+      "returned_evidence_ids": [
+        "ev001",
+        "ev002",
+        "ev004"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "026c0cb0-72fe-4ad7-9978-92481c68b613",
+        "cb2f5b0b-9505-4969-9f95-604ac6f561e1"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev003",
+        "ev006",
+        "ev047"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "ad5a19ff-5ad3-40e9-8d86-92babcb60837"
+      ],
+      "latency_ms": 57.386542,
+      "matched_canonical_atom_ids": [
+        "cb2f5b0b-9505-4969-9f95-604ac6f561e1"
+      ],
+      "matched_evidence_ids": [
+        "ev003",
+        "ev047"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 0.6131471927654584,
+      "packet_bytes": 1086,
+      "precision_at_6": 0.16666666666666666,
+      "query": "¿Qué leí sobre energía eólica?",
+      "query_id": "q003",
+      "ranked_results": [
+        {
+          "atom_id": "cb2f5b0b-9505-4969-9f95-604ac6f561e1",
+          "evidence_ids": [
+            "ev003",
+            "ev047"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev003",
+            "ev047"
+          ],
+          "rank": 1,
+          "relevant": true
+        },
+        {
+          "atom_id": "ad5a19ff-5ad3-40e9-8d86-92babcb60837",
+          "evidence_ids": [
+            "ev001",
+            "ev004"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 2,
+          "relevant": false
+        }
+      ],
+      "recall_at_6": 0.5,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "cb2f5b0b-9505-4969-9f95-604ac6f561e1",
+        "ad5a19ff-5ad3-40e9-8d86-92babcb60837"
+      ],
+      "returned_evidence_ids": [
+        "ev001",
+        "ev003",
+        "ev004",
+        "ev047"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.250625,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "¿Qué modelo de panel solar elegí?",
+      "query_id": "q004",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.688125,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "¿Cuánto costaba la instalación fotovoltaica?",
+      "query_id": "q005",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 56.856916,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "¿Qué investigué?",
+      "query_id": "q006",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "a7cc1247-f485-494c-ab37-8314a6bfa843"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev007",
+        "ev008"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.754167,
+      "matched_canonical_atom_ids": [
+        "a7cc1247-f485-494c-ab37-8314a6bfa843"
+      ],
+      "matched_evidence_ids": [
+        "ev007",
+        "ev008"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 673,
+      "precision_at_6": 0.16666666666666666,
+      "query": "¿Qué parque nacional de Tenerife vi?",
+      "query_id": "q007",
+      "ranked_results": [
+        {
+          "atom_id": "a7cc1247-f485-494c-ab37-8314a6bfa843",
+          "evidence_ids": [
+            "ev007",
+            "ev008"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev007",
+            "ev008"
+          ],
+          "rank": 1,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "a7cc1247-f485-494c-ab37-8314a6bfa843"
+      ],
+      "returned_evidence_ids": [
+        "ev007",
+        "ev008"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "63dca0b7-fcce-4989-85df-b56a8470bdb8",
+        "f4ce4473-996e-4cef-9bb1-69538fce9e49"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev009",
+        "ev010",
+        "ev011"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.091,
+      "matched_canonical_atom_ids": [
+        "63dca0b7-fcce-4989-85df-b56a8470bdb8"
+      ],
+      "matched_evidence_ids": [
+        "ev010"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 0.6131471927654584,
+      "packet_bytes": 655,
+      "precision_at_6": 0.16666666666666666,
+      "query": "¿Qué visité en Granada?",
+      "query_id": "q008",
+      "ranked_results": [
+        {
+          "atom_id": "63dca0b7-fcce-4989-85df-b56a8470bdb8",
+          "evidence_ids": [
+            "ev010"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev010"
+          ],
+          "rank": 1,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 0.5,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "63dca0b7-fcce-4989-85df-b56a8470bdb8"
+      ],
+      "returned_evidence_ids": [
+        "ev010"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.400791999999996,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "¿Qué restaurante de Granada reservé?",
+      "query_id": "q009",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "05489376-c100-4657-86f8-16edcbbe763f",
+        "be826dba-dd80-4a69-a7e9-74139b670c26"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev012",
+        "ev013",
+        "ev014"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.492666,
+      "matched_canonical_atom_ids": [
+        "05489376-c100-4657-86f8-16edcbbe763f",
+        "be826dba-dd80-4a69-a7e9-74139b670c26"
+      ],
+      "matched_evidence_ids": [
+        "ev012",
+        "ev013",
+        "ev014"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 1095,
+      "precision_at_6": 0.3333333333333333,
+      "query": "¿Qué receta española abrí?",
+      "query_id": "q010",
+      "ranked_results": [
+        {
+          "atom_id": "be826dba-dd80-4a69-a7e9-74139b670c26",
+          "evidence_ids": [
+            "ev012",
+            "ev013"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev012",
+            "ev013"
+          ],
+          "rank": 1,
+          "relevant": true
+        },
+        {
+          "atom_id": "05489376-c100-4657-86f8-16edcbbe763f",
+          "evidence_ids": [
+            "ev014"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev014"
+          ],
+          "rank": 2,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "be826dba-dd80-4a69-a7e9-74139b670c26",
+        "05489376-c100-4657-86f8-16edcbbe763f"
+      ],
+      "returned_evidence_ids": [
+        "ev012",
+        "ev013",
+        "ev014"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.52525,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "¿Prefería la tortilla con cebolla?",
+      "query_id": "q011",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.208042,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "¿Qué planetas decidí visitar?",
+      "query_id": "q012",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "d01c6b7e-059c-45da-99e7-5f4f357c2f32"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev015"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "ad5a19ff-5ad3-40e9-8d86-92babcb60837"
+      ],
+      "latency_ms": 57.543041,
+      "matched_canonical_atom_ids": [
+        "d01c6b7e-059c-45da-99e7-5f4f357c2f32"
+      ],
+      "matched_evidence_ids": [
+        "ev015"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 1083,
+      "precision_at_6": 0.16666666666666666,
+      "query": "¿Qué página abrí sobre el sistema solar?",
+      "query_id": "q013",
+      "ranked_results": [
+        {
+          "atom_id": "d01c6b7e-059c-45da-99e7-5f4f357c2f32",
+          "evidence_ids": [
+            "ev015",
+            "ev048"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev015"
+          ],
+          "rank": 1,
+          "relevant": true
+        },
+        {
+          "atom_id": "ad5a19ff-5ad3-40e9-8d86-92babcb60837",
+          "evidence_ids": [
+            "ev001",
+            "ev004"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 2,
+          "relevant": false
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "d01c6b7e-059c-45da-99e7-5f4f357c2f32",
+        "ad5a19ff-5ad3-40e9-8d86-92babcb60837"
+      ],
+      "returned_evidence_ids": [
+        "ev001",
+        "ev004",
+        "ev015",
+        "ev048"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "174f4968-396b-4aa1-b2e0-ac665f0b01e5",
+        "26538c4c-9def-48b0-bfff-d535df26097d",
+        "61e791ba-7693-417b-b9d0-5f47e940ba0c",
+        "b279a482-ed64-429a-8de0-1bba26bff559",
+        "f0b1c3c4-045c-4680-9b78-f08daf9e273f"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev016",
+        "ev017",
+        "ev018",
+        "ev019",
+        "ev020",
+        "ev021"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "21085823-360d-44c4-9172-5127f2b476e5",
+        "e480f545-35df-49f5-8bee-79d382cbd57d",
+        "93b3a252-bb58-4a1e-991b-d251e5429955"
+      ],
+      "latency_ms": 58.265333000000005,
+      "matched_canonical_atom_ids": [
+        "26538c4c-9def-48b0-bfff-d535df26097d",
+        "61e791ba-7693-417b-b9d0-5f47e940ba0c"
+      ],
+      "matched_evidence_ids": [
+        "ev016",
+        "ev019",
+        "ev021"
+      ],
+      "mrr": 0.3333333333333333,
+      "ndcg_at_6": 0.30078518014914984,
+      "packet_bytes": 2426,
+      "precision_at_6": 0.3333333333333333,
+      "query": "¿Qué trenes japoneses estaba comparando?",
+      "query_id": "q014",
+      "ranked_results": [
+        {
+          "atom_id": "21085823-360d-44c4-9172-5127f2b476e5",
+          "evidence_ids": [
+            "ev029"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 1,
+          "relevant": false
+        },
+        {
+          "atom_id": "e480f545-35df-49f5-8bee-79d382cbd57d",
+          "evidence_ids": [
+            "ev022"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 2,
+          "relevant": false
+        },
+        {
+          "atom_id": "61e791ba-7693-417b-b9d0-5f47e940ba0c",
+          "evidence_ids": [
+            "ev016",
+            "ev021"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev016",
+            "ev021"
+          ],
+          "rank": 3,
+          "relevant": true
+        },
+        {
+          "atom_id": "93b3a252-bb58-4a1e-991b-d251e5429955",
+          "evidence_ids": [
+            "ev024"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 4,
+          "relevant": false
+        },
+        {
+          "atom_id": "26538c4c-9def-48b0-bfff-d535df26097d",
+          "evidence_ids": [
+            "ev019"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev019"
+          ],
+          "rank": 5,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 0.4,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "21085823-360d-44c4-9172-5127f2b476e5",
+        "e480f545-35df-49f5-8bee-79d382cbd57d",
+        "61e791ba-7693-417b-b9d0-5f47e940ba0c",
+        "93b3a252-bb58-4a1e-991b-d251e5429955",
+        "26538c4c-9def-48b0-bfff-d535df26097d"
+      ],
+      "returned_evidence_ids": [
+        "ev016",
+        "ev019",
+        "ev021",
+        "ev022",
+        "ev024",
+        "ev029"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "174f4968-396b-4aa1-b2e0-ac665f0b01e5",
+        "3d05240f-dc9f-48ac-8355-f872dce8cc9c"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev018",
+        "ev023"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.613,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": 0.0,
+      "ndcg_at_6": -0.0,
+      "packet_bytes": 244,
+      "precision_at_6": 0.0,
+      "query": "What does E7 refer to in my Japanese rail research?",
+      "query_id": "q015",
+      "ranked_results": [],
+      "recall_at_6": 0.0,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "61e791ba-7693-417b-b9d0-5f47e940ba0c",
+        "b279a482-ed64-429a-8de0-1bba26bff559",
+        "e480f545-35df-49f5-8bee-79d382cbd57d",
+        "f0b1c3c4-045c-4680-9b78-f08daf9e273f"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev016",
+        "ev017",
+        "ev020",
+        "ev021",
+        "ev022"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "21085823-360d-44c4-9172-5127f2b476e5",
+        "93b3a252-bb58-4a1e-991b-d251e5429955",
+        "26538c4c-9def-48b0-bfff-d535df26097d"
+      ],
+      "latency_ms": 58.575167,
+      "matched_canonical_atom_ids": [
+        "61e791ba-7693-417b-b9d0-5f47e940ba0c",
+        "b279a482-ed64-429a-8de0-1bba26bff559",
+        "e480f545-35df-49f5-8bee-79d382cbd57d"
+      ],
+      "matched_evidence_ids": [
+        "ev016",
+        "ev020",
+        "ev021",
+        "ev022"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 0.8048099750039491,
+      "packet_bytes": 2880,
+      "precision_at_6": 0.5,
+      "query": "新幹線の路線図について何を見ましたか？",
+      "query_id": "q016",
+      "ranked_results": [
+        {
+          "atom_id": "e480f545-35df-49f5-8bee-79d382cbd57d",
+          "evidence_ids": [
+            "ev022"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev022"
+          ],
+          "rank": 1,
+          "relevant": true
+        },
+        {
+          "atom_id": "61e791ba-7693-417b-b9d0-5f47e940ba0c",
+          "evidence_ids": [
+            "ev016",
+            "ev021"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev016",
+            "ev021"
+          ],
+          "rank": 2,
+          "relevant": true
+        },
+        {
+          "atom_id": "21085823-360d-44c4-9172-5127f2b476e5",
+          "evidence_ids": [
+            "ev029"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 3,
+          "relevant": false
+        },
+        {
+          "atom_id": "b279a482-ed64-429a-8de0-1bba26bff559",
+          "evidence_ids": [
+            "ev020"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev020"
+          ],
+          "rank": 4,
+          "relevant": true
+        },
+        {
+          "atom_id": "93b3a252-bb58-4a1e-991b-d251e5429955",
+          "evidence_ids": [
+            "ev024"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 5,
+          "relevant": false
+        },
+        {
+          "atom_id": "26538c4c-9def-48b0-bfff-d535df26097d",
+          "evidence_ids": [
+            "ev019"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 6,
+          "relevant": false
+        }
+      ],
+      "recall_at_6": 0.75,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "e480f545-35df-49f5-8bee-79d382cbd57d",
+        "61e791ba-7693-417b-b9d0-5f47e940ba0c",
+        "21085823-360d-44c4-9172-5127f2b476e5",
+        "b279a482-ed64-429a-8de0-1bba26bff559",
+        "93b3a252-bb58-4a1e-991b-d251e5429955",
+        "26538c4c-9def-48b0-bfff-d535df26097d"
+      ],
+      "returned_evidence_ids": [
+        "ev016",
+        "ev019",
+        "ev020",
+        "ev021",
+        "ev022",
+        "ev024",
+        "ev029"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.687250000000006,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "新幹線の切符を買いましたか？",
+      "query_id": "q017",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.259916000000004,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "What exact departure time did I choose for the E7?",
+      "query_id": "q018",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "174f4968-396b-4aa1-b2e0-ac665f0b01e5",
+        "3d05240f-dc9f-48ac-8355-f872dce8cc9c"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev018",
+        "ev023"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.361916,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": 0.0,
+      "ndcg_at_6": -0.0,
+      "packet_bytes": 244,
+      "precision_at_6": 0.0,
+      "query": "What did I search about E7-series trains?",
+      "query_id": "q019",
+      "ranked_results": [],
+      "recall_at_6": 0.0,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "3d05240f-dc9f-48ac-8355-f872dce8cc9c",
+        "61e791ba-7693-417b-b9d0-5f47e940ba0c",
+        "e480f545-35df-49f5-8bee-79d382cbd57d"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev016",
+        "ev021",
+        "ev022",
+        "ev023"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.811125,
+      "matched_canonical_atom_ids": [
+        "e480f545-35df-49f5-8bee-79d382cbd57d"
+      ],
+      "matched_evidence_ids": [
+        "ev022"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 0.46927872602275644,
+      "packet_bytes": 659,
+      "precision_at_6": 0.16666666666666666,
+      "query": "Which Japanese rail topic did I revisit?",
+      "query_id": "q020",
+      "ranked_results": [
+        {
+          "atom_id": "e480f545-35df-49f5-8bee-79d382cbd57d",
+          "evidence_ids": [
+            "ev022"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev022"
+          ],
+          "rank": 1,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 0.3333333333333333,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "e480f545-35df-49f5-8bee-79d382cbd57d"
+      ],
+      "returned_evidence_ids": [
+        "ev022"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "42b374a5-020c-49eb-8818-8106eedfbf42",
+        "6133a35c-273c-41ad-9ade-0096c79805a5",
+        "786af1e7-b9b2-47aa-871b-36a713c02b67"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev025",
+        "ev026",
+        "ev027",
+        "ev028"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.630584,
+      "matched_canonical_atom_ids": [
+        "42b374a5-020c-49eb-8818-8106eedfbf42",
+        "6133a35c-273c-41ad-9ade-0096c79805a5"
+      ],
+      "matched_evidence_ids": [
+        "ev025",
+        "ev026",
+        "ev027"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 0.7653606369886217,
+      "packet_bytes": 1097,
+      "precision_at_6": 0.3333333333333333,
+      "query": "What did I research about Kyoto tourism?",
+      "query_id": "q021",
+      "ranked_results": [
+        {
+          "atom_id": "6133a35c-273c-41ad-9ade-0096c79805a5",
+          "evidence_ids": [
+            "ev025",
+            "ev026",
+            "ev046"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev025",
+            "ev026"
+          ],
+          "rank": 1,
+          "relevant": true
+        },
+        {
+          "atom_id": "42b374a5-020c-49eb-8818-8106eedfbf42",
+          "evidence_ids": [
+            "ev027"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev027"
+          ],
+          "rank": 2,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 0.6666666666666666,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "6133a35c-273c-41ad-9ade-0096c79805a5",
+        "42b374a5-020c-49eb-8818-8106eedfbf42"
+      ],
+      "returned_evidence_ids": [
+        "ev025",
+        "ev026",
+        "ev027",
+        "ev046"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "786af1e7-b9b2-47aa-871b-36a713c02b67"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev028"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "42b374a5-020c-49eb-8818-8106eedfbf42"
+      ],
+      "latency_ms": 58.187667,
+      "matched_canonical_atom_ids": [
+        "786af1e7-b9b2-47aa-871b-36a713c02b67"
+      ],
+      "matched_evidence_ids": [
+        "ev028"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 1073,
+      "precision_at_6": 0.16666666666666666,
+      "query": "京都の紅葉について検索しましたか？",
+      "query_id": "q022",
+      "ranked_results": [
+        {
+          "atom_id": "786af1e7-b9b2-47aa-871b-36a713c02b67",
+          "evidence_ids": [
+            "ev028"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev028"
+          ],
+          "rank": 1,
+          "relevant": true
+        },
+        {
+          "atom_id": "42b374a5-020c-49eb-8818-8106eedfbf42",
+          "evidence_ids": [
+            "ev027"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 2,
+          "relevant": false
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "786af1e7-b9b2-47aa-871b-36a713c02b67",
+        "42b374a5-020c-49eb-8818-8106eedfbf42"
+      ],
+      "returned_evidence_ids": [
+        "ev027",
+        "ev028"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.744583,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "Did I make a Kyoto hotel reservation?",
+      "query_id": "q023",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "6133a35c-273c-41ad-9ade-0096c79805a5"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev025",
+        "ev026",
+        "ev046"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 56.916166999999994,
+      "matched_canonical_atom_ids": [
+        "6133a35c-273c-41ad-9ade-0096c79805a5"
+      ],
+      "matched_evidence_ids": [
+        "ev025",
+        "ev026",
+        "ev046"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 684,
+      "precision_at_6": 0.16666666666666666,
+      "query": "Where was the Japanese city guide I opened?",
+      "query_id": "q024",
+      "ranked_results": [
+        {
+          "atom_id": "6133a35c-273c-41ad-9ade-0096c79805a5",
+          "evidence_ids": [
+            "ev025",
+            "ev026",
+            "ev046"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev025",
+            "ev026",
+            "ev046"
+          ],
+          "rank": 1,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "6133a35c-273c-41ad-9ade-0096c79805a5"
+      ],
+      "returned_evidence_ids": [
+        "ev025",
+        "ev026",
+        "ev046"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.335208,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "What was the exact Kyoto itinerary?",
+      "query_id": "q025",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "21085823-360d-44c4-9172-5127f2b476e5",
+        "3d05240f-dc9f-48ac-8355-f872dce8cc9c",
+        "e480f545-35df-49f5-8bee-79d382cbd57d"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev022",
+        "ev023",
+        "ev029"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 58.098333000000004,
+      "matched_canonical_atom_ids": [
+        "21085823-360d-44c4-9172-5127f2b476e5",
+        "e480f545-35df-49f5-8bee-79d382cbd57d"
+      ],
+      "matched_evidence_ids": [
+        "ev022",
+        "ev029"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 0.7653606369886217,
+      "packet_bytes": 1075,
+      "precision_at_6": 0.3333333333333333,
+      "query": "What did I search in Japanese about trains?",
+      "query_id": "q026",
+      "ranked_results": [
+        {
+          "atom_id": "21085823-360d-44c4-9172-5127f2b476e5",
+          "evidence_ids": [
+            "ev029"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev029"
+          ],
+          "rank": 1,
+          "relevant": true
+        },
+        {
+          "atom_id": "e480f545-35df-49f5-8bee-79d382cbd57d",
+          "evidence_ids": [
+            "ev022"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev022"
+          ],
+          "rank": 2,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 0.6666666666666666,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "21085823-360d-44c4-9172-5127f2b476e5",
+        "e480f545-35df-49f5-8bee-79d382cbd57d"
+      ],
+      "returned_evidence_ids": [
+        "ev022",
+        "ev029"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.395541,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "京都について何を決めましたか？",
+      "query_id": "q027",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.659584,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "What did I research?",
+      "query_id": "q028",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.785250000000005,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "What was in my X feed?",
+      "query_id": "q029",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "f16aa0b7-fccb-48cc-aa7a-e8f738efcfe6"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev035"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.695,
+      "matched_canonical_atom_ids": [
+        "f16aa0b7-fccb-48cc-aa7a-e8f738efcfe6"
+      ],
+      "matched_evidence_ids": [
+        "ev035"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 680,
+      "precision_at_6": 0.16666666666666666,
+      "query": "What aircraft video title did I open?",
+      "query_id": "q030",
+      "ranked_results": [
+        {
+          "atom_id": "f16aa0b7-fccb-48cc-aa7a-e8f738efcfe6",
+          "evidence_ids": [
+            "ev035"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev035"
+          ],
+          "rank": 1,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "f16aa0b7-fccb-48cc-aa7a-e8f738efcfe6"
+      ],
+      "returned_evidence_ids": [
+        "ev035"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "f16aa0b7-fccb-48cc-aa7a-e8f738efcfe6"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev035"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 58.038167,
+      "matched_canonical_atom_ids": [
+        "f16aa0b7-fccb-48cc-aa7a-e8f738efcfe6"
+      ],
+      "matched_evidence_ids": [
+        "ev035"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 680,
+      "precision_at_6": 0.16666666666666666,
+      "query": "What was the title of the airplane video?",
+      "query_id": "q031",
+      "ranked_results": [
+        {
+          "atom_id": "f16aa0b7-fccb-48cc-aa7a-e8f738efcfe6",
+          "evidence_ids": [
+            "ev035"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev035"
+          ],
+          "rank": 1,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "f16aa0b7-fccb-48cc-aa7a-e8f738efcfe6"
+      ],
+      "returned_evidence_ids": [
+        "ev035"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.788666,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "What did I see on Reddit?",
+      "query_id": "q032",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 58.315417000000004,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "What is the latest weather where I live?",
+      "query_id": "q033",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.999625,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "Which email did I receive?",
+      "query_id": "q034",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.715958,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "Did I browse a generic home page?",
+      "query_id": "q035",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.974083,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "What do I generally like?",
+      "query_id": "q036",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "be2d1d2f-f5b4-4d06-a3b0-74c6cfdd37c1"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev040",
+        "ev041"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.692541999999996,
+      "matched_canonical_atom_ids": [
+        "be2d1d2f-f5b4-4d06-a3b0-74c6cfdd37c1"
+      ],
+      "matched_evidence_ids": [
+        "ev040",
+        "ev041"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 641,
+      "precision_at_6": 0.16666666666666666,
+      "query": "What was the identifier I searched twice?",
+      "query_id": "q037",
+      "ranked_results": [
+        {
+          "atom_id": "be2d1d2f-f5b4-4d06-a3b0-74c6cfdd37c1",
+          "evidence_ids": [
+            "ev040",
+            "ev041"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev040",
+            "ev041"
+          ],
+          "rank": 1,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "be2d1d2f-f5b4-4d06-a3b0-74c6cfdd37c1"
+      ],
+      "returned_evidence_ids": [
+        "ev040",
+        "ev041"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "d28110df-6e85-4424-8df8-6d0ea495528c"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev042",
+        "ev043"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 58.041791,
+      "matched_canonical_atom_ids": [
+        "d28110df-6e85-4424-8df8-6d0ea495528c"
+      ],
+      "matched_evidence_ids": [
+        "ev042",
+        "ev043"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 645,
+      "precision_at_6": 0.16666666666666666,
+      "query": "What measurement appeared in my search?",
+      "query_id": "q038",
+      "ranked_results": [
+        {
+          "atom_id": "d28110df-6e85-4424-8df8-6d0ea495528c",
+          "evidence_ids": [
+            "ev042",
+            "ev043"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev042",
+            "ev043"
+          ],
+          "rank": 1,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "d28110df-6e85-4424-8df8-6d0ea495528c"
+      ],
+      "returned_evidence_ids": [
+        "ev042",
+        "ev043"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.405458,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "What product did J501 identify?",
+      "query_id": "q039",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.294958,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "Which of these did I buy: a chair, train ticket, or solar panel?",
+      "query_id": "q040",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "411ca150-c7e3-4f6f-8d63-64435c14e892",
+        "ad5a19ff-5ad3-40e9-8d86-92babcb60837",
+        "efec5d16-209b-4d50-a437-4ef7f1d8932d"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev001",
+        "ev002",
+        "ev004",
+        "ev005"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.655499999999996,
+      "matched_canonical_atom_ids": [
+        "ad5a19ff-5ad3-40e9-8d86-92babcb60837",
+        "efec5d16-209b-4d50-a437-4ef7f1d8932d"
+      ],
+      "matched_evidence_ids": [
+        "ev001",
+        "ev002",
+        "ev004"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 0.7653606369886217,
+      "packet_bytes": 1097,
+      "precision_at_6": 0.3333333333333333,
+      "query": "What did I research about solar energy?",
+      "query_id": "q041",
+      "ranked_results": [
+        {
+          "atom_id": "ad5a19ff-5ad3-40e9-8d86-92babcb60837",
+          "evidence_ids": [
+            "ev001",
+            "ev004"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev001",
+            "ev004"
+          ],
+          "rank": 1,
+          "relevant": true
+        },
+        {
+          "atom_id": "efec5d16-209b-4d50-a437-4ef7f1d8932d",
+          "evidence_ids": [
+            "ev002"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev002"
+          ],
+          "rank": 2,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 0.6666666666666666,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "ad5a19ff-5ad3-40e9-8d86-92babcb60837",
+        "efec5d16-209b-4d50-a437-4ef7f1d8932d"
+      ],
+      "returned_evidence_ids": [
+        "ev001",
+        "ev002",
+        "ev004"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "f4ce4473-996e-4cef-9bb1-69538fce9e49"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev009",
+        "ev011"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 58.021917,
+      "matched_canonical_atom_ids": [
+        "f4ce4473-996e-4cef-9bb1-69538fce9e49"
+      ],
+      "matched_evidence_ids": [
+        "ev009",
+        "ev011"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 656,
+      "precision_at_6": 0.16666666666666666,
+      "query": "¿Qué página repetí sobre la Alhambra?",
+      "query_id": "q042",
+      "ranked_results": [
+        {
+          "atom_id": "f4ce4473-996e-4cef-9bb1-69538fce9e49",
+          "evidence_ids": [
+            "ev009",
+            "ev011"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev009",
+            "ev011"
+          ],
+          "rank": 1,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "f4ce4473-996e-4cef-9bb1-69538fce9e49"
+      ],
+      "returned_evidence_ids": [
+        "ev009",
+        "ev011"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.588542,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "¿Qué ciudad elegí para mis vacaciones?",
+      "query_id": "q043",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.795375,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "新幹線の料金はいくらでしたか？",
+      "query_id": "q044",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "6133a35c-273c-41ad-9ade-0096c79805a5"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev025",
+        "ev026"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "42b374a5-020c-49eb-8818-8106eedfbf42",
+        "786af1e7-b9b2-47aa-871b-36a713c02b67"
+      ],
+      "latency_ms": 57.980208999999995,
+      "matched_canonical_atom_ids": [
+        "6133a35c-273c-41ad-9ade-0096c79805a5"
+      ],
+      "matched_evidence_ids": [
+        "ev025",
+        "ev026"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 1517,
+      "precision_at_6": 0.16666666666666666,
+      "query": "京都の公式観光サイトを見ましたか？",
+      "query_id": "q045",
+      "ranked_results": [
+        {
+          "atom_id": "6133a35c-273c-41ad-9ade-0096c79805a5",
+          "evidence_ids": [
+            "ev025",
+            "ev026",
+            "ev046"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev025",
+            "ev026"
+          ],
+          "rank": 1,
+          "relevant": true
+        },
+        {
+          "atom_id": "42b374a5-020c-49eb-8818-8106eedfbf42",
+          "evidence_ids": [
+            "ev027"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 2,
+          "relevant": false
+        },
+        {
+          "atom_id": "786af1e7-b9b2-47aa-871b-36a713c02b67",
+          "evidence_ids": [
+            "ev028"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 3,
+          "relevant": false
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "6133a35c-273c-41ad-9ade-0096c79805a5",
+        "42b374a5-020c-49eb-8818-8106eedfbf42",
+        "786af1e7-b9b2-47aa-871b-36a713c02b67"
+      ],
+      "returned_evidence_ids": [
+        "ev025",
+        "ev026",
+        "ev027",
+        "ev028",
+        "ev046"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 59.156833,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "What did I research about renewables?",
+      "query_id": "q046",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "026c0cb0-72fe-4ad7-9978-92481c68b613",
+        "cb2f5b0b-9505-4969-9f95-604ac6f561e1"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev003",
+        "ev006",
+        "ev047"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "ad5a19ff-5ad3-40e9-8d86-92babcb60837"
+      ],
+      "latency_ms": 58.030917,
+      "matched_canonical_atom_ids": [
+        "026c0cb0-72fe-4ad7-9978-92481c68b613",
+        "cb2f5b0b-9505-4969-9f95-604ac6f561e1"
+      ],
+      "matched_evidence_ids": [
+        "ev003",
+        "ev006",
+        "ev047"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 1515,
+      "precision_at_6": 0.3333333333333333,
+      "query": "¿Qué abrí después de buscar energía eólica?",
+      "query_id": "q047",
+      "ranked_results": [
+        {
+          "atom_id": "cb2f5b0b-9505-4969-9f95-604ac6f561e1",
+          "evidence_ids": [
+            "ev003",
+            "ev047"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev003",
+            "ev047"
+          ],
+          "rank": 1,
+          "relevant": true
+        },
+        {
+          "atom_id": "026c0cb0-72fe-4ad7-9978-92481c68b613",
+          "evidence_ids": [
+            "ev006"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev006"
+          ],
+          "rank": 2,
+          "relevant": true
+        },
+        {
+          "atom_id": "ad5a19ff-5ad3-40e9-8d86-92babcb60837",
+          "evidence_ids": [
+            "ev001",
+            "ev004"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 3,
+          "relevant": false
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "cb2f5b0b-9505-4969-9f95-604ac6f561e1",
+        "026c0cb0-72fe-4ad7-9978-92481c68b613",
+        "ad5a19ff-5ad3-40e9-8d86-92babcb60837"
+      ],
+      "returned_evidence_ids": [
+        "ev001",
+        "ev003",
+        "ev004",
+        "ev006",
+        "ev047"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.678332999999995,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "Can you tell whether the short search meant strong interest?",
+      "query_id": "q048",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    }
+  ],
+  "retrieval_mode_counts": {
+    "hybrid": 48,
+    "lexical": 0
+  },
+  "synthetic_only": true
+}

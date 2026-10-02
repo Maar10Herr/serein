@@ -62,14 +62,14 @@ const en = {
   "context.confirmed": "Confirmed",
   "context.topic": "Topic",
   "context.lastActivity": "Last activity",
-  "context.distinctSessions": "Distinct sessions",
+  "context.distinctSessions": "Activity windows",
   "context.distinctSites": "Distinct sites",
   "context.why": "Why",
   "context.correct": "Correct",
   "context.forget": "Forget",
   "context.confidenceLimited":
     "Suggestions are uncertain and are not personal facts.",
-  "context.refresh": "Refresh context",
+  "context.refresh": "Refresh",
   "context.refreshing": "Updating context…",
   "context.updated": "Context updated",
   "why.heading": "Why this appeared",
@@ -242,14 +242,14 @@ const de = {
   "context.confirmed": "Bestätigt",
   "context.topic": "Thema",
   "context.lastActivity": "Letzte Aktivität",
-  "context.distinctSessions": "Unterschiedliche Sitzungen",
+  "context.distinctSessions": "Aktivitätsfenster",
   "context.distinctSites": "Unterschiedliche Websites",
   "context.why": "Warum",
   "context.correct": "Korrigieren",
   "context.forget": "Vergessen",
   "context.confidenceLimited":
     "Vorschläge sind unsicher und keine persönlichen Tatsachen.",
-  "context.refresh": "Kontext aktualisieren",
+  "context.refresh": "Aktualisieren",
   "context.refreshing": "Kontext wird aktualisiert…",
   "context.updated": "Kontext aktualisiert",
   "why.heading": "Warum dies angezeigt wird",
@@ -420,14 +420,14 @@ const nl = {
   "context.confirmed": "Bevestigd",
   "context.topic": "Onderwerp",
   "context.lastActivity": "Laatste activiteit",
-  "context.distinctSessions": "Verschillende sessies",
+  "context.distinctSessions": "Activiteitsvensters",
   "context.distinctSites": "Verschillende sites",
   "context.why": "Waarom",
   "context.correct": "Corrigeren",
   "context.forget": "Vergeten",
   "context.confidenceLimited":
     "Suggesties zijn onzeker en geen persoonlijke feiten.",
-  "context.refresh": "Context bijwerken",
+  "context.refresh": "Vernieuwen",
   "context.refreshing": "Context wordt bijgewerkt…",
   "context.updated": "Context bijgewerkt",
   "why.heading": "Waarom dit wordt getoond",
@@ -595,13 +595,13 @@ const zhCN = {
   "context.confirmed": "已确认",
   "context.topic": "主题",
   "context.lastActivity": "最近活动",
-  "context.distinctSessions": "不同会话数",
+  "context.distinctSessions": "活动时间窗",
   "context.distinctSites": "不同网站数",
   "context.why": "原因",
   "context.correct": "更正",
   "context.forget": "忘记",
   "context.confidenceLimited": "建议可能不准确，不代表个人事实。",
-  "context.refresh": "更新上下文",
+  "context.refresh": "刷新",
   "context.refreshing": "正在更新上下文…",
   "context.updated": "上下文已更新",
   "why.heading": "显示此内容的原因",
@@ -762,14 +762,14 @@ const ja = {
   "context.confirmed": "確認済み",
   "context.topic": "トピック",
   "context.lastActivity": "最終アクティビティ",
-  "context.distinctSessions": "個別のセッション数",
+  "context.distinctSessions": "活動ウィンドウ数",
   "context.distinctSites": "個別のサイト数",
   "context.why": "理由",
   "context.correct": "修正",
   "context.forget": "削除",
   "context.confidenceLimited":
     "提案には不確実性があり、個人の事実を示すものではありません。",
-  "context.refresh": "コンテキストを更新",
+  "context.refresh": "更新",
   "context.refreshing": "コンテキストを更新中…",
   "context.updated": "コンテキストを更新しました",
   "why.heading": "表示された理由",
@@ -940,14 +940,14 @@ const es = {
   "context.confirmed": "Confirmado",
   "context.topic": "Tema",
   "context.lastActivity": "Actividad reciente",
-  "context.distinctSessions": "Sesiones distintas",
+  "context.distinctSessions": "Ventanas de actividad",
   "context.distinctSites": "Sitios distintos",
   "context.why": "Motivo",
   "context.correct": "Corregir",
   "context.forget": "Olvidar",
   "context.confidenceLimited":
     "Las sugerencias pueden ser inciertas y no son datos personales confirmados.",
-  "context.refresh": "Actualizar contexto",
+  "context.refresh": "Actualizar",
   "context.refreshing": "Actualizando contexto…",
   "context.updated": "Contexto actualizado",
   "why.heading": "Por qué aparece esto",
@@ -1055,6 +1055,7 @@ const es = {
 } satisfies Record<CatalogKey, string>;
 
 const uiEn = {
+  "context.retryPrivacy": "Retry privacy change",
   "status.notConnected": "Not connected",
   "popup.pageUnavailable": "This page is not eligible for saving.",
   "popup.pendingPrivacy": "Excluded · privacy changes pending local connection",
@@ -1083,12 +1084,12 @@ const uiEn = {
     "Research themes and useful evidence, with the sources behind them.",
   "context.researchMemories": "Research memories",
   "context.memoriesDescription":
-    "Related observations grouped into research themes. These summaries describe activity, not personal facts.",
+    "Related observations are grouped into provisional research themes. Groups may change as observations arrive; they describe activity, not beliefs or confirmed intentions.",
   "context.noResearchMemories":
     "Related research will appear here when Serein can group it. Recent evidence and the full activity list stay below.",
   "context.suggestedProject": "Suggested research",
   "context.evidenceCount":
-    "{count} observations · {sessions} sessions · {sites} sites",
+    "{count} observations · {sessions} activity windows · {sites} sites",
   "context.viewEvidence": "View evidence ({count})",
   "context.noLinkedEvidence":
     "No linked evidence is available in this dashboard view.",
@@ -1101,15 +1102,25 @@ const uiEn = {
   "context.savedDevice": "Saved on this device",
   "context.filterLabel": "Context filter",
   "context.filterAll": "All context",
-  "context.searchLabel": "Search your context",
-  "context.searchPlaceholder": "Search your context…",
-  "context.activityCount": "{sessions} sessions · {sites} sites",
-  "context.sessionSingular": "{count} session",
-  "context.sessionsPlural": "{count} sessions",
+  "context.searchLabel": "Filter this view",
+  "context.searchPlaceholder": "Filter this view",
+  "context.viewScopeNote":
+    "This view shows recent activity and selected research evidence, not every saved observation.",
+  "context.activityCount": "{sessions} activity windows · {sites} sites",
+  "context.sessionSingular": "{count} activity window",
+  "context.sessionsPlural": "{count} activity windows",
   "context.siteSingular": "{count} site",
   "context.sitesPlural": "{count} sites",
   "context.sourceBacked": "Source-backed context",
-  "context.noMatch": "No matching context",
+  "context.noMatch": "No matches in the displayed context.",
+  "context.stale":
+    "Showing the last available context. Refresh to check for updates.",
+  "context.unavailable":
+    "Context is unavailable. Check the local connection and try Refresh.",
+  "context.privacyUnconfirmed":
+    "This privacy change is not confirmed. Affected context stays hidden until it is confirmed.",
+  "context.wrongTopicHelp":
+    "This hides the observation from all assistant recall; it does not move it to another research group.",
   "context.emptyConnected":
     "Permitted titles and searches will appear here as you browse. You decide what stays and what assistants can use.",
   "context.emptyDisconnected":
@@ -1139,7 +1150,9 @@ const uiEn = {
   "journey.askDetail": "Try this question in the assistant you linked:",
   "journey.recallDisabled":
     "Assistant recall is off. Turn it on in Privacy before trying.",
-  "journey.question": "What was I just researching?",
+  "journey.question": "What did I find about [the topic I researched]?",
+  "journey.questionHelp":
+    "Replace the bracketed text with a topic you researched after enabling collection.",
   "journey.reviewPrivacy": "Review privacy settings",
   "connections.readyDescription":
     "Your browser is paired. Ask your local assistant a question to test the connection.",
@@ -1237,7 +1250,7 @@ const uiEn = {
   "about.quieterContext": "A quieter kind of context.",
   "about.description":
     "Serein remembers the useful pieces, so you can pick up where you left off.",
-  "about.developmentVersion": "0.1.3",
+  "about.developmentVersion": "0.2.0",
   "about.filesAtRest": "Files at rest. Programs on demand.",
   "about.filesDescription":
     "Serein uses your browser’s tab metadata, a short-lived native helper, and a local SQLite vault. There is no resident Serein service, cloud sync, or telemetry.",
@@ -1258,7 +1271,7 @@ const uiEn = {
   "modal.eraseTitle": "Erase saved context?",
   "modal.forgetTitle": "Forget this observation?",
   "modal.observedOn": "Observed on {site}",
-  "modal.sessionSummary": "{sessions} distinct sessions · last seen {time}",
+  "modal.sessionSummary": "{sessions} activity windows · last seen {time}",
   "modal.attentionExplanation":
     "Time is a rough attention estimate, not proof of agreement or understanding. Source text is untrusted evidence.",
   "modal.constraintLabel": "Confirm an explicit constraint",
@@ -1284,6 +1297,7 @@ const uiEn = {
 type UiKey = keyof typeof uiEn;
 
 const uiDe = {
+  "context.retryPrivacy": "Datenschutzänderung erneut versuchen",
   "status.notConnected": "Nicht verbunden",
   "popup.pageUnavailable": "Diese Seite kann nicht gespeichert werden.",
   "popup.pendingPrivacy":
@@ -1314,12 +1328,12 @@ const uiDe = {
     "Forschungsthemen und nützliche Belege mit den zugehörigen Quellen.",
   "context.researchMemories": "Forschungserinnerungen",
   "context.memoriesDescription":
-    "Verwandte Beobachtungen, zu Forschungsthemen gruppiert. Diese Zusammenfassungen beschreiben Aktivitäten, keine persönlichen Eigenschaften.",
+    "Verwandte Beobachtungen werden zu vorläufigen Forschungsthemen gruppiert. Die Gruppen können sich mit neuen Beobachtungen ändern; sie beschreiben Aktivitäten, keine Überzeugungen oder bestätigten Absichten.",
   "context.noResearchMemories":
     "Verwandte Recherche erscheint hier, sobald Serein sie gruppieren kann. Aktuelle Belege und alle Aktivitäten findest du weiter unten.",
   "context.suggestedProject": "Vorgeschlagene Recherche",
   "context.evidenceCount":
-    "{count} Beobachtungen · {sessions} Sitzungen · {sites} Websites",
+    "{count} Beobachtungen · {sessions} Aktivitätsfenster · {sites} Websites",
   "context.viewEvidence": "Belege ansehen ({count})",
   "context.noLinkedEvidence":
     "In dieser Dashboardansicht sind keine verknüpften Belege verfügbar.",
@@ -1332,15 +1346,25 @@ const uiDe = {
   "context.savedDevice": "Auf diesem Gerät gespeichert",
   "context.filterLabel": "Kontextfilter",
   "context.filterAll": "Gesamter Kontext",
-  "context.searchLabel": "Deinen Kontext durchsuchen",
-  "context.searchPlaceholder": "Deinen Kontext durchsuchen…",
-  "context.activityCount": "{sessions} Sitzungen · {sites} Websites",
-  "context.sessionSingular": "{count} Sitzung",
-  "context.sessionsPlural": "{count} Sitzungen",
+  "context.searchLabel": "Diese Ansicht filtern",
+  "context.searchPlaceholder": "Diese Ansicht filtern",
+  "context.viewScopeNote":
+    "Diese Ansicht zeigt aktuelle Aktivitäten und ausgewählte Recherchebelege, nicht alle gespeicherten Beobachtungen.",
+  "context.activityCount": "{sessions} Aktivitätsfenster · {sites} Websites",
+  "context.sessionSingular": "{count} Aktivitätsfenster",
+  "context.sessionsPlural": "{count} Aktivitätsfenster",
   "context.siteSingular": "{count} Website",
   "context.sitesPlural": "{count} Websites",
   "context.sourceBacked": "Quellenbelegter Kontext",
-  "context.noMatch": "Kein passender Kontext",
+  "context.noMatch": "Keine Treffer im angezeigten Kontext.",
+  "context.stale":
+    "Der zuletzt verfügbare Kontext wird angezeigt. Aktualisiere, um nach Änderungen zu suchen.",
+  "context.unavailable":
+    "Der Kontext ist nicht verfügbar. Prüfe die lokale Verbindung und versuche es erneut mit „Aktualisieren“.",
+  "context.privacyUnconfirmed":
+    "Diese Datenschutzänderung ist noch nicht bestätigt. Der betroffene Kontext bleibt ausgeblendet, bis sie bestätigt ist.",
+  "context.wrongTopicHelp":
+    "Diese Beobachtung wird für den Abruf durch alle Assistenten ausgeblendet; sie wird keiner anderen Recherchegruppe zugeordnet.",
   "context.emptyConnected":
     "Zulässige Titel und Suchanfragen erscheinen hier beim Surfen. Du entscheidest, was bleibt und was Assistenten nutzen dürfen.",
   "context.emptyDisconnected":
@@ -1371,7 +1395,9 @@ const uiDe = {
     "Probiere diese Frage in deinem gekoppelten Assistenten aus:",
   "journey.recallDisabled":
     "Der Assistentenabruf ist aus. Aktiviere ihn unter Datenschutz, bevor du es ausprobierst.",
-  "journey.question": "Woran habe ich gerade recherchiert?",
+  "journey.question": "Was habe ich über [das recherchierte Thema] herausgefunden?",
+  "journey.questionHelp":
+    "Ersetze den Text in eckigen Klammern durch ein Thema, zu dem du nach dem Aktivieren der Erfassung recherchiert hast.",
   "journey.reviewPrivacy": "Datenschutzeinstellungen prüfen",
   "connections.readyDescription":
     "Dein Browser ist gekoppelt. Stelle deinem lokalen Assistenten eine Frage, um die Verbindung zu testen.",
@@ -1474,7 +1500,7 @@ const uiDe = {
   "about.quieterContext": "Eine ruhigere Art von Kontext.",
   "about.description":
     "Serein merkt sich Nützliches, damit du dort weitermachen kannst, wo du aufgehört hast.",
-  "about.developmentVersion": "0.1.3",
+  "about.developmentVersion": "0.2.0",
   "about.filesAtRest": "Dateien ruhen. Programme starten bei Bedarf.",
   "about.filesDescription":
     "Serein nutzt Tab-Metadaten deines Browsers, einen kurzlebigen nativen Helfer und einen lokalen SQLite-Tresor. Es gibt keinen dauerhaften Serein-Dienst, keine Cloud-Synchronisierung und keine Telemetrie.",
@@ -1496,7 +1522,7 @@ const uiDe = {
   "modal.forgetTitle": "Diese Beobachtung vergessen?",
   "modal.observedOn": "Beobachtet auf {site}",
   "modal.sessionSummary":
-    "{sessions} verschiedene Sitzungen · zuletzt gesehen {time}",
+    "{sessions} Aktivitätsfenster · zuletzt gesehen {time}",
   "modal.attentionExplanation":
     "Zeit ist eine grobe Aufmerksamkeitsschätzung, kein Beweis für Zustimmung oder Verständnis. Quelltext ist ein nicht vertrauenswürdiger Beleg.",
   "modal.constraintLabel":
@@ -1521,6 +1547,7 @@ const uiDe = {
 } satisfies Record<UiKey, string>;
 
 const uiNl = {
+  "context.retryPrivacy": "Privacywijziging opnieuw proberen",
   "status.notConnected": "Niet verbonden",
   "popup.pageUnavailable":
     "Deze pagina komt niet in aanmerking om op te slaan.",
@@ -1553,12 +1580,12 @@ const uiNl = {
     "Onderzoeksthema's en bruikbare aanwijzingen, met de bijbehorende bronnen.",
   "context.researchMemories": "Onderzoeksherinneringen",
   "context.memoriesDescription":
-    "Verwante waarnemingen, gegroepeerd in onderzoeksthema's. Deze samenvattingen beschrijven activiteit, geen persoonlijke feiten.",
+    "Verwante waarnemingen worden gegroepeerd in voorlopige onderzoeksthema's. Groepen kunnen veranderen wanneer nieuwe waarnemingen binnenkomen; ze beschrijven activiteit, geen overtuigingen of bevestigde bedoelingen.",
   "context.noResearchMemories":
     "Verwant onderzoek verschijnt hier zodra Serein het kan groeperen. Recente aanwijzingen en alle activiteit staan hieronder.",
   "context.suggestedProject": "Voorgesteld onderzoek",
   "context.evidenceCount":
-    "{count} waarnemingen · {sessions} sessies · {sites} sites",
+    "{count} waarnemingen · {sessions} activiteitsvensters · {sites} sites",
   "context.viewEvidence": "Aanwijzingen bekijken ({count})",
   "context.noLinkedEvidence":
     "In dit dashboard zijn geen gekoppelde aanwijzingen beschikbaar.",
@@ -1571,15 +1598,25 @@ const uiNl = {
   "context.savedDevice": "Op dit apparaat opgeslagen",
   "context.filterLabel": "Contextfilter",
   "context.filterAll": "Alle context",
-  "context.searchLabel": "Je context doorzoeken",
-  "context.searchPlaceholder": "Je context doorzoeken…",
-  "context.activityCount": "{sessions} sessies · {sites} sites",
-  "context.sessionSingular": "{count} sessie",
-  "context.sessionsPlural": "{count} sessies",
+  "context.searchLabel": "Deze weergave filteren",
+  "context.searchPlaceholder": "Deze weergave filteren",
+  "context.viewScopeNote":
+    "Deze weergave toont recente activiteit en geselecteerd onderzoeksmateriaal, niet alle opgeslagen observaties.",
+  "context.activityCount": "{sessions} activiteitsvensters · {sites} sites",
+  "context.sessionSingular": "{count} activiteitsvenster",
+  "context.sessionsPlural": "{count} activiteitsvensters",
   "context.siteSingular": "{count} site",
   "context.sitesPlural": "{count} sites",
   "context.sourceBacked": "Context met bronverwijzingen",
-  "context.noMatch": "Geen overeenkomende context",
+  "context.noMatch": "Geen overeenkomsten in de weergegeven context.",
+  "context.stale":
+    "De laatst beschikbare context wordt getoond. Vernieuw om op updates te controleren.",
+  "context.unavailable":
+    "De context is niet beschikbaar. Controleer de lokale verbinding en probeer Vernieuwen opnieuw.",
+  "context.privacyUnconfirmed":
+    "Deze privacywijziging is niet bevestigd. De betrokken context blijft verborgen totdat ze is bevestigd.",
+  "context.wrongTopicHelp":
+    "Deze observatie wordt voor alle assistenten verborgen; ze wordt niet naar een andere onderzoeksgroep verplaatst.",
   "context.emptyConnected":
     "Toegestane titels en zoekopdrachten verschijnen hier terwijl je browst. Jij bepaalt wat blijft en wat assistenten mogen gebruiken.",
   "context.emptyDisconnected":
@@ -1609,7 +1646,9 @@ const uiNl = {
   "journey.askDetail": "Probeer deze vraag in de gekoppelde assistent:",
   "journey.recallDisabled":
     "Ophalen door de assistent staat uit. Zet het aan bij Privacy om dit te proberen.",
-  "journey.question": "Wat was ik net aan het onderzoeken?",
+  "journey.question": "Wat heb ik gevonden over [het onderwerp dat ik onderzocht]?",
+  "journey.questionHelp":
+    "Vervang de tekst tussen vierkante haken door een onderwerp dat je hebt onderzocht nadat je het verzamelen hebt ingeschakeld.",
   "journey.reviewPrivacy": "Privacyinstellingen bekijken",
   "connections.readyDescription":
     "Je browser is gekoppeld. Stel je lokale assistent een vraag om de verbinding te testen.",
@@ -1711,7 +1750,7 @@ const uiNl = {
   "about.quieterContext": "Een rustigere vorm van context.",
   "about.description":
     "Serein onthoudt de nuttige onderdelen, zodat je verder kunt waar je gebleven was.",
-  "about.developmentVersion": "0.1.3",
+  "about.developmentVersion": "0.2.0",
   "about.filesAtRest": "Bestanden in rust. Programma's op aanvraag.",
   "about.filesDescription":
     "Serein gebruikt tabmetadata van je browser, een kortstondige native hulp en een lokale SQLite-kluis. Er is geen blijvende Serein-dienst, cloudsynchronisatie of telemetrie.",
@@ -1733,7 +1772,7 @@ const uiNl = {
   "modal.forgetTitle": "Deze waarneming vergeten?",
   "modal.observedOn": "Waargenomen op {site}",
   "modal.sessionSummary":
-    "{sessions} verschillende sessies · laatst gezien {time}",
+    "{sessions} activiteitsvensters · laatst gezien {time}",
   "modal.attentionExplanation":
     "Tijd is een ruwe schatting van aandacht, geen bewijs van instemming of begrip. Brontekst is onbetrouwbaar bewijs.",
   "modal.constraintLabel": "Een uitdrukkelijke beperking bevestigen",
@@ -1757,6 +1796,7 @@ const uiNl = {
 } satisfies Record<UiKey, string>;
 
 const uiZhCN = {
+  "context.retryPrivacy": "重试隐私更改",
   "status.notConnected": "未连接",
   "popup.pageUnavailable": "此页面不符合保存条件。",
   "popup.pendingPrivacy": "已排除 · 隐私更改等待本地连接处理",
@@ -1783,12 +1823,12 @@ const uiZhCN = {
   "context.subtitle": "研究主题和有用线索，并显示它们的来源。",
   "context.researchMemories": "研究记忆",
   "context.memoriesDescription":
-    "将相关观察归为研究主题。这些摘要描述的是活动，不是个人事实。",
+    "将相关观察记录归为暂定的研究主题。随着新观察记录到来，分组可能会变化；它们描述的是活动，不是信念或已确认的意图。",
   "context.noResearchMemories":
     "Serein 能够归组相关研究后，这里会显示研究主题。近期线索和完整活动列表在下方。",
   "context.suggestedProject": "建议的研究主题",
   "context.evidenceCount":
-    "{count} 条观察 · {sessions} 个会话 · {sites} 个网站",
+    "{count} 条观察 · {sessions} 个活动时间窗 · {sites} 个网站",
   "context.viewEvidence": "查看线索（{count}）",
   "context.noLinkedEvidence": "此仪表板视图中没有关联的线索。",
   "context.recentEvidence": "近期有用线索",
@@ -1800,15 +1840,23 @@ const uiZhCN = {
   "context.savedDevice": "保存在此设备上",
   "context.filterLabel": "上下文筛选",
   "context.filterAll": "所有上下文",
-  "context.searchLabel": "搜索你的上下文",
-  "context.searchPlaceholder": "搜索你的上下文…",
-  "context.activityCount": "{sessions} 个会话 · {sites} 个网站",
-  "context.sessionSingular": "{count} 个会话",
-  "context.sessionsPlural": "{count} 个会话",
+  "context.searchLabel": "筛选此视图",
+  "context.searchPlaceholder": "筛选此视图",
+  "context.viewScopeNote":
+    "此视图显示近期活动和选定的研究证据，不包含所有已保存的观察记录。",
+  "context.activityCount": "{sessions} 个活动时间窗 · {sites} 个网站",
+  "context.sessionSingular": "{count} 个活动时间窗",
+  "context.sessionsPlural": "{count} 个活动时间窗",
   "context.siteSingular": "{count} 个网站",
   "context.sitesPlural": "{count} 个网站",
   "context.sourceBacked": "有来源依据的上下文",
-  "context.noMatch": "没有匹配的上下文",
+  "context.noMatch": "当前显示的上下文中没有匹配项。",
+  "context.stale": "正在显示最近一次可用的上下文。请刷新以检查更新。",
+  "context.unavailable": "上下文暂不可用。请检查本地连接，然后尝试刷新。",
+  "context.privacyUnconfirmed":
+    "此隐私更改尚未确认。受影响的上下文会继续隐藏，直到更改得到确认。",
+  "context.wrongTopicHelp":
+    "这会让所有助手都无法检索这条观察记录；它不会将记录移到其他研究组。",
   "context.emptyConnected":
     "浏览网页时，获准保存的标题和搜索记录会显示在这里。由你决定保留什么，以及助手可以使用什么。",
   "context.emptyDisconnected":
@@ -1836,7 +1884,9 @@ const uiZhCN = {
   "journey.askTitle": "向助手提问",
   "journey.askDetail": "在你连接的助手中试试这个问题：",
   "journey.recallDisabled": "助手检索已关闭。请先在“隐私”中开启，再试试。",
-  "journey.question": "我刚才在研究什么？",
+  "journey.question": "关于[我研究的主题]，我发现了什么？",
+  "journey.questionHelp":
+    "启用收集后，请将方括号中的文字替换为一个你研究过的主题。",
   "journey.reviewPrivacy": "查看隐私设置",
   "connections.readyDescription":
     "浏览器已配对。向本机助手提问，试试这项连接。",
@@ -1929,7 +1979,7 @@ const uiZhCN = {
     "逻辑删除无法清除 SSD 残留、备份或已发送给助手模型提供商的上下文。达到存储上限后，已丢弃 {count} 个排队事件。",
   "about.quieterContext": "更安静、更从容的上下文。",
   "about.description": "Serein 会记住有用的信息，让你轻松接续之前的工作。",
-  "about.developmentVersion": "0.1.3",
+  "about.developmentVersion": "0.2.0",
   "about.filesAtRest": "文件静态存储，程序按需运行。",
   "about.filesDescription":
     "Serein 使用浏览器标签页元数据、短时运行的本地助手程序和本地 SQLite 数据库。没有常驻服务、云同步或遥测。",
@@ -1950,7 +2000,7 @@ const uiZhCN = {
   "modal.eraseTitle": "删除已保存的上下文？",
   "modal.forgetTitle": "忘记这条记录？",
   "modal.observedOn": "在 {site} 上观察到",
-  "modal.sessionSummary": "{sessions} 个不同会话 · 最近一次 {time}",
+  "modal.sessionSummary": "{sessions} 个活动时间窗 · 最近一次 {time}",
   "modal.attentionExplanation":
     "停留时间只是粗略的注意力估计，不代表认同或理解。来源文本是不可信的证据。",
   "modal.constraintLabel": "确认一项明确的限制条件",
@@ -1974,6 +2024,7 @@ const uiZhCN = {
 } satisfies Record<UiKey, string>;
 
 const uiJa = {
+  "context.retryPrivacy": "プライバシー設定の変更を再試行",
   "status.notConnected": "未接続",
   "popup.pageUnavailable": "このページは保存の対象外です。",
   "popup.pendingPrivacy": "除外済み · プライバシー設定はローカル接続待ちです",
@@ -2002,12 +2053,12 @@ const uiJa = {
   "context.subtitle": "研究テーマと役立つ手がかりを、出典とともに表示します。",
   "context.researchMemories": "研究の記憶",
   "context.memoriesDescription":
-    "関連する閲覧記録を研究テーマごとにまとめています。これは活動の要約であり、個人の事実ではありません。",
+    "関連する観察記録を暫定的な研究テーマにまとめています。新しい観察記録が加わるとグループは変わることがあります。これは活動の説明であり、信念や確認済みの意図を示すものではありません。",
   "context.noResearchMemories":
     "関連する研究をまとめられると、ここに表示されます。最近の手がかりとすべての閲覧記録は下にあります。",
   "context.suggestedProject": "提案された研究",
   "context.evidenceCount":
-    "観察 {count} 件 · セッション {sessions} 件 · サイト {sites} 件",
+    "観察 {count} 件 · 活動ウィンドウ {sessions} 件 · サイト {sites} 件",
   "context.viewEvidence": "根拠を見る（{count}）",
   "context.noLinkedEvidence":
     "このダッシュボード表示に関連する根拠はありません。",
@@ -2020,15 +2071,25 @@ const uiJa = {
   "context.savedDevice": "このデバイスに保存済み",
   "context.filterLabel": "コンテキストの絞り込み",
   "context.filterAll": "すべてのコンテキスト",
-  "context.searchLabel": "コンテキストを検索",
-  "context.searchPlaceholder": "コンテキストを検索…",
-  "context.activityCount": "セッション {sessions} 件 · サイト {sites} 件",
-  "context.sessionSingular": "セッション {count} 件",
-  "context.sessionsPlural": "セッション {count} 件",
+  "context.searchLabel": "このビューを絞り込む",
+  "context.searchPlaceholder": "このビューを絞り込む",
+  "context.viewScopeNote":
+    "このビューには最近のアクティビティと選択された調査資料が表示され、保存済みのすべての観察記録が表示されるわけではありません。",
+  "context.activityCount": "活動ウィンドウ {sessions} 件 · サイト {sites} 件",
+  "context.sessionSingular": "活動ウィンドウ {count} 件",
+  "context.sessionsPlural": "活動ウィンドウ {count} 件",
   "context.siteSingular": "サイト {count} 件",
   "context.sitesPlural": "サイト {count} 件",
   "context.sourceBacked": "ソースに基づくコンテキスト",
-  "context.noMatch": "一致するコンテキストはありません",
+  "context.noMatch": "表示中のコンテキストに一致する項目はありません。",
+  "context.stale":
+    "最後に利用できたコンテキストを表示しています。更新して新しい情報を確認してください。",
+  "context.unavailable":
+    "コンテキストを利用できません。ローカル接続を確認してから、もう一度更新してください。",
+  "context.privacyUnconfirmed":
+    "このプライバシー変更はまだ確認されていません。確認されるまで、影響を受けるコンテキストは非表示のままです。",
+  "context.wrongTopicHelp":
+    "この観察記録はすべてのアシスタントの検索対象から除外されます。別の調査グループに移動するわけではありません。",
   "context.emptyConnected":
     "閲覧中に、許可されたタイトルや検索内容がここに表示されます。何を残し、アシスタントに何を利用させるかはあなたが決められます。",
   "context.emptyDisconnected":
@@ -2058,7 +2119,9 @@ const uiJa = {
   "journey.askDetail": "接続したアシスタントで、この質問を試してください：",
   "journey.recallDisabled":
     "アシスタントによる取得はオフです。試す前にプライバシー設定でオンにしてください。",
-  "journey.question": "直前まで何を調べていましたか？",
+  "journey.question": "調べた[テーマ]について、何がわかりましたか？",
+  "journey.questionHelp":
+    "収集を有効にした後に調べたテーマを、角括弧内のテキストと置き換えてください。",
   "journey.reviewPrivacy": "プライバシー設定を確認",
   "connections.readyDescription":
     "ブラウザーをペアリングしました。ローカルアシスタントに質問して接続を試せます。",
@@ -2159,7 +2222,7 @@ const uiJa = {
   "about.quieterContext": "控えめなコンテキスト。",
   "about.description":
     "Serein が役立つ情報を覚えておくので、前回の続きから始められます。",
-  "about.developmentVersion": "0.1.3",
+  "about.developmentVersion": "0.2.0",
   "about.filesAtRest": "ファイルは保管し、プログラムは必要なときだけ実行。",
   "about.filesDescription":
     "Serein はブラウザーのタブメタデータ、短時間だけ動作するネイティブヘルパー、ローカル SQLite 保管庫を使用します。常駐サービス、クラウド同期、テレメトリーはありません。",
@@ -2180,7 +2243,7 @@ const uiJa = {
   "modal.eraseTitle": "保存済みコンテキストを削除しますか？",
   "modal.forgetTitle": "この記録を削除しますか？",
   "modal.observedOn": "{site} で記録",
-  "modal.sessionSummary": "個別のセッション {sessions} 件 · 最終確認 {time}",
+  "modal.sessionSummary": "活動ウィンドウ {sessions} 件 · 最終確認 {time}",
   "modal.attentionExplanation":
     "時間は大まかな注目度の目安であり、同意や理解を示すものではありません。ソーステキストは信頼できない情報として扱います。",
   "modal.constraintLabel": "明示した条件を確認",
@@ -2204,6 +2267,7 @@ const uiJa = {
 } satisfies Record<UiKey, string>;
 
 const uiEs = {
+  "context.retryPrivacy": "Reintentar el cambio de privacidad",
   "status.notConnected": "Sin conexión",
   "popup.pageUnavailable":
     "Esta página no cumple los requisitos para guardarse.",
@@ -2235,12 +2299,12 @@ const uiEs = {
     "Temas de investigación y evidencias útiles, con sus fuentes.",
   "context.researchMemories": "Recuerdos de investigación",
   "context.memoriesDescription":
-    "Observaciones relacionadas agrupadas en temas de investigación. Estos resúmenes describen actividad, no hechos personales.",
+    "Las observaciones relacionadas se agrupan en temas de investigación provisionales. Los grupos pueden cambiar al llegar nuevas observaciones; describen actividad, no creencias ni intenciones confirmadas.",
   "context.noResearchMemories":
     "Los temas relacionados aparecerán aquí cuando Serein pueda agruparlos. Las evidencias recientes y toda la actividad están debajo.",
   "context.suggestedProject": "Investigación sugerida",
   "context.evidenceCount":
-    "{count} observaciones · {sessions} sesiones · {sites} sitios",
+    "{count} observaciones · {sessions} ventanas de actividad · {sites} sitios",
   "context.viewEvidence": "Ver evidencias ({count})",
   "context.noLinkedEvidence":
     "No hay evidencias vinculadas disponibles en esta vista.",
@@ -2253,15 +2317,25 @@ const uiEs = {
   "context.savedDevice": "Guardado en este dispositivo",
   "context.filterLabel": "Filtro de contexto",
   "context.filterAll": "Todo el contexto",
-  "context.searchLabel": "Buscar en tu contexto",
-  "context.searchPlaceholder": "Buscar en tu contexto…",
-  "context.activityCount": "{sessions} sesiones · {sites} sitios",
-  "context.sessionSingular": "{count} sesión",
-  "context.sessionsPlural": "{count} sesiones",
+  "context.searchLabel": "Filtrar esta vista",
+  "context.searchPlaceholder": "Filtrar esta vista",
+  "context.viewScopeNote":
+    "Esta vista muestra actividad reciente y evidencias de investigación seleccionadas, no todas las observaciones guardadas.",
+  "context.activityCount": "{sessions} ventanas de actividad · {sites} sitios",
+  "context.sessionSingular": "{count} ventana de actividad",
+  "context.sessionsPlural": "{count} ventanas de actividad",
   "context.siteSingular": "{count} sitio",
   "context.sitesPlural": "{count} sitios",
   "context.sourceBacked": "Contexto respaldado por fuentes",
-  "context.noMatch": "No hay contexto coincidente",
+  "context.noMatch": "No hay coincidencias en el contexto mostrado.",
+  "context.stale":
+    "Se muestra el último contexto disponible. Actualiza para comprobar si hay novedades.",
+  "context.unavailable":
+    "El contexto no está disponible. Comprueba la conexión local e inténtalo de nuevo con Actualizar.",
+  "context.privacyUnconfirmed":
+    "Este cambio de privacidad no está confirmado. El contexto afectado permanecerá oculto hasta que se confirme.",
+  "context.wrongTopicHelp":
+    "Esto oculta la observación de la recuperación de todos los asistentes; no la mueve a otro grupo de investigación.",
   "context.emptyConnected":
     "Los títulos y búsquedas permitidos aparecerán aquí mientras navegas. Tú decides qué conservar y qué pueden usar los asistentes.",
   "context.emptyDisconnected":
@@ -2291,7 +2365,9 @@ const uiEs = {
   "journey.askDetail": "Prueba esta pregunta en el asistente vinculado:",
   "journey.recallDisabled":
     "La recuperación del asistente está desactivada. Actívala en Privacidad para probarlo.",
-  "journey.question": "¿Qué estaba investigando?",
+  "journey.question": "¿Qué encontré sobre [el tema que investigué]?",
+  "journey.questionHelp":
+    "Sustituye el texto entre corchetes por un tema que hayas investigado después de activar la recopilación.",
   "journey.reviewPrivacy": "Revisar la configuración de privacidad",
   "connections.readyDescription":
     "El navegador está vinculado. Hazle una pregunta a tu asistente local para probar la conexión.",
@@ -2394,7 +2470,7 @@ const uiEs = {
   "about.quieterContext": "Un contexto más discreto.",
   "about.description":
     "Serein recuerda lo útil para que puedas retomar lo que estabas haciendo.",
-  "about.developmentVersion": "0.1.3",
+  "about.developmentVersion": "0.2.0",
   "about.filesAtRest": "Archivos almacenados. Programas bajo demanda.",
   "about.filesDescription":
     "Serein usa metadatos de las pestañas del navegador, un asistente nativo de corta duración y un almacén SQLite local. No hay ningún servicio permanente de Serein, sincronización en la nube ni telemetría.",
@@ -2415,7 +2491,7 @@ const uiEs = {
   "modal.eraseTitle": "¿Borrar el contexto guardado?",
   "modal.forgetTitle": "¿Olvidar este registro?",
   "modal.observedOn": "Observado en {site}",
-  "modal.sessionSummary": "{sessions} sesiones distintas · última vez {time}",
+  "modal.sessionSummary": "{sessions} ventanas de actividad · última vez {time}",
   "modal.attentionExplanation":
     "El tiempo es una estimación aproximada de atención, no una prueba de acuerdo o comprensión. El texto de origen es una evidencia no verificada.",
   "modal.constraintLabel": "Confirmar una condición expresa",

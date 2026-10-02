@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "browser": "148.0.7778.96",
+  "extension_manifest_version": "0.2.0",
+  "isolated_profile": true,
+  "initial_consent": false,
+  "consent_disclosures_required": true,
+  "setup_button_disabled_during_policy_write": true,
+  "pending_mutation": {
+    "policyMessages": 1,
+    "tickets": 0,
+    "consent": false,
+    "releaseAvailable": true
+  },
+  "ticket_instructions_rendered": true,
+  "clipboard_write_success_notice": "Setup instructions copied Paste them into your local assistant.",
+  "ticket_summary": {
+    "browser": "chrome",
+    "adapters": [
+      "generic"
+    ],
+    "install_skills": false,
+    "consent": true
+  },
+  "page_errors": []
+}

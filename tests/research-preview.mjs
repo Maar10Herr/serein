@@ -1,4 +1,5 @@
 import { createRequire } from 'node:module';
+import { createHash } from 'node:crypto';
 import { mkdtemp, realpath, rm, mkdir, readFile, writeFile, rename } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import path from 'node:path';
@@ -6,7 +7,7 @@ import { tmpdir } from 'node:os';
 import assert from 'node:assert/strict';
 
 // A constructed product preview. The titles and hosts are public-site metadata
-// observed in the earlier real-site demo; the visits and sessions below are
+// observed in the earlier real-site demo; the visits and visit batches below are
 // invented. This is never described as a fresh browser capture or user data.
 const publicMetadata = [
   { site: 'www.amazon.com', title: 'ergonomic office chair', query: 'ergonomic office chair' },
@@ -64,6 +65,13 @@ try {
   ], { input: JSON.stringify(ticket), env: browserEnv }).toString());
   assert.equal(setup.status, 'ok');
   const manifest = await readFile(setup.manifest, 'utf8');
+  const nativeManifest = JSON.parse(manifest);
+  const skillRuntime = path.join(root, 'skills/serein-context/runtime/macos-arm64');
+  const nativeHostSha256 = createHash('sha256').update(await readFile(nativeManifest.path)).digest('hex');
+  const bundledHostSha256 = createHash('sha256').update(await readFile(path.join(skillRuntime, 'serein-host'))).digest('hex');
+  const nativeRuntimeCliSha256 = createHash('sha256').update(await readFile(path.join(skillRuntime, 'serein'))).digest('hex');
+  assert.equal(nativeHostSha256, bundledHostSha256,
+    'the registered host must match the final bundled skill helper');
   const nativeDirectory = path.join(temp, 'profile', 'NativeMessagingHosts');
   await mkdir(nativeDirectory, { recursive: true });
   await writeFile(path.join(nativeDirectory, 'com.serein.context.json'), manifest, {
@@ -77,7 +85,7 @@ try {
   assert.equal(connected.state.policy.consent, true);
 
   const events = [];
-  for (const [sessionIndex, daysAgo] of [3, 1].entries()) {
+  for (const [visitBatchIndex, daysAgo] of [3, 1].entries()) {
     for (const [itemIndex, item] of publicMetadata.entries()) {
       events.push({
         event_id: crypto.randomUUID(),
@@ -88,7 +96,7 @@ try {
         kind: item.query ? 'search' : 'visit',
         title: item.title,
         ...(item.query ? { search_query: item.query } : {}),
-        foreground_seconds: 150 + sessionIndex * 20 + itemIndex * 10,
+        foreground_seconds: 150 + visitBatchIndex * 20 + itemIndex * 10,
       });
     }
   }
@@ -138,6 +146,8 @@ try {
   await page.locator('article.memory-card details.memory-sources').first().locator('summary').click();
   await page.screenshot({ animations: 'disabled', path: stagedDark, fullPage: true });
 
+  const extensionManifest = JSON.parse(await readFile(path.join(extension, 'manifest.json'), 'utf8'));
+
   await mkdir(screenshots, { recursive: true });
   await rename(stagedLight, path.join(screenshots, 'research-preview-light.png'));
   await rename(stagedDark, path.join(screenshots, 'research-preview-dark.png'));
@@ -146,8 +156,11 @@ try {
     browser: context.browser()?.version(),
     isolated_profile: true,
     synthetic_events: events.length,
-    synthetic_sessions: 2,
+    synthetic_visit_batches: 2,
     distinct_public_sites: publicMetadata.length,
+    extension_manifest_version: extensionManifest.version,
+    native_runtime_cli_sha256: nativeRuntimeCliSha256,
+    native_host_sha256: nativeHostSha256,
     ingress: 'Actual native host ingest request with constructed records; extension tabs observer was not used for these observations.',
     dashboard_raw_cards: dashboard.cards.length,
     dashboard_research_groups: dashboard.memories.length,

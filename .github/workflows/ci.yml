@@ -10,6 +10,8 @@ jobs:
     runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
@@ -17,6 +19,12 @@ jobs:
         with:
           version: '11.25.0'
       - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+      - name: Set release build inputs
+        run: |
+          printf '%s\n' "RUSTFLAGS=--remap-path-prefix=$HOME=/build --remap-path-prefix=$PWD=/src" >> "$GITHUB_ENV"
+          printf '%s\n' "SEREIN_SKILL_REPOSITORY=https://github.com/Maar10Herr/serein" >> "$GITHUB_ENV"
       - run: pnpm install --frozen-lockfile
       - run: pnpm --dir apps/extension check
       - run: pnpm --dir apps/extension test
@@ -26,11 +34,19 @@ jobs:
       - run: pnpm --dir apps/extension build:firefox
         env:
           SEREIN_SKILL_REPOSITORY: https://github.com/Maar10Herr/serein
-      - run: cargo test --workspace --release
-      - run: cargo build --workspace --release
+      - name: Build pinned prior schema readers
+        run: python3 tools/build_migration_readers.py --output "$RUNNER_TEMP/serein-migration-readers"
+      - run: cargo fmt --all -- --check
+      - run: cargo test --workspace --release --locked
+      - run: cargo build --workspace --release --locked
         env:
           SEREIN_SKILL_REPOSITORY: https://github.com/Maar10Herr/serein
+      - run: python3 tools/bundle_skill.py
       - run: python3 tests/install_uninstall.py
       - run: python3 tests/native_bridge.py
       - run: python3 tests/skill_bundle.py
+      - name: Verify installed skill without network access
+        run: /usr/bin/sandbox-exec -p '(version 1)(allow default)(deny network*)' env SEREIN_REQUIRE_OFFLINE=1 python3 tests/skill_bundle.py
       - run: python3 tools/check_contracts.py
+      - run: python3 tests/package_binding.py
+      - run: python3 tools/package.py

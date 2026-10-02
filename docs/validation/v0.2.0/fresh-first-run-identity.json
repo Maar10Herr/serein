@@ -1,0 +1,11 @@
+{
+  "original_report_sha256": "fe0d33c76a2ec4fabb62f56c2f3200bba05a424d2c9e09f755be8a5c932dc5b9",
+  "fixture_sha256": "4b6f83e16f4322ab364f95b9bcc55926152edf46c4efa464008917ca7be3f387",
+  "binary_sha256": {
+    "baseline_cli": "fabc11e2ad1b1feb8e82dc7c2457fad6e27874c0e34c5fc329b339c66c594081",
+    "baseline_host": "a877c55a3b6e488df5eeeda1146ff93bc0ae0e32c74b04b19a5ec5a3c67542a7",
+    "candidate_cli": "de7aeed2370ab49a97195c485787d2dce9671f3a1666e1083d1d5bc88e105040",
+    "candidate_host": "9fe827b4fca4d571582dfbbe32e547b7f581b1192349a5276f9d4a2617e7f678"
+  },
+  "evidence": "Baseline matches pinned035 public runtime blobs; candidate matches pre-fresh final-capacity-summary.json run identity; no runtime/bundle builds occurred during or after original fresh run."
+}

@@ -1,0 +1,1012 @@
+{
+  "candidate_calibration_suite": true,
+  "generated_utc_date": "2026-10-02",
+  "fixture_suite": "four previously seen synthetic retrieval fixtures",
+  "fresh_holdout_claim": false,
+  "total_queries": 158,
+  "requested_total_note": "Current checked-in fixture query counts sum to 158 (40 + 48 + 35 + 35), not 168; no fixture was changed.",
+  "unchanged_development_floor": {
+    "minimum_recall_at_6": 0.6,
+    "minimum_empty_specificity": 1.0
+  },
+  "development_floor_results": {
+    "dev_relevance_noise": {
+      "evaluated_query_count": 40,
+      "non_empty_query_count": 25,
+      "expected_empty_query_count": 15,
+      "recall_at_6_macro_non_empty": 0.6086666666666666,
+      "precision_at_6_macro_non_empty": 0.1666666666666666,
+      "mrr_macro_non_empty": 0.6366666666666666,
+      "ndcg_at_6_macro_non_empty": 0.5695550704018619,
+      "expected_empty_specificity": 1.0,
+      "expected_empty_true_negatives": 15
+    },
+    "dev_multilingual": {
+      "evaluated_query_count": 48,
+      "non_empty_query_count": 24,
+      "expected_empty_query_count": 24,
+      "recall_at_6_macro_non_empty": 0.7701388888888889,
+      "precision_at_6_macro_non_empty": 0.2222222222222222,
+      "mrr_macro_non_empty": 0.8888888888888888,
+      "ndcg_at_6_macro_non_empty": 0.7957187574030266,
+      "expected_empty_specificity": 1.0,
+      "expected_empty_true_negatives": 24
+    }
+  },
+  "source_sha256": {
+    "crates/serein-core/src/algorithm.rs": "a3c023b170de40f11c4dfb14a90359b4cbe679752784b8804694315e3fec0616",
+    "crates/serein-core/src/inference.rs": "1938b468e311dd53117f7d3027873e9a41784f56b9a9cdc3953598ba0cd4f2a9",
+    "crates/serein-core/src/retrieval.rs": "0eac5e5bdd451286f784a78d64c53a8b5dacbe92604b8b89113fc17abe7a0c24",
+    "crates/serein-core/src/storage.rs": "d2150e5aeb9cca9a1942865334ba9c1ce99c31bd65ff1fb315f21578d5e2887e",
+    "crates/serein-core/tests/calibration.rs": "c6bad4edeabfd09b17a7d321c070ed5453a7dd5ef1fdd48e8a6939b8b4890f87"
+  },
+  "model_pack_file_sha256": {
+    "models/pack/LICENSE-2.0.txt": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "models/pack/NOTICE.md": "f4dd8621a35f467c365fbd7ebd06b1b820818413379285b58b8227e8478ae31f",
+    "models/pack/manifest.json": "8661322502cf2881aec0b935e92b802c0538cbb397bd8b5f36fa2253bdec9e16",
+    "models/pack/parity.json": "b665ed1ea3735442a43e2ea604dbe9d01bbc40549dff234919c6294dfe2e7928",
+    "models/pack/scales.f32": "2b42e8dedf1b2b5e45a5cac326ea17d3d9b1e07e12d571f6a09181d73d72c1ee",
+    "models/pack/tokenizer.json": "11aaf894a4ccf3d95e8830e27c0f8152791fbbff2b988e29a265580b86edd216",
+    "models/pack/weights.i8": "ea6daccc4c4fdf27eecfcd2716f5408142947622b5e3dcc356231ea8ddade15e"
+  },
+  "release_binary_sha256": {
+    "target/release/serein": "de7aeed2370ab49a97195c485787d2dce9671f3a1666e1083d1d5bc88e105040",
+    "target/release/serein-host": "9fe827b4fca4d571582dfbbe32e547b7f581b1192349a5276f9d4a2617e7f678"
+  },
+  "holdout_baseline_ambiguity": {
+    "raw_paired_reference": "before-calibration_holdout_relevance_noise.json reports Recall@6 0.7347222 and empty specificity 0.6363636.",
+    "tracked_docs_historical_checkpoint": "docs/calibration-results.json reports 0.6722222 and 0.8181818 for the earlier relevance holdout; that aggregate checkpoint has no paired per-query report in this workspace.",
+    "v2_reference": "before-calibration_holdout_v2_relevance.json matches docs/calibration-results.json at Recall@6 0.6521739 and specificity 1.0."
+  },
+  "fixtures": {
+    "dev_relevance_noise": {
+      "fixture_id": "serein-calibration-dev-relevance-noise-v1",
+      "query_count": 40,
+      "evaluation_split": "development",
+      "baseline_role": "last recorded T04 development run",
+      "baseline_report": "<validation-artifact:t04-calibration_dev_relevance_noise.json>",
+      "baseline_sha256": "39618707c50d18fad87286f831d8cd6f4234184662147c8c6352717407b3e38f",
+      "candidate_report": "seen-candidate-dev_relevance_noise.json",
+      "candidate_report_sha256": "cf7b6a67c15a538fcb4c8e12cadd731b4a2f5a37e4d2ecffcd7e2959b0c8af3d",
+      "paired_aggregate_deltas_candidate_minus_baseline": {
+        "recall_at_6_macro_non_empty": 0.0,
+        "precision_at_6_macro_non_empty": 0.0,
+        "mrr_macro_non_empty": 0.0,
+        "ndcg_at_6_macro_non_empty": 0.0,
+        "expected_empty_specificity": 0.0
+      },
+      "new_unsupported_inclusion_count": 1,
+      "new_unsupported_inclusions": [
+        {
+          "fixture": "dev_relevance_noise",
+          "query_id": "q015",
+          "evidence_ids": [
+            "ev012"
+          ]
+        }
+      ],
+      "new_miss_count": 0,
+      "new_misses": [],
+      "all_candidate_queries_with_misses": [
+        {
+          "fixture": "dev_relevance_noise",
+          "query_id": "q001",
+          "expected_evidence_ids_missing": [
+            "ev001",
+            "ev002",
+            "ev007"
+          ]
+        },
+        {
+          "fixture": "dev_relevance_noise",
+          "query_id": "q002",
+          "expected_evidence_ids_missing": [
+            "ev001",
+            "ev002",
+            "ev007"
+          ]
+        },
+        {
+          "fixture": "dev_relevance_noise",
+          "query_id": "q003",
+          "expected_evidence_ids_missing": [
+            "ev003"
+          ]
+        },
+        {
+          "fixture": "dev_relevance_noise",
+          "query_id": "q011",
+          "expected_evidence_ids_missing": [
+            "ev014",
+            "ev017"
+          ]
+        },
+        {
+          "fixture": "dev_relevance_noise",
+          "query_id": "q012",
+          "expected_evidence_ids_missing": [
+            "ev017"
+          ]
+        },
+        {
+          "fixture": "dev_relevance_noise",
+          "query_id": "q014",
+          "expected_evidence_ids_missing": [
+            "ev011",
+            "ev013",
+            "ev017"
+          ]
+        },
+        {
+          "fixture": "dev_relevance_noise",
+          "query_id": "q019",
+          "expected_evidence_ids_missing": [
+            "ev021"
+          ]
+        },
+        {
+          "fixture": "dev_relevance_noise",
+          "query_id": "q021",
+          "expected_evidence_ids_missing": [
+            "ev020"
+          ]
+        },
+        {
+          "fixture": "dev_relevance_noise",
+          "query_id": "q022",
+          "expected_evidence_ids_missing": [
+            "ev019",
+            "ev020",
+            "ev021",
+            "ev022",
+            "ev023"
+          ]
+        },
+        {
+          "fixture": "dev_relevance_noise",
+          "query_id": "q031",
+          "expected_evidence_ids_missing": [
+            "ev033"
+          ]
+        },
+        {
+          "fixture": "dev_relevance_noise",
+          "query_id": "q032",
+          "expected_evidence_ids_missing": [
+            "ev036"
+          ]
+        },
+        {
+          "fixture": "dev_relevance_noise",
+          "query_id": "q037",
+          "expected_evidence_ids_missing": [
+            "ev001",
+            "ev002",
+            "ev003",
+            "ev004",
+            "ev005",
+            "ev007"
+          ]
+        },
+        {
+          "fixture": "dev_relevance_noise",
+          "query_id": "q039",
+          "expected_evidence_ids_missing": [
+            "ev001",
+            "ev007",
+            "ev011",
+            "ev013",
+            "ev022",
+            "ev023"
+          ]
+        }
+      ],
+      "candidate_metrics": {
+        "evaluated_query_count": 40,
+        "non_empty_query_count": 25,
+        "expected_empty_query_count": 15,
+        "recall_at_6_macro_non_empty": 0.6086666666666666,
+        "precision_at_6_macro_non_empty": 0.1666666666666666,
+        "mrr_macro_non_empty": 0.6366666666666666,
+        "ndcg_at_6_macro_non_empty": 0.5695550704018619,
+        "expected_empty_specificity": 1.0,
+        "expected_empty_true_negatives": 15
+      },
+      "baseline_metrics": {
+        "evaluated_query_count": 40,
+        "non_empty_query_count": 25,
+        "expected_empty_query_count": 15,
+        "recall_at_6_macro_non_empty": 0.6086666666666666,
+        "precision_at_6_macro_non_empty": 0.1666666666666666,
+        "mrr_macro_non_empty": 0.6366666666666666,
+        "ndcg_at_6_macro_non_empty": 0.5695550704018619,
+        "expected_empty_specificity": 1.0,
+        "expected_empty_true_negatives": 15
+      }
+    },
+    "dev_multilingual": {
+      "fixture_id": "serein-calibration-dev-multilingual-v1",
+      "query_count": 48,
+      "evaluation_split": "development",
+      "baseline_role": "last recorded T04 development run",
+      "baseline_report": "<validation-artifact:t04-calibration_dev_multilingual.json>",
+      "baseline_sha256": "cdce55cfb44526d584f4c3f74f35ef84b437179532c476dfb33a8de6d711585a",
+      "candidate_report": "seen-candidate-dev_multilingual.json",
+      "candidate_report_sha256": "9c59588d82bbc258e6be5ecd33a9c77c8051226af36902feeb0b69f04c1c3efa",
+      "paired_aggregate_deltas_candidate_minus_baseline": {
+        "recall_at_6_macro_non_empty": 0.0,
+        "precision_at_6_macro_non_empty": 0.0,
+        "mrr_macro_non_empty": 0.0,
+        "ndcg_at_6_macro_non_empty": 0.0,
+        "expected_empty_specificity": 0.0
+      },
+      "new_unsupported_inclusion_count": 0,
+      "new_unsupported_inclusions": [],
+      "new_miss_count": 0,
+      "new_misses": [],
+      "all_candidate_queries_with_misses": [
+        {
+          "fixture": "dev_multilingual",
+          "query_id": "q003",
+          "expected_evidence_ids_missing": [
+            "ev006"
+          ]
+        },
+        {
+          "fixture": "dev_multilingual",
+          "query_id": "q008",
+          "expected_evidence_ids_missing": [
+            "ev009",
+            "ev011"
+          ]
+        },
+        {
+          "fixture": "dev_multilingual",
+          "query_id": "q014",
+          "expected_evidence_ids_missing": [
+            "ev017",
+            "ev018",
+            "ev020"
+          ]
+        },
+        {
+          "fixture": "dev_multilingual",
+          "query_id": "q015",
+          "expected_evidence_ids_missing": [
+            "ev018",
+            "ev023"
+          ]
+        },
+        {
+          "fixture": "dev_multilingual",
+          "query_id": "q016",
+          "expected_evidence_ids_missing": [
+            "ev017"
+          ]
+        },
+        {
+          "fixture": "dev_multilingual",
+          "query_id": "q019",
+          "expected_evidence_ids_missing": [
+            "ev018",
+            "ev023"
+          ]
+        },
+        {
+          "fixture": "dev_multilingual",
+          "query_id": "q020",
+          "expected_evidence_ids_missing": [
+            "ev016",
+            "ev021",
+            "ev023"
+          ]
+        },
+        {
+          "fixture": "dev_multilingual",
+          "query_id": "q021",
+          "expected_evidence_ids_missing": [
+            "ev028"
+          ]
+        },
+        {
+          "fixture": "dev_multilingual",
+          "query_id": "q026",
+          "expected_evidence_ids_missing": [
+            "ev023"
+          ]
+        },
+        {
+          "fixture": "dev_multilingual",
+          "query_id": "q041",
+          "expected_evidence_ids_missing": [
+            "ev005"
+          ]
+        }
+      ],
+      "candidate_metrics": {
+        "evaluated_query_count": 48,
+        "non_empty_query_count": 24,
+        "expected_empty_query_count": 24,
+        "recall_at_6_macro_non_empty": 0.7701388888888889,
+        "precision_at_6_macro_non_empty": 0.2222222222222222,
+        "mrr_macro_non_empty": 0.8888888888888888,
+        "ndcg_at_6_macro_non_empty": 0.7957187574030266,
+        "expected_empty_specificity": 1.0,
+        "expected_empty_true_negatives": 24
+      },
+      "baseline_metrics": {
+        "evaluated_query_count": 48,
+        "non_empty_query_count": 24,
+        "expected_empty_query_count": 24,
+        "recall_at_6_macro_non_empty": 0.7701388888888889,
+        "precision_at_6_macro_non_empty": 0.2222222222222222,
+        "mrr_macro_non_empty": 0.8888888888888888,
+        "ndcg_at_6_macro_non_empty": 0.7957187574030266,
+        "expected_empty_specificity": 1.0,
+        "expected_empty_true_negatives": 24
+      }
+    },
+    "holdout_relevance_noise": {
+      "fixture_id": "calibration_holdout_relevance_noise_v1",
+      "query_count": 35,
+      "evaluation_split": "previously seen held-out regression check; not fresh validation",
+      "baseline_role": "preserved pre-run report for a previously seen holdout; no post-T04 paired report exists",
+      "baseline_report": "<validation-artifact:before-calibration_holdout_relevance_noise.json>",
+      "baseline_sha256": "f4cf10ffdddac5845a5d02820d001645797360466a372455e5973e333c86b09b",
+      "candidate_report": "seen-candidate-holdout_relevance_noise.json",
+      "candidate_report_sha256": "3502cbb80161950a1504a55b4b9c4a442f8061cfa486e67cdad032568ecaf036",
+      "paired_aggregate_deltas_candidate_minus_baseline": {
+        "recall_at_6_macro_non_empty": 0.0,
+        "precision_at_6_macro_non_empty": 0.0,
+        "mrr_macro_non_empty": 0.0,
+        "ndcg_at_6_macro_non_empty": 0.0,
+        "expected_empty_specificity": 0.0
+      },
+      "new_unsupported_inclusion_count": 0,
+      "new_unsupported_inclusions": [],
+      "new_miss_count": 0,
+      "new_misses": [],
+      "all_candidate_queries_with_misses": [
+        {
+          "fixture": "holdout_relevance_noise",
+          "query_id": "q03",
+          "expected_evidence_ids_missing": [
+            "o07"
+          ]
+        },
+        {
+          "fixture": "holdout_relevance_noise",
+          "query_id": "q05",
+          "expected_evidence_ids_missing": [
+            "o11"
+          ]
+        },
+        {
+          "fixture": "holdout_relevance_noise",
+          "query_id": "q07",
+          "expected_evidence_ids_missing": [
+            "o12"
+          ]
+        },
+        {
+          "fixture": "holdout_relevance_noise",
+          "query_id": "q10",
+          "expected_evidence_ids_missing": [
+            "o17"
+          ]
+        },
+        {
+          "fixture": "holdout_relevance_noise",
+          "query_id": "q12",
+          "expected_evidence_ids_missing": [
+            "o20"
+          ]
+        },
+        {
+          "fixture": "holdout_relevance_noise",
+          "query_id": "q16",
+          "expected_evidence_ids_missing": [
+            "o26"
+          ]
+        },
+        {
+          "fixture": "holdout_relevance_noise",
+          "query_id": "q18",
+          "expected_evidence_ids_missing": [
+            "o31"
+          ]
+        },
+        {
+          "fixture": "holdout_relevance_noise",
+          "query_id": "q20",
+          "expected_evidence_ids_missing": [
+            "o37"
+          ]
+        },
+        {
+          "fixture": "holdout_relevance_noise",
+          "query_id": "q26",
+          "expected_evidence_ids_missing": [
+            "o03"
+          ]
+        },
+        {
+          "fixture": "holdout_relevance_noise",
+          "query_id": "q28",
+          "expected_evidence_ids_missing": [
+            "o05",
+            "o33",
+            "o34",
+            "o35",
+            "o36",
+            "o40",
+            "o41"
+          ]
+        },
+        {
+          "fixture": "holdout_relevance_noise",
+          "query_id": "q31",
+          "expected_evidence_ids_missing": [
+            "o06",
+            "o08"
+          ]
+        }
+      ],
+      "candidate_metrics": {
+        "evaluated_query_count": 35,
+        "non_empty_query_count": 24,
+        "expected_empty_query_count": 11,
+        "recall_at_6_macro_non_empty": 0.7347222222222222,
+        "precision_at_6_macro_non_empty": 0.20138888888888887,
+        "mrr_macro_non_empty": 0.875,
+        "ndcg_at_6_macro_non_empty": 0.7467470057727718,
+        "expected_empty_specificity": 0.6363636363636364,
+        "expected_empty_true_negatives": 7
+      },
+      "baseline_metrics": {
+        "evaluated_query_count": 35,
+        "non_empty_query_count": 24,
+        "expected_empty_query_count": 11,
+        "recall_at_6_macro_non_empty": 0.7347222222222222,
+        "precision_at_6_macro_non_empty": 0.20138888888888887,
+        "mrr_macro_non_empty": 0.875,
+        "ndcg_at_6_macro_non_empty": 0.7467470057727718,
+        "expected_empty_specificity": 0.6363636363636364,
+        "expected_empty_true_negatives": 7
+      }
+    },
+    "holdout_v2_relevance": {
+      "fixture_id": "calibration_holdout_v2_relevance",
+      "query_count": 35,
+      "evaluation_split": "previously seen held-out regression check; not fresh validation",
+      "baseline_role": "preserved pre-run report for a previously seen holdout; no post-T04 paired report exists",
+      "baseline_report": "<validation-artifact:before-calibration_holdout_v2_relevance.json>",
+      "baseline_sha256": "089a430511e32d4608c9bd6c390fe5a237ccd1d1b5bd211b58b19e4f1c56f85f",
+      "candidate_report": "seen-candidate-holdout_v2_relevance.json",
+      "candidate_report_sha256": "9e8ff71624f9cef042ffbe0a092a7430aed32fb895b9d00efdfc4cf85c57815e",
+      "paired_aggregate_deltas_candidate_minus_baseline": {
+        "recall_at_6_macro_non_empty": -0.04347826087,
+        "precision_at_6_macro_non_empty": -0.014492753623,
+        "mrr_macro_non_empty": 0.0,
+        "ndcg_at_6_macro_non_empty": -0.030623031776,
+        "expected_empty_specificity": 0.0
+      },
+      "new_unsupported_inclusion_count": 1,
+      "new_unsupported_inclusions": [
+        {
+          "fixture": "holdout_v2_relevance",
+          "query_id": "q_saf_4",
+          "evidence_ids": [
+            "icao_saf"
+          ]
+        }
+      ],
+      "new_miss_count": 2,
+      "new_misses": [
+        {
+          "fixture": "holdout_v2_relevance",
+          "query_id": "q_saf_4",
+          "evidence_ids": [
+            "iata_saf"
+          ]
+        },
+        {
+          "fixture": "holdout_v2_relevance",
+          "query_id": "q_drought_4",
+          "evidence_ids": [
+            "usdm_map"
+          ]
+        }
+      ],
+      "all_candidate_queries_with_misses": [
+        {
+          "fixture": "holdout_v2_relevance",
+          "query_id": "q_drought_es",
+          "expected_evidence_ids_missing": [
+            "drought_gov_current",
+            "drought_gov_monitor"
+          ]
+        },
+        {
+          "fixture": "holdout_v2_relevance",
+          "query_id": "q_saf_ja",
+          "expected_evidence_ids_missing": [
+            "doe_saf"
+          ]
+        },
+        {
+          "fixture": "holdout_v2_relevance",
+          "query_id": "q_stormwater_2",
+          "expected_evidence_ids_missing": [
+            "epa_gi_research"
+          ]
+        },
+        {
+          "fixture": "holdout_v2_relevance",
+          "query_id": "q_drought_2",
+          "expected_evidence_ids_missing": [
+            "nasa_drought",
+            "nasa_earthdata_drought"
+          ]
+        },
+        {
+          "fixture": "holdout_v2_relevance",
+          "query_id": "q_drought_3",
+          "expected_evidence_ids_missing": [
+            "usgs_drought"
+          ]
+        },
+        {
+          "fixture": "holdout_v2_relevance",
+          "query_id": "q_saf_4",
+          "expected_evidence_ids_missing": [
+            "iata_saf"
+          ]
+        },
+        {
+          "fixture": "holdout_v2_relevance",
+          "query_id": "q_saf_1",
+          "expected_evidence_ids_missing": [
+            "doe_saf"
+          ]
+        },
+        {
+          "fixture": "holdout_v2_relevance",
+          "query_id": "q_permafrost_2",
+          "expected_evidence_ids_missing": [
+            "noaa_arctic_permafrost"
+          ]
+        },
+        {
+          "fixture": "holdout_v2_relevance",
+          "query_id": "q_wetlands_4",
+          "expected_evidence_ids_missing": [
+            "ramsar_mission"
+          ]
+        },
+        {
+          "fixture": "holdout_v2_relevance",
+          "query_id": "q_drought_4",
+          "expected_evidence_ids_missing": [
+            "usdm_map"
+          ]
+        },
+        {
+          "fixture": "holdout_v2_relevance",
+          "query_id": "q_permafrost_4",
+          "expected_evidence_ids_missing": [
+            "nasa_siberia"
+          ]
+        }
+      ],
+      "candidate_metrics": {
+        "evaluated_query_count": 35,
+        "non_empty_query_count": 23,
+        "expected_empty_query_count": 12,
+        "recall_at_6_macro_non_empty": 0.6086956521739131,
+        "precision_at_6_macro_non_empty": 0.12318840579710141,
+        "mrr_macro_non_empty": 0.6739130434782609,
+        "ndcg_at_6_macro_non_empty": 0.6150441380295263,
+        "expected_empty_specificity": 1.0,
+        "expected_empty_true_negatives": 12
+      },
+      "baseline_metrics": {
+        "evaluated_query_count": 35,
+        "non_empty_query_count": 23,
+        "expected_empty_query_count": 12,
+        "recall_at_6_macro_non_empty": 0.6521739130434783,
+        "precision_at_6_macro_non_empty": 0.13768115942028983,
+        "mrr_macro_non_empty": 0.6739130434782609,
+        "ndcg_at_6_macro_non_empty": 0.6456671698058589,
+        "expected_empty_specificity": 1.0,
+        "expected_empty_true_negatives": 12
+      }
+    }
+  },
+  "all_new_unsupported_inclusions": [
+    {
+      "fixture": "dev_relevance_noise",
+      "query_id": "q015",
+      "evidence_ids": [
+        "ev012"
+      ]
+    },
+    {
+      "fixture": "holdout_v2_relevance",
+      "query_id": "q_saf_4",
+      "evidence_ids": [
+        "icao_saf"
+      ]
+    }
+  ],
+  "all_new_misses_vs_baseline": [
+    {
+      "fixture": "holdout_v2_relevance",
+      "query_id": "q_saf_4",
+      "evidence_ids": [
+        "iata_saf"
+      ]
+    },
+    {
+      "fixture": "holdout_v2_relevance",
+      "query_id": "q_drought_4",
+      "evidence_ids": [
+        "usdm_map"
+      ]
+    }
+  ],
+  "all_candidate_missed_expected_ids": [
+    {
+      "fixture": "dev_relevance_noise",
+      "query_id": "q001",
+      "expected_evidence_ids_missing": [
+        "ev001",
+        "ev002",
+        "ev007"
+      ]
+    },
+    {
+      "fixture": "dev_relevance_noise",
+      "query_id": "q002",
+      "expected_evidence_ids_missing": [
+        "ev001",
+        "ev002",
+        "ev007"
+      ]
+    },
+    {
+      "fixture": "dev_relevance_noise",
+      "query_id": "q003",
+      "expected_evidence_ids_missing": [
+        "ev003"
+      ]
+    },
+    {
+      "fixture": "dev_relevance_noise",
+      "query_id": "q011",
+      "expected_evidence_ids_missing": [
+        "ev014",
+        "ev017"
+      ]
+    },
+    {
+      "fixture": "dev_relevance_noise",
+      "query_id": "q012",
+      "expected_evidence_ids_missing": [
+        "ev017"
+      ]
+    },
+    {
+      "fixture": "dev_relevance_noise",
+      "query_id": "q014",
+      "expected_evidence_ids_missing": [
+        "ev011",
+        "ev013",
+        "ev017"
+      ]
+    },
+    {
+      "fixture": "dev_relevance_noise",
+      "query_id": "q019",
+      "expected_evidence_ids_missing": [
+        "ev021"
+      ]
+    },
+    {
+      "fixture": "dev_relevance_noise",
+      "query_id": "q021",
+      "expected_evidence_ids_missing": [
+        "ev020"
+      ]
+    },
+    {
+      "fixture": "dev_relevance_noise",
+      "query_id": "q022",
+      "expected_evidence_ids_missing": [
+        "ev019",
+        "ev020",
+        "ev021",
+        "ev022",
+        "ev023"
+      ]
+    },
+    {
+      "fixture": "dev_relevance_noise",
+      "query_id": "q031",
+      "expected_evidence_ids_missing": [
+        "ev033"
+      ]
+    },
+    {
+      "fixture": "dev_relevance_noise",
+      "query_id": "q032",
+      "expected_evidence_ids_missing": [
+        "ev036"
+      ]
+    },
+    {
+      "fixture": "dev_relevance_noise",
+      "query_id": "q037",
+      "expected_evidence_ids_missing": [
+        "ev001",
+        "ev002",
+        "ev003",
+        "ev004",
+        "ev005",
+        "ev007"
+      ]
+    },
+    {
+      "fixture": "dev_relevance_noise",
+      "query_id": "q039",
+      "expected_evidence_ids_missing": [
+        "ev001",
+        "ev007",
+        "ev011",
+        "ev013",
+        "ev022",
+        "ev023"
+      ]
+    },
+    {
+      "fixture": "dev_multilingual",
+      "query_id": "q003",
+      "expected_evidence_ids_missing": [
+        "ev006"
+      ]
+    },
+    {
+      "fixture": "dev_multilingual",
+      "query_id": "q008",
+      "expected_evidence_ids_missing": [
+        "ev009",
+        "ev011"
+      ]
+    },
+    {
+      "fixture": "dev_multilingual",
+      "query_id": "q014",
+      "expected_evidence_ids_missing": [
+        "ev017",
+        "ev018",
+        "ev020"
+      ]
+    },
+    {
+      "fixture": "dev_multilingual",
+      "query_id": "q015",
+      "expected_evidence_ids_missing": [
+        "ev018",
+        "ev023"
+      ]
+    },
+    {
+      "fixture": "dev_multilingual",
+      "query_id": "q016",
+      "expected_evidence_ids_missing": [
+        "ev017"
+      ]
+    },
+    {
+      "fixture": "dev_multilingual",
+      "query_id": "q019",
+      "expected_evidence_ids_missing": [
+        "ev018",
+        "ev023"
+      ]
+    },
+    {
+      "fixture": "dev_multilingual",
+      "query_id": "q020",
+      "expected_evidence_ids_missing": [
+        "ev016",
+        "ev021",
+        "ev023"
+      ]
+    },
+    {
+      "fixture": "dev_multilingual",
+      "query_id": "q021",
+      "expected_evidence_ids_missing": [
+        "ev028"
+      ]
+    },
+    {
+      "fixture": "dev_multilingual",
+      "query_id": "q026",
+      "expected_evidence_ids_missing": [
+        "ev023"
+      ]
+    },
+    {
+      "fixture": "dev_multilingual",
+      "query_id": "q041",
+      "expected_evidence_ids_missing": [
+        "ev005"
+      ]
+    },
+    {
+      "fixture": "holdout_relevance_noise",
+      "query_id": "q03",
+      "expected_evidence_ids_missing": [
+        "o07"
+      ]
+    },
+    {
+      "fixture": "holdout_relevance_noise",
+      "query_id": "q05",
+      "expected_evidence_ids_missing": [
+        "o11"
+      ]
+    },
+    {
+      "fixture": "holdout_relevance_noise",
+      "query_id": "q07",
+      "expected_evidence_ids_missing": [
+        "o12"
+      ]
+    },
+    {
+      "fixture": "holdout_relevance_noise",
+      "query_id": "q10",
+      "expected_evidence_ids_missing": [
+        "o17"
+      ]
+    },
+    {
+      "fixture": "holdout_relevance_noise",
+      "query_id": "q12",
+      "expected_evidence_ids_missing": [
+        "o20"
+      ]
+    },
+    {
+      "fixture": "holdout_relevance_noise",
+      "query_id": "q16",
+      "expected_evidence_ids_missing": [
+        "o26"
+      ]
+    },
+    {
+      "fixture": "holdout_relevance_noise",
+      "query_id": "q18",
+      "expected_evidence_ids_missing": [
+        "o31"
+      ]
+    },
+    {
+      "fixture": "holdout_relevance_noise",
+      "query_id": "q20",
+      "expected_evidence_ids_missing": [
+        "o37"
+      ]
+    },
+    {
+      "fixture": "holdout_relevance_noise",
+      "query_id": "q26",
+      "expected_evidence_ids_missing": [
+        "o03"
+      ]
+    },
+    {
+      "fixture": "holdout_relevance_noise",
+      "query_id": "q28",
+      "expected_evidence_ids_missing": [
+        "o05",
+        "o33",
+        "o34",
+        "o35",
+        "o36",
+        "o40",
+        "o41"
+      ]
+    },
+    {
+      "fixture": "holdout_relevance_noise",
+      "query_id": "q31",
+      "expected_evidence_ids_missing": [
+        "o06",
+        "o08"
+      ]
+    },
+    {
+      "fixture": "holdout_v2_relevance",
+      "query_id": "q_drought_es",
+      "expected_evidence_ids_missing": [
+        "drought_gov_current",
+        "drought_gov_monitor"
+      ]
+    },
+    {
+      "fixture": "holdout_v2_relevance",
+      "query_id": "q_saf_ja",
+      "expected_evidence_ids_missing": [
+        "doe_saf"
+      ]
+    },
+    {
+      "fixture": "holdout_v2_relevance",
+      "query_id": "q_stormwater_2",
+      "expected_evidence_ids_missing": [
+        "epa_gi_research"
+      ]
+    },
+    {
+      "fixture": "holdout_v2_relevance",
+      "query_id": "q_drought_2",
+      "expected_evidence_ids_missing": [
+        "nasa_drought",
+        "nasa_earthdata_drought"
+      ]
+    },
+    {
+      "fixture": "holdout_v2_relevance",
+      "query_id": "q_drought_3",
+      "expected_evidence_ids_missing": [
+        "usgs_drought"
+      ]
+    },
+    {
+      "fixture": "holdout_v2_relevance",
+      "query_id": "q_saf_4",
+      "expected_evidence_ids_missing": [
+        "iata_saf"
+      ]
+    },
+    {
+      "fixture": "holdout_v2_relevance",
+      "query_id": "q_saf_1",
+      "expected_evidence_ids_missing": [
+        "doe_saf"
+      ]
+    },
+    {
+      "fixture": "holdout_v2_relevance",
+      "query_id": "q_permafrost_2",
+      "expected_evidence_ids_missing": [
+        "noaa_arctic_permafrost"
+      ]
+    },
+    {
+      "fixture": "holdout_v2_relevance",
+      "query_id": "q_wetlands_4",
+      "expected_evidence_ids_missing": [
+        "ramsar_mission"
+      ]
+    },
+    {
+      "fixture": "holdout_v2_relevance",
+      "query_id": "q_drought_4",
+      "expected_evidence_ids_missing": [
+        "usdm_map"
+      ]
+    },
+    {
+      "fixture": "holdout_v2_relevance",
+      "query_id": "q_permafrost_4",
+      "expected_evidence_ids_missing": [
+        "nasa_siberia"
+      ]
+    }
+  ]
+}

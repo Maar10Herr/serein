@@ -1,0 +1,2160 @@
+{
+  "aggregate": {
+    "evaluated_query_count": 40,
+    "expected_empty_false_positives": [],
+    "expected_empty_query_count": 15,
+    "expected_empty_specificity": 1.0,
+    "expected_empty_true_negatives": 15,
+    "latency_ms": {
+      "mean": 58.57226565000002,
+      "median": 57.32975,
+      "p95": 57.957041000000004
+    },
+    "mrr_macro_non_empty": 0.6366666666666666,
+    "ndcg_at_6_macro_non_empty": 0.5695550704018619,
+    "non_empty_query_count": 25,
+    "packet_bytes": {
+      "max": 2827,
+      "mean": 941.05
+    },
+    "precision_at_6_macro_non_empty": 0.1666666666666666,
+    "recall_at_6_macro_non_empty": 0.6086666666666666
+  },
+  "development_quality_gate": {
+    "minimum_empty_specificity": 1.0,
+    "minimum_recall_at_6": 0.6,
+    "passed": true
+  },
+  "evaluation_split": "development",
+  "fixture_id": "serein-calibration-dev-relevance-noise-v1",
+  "ingest": {
+    "accepted_evidence_count": 42,
+    "fixture_evidence_count": 46,
+    "ingested_event_count": 45,
+    "invalid_hostname_safe_drop_ids": [
+      "ev031"
+    ],
+    "policy_rejection_counts": {
+      "EXCLUDED_SITE": 1,
+      "SHORT_VISIT": 2
+    },
+    "unique_atom_count": 37
+  },
+  "invariant_checks": {
+    "checks_passed": {
+      "context_at_most_six_records": 40,
+      "observed_evidence_has_unknown_subject": 65,
+      "packet_within_requested_byte_limit": 40,
+      "request_id_preserved": 40
+    },
+    "context_limit_records": 6,
+    "failures": [],
+    "packet_limit_bytes": 4096
+  },
+  "metric_definitions": {
+    "aggregation": "Macro average across non-empty queries. Expected-empty queries are measured separately with specificity.",
+    "mrr": "Reciprocal rank of the first returned atom that supports any expected evidence ID.",
+    "ndcg_at_6": "Binary relevance nDCG over returned atoms; expected duplicate observations that share one atom count as one retrievable item.",
+    "precision_at_6": "Relevant returned atom positions divided by six, even when fewer than six atoms are returned.",
+    "recall_at_6": "Unique expected canonical atoms represented by the top six returned atoms divided by unique expected canonical atoms. Expected labels without an ingestible atom are counted as unmatched units."
+  },
+  "model_pack": "override",
+  "model_pack_available": true,
+  "queries": [
+    {
+      "expected_canonical_atom_ids": [
+        "4702a22c-8d1b-44dd-98f1-fe92afdcd569",
+        "c6ec4c87-16b1-462f-bf17-d03c646393b8"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev001",
+        "ev002",
+        "ev007"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "6a5008f7-4fd5-483d-a0ca-322c66f60491",
+        "a0eab660-817f-46d9-9a9d-7294aca1ac89"
+      ],
+      "latency_ms": 105.65475,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": 0.0,
+      "ndcg_at_6": -0.0,
+      "packet_bytes": 1101,
+      "precision_at_6": 0.0,
+      "query": "Which ergonomic chair did I look at from Herman Miller?",
+      "query_id": "q001",
+      "ranked_results": [
+        {
+          "atom_id": "6a5008f7-4fd5-483d-a0ca-322c66f60491",
+          "evidence_ids": [
+            "ev041"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 1,
+          "relevant": false
+        },
+        {
+          "atom_id": "a0eab660-817f-46d9-9a9d-7294aca1ac89",
+          "evidence_ids": [
+            "ev008"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 2,
+          "relevant": false
+        }
+      ],
+      "recall_at_6": 0.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "6a5008f7-4fd5-483d-a0ca-322c66f60491",
+        "a0eab660-817f-46d9-9a9d-7294aca1ac89"
+      ],
+      "returned_evidence_ids": [
+        "ev008",
+        "ev041"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "4702a22c-8d1b-44dd-98f1-fe92afdcd569",
+        "c6ec4c87-16b1-462f-bf17-d03c646393b8"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev001",
+        "ev002",
+        "ev007"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "6a5008f7-4fd5-483d-a0ca-322c66f60491"
+      ],
+      "latency_ms": 57.957041000000004,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": 0.0,
+      "ndcg_at_6": -0.0,
+      "packet_bytes": 661,
+      "precision_at_6": 0.0,
+      "query": "What was the Herman Miller chair called?",
+      "query_id": "q002",
+      "ranked_results": [
+        {
+          "atom_id": "6a5008f7-4fd5-483d-a0ca-322c66f60491",
+          "evidence_ids": [
+            "ev041"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 1,
+          "relevant": false
+        }
+      ],
+      "recall_at_6": 0.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "6a5008f7-4fd5-483d-a0ca-322c66f60491"
+      ],
+      "returned_evidence_ids": [
+        "ev041"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "719cc2cc-c928-43b6-a67e-bd133bbf24ed",
+        "c6ec4c87-16b1-462f-bf17-d03c646393b8"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev002",
+        "ev003"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "4702a22c-8d1b-44dd-98f1-fe92afdcd569"
+      ],
+      "latency_ms": 57.588,
+      "matched_canonical_atom_ids": [
+        "c6ec4c87-16b1-462f-bf17-d03c646393b8"
+      ],
+      "matched_evidence_ids": [
+        "ev002"
+      ],
+      "mrr": 0.5,
+      "ndcg_at_6": 0.38685280723454163,
+      "packet_bytes": 1098,
+      "precision_at_6": 0.16666666666666666,
+      "query": "What did I read about Aeron ergonomics?",
+      "query_id": "q003",
+      "ranked_results": [
+        {
+          "atom_id": "4702a22c-8d1b-44dd-98f1-fe92afdcd569",
+          "evidence_ids": [
+            "ev001",
+            "ev007"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 1,
+          "relevant": false
+        },
+        {
+          "atom_id": "c6ec4c87-16b1-462f-bf17-d03c646393b8",
+          "evidence_ids": [
+            "ev002"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev002"
+          ],
+          "rank": 2,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 0.5,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "4702a22c-8d1b-44dd-98f1-fe92afdcd569",
+        "c6ec4c87-16b1-462f-bf17-d03c646393b8"
+      ],
+      "returned_evidence_ids": [
+        "ev001",
+        "ev002",
+        "ev007"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "3e030d68-aaa3-41e7-ba43-12db217ec026",
+        "4702a22c-8d1b-44dd-98f1-fe92afdcd569",
+        "a0eab660-817f-46d9-9a9d-7294aca1ac89"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev001",
+        "ev004",
+        "ev007",
+        "ev008"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "c6ec4c87-16b1-462f-bf17-d03c646393b8"
+      ],
+      "latency_ms": 57.428917000000006,
+      "matched_canonical_atom_ids": [
+        "3e030d68-aaa3-41e7-ba43-12db217ec026",
+        "4702a22c-8d1b-44dd-98f1-fe92afdcd569",
+        "a0eab660-817f-46d9-9a9d-7294aca1ac89"
+      ],
+      "matched_evidence_ids": [
+        "ev001",
+        "ev004",
+        "ev007",
+        "ev008"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 1963,
+      "precision_at_6": 0.5,
+      "query": "Compare the Aeron and Leap chairs I researched",
+      "query_id": "q004",
+      "ranked_results": [
+        {
+          "atom_id": "4702a22c-8d1b-44dd-98f1-fe92afdcd569",
+          "evidence_ids": [
+            "ev001",
+            "ev007"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev001",
+            "ev007"
+          ],
+          "rank": 1,
+          "relevant": true
+        },
+        {
+          "atom_id": "a0eab660-817f-46d9-9a9d-7294aca1ac89",
+          "evidence_ids": [
+            "ev008"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev008"
+          ],
+          "rank": 2,
+          "relevant": true
+        },
+        {
+          "atom_id": "3e030d68-aaa3-41e7-ba43-12db217ec026",
+          "evidence_ids": [
+            "ev004",
+            "ev043"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev004"
+          ],
+          "rank": 3,
+          "relevant": true
+        },
+        {
+          "atom_id": "c6ec4c87-16b1-462f-bf17-d03c646393b8",
+          "evidence_ids": [
+            "ev002"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 4,
+          "relevant": false
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "4702a22c-8d1b-44dd-98f1-fe92afdcd569",
+        "a0eab660-817f-46d9-9a9d-7294aca1ac89",
+        "3e030d68-aaa3-41e7-ba43-12db217ec026",
+        "c6ec4c87-16b1-462f-bf17-d03c646393b8"
+      ],
+      "returned_evidence_ids": [
+        "ev001",
+        "ev002",
+        "ev004",
+        "ev007",
+        "ev008",
+        "ev043"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "4702a22c-8d1b-44dd-98f1-fe92afdcd569"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev001",
+        "ev007"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "a0eab660-817f-46d9-9a9d-7294aca1ac89",
+        "057ee938-df78-4795-82d2-e318614f70a5",
+        "178284b0-c33a-4713-a040-65e9bdf68a41",
+        "c6ec4c87-16b1-462f-bf17-d03c646393b8",
+        "3cce4ed4-dbf5-420f-bfec-d901a25e7867"
+      ],
+      "latency_ms": 57.18025,
+      "matched_canonical_atom_ids": [
+        "4702a22c-8d1b-44dd-98f1-fe92afdcd569"
+      ],
+      "matched_evidence_ids": [
+        "ev001",
+        "ev007"
+      ],
+      "mrr": 0.3333333333333333,
+      "ndcg_at_6": 0.5,
+      "packet_bytes": 2817,
+      "precision_at_6": 0.16666666666666666,
+      "query": "Which chair did I revisit in another session?",
+      "query_id": "q005",
+      "ranked_results": [
+        {
+          "atom_id": "a0eab660-817f-46d9-9a9d-7294aca1ac89",
+          "evidence_ids": [
+            "ev008"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 1,
+          "relevant": false
+        },
+        {
+          "atom_id": "057ee938-df78-4795-82d2-e318614f70a5",
+          "evidence_ids": [
+            "ev005"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 2,
+          "relevant": false
+        },
+        {
+          "atom_id": "4702a22c-8d1b-44dd-98f1-fe92afdcd569",
+          "evidence_ids": [
+            "ev001",
+            "ev007"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev001",
+            "ev007"
+          ],
+          "rank": 3,
+          "relevant": true
+        },
+        {
+          "atom_id": "178284b0-c33a-4713-a040-65e9bdf68a41",
+          "evidence_ids": [
+            "ev010"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 4,
+          "relevant": false
+        },
+        {
+          "atom_id": "c6ec4c87-16b1-462f-bf17-d03c646393b8",
+          "evidence_ids": [
+            "ev002"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 5,
+          "relevant": false
+        },
+        {
+          "atom_id": "3cce4ed4-dbf5-420f-bfec-d901a25e7867",
+          "evidence_ids": [
+            "ev009"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 6,
+          "relevant": false
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "a0eab660-817f-46d9-9a9d-7294aca1ac89",
+        "057ee938-df78-4795-82d2-e318614f70a5",
+        "4702a22c-8d1b-44dd-98f1-fe92afdcd569",
+        "178284b0-c33a-4713-a040-65e9bdf68a41",
+        "c6ec4c87-16b1-462f-bf17-d03c646393b8",
+        "3cce4ed4-dbf5-420f-bfec-d901a25e7867"
+      ],
+      "returned_evidence_ids": [
+        "ev001",
+        "ev002",
+        "ev005",
+        "ev007",
+        "ev008",
+        "ev009",
+        "ev010"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "3cce4ed4-dbf5-420f-bfec-d901a25e7867"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev009"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "057ee938-df78-4795-82d2-e318614f70a5"
+      ],
+      "latency_ms": 57.336042,
+      "matched_canonical_atom_ids": [
+        "3cce4ed4-dbf5-420f-bfec-d901a25e7867"
+      ],
+      "matched_evidence_ids": [
+        "ev009"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 1085,
+      "precision_at_6": 0.16666666666666666,
+      "query": "What chair might suit a short person?",
+      "query_id": "q006",
+      "ranked_results": [
+        {
+          "atom_id": "3cce4ed4-dbf5-420f-bfec-d901a25e7867",
+          "evidence_ids": [
+            "ev009"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev009"
+          ],
+          "rank": 1,
+          "relevant": true
+        },
+        {
+          "atom_id": "057ee938-df78-4795-82d2-e318614f70a5",
+          "evidence_ids": [
+            "ev005"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 2,
+          "relevant": false
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "3cce4ed4-dbf5-420f-bfec-d901a25e7867",
+        "057ee938-df78-4795-82d2-e318614f70a5"
+      ],
+      "returned_evidence_ids": [
+        "ev005",
+        "ev009"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "178284b0-c33a-4713-a040-65e9bdf68a41"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev010"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "057ee938-df78-4795-82d2-e318614f70a5"
+      ],
+      "latency_ms": 57.369625,
+      "matched_canonical_atom_ids": [
+        "178284b0-c33a-4713-a040-65e9bdf68a41"
+      ],
+      "matched_evidence_ids": [
+        "ev010"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 1092,
+      "precision_at_6": 0.16666666666666666,
+      "query": "What chair has lumbar support?",
+      "query_id": "q007",
+      "ranked_results": [
+        {
+          "atom_id": "178284b0-c33a-4713-a040-65e9bdf68a41",
+          "evidence_ids": [
+            "ev010"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev010"
+          ],
+          "rank": 1,
+          "relevant": true
+        },
+        {
+          "atom_id": "057ee938-df78-4795-82d2-e318614f70a5",
+          "evidence_ids": [
+            "ev005"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 2,
+          "relevant": false
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "178284b0-c33a-4713-a040-65e9bdf68a41",
+        "057ee938-df78-4795-82d2-e318614f70a5"
+      ],
+      "returned_evidence_ids": [
+        "ev005",
+        "ev010"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 56.952666,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "Did I research an ergonomic chair from IKEA?",
+      "query_id": "q008",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.273041,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "What was the exact price of the Aeron chair?",
+      "query_id": "q009",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.054292,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "What desk height did I decide on?",
+      "query_id": "q010",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "5b5880ee-af63-4ab6-9a9b-ae6580b0524c",
+        "e9ccd37c-d7ab-45ac-b8fb-29ad0c117441",
+        "eb5346fa-7bbb-499a-89d4-10fafb6e7c22",
+        "f915148e-d6b2-4111-ba3c-98832ab66a04",
+        "fa5fc540-d987-41e5-b795-07010ce6a9c1"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev011",
+        "ev012",
+        "ev013",
+        "ev014",
+        "ev015",
+        "ev017"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "fd4af3eb-14c3-4fcb-960b-e50cd56b3fa8",
+        "ae6adb49-40d0-4adc-8d7a-56725b8f5860",
+        "08844078-9fbc-473f-9453-587630128175"
+      ],
+      "latency_ms": 57.134833,
+      "matched_canonical_atom_ids": [
+        "5b5880ee-af63-4ab6-9a9b-ae6580b0524c",
+        "e9ccd37c-d7ab-45ac-b8fb-29ad0c117441",
+        "eb5346fa-7bbb-499a-89d4-10fafb6e7c22"
+      ],
+      "matched_evidence_ids": [
+        "ev011",
+        "ev012",
+        "ev013",
+        "ev015"
+      ],
+      "mrr": 0.25,
+      "ndcg_at_6": 0.3980847300545424,
+      "packet_bytes": 2810,
+      "precision_at_6": 0.5,
+      "query": "What was the water heater type I researched?",
+      "query_id": "q011",
+      "ranked_results": [
+        {
+          "atom_id": "fd4af3eb-14c3-4fcb-960b-e50cd56b3fa8",
+          "evidence_ids": [
+            "ev018"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 1,
+          "relevant": false
+        },
+        {
+          "atom_id": "ae6adb49-40d0-4adc-8d7a-56725b8f5860",
+          "evidence_ids": [
+            "ev042"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 2,
+          "relevant": false
+        },
+        {
+          "atom_id": "08844078-9fbc-473f-9453-587630128175",
+          "evidence_ids": [
+            "ev016"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 3,
+          "relevant": false
+        },
+        {
+          "atom_id": "e9ccd37c-d7ab-45ac-b8fb-29ad0c117441",
+          "evidence_ids": [
+            "ev011",
+            "ev013"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev011",
+            "ev013"
+          ],
+          "rank": 4,
+          "relevant": true
+        },
+        {
+          "atom_id": "eb5346fa-7bbb-499a-89d4-10fafb6e7c22",
+          "evidence_ids": [
+            "ev015"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev015"
+          ],
+          "rank": 5,
+          "relevant": true
+        },
+        {
+          "atom_id": "5b5880ee-af63-4ab6-9a9b-ae6580b0524c",
+          "evidence_ids": [
+            "ev012"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev012"
+          ],
+          "rank": 6,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 0.6,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "fd4af3eb-14c3-4fcb-960b-e50cd56b3fa8",
+        "ae6adb49-40d0-4adc-8d7a-56725b8f5860",
+        "08844078-9fbc-473f-9453-587630128175",
+        "e9ccd37c-d7ab-45ac-b8fb-29ad0c117441",
+        "eb5346fa-7bbb-499a-89d4-10fafb6e7c22",
+        "5b5880ee-af63-4ab6-9a9b-ae6580b0524c"
+      ],
+      "returned_evidence_ids": [
+        "ev011",
+        "ev012",
+        "ev013",
+        "ev015",
+        "ev016",
+        "ev018",
+        "ev042"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "5b5880ee-af63-4ab6-9a9b-ae6580b0524c",
+        "e9ccd37c-d7ab-45ac-b8fb-29ad0c117441",
+        "f915148e-d6b2-4111-ba3c-98832ab66a04",
+        "fa5fc540-d987-41e5-b795-07010ce6a9c1"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev011",
+        "ev012",
+        "ev013",
+        "ev014",
+        "ev017"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "ae6adb49-40d0-4adc-8d7a-56725b8f5860",
+        "08844078-9fbc-473f-9453-587630128175",
+        "eb5346fa-7bbb-499a-89d4-10fafb6e7c22"
+      ],
+      "latency_ms": 57.330958,
+      "matched_canonical_atom_ids": [
+        "5b5880ee-af63-4ab6-9a9b-ae6580b0524c",
+        "e9ccd37c-d7ab-45ac-b8fb-29ad0c117441",
+        "fa5fc540-d987-41e5-b795-07010ce6a9c1"
+      ],
+      "matched_evidence_ids": [
+        "ev011",
+        "ev012",
+        "ev013",
+        "ev014"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 0.6975637657739948,
+      "packet_bytes": 2827,
+      "precision_at_6": 0.5,
+      "query": "Where did I read about heat pump water heaters?",
+      "query_id": "q012",
+      "ranked_results": [
+        {
+          "atom_id": "5b5880ee-af63-4ab6-9a9b-ae6580b0524c",
+          "evidence_ids": [
+            "ev012"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev012"
+          ],
+          "rank": 1,
+          "relevant": true
+        },
+        {
+          "atom_id": "ae6adb49-40d0-4adc-8d7a-56725b8f5860",
+          "evidence_ids": [
+            "ev042"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 2,
+          "relevant": false
+        },
+        {
+          "atom_id": "08844078-9fbc-473f-9453-587630128175",
+          "evidence_ids": [
+            "ev016"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 3,
+          "relevant": false
+        },
+        {
+          "atom_id": "e9ccd37c-d7ab-45ac-b8fb-29ad0c117441",
+          "evidence_ids": [
+            "ev011",
+            "ev013"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev011",
+            "ev013"
+          ],
+          "rank": 4,
+          "relevant": true
+        },
+        {
+          "atom_id": "eb5346fa-7bbb-499a-89d4-10fafb6e7c22",
+          "evidence_ids": [
+            "ev015"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 5,
+          "relevant": false
+        },
+        {
+          "atom_id": "fa5fc540-d987-41e5-b795-07010ce6a9c1",
+          "evidence_ids": [
+            "ev014"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev014"
+          ],
+          "rank": 6,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 0.75,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "5b5880ee-af63-4ab6-9a9b-ae6580b0524c",
+        "ae6adb49-40d0-4adc-8d7a-56725b8f5860",
+        "08844078-9fbc-473f-9453-587630128175",
+        "e9ccd37c-d7ab-45ac-b8fb-29ad0c117441",
+        "eb5346fa-7bbb-499a-89d4-10fafb6e7c22",
+        "fa5fc540-d987-41e5-b795-07010ce6a9c1"
+      ],
+      "returned_evidence_ids": [
+        "ev011",
+        "ev012",
+        "ev013",
+        "ev014",
+        "ev015",
+        "ev016",
+        "ev042"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "eb5346fa-7bbb-499a-89d4-10fafb6e7c22"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev015"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "ae6adb49-40d0-4adc-8d7a-56725b8f5860",
+        "08844078-9fbc-473f-9453-587630128175",
+        "e9ccd37c-d7ab-45ac-b8fb-29ad0c117441",
+        "5b5880ee-af63-4ab6-9a9b-ae6580b0524c",
+        "f915148e-d6b2-4111-ba3c-98832ab66a04"
+      ],
+      "latency_ms": 57.305707999999996,
+      "matched_canonical_atom_ids": [
+        "eb5346fa-7bbb-499a-89d4-10fafb6e7c22"
+      ],
+      "matched_evidence_ids": [
+        "ev015"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 2827,
+      "precision_at_6": 0.16666666666666666,
+      "query": "What did I look up about heat-pump water-heater noise?",
+      "query_id": "q013",
+      "ranked_results": [
+        {
+          "atom_id": "eb5346fa-7bbb-499a-89d4-10fafb6e7c22",
+          "evidence_ids": [
+            "ev015"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev015"
+          ],
+          "rank": 1,
+          "relevant": true
+        },
+        {
+          "atom_id": "ae6adb49-40d0-4adc-8d7a-56725b8f5860",
+          "evidence_ids": [
+            "ev042"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 2,
+          "relevant": false
+        },
+        {
+          "atom_id": "08844078-9fbc-473f-9453-587630128175",
+          "evidence_ids": [
+            "ev016"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 3,
+          "relevant": false
+        },
+        {
+          "atom_id": "e9ccd37c-d7ab-45ac-b8fb-29ad0c117441",
+          "evidence_ids": [
+            "ev011",
+            "ev013"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 4,
+          "relevant": false
+        },
+        {
+          "atom_id": "5b5880ee-af63-4ab6-9a9b-ae6580b0524c",
+          "evidence_ids": [
+            "ev012"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 5,
+          "relevant": false
+        },
+        {
+          "atom_id": "f915148e-d6b2-4111-ba3c-98832ab66a04",
+          "evidence_ids": [
+            "ev017"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 6,
+          "relevant": false
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "eb5346fa-7bbb-499a-89d4-10fafb6e7c22",
+        "ae6adb49-40d0-4adc-8d7a-56725b8f5860",
+        "08844078-9fbc-473f-9453-587630128175",
+        "e9ccd37c-d7ab-45ac-b8fb-29ad0c117441",
+        "5b5880ee-af63-4ab6-9a9b-ae6580b0524c",
+        "f915148e-d6b2-4111-ba3c-98832ab66a04"
+      ],
+      "returned_evidence_ids": [
+        "ev011",
+        "ev012",
+        "ev013",
+        "ev015",
+        "ev016",
+        "ev017",
+        "ev042"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "e9ccd37c-d7ab-45ac-b8fb-29ad0c117441",
+        "f915148e-d6b2-4111-ba3c-98832ab66a04"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev011",
+        "ev013",
+        "ev017"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.284292,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": 0.0,
+      "ndcg_at_6": -0.0,
+      "packet_bytes": 244,
+      "precision_at_6": 0.0,
+      "query": "Did I check ENERGY STAR guidance for this?",
+      "query_id": "q014",
+      "ranked_results": [],
+      "recall_at_6": 0.0,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "f915148e-d6b2-4111-ba3c-98832ab66a04"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev017"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "ae6adb49-40d0-4adc-8d7a-56725b8f5860",
+        "08844078-9fbc-473f-9453-587630128175",
+        "e9ccd37c-d7ab-45ac-b8fb-29ad0c117441",
+        "5b5880ee-af63-4ab6-9a9b-ae6580b0524c",
+        "eb5346fa-7bbb-499a-89d4-10fafb6e7c22"
+      ],
+      "latency_ms": 57.445041,
+      "matched_canonical_atom_ids": [
+        "f915148e-d6b2-4111-ba3c-98832ab66a04"
+      ],
+      "matched_evidence_ids": [
+        "ev017"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 2827,
+      "precision_at_6": 0.16666666666666666,
+      "query": "What was the heat pump water heater tax credit page?",
+      "query_id": "q015",
+      "ranked_results": [
+        {
+          "atom_id": "f915148e-d6b2-4111-ba3c-98832ab66a04",
+          "evidence_ids": [
+            "ev017"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev017"
+          ],
+          "rank": 1,
+          "relevant": true
+        },
+        {
+          "atom_id": "ae6adb49-40d0-4adc-8d7a-56725b8f5860",
+          "evidence_ids": [
+            "ev042"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 2,
+          "relevant": false
+        },
+        {
+          "atom_id": "08844078-9fbc-473f-9453-587630128175",
+          "evidence_ids": [
+            "ev016"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 3,
+          "relevant": false
+        },
+        {
+          "atom_id": "e9ccd37c-d7ab-45ac-b8fb-29ad0c117441",
+          "evidence_ids": [
+            "ev011",
+            "ev013"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 4,
+          "relevant": false
+        },
+        {
+          "atom_id": "5b5880ee-af63-4ab6-9a9b-ae6580b0524c",
+          "evidence_ids": [
+            "ev012"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 5,
+          "relevant": false
+        },
+        {
+          "atom_id": "eb5346fa-7bbb-499a-89d4-10fafb6e7c22",
+          "evidence_ids": [
+            "ev015"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 6,
+          "relevant": false
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "f915148e-d6b2-4111-ba3c-98832ab66a04",
+        "ae6adb49-40d0-4adc-8d7a-56725b8f5860",
+        "08844078-9fbc-473f-9453-587630128175",
+        "e9ccd37c-d7ab-45ac-b8fb-29ad0c117441",
+        "5b5880ee-af63-4ab6-9a9b-ae6580b0524c",
+        "eb5346fa-7bbb-499a-89d4-10fafb6e7c22"
+      ],
+      "returned_evidence_ids": [
+        "ev011",
+        "ev012",
+        "ev013",
+        "ev015",
+        "ev016",
+        "ev017",
+        "ev042"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.197708999999996,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "Which water heater model did I choose?",
+      "query_id": "q016",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.06320899999999,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "What was my home electricity rate?",
+      "query_id": "q017",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.54275,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "Did I research a tankless gas heater?",
+      "query_id": "q018",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "76833ddd-1adc-4d55-bac1-927036c6fbf7",
+        "ebefb10c-459e-4469-be24-2f4e21897da3"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev019",
+        "ev021"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "30922e9f-73c2-439b-b404-85cb94ee2124",
+        "be4bdb6b-f99d-4c1a-a2db-e5dfbe3a472a",
+        "65e451f7-1b97-4448-85c0-9b705357c886"
+      ],
+      "latency_ms": 58.251,
+      "matched_canonical_atom_ids": [
+        "76833ddd-1adc-4d55-bac1-927036c6fbf7"
+      ],
+      "matched_evidence_ids": [
+        "ev019"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 0.6131471927654584,
+      "packet_bytes": 1965,
+      "precision_at_6": 0.16666666666666666,
+      "query": "How does Firefox handle extension background scripts?",
+      "query_id": "q019",
+      "ranked_results": [
+        {
+          "atom_id": "76833ddd-1adc-4d55-bac1-927036c6fbf7",
+          "evidence_ids": [
+            "ev019"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev019"
+          ],
+          "rank": 1,
+          "relevant": true
+        },
+        {
+          "atom_id": "30922e9f-73c2-439b-b404-85cb94ee2124",
+          "evidence_ids": [
+            "ev025"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 2,
+          "relevant": false
+        },
+        {
+          "atom_id": "be4bdb6b-f99d-4c1a-a2db-e5dfbe3a472a",
+          "evidence_ids": [
+            "ev044"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 3,
+          "relevant": false
+        },
+        {
+          "atom_id": "65e451f7-1b97-4448-85c0-9b705357c886",
+          "evidence_ids": [
+            "ev024"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 4,
+          "relevant": false
+        }
+      ],
+      "recall_at_6": 0.5,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "76833ddd-1adc-4d55-bac1-927036c6fbf7",
+        "30922e9f-73c2-439b-b404-85cb94ee2124",
+        "be4bdb6b-f99d-4c1a-a2db-e5dfbe3a472a",
+        "65e451f7-1b97-4448-85c0-9b705357c886"
+      ],
+      "returned_evidence_ids": [
+        "ev019",
+        "ev024",
+        "ev025",
+        "ev044"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "1602cc5f-aa9b-402e-aec3-5b5131a09710"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev022",
+        "ev023"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "be4bdb6b-f99d-4c1a-a2db-e5dfbe3a472a",
+        "65e451f7-1b97-4448-85c0-9b705357c886",
+        "30922e9f-73c2-439b-b404-85cb94ee2124"
+      ],
+      "latency_ms": 57.661625,
+      "matched_canonical_atom_ids": [
+        "1602cc5f-aa9b-402e-aec3-5b5131a09710"
+      ],
+      "matched_evidence_ids": [
+        "ev022",
+        "ev023"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 1963,
+      "precision_at_6": 0.16666666666666666,
+      "query": "What did I read about native messaging in Firefox?",
+      "query_id": "q020",
+      "ranked_results": [
+        {
+          "atom_id": "1602cc5f-aa9b-402e-aec3-5b5131a09710",
+          "evidence_ids": [
+            "ev022",
+            "ev023"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev022",
+            "ev023"
+          ],
+          "rank": 1,
+          "relevant": true
+        },
+        {
+          "atom_id": "be4bdb6b-f99d-4c1a-a2db-e5dfbe3a472a",
+          "evidence_ids": [
+            "ev044"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 2,
+          "relevant": false
+        },
+        {
+          "atom_id": "65e451f7-1b97-4448-85c0-9b705357c886",
+          "evidence_ids": [
+            "ev024"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 3,
+          "relevant": false
+        },
+        {
+          "atom_id": "30922e9f-73c2-439b-b404-85cb94ee2124",
+          "evidence_ids": [
+            "ev025"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 4,
+          "relevant": false
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "1602cc5f-aa9b-402e-aec3-5b5131a09710",
+        "be4bdb6b-f99d-4c1a-a2db-e5dfbe3a472a",
+        "65e451f7-1b97-4448-85c0-9b705357c886",
+        "30922e9f-73c2-439b-b404-85cb94ee2124"
+      ],
+      "returned_evidence_ids": [
+        "ev022",
+        "ev023",
+        "ev024",
+        "ev025",
+        "ev044"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "2407c914-0deb-4482-83ea-616bf28069b9"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev020"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.569708,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": 0.0,
+      "ndcg_at_6": -0.0,
+      "packet_bytes": 244,
+      "precision_at_6": 0.0,
+      "query": "Which page covered extension messages?",
+      "query_id": "q021",
+      "ranked_results": [],
+      "recall_at_6": 0.0,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "1602cc5f-aa9b-402e-aec3-5b5131a09710",
+        "2407c914-0deb-4482-83ea-616bf28069b9",
+        "65e451f7-1b97-4448-85c0-9b705357c886",
+        "76833ddd-1adc-4d55-bac1-927036c6fbf7",
+        "ebefb10c-459e-4469-be24-2f4e21897da3"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev019",
+        "ev020",
+        "ev021",
+        "ev022",
+        "ev023",
+        "ev024"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "be4bdb6b-f99d-4c1a-a2db-e5dfbe3a472a",
+        "30922e9f-73c2-439b-b404-85cb94ee2124"
+      ],
+      "latency_ms": 57.649334,
+      "matched_canonical_atom_ids": [
+        "65e451f7-1b97-4448-85c0-9b705357c886"
+      ],
+      "matched_evidence_ids": [
+        "ev024"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 0.3391602052736161,
+      "packet_bytes": 1518,
+      "precision_at_6": 0.16666666666666666,
+      "query": "Was I looking into Firefox or Chrome extension behavior?",
+      "query_id": "q022",
+      "ranked_results": [
+        {
+          "atom_id": "65e451f7-1b97-4448-85c0-9b705357c886",
+          "evidence_ids": [
+            "ev024"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev024"
+          ],
+          "rank": 1,
+          "relevant": true
+        },
+        {
+          "atom_id": "be4bdb6b-f99d-4c1a-a2db-e5dfbe3a472a",
+          "evidence_ids": [
+            "ev044"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 2,
+          "relevant": false
+        },
+        {
+          "atom_id": "30922e9f-73c2-439b-b404-85cb94ee2124",
+          "evidence_ids": [
+            "ev025"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 3,
+          "relevant": false
+        }
+      ],
+      "recall_at_6": 0.2,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "65e451f7-1b97-4448-85c0-9b705357c886",
+        "be4bdb6b-f99d-4c1a-a2db-e5dfbe3a472a",
+        "30922e9f-73c2-439b-b404-85cb94ee2124"
+      ],
+      "returned_evidence_ids": [
+        "ev024",
+        "ev025",
+        "ev044"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "30922e9f-73c2-439b-b404-85cb94ee2124"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev025"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "65e451f7-1b97-4448-85c0-9b705357c886",
+        "be4bdb6b-f99d-4c1a-a2db-e5dfbe3a472a"
+      ],
+      "latency_ms": 57.697417,
+      "matched_canonical_atom_ids": [
+        "30922e9f-73c2-439b-b404-85cb94ee2124"
+      ],
+      "matched_evidence_ids": [
+        "ev025"
+      ],
+      "mrr": 0.3333333333333333,
+      "ndcg_at_6": 0.5,
+      "packet_bytes": 1518,
+      "precision_at_6": 0.16666666666666666,
+      "query": "What Firefox extension store did I visit?",
+      "query_id": "q023",
+      "ranked_results": [
+        {
+          "atom_id": "65e451f7-1b97-4448-85c0-9b705357c886",
+          "evidence_ids": [
+            "ev024"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 1,
+          "relevant": false
+        },
+        {
+          "atom_id": "be4bdb6b-f99d-4c1a-a2db-e5dfbe3a472a",
+          "evidence_ids": [
+            "ev044"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 2,
+          "relevant": false
+        },
+        {
+          "atom_id": "30922e9f-73c2-439b-b404-85cb94ee2124",
+          "evidence_ids": [
+            "ev025"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev025"
+          ],
+          "rank": 3,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "65e451f7-1b97-4448-85c0-9b705357c886",
+        "be4bdb6b-f99d-4c1a-a2db-e5dfbe3a472a",
+        "30922e9f-73c2-439b-b404-85cb94ee2124"
+      ],
+      "returned_evidence_ids": [
+        "ev024",
+        "ev025",
+        "ev044"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "1602cc5f-aa9b-402e-aec3-5b5131a09710"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev022",
+        "ev023"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.161542000000004,
+      "matched_canonical_atom_ids": [
+        "1602cc5f-aa9b-402e-aec3-5b5131a09710"
+      ],
+      "matched_evidence_ids": [
+        "ev022",
+        "ev023"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 685,
+      "precision_at_6": 0.16666666666666666,
+      "query": "Did I read about native messaging for a browser extension?",
+      "query_id": "q024",
+      "ranked_results": [
+        {
+          "atom_id": "1602cc5f-aa9b-402e-aec3-5b5131a09710",
+          "evidence_ids": [
+            "ev022",
+            "ev023"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev022",
+            "ev023"
+          ],
+          "rank": 1,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "1602cc5f-aa9b-402e-aec3-5b5131a09710"
+      ],
+      "returned_evidence_ids": [
+        "ev022",
+        "ev023"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.584666999999996,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "What did I decide about service worker architecture?",
+      "query_id": "q025",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.131208,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "Which browser extension bug happened to me?",
+      "query_id": "q026",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "841f6816-d23c-439d-bd71-c5d9a98bb2d6"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev029"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.451958,
+      "matched_canonical_atom_ids": [
+        "841f6816-d23c-439d-bd71-c5d9a98bb2d6"
+      ],
+      "matched_evidence_ids": [
+        "ev029"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 680,
+      "precision_at_6": 0.16666666666666666,
+      "query": "What did I watch on YouTube about airplane design?",
+      "query_id": "q027",
+      "ranked_results": [
+        {
+          "atom_id": "841f6816-d23c-439d-bd71-c5d9a98bb2d6",
+          "evidence_ids": [
+            "ev029"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev029"
+          ],
+          "rank": 1,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "841f6816-d23c-439d-bd71-c5d9a98bb2d6"
+      ],
+      "returned_evidence_ids": [
+        "ev029"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "841f6816-d23c-439d-bd71-c5d9a98bb2d6"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev029"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.27575,
+      "matched_canonical_atom_ids": [
+        "841f6816-d23c-439d-bd71-c5d9a98bb2d6"
+      ],
+      "matched_evidence_ids": [
+        "ev029"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 680,
+      "precision_at_6": 0.16666666666666666,
+      "query": "What was the title of the airplane video?",
+      "query_id": "q028",
+      "ranked_results": [
+        {
+          "atom_id": "841f6816-d23c-439d-bd71-c5d9a98bb2d6",
+          "evidence_ids": [
+            "ev029"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev029"
+          ],
+          "rank": 1,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "841f6816-d23c-439d-bd71-c5d9a98bb2d6"
+      ],
+      "returned_evidence_ids": [
+        "ev029"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.138792,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "What was in my X feed?",
+      "query_id": "q029",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.170667,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "What did I see on X?",
+      "query_id": "q030",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "3460fe9c-180c-4dc1-8757-8689d33fa593"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev033"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.362249999999996,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": 0.0,
+      "ndcg_at_6": -0.0,
+      "packet_bytes": 244,
+      "precision_at_6": 0.0,
+      "query": "What did I research about travel credit cards?",
+      "query_id": "q031",
+      "ranked_results": [],
+      "recall_at_6": 0.0,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "3d96b019-b83e-482c-8236-f5faa2202d40",
+        "a544a65c-764a-40cd-8485-a0de45139498"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev036",
+        "ev037"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.305791,
+      "matched_canonical_atom_ids": [
+        "3d96b019-b83e-482c-8236-f5faa2202d40"
+      ],
+      "matched_evidence_ids": [
+        "ev037"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 0.6131471927654584,
+      "packet_bytes": 679,
+      "precision_at_6": 0.16666666666666666,
+      "query": "What mechanical keyboard switches did I compare?",
+      "query_id": "q032",
+      "ranked_results": [
+        {
+          "atom_id": "3d96b019-b83e-482c-8236-f5faa2202d40",
+          "evidence_ids": [
+            "ev037"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev037"
+          ],
+          "rank": 1,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 0.5,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "3d96b019-b83e-482c-8236-f5faa2202d40"
+      ],
+      "returned_evidence_ids": [
+        "ev037"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "5fd6fb34-1de4-4968-8c32-519aa83dc185"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev039"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.452957999999995,
+      "matched_canonical_atom_ids": [
+        "5fd6fb34-1de4-4968-8c32-519aa83dc185"
+      ],
+      "matched_evidence_ids": [
+        "ev039"
+      ],
+      "mrr": 1.0,
+      "ndcg_at_6": 1.0,
+      "packet_bytes": 665,
+      "precision_at_6": 0.16666666666666666,
+      "query": "What soup recipe did I open?",
+      "query_id": "q033",
+      "ranked_results": [
+        {
+          "atom_id": "5fd6fb34-1de4-4968-8c32-519aa83dc185",
+          "evidence_ids": [
+            "ev039"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev039"
+          ],
+          "rank": 1,
+          "relevant": true
+        }
+      ],
+      "recall_at_6": 1.0,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "5fd6fb34-1de4-4968-8c32-519aa83dc185"
+      ],
+      "returned_evidence_ids": [
+        "ev039"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.32975,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "What is the weather today?",
+      "query_id": "q034",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.446834,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "Which work email did I read?",
+      "query_id": "q035",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.148958,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "Did I browse a generic homepage or feed?",
+      "query_id": "q036",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "057ee938-df78-4795-82d2-e318614f70a5",
+        "3e030d68-aaa3-41e7-ba43-12db217ec026",
+        "4702a22c-8d1b-44dd-98f1-fe92afdcd569",
+        "719cc2cc-c928-43b6-a67e-bd133bbf24ed",
+        "a0eab660-817f-46d9-9a9d-7294aca1ac89",
+        "c6ec4c87-16b1-462f-bf17-d03c646393b8"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev001",
+        "ev002",
+        "ev003",
+        "ev004",
+        "ev005",
+        "ev007",
+        "ev008"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [
+        "3cce4ed4-dbf5-420f-bfec-d901a25e7867",
+        "91ab86c6-3ef0-43b9-9e08-91f86cc1832b"
+      ],
+      "latency_ms": 57.274167,
+      "matched_canonical_atom_ids": [
+        "a0eab660-817f-46d9-9a9d-7294aca1ac89"
+      ],
+      "matched_evidence_ids": [
+        "ev008"
+      ],
+      "mrr": 0.5,
+      "ndcg_at_6": 0.19092086617893467,
+      "packet_bytes": 1545,
+      "precision_at_6": 0.16666666666666666,
+      "query": "What did I research about office ergonomics?",
+      "query_id": "q037",
+      "ranked_results": [
+        {
+          "atom_id": "3cce4ed4-dbf5-420f-bfec-d901a25e7867",
+          "evidence_ids": [
+            "ev009"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 1,
+          "relevant": false
+        },
+        {
+          "atom_id": "a0eab660-817f-46d9-9a9d-7294aca1ac89",
+          "evidence_ids": [
+            "ev008"
+          ],
+          "matched_expected_evidence_ids": [
+            "ev008"
+          ],
+          "rank": 2,
+          "relevant": true
+        },
+        {
+          "atom_id": "91ab86c6-3ef0-43b9-9e08-91f86cc1832b",
+          "evidence_ids": [
+            "ev006"
+          ],
+          "matched_expected_evidence_ids": [],
+          "rank": 3,
+          "relevant": false
+        }
+      ],
+      "recall_at_6": 0.16666666666666666,
+      "response_status": "ok",
+      "returned_atom_ids": [
+        "3cce4ed4-dbf5-420f-bfec-d901a25e7867",
+        "a0eab660-817f-46d9-9a9d-7294aca1ac89",
+        "91ab86c6-3ef0-43b9-9e08-91f86cc1832b"
+      ],
+      "returned_evidence_ids": [
+        "ev006",
+        "ev008",
+        "ev009"
+      ],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.580292,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "What was the exact chair model I chose for my office?",
+      "query_id": "q038",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [
+        "1602cc5f-aa9b-402e-aec3-5b5131a09710",
+        "4702a22c-8d1b-44dd-98f1-fe92afdcd569",
+        "e9ccd37c-d7ab-45ac-b8fb-29ad0c117441"
+      ],
+      "expected_empty": false,
+      "expected_evidence_ids": [
+        "ev001",
+        "ev007",
+        "ev011",
+        "ev013",
+        "ev022",
+        "ev023"
+      ],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.003209,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": 0.0,
+      "ndcg_at_6": -0.0,
+      "packet_bytes": 244,
+      "precision_at_6": 0.0,
+      "query": "What topic did I repeatedly research over multiple sessions?",
+      "query_id": "q039",
+      "ranked_results": [],
+      "recall_at_6": 0.0,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    },
+    {
+      "expected_canonical_atom_ids": [],
+      "expected_empty": true,
+      "expected_evidence_ids": [],
+      "index_mode": "hybrid",
+      "irrelevant_returned_atom_ids": [],
+      "latency_ms": 57.143625,
+      "matched_canonical_atom_ids": [],
+      "matched_evidence_ids": [],
+      "mrr": null,
+      "ndcg_at_6": null,
+      "packet_bytes": 244,
+      "precision_at_6": null,
+      "query": "What were my saved preferences?",
+      "query_id": "q040",
+      "ranked_results": [],
+      "recall_at_6": null,
+      "response_status": "empty",
+      "returned_atom_ids": [],
+      "returned_evidence_ids": [],
+      "unavailable_expected_evidence_ids": [],
+      "unknown_atom_ids": []
+    }
+  ],
+  "retrieval_mode_counts": {
+    "hybrid": 40,
+    "lexical": 0
+  },
+  "synthetic_only": true
+}
