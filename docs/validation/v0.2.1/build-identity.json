@@ -1,0 +1,80 @@
+{
+  "version": "0.2.1",
+  "build": "cargo build --workspace --release --locked --offline",
+  "path_remapping": true,
+  "binaries": {
+    "serein": "83a9eac02410d37cb6c602bd1dc18cc141a413ac08eef968adecc2b99a3da29a",
+    "serein-host": "80e1c8cefe19573d06acd472887a83b350013c2a7a119bc0dea388abcb30f5be"
+  },
+  "model_manifest_sha256": "8661322502cf2881aec0b935e92b802c0538cbb397bd8b5f36fa2253bdec9e16",
+  "extension_manifests": {
+    "chrome": {
+      "manifest_version": 3,
+      "name": "Serein",
+      "description": "Your context. Only when it helps.",
+      "version": "0.2.1",
+      "icons": {
+        "16": "/icon/icon-16.png",
+        "32": "/icon/icon-32.png",
+        "48": "/icon/icon-48.png",
+        "128": "/icon/icon-128.png"
+      },
+      "permissions": [
+        "tabs",
+        "storage",
+        "alarms",
+        "idle",
+        "nativeMessaging"
+      ],
+      "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAu5vxyaU8BksD22+1DpLBeH4bJ5XQCNBFAENf9nMa4YqLwELSRTFOX7R1/NluKKLugN1X50ZMJ3cl1cKUtsJzRHKRAECUFWAOafO5w6qxY6CkFDJcf1QBZcl8jODh2EWSQuqCHrqOqFEr0FeZ+n/A2OZ77kdoMhubcj57p/vxl+/0FoNrQzfMhyxp1OP6BkEA3pcxovmj0ADMh0EhxHU2wodx4/yctN0UAYuiw13vZgGHNuUXLhoHwlpSa71s4PIUlIbKGguOl905RlD1wY5s1p1Gs4UC0HNTK7If77nn5YA1ml4gRufXYCfZ+VQK1PHnoo4Ikwo0tRX3+WIwUoDe3QIDAQAB",
+      "action": {
+        "default_title": "Serein",
+        "default_popup": "popup.html"
+      },
+      "background": {
+        "service_worker": "background.js"
+      }
+    },
+    "firefox": {
+      "manifest_version": 3,
+      "name": "Serein",
+      "description": "Your context. Only when it helps.",
+      "version": "0.2.1",
+      "icons": {
+        "16": "/icon/icon-16.png",
+        "32": "/icon/icon-32.png",
+        "48": "/icon/icon-48.png",
+        "128": "/icon/icon-128.png"
+      },
+      "permissions": [
+        "tabs",
+        "storage",
+        "alarms",
+        "idle",
+        "nativeMessaging"
+      ],
+      "browser_specific_settings": {
+        "gecko": {
+          "id": "serein-context@local.serein",
+          "strict_min_version": "140.0",
+          "data_collection_permissions": {
+            "required": [
+              "browsingActivity",
+              "searchTerms",
+              "websiteContent"
+            ]
+          }
+        }
+      },
+      "action": {
+        "default_title": "Serein",
+        "default_popup": "popup.html"
+      },
+      "background": {
+        "scripts": [
+          "background.js"
+        ]
+      }
+    }
+  }
+}

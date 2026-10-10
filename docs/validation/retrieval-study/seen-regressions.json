@@ -1,0 +1,3289 @@
+{
+  "method": "Previously inspected regression fixtures. Baseline is the preserved v0.2.0 report; candidate is the local frozen source evaluation. Random atom IDs are compared by fixture evidence ID. Historical timings are not paired performance measurements. Labels and floors unchanged.",
+  "fixtures": {
+    "dev_multilingual": {
+      "baseline_report_sha256": "90e065983799637a0ef07d5f8cae56c09fb004b6564876857a731358cc4f944e",
+      "candidate_report_sha256": "1750109ec68b06f8ef90c7651c5bff999fd51f3fc51e9d94caff94cf5089ecf5",
+      "baseline_aggregate": {
+        "evaluated_query_count": 48,
+        "expected_empty_false_positives": [],
+        "expected_empty_query_count": 24,
+        "expected_empty_specificity": 1.0,
+        "expected_empty_true_negatives": 24,
+        "latency_ms": {
+          "mean": 57.92726643749998,
+          "median": 57.688125,
+          "p95": 58.575167
+        },
+        "mrr_macro_non_empty": 0.8888888888888888,
+        "ndcg_at_6_macro_non_empty": 0.7957187574030266,
+        "non_empty_query_count": 24,
+        "packet_bytes": {
+          "max": 2880,
+          "mean": 643.5625
+        },
+        "precision_at_6_macro_non_empty": 0.2222222222222222,
+        "recall_at_6_macro_non_empty": 0.7701388888888889
+      },
+      "candidate_aggregate": {
+        "evaluated_query_count": 48,
+        "expected_empty_false_positives": [],
+        "expected_empty_query_count": 24,
+        "expected_empty_specificity": 1.0,
+        "expected_empty_true_negatives": 24,
+        "latency_ms": {
+          "mean": 69.73028989583331,
+          "median": 70.298375,
+          "p95": 80.868708
+        },
+        "mrr_macro_non_empty": 0.8888888888888888,
+        "ndcg_at_6_macro_non_empty": 0.7957187574030266,
+        "non_empty_query_count": 24,
+        "packet_bytes": {
+          "max": 2880,
+          "mean": 643.5625
+        },
+        "precision_at_6_macro_non_empty": 0.2222222222222222,
+        "recall_at_6_macro_non_empty": 0.7701388888888889
+      },
+      "candidate_configured_gate": {
+        "minimum_empty_specificity": 1.0,
+        "minimum_recall_at_6": 0.6,
+        "passed": true
+      },
+      "candidate_invariants": {
+        "checks_passed": {
+          "context_at_most_six_records": 48,
+          "observed_evidence_has_unknown_subject": 45,
+          "packet_within_requested_byte_limit": 48,
+          "request_id_preserved": 48
+        },
+        "context_limit_records": 6,
+        "failures": [],
+        "packet_limit_bytes": 4096
+      },
+      "pairs": [
+        {
+          "query_id": "q001",
+          "query": "¿Qué consulté sobre paneles solares fotovoltaicos?",
+          "expected_evidence_ids": [
+            "ev001",
+            "ev002",
+            "ev005"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev001",
+            "ev002",
+            "ev004",
+            "ev005"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev001",
+            "ev002",
+            "ev004",
+            "ev005"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q002",
+          "query": "¿Volví a investigar energía solar en otra sesión?",
+          "expected_evidence_ids": [
+            "ev001",
+            "ev004"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev001",
+            "ev002",
+            "ev004"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev001",
+            "ev002",
+            "ev004"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q003",
+          "query": "¿Qué leí sobre energía eólica?",
+          "expected_evidence_ids": [
+            "ev003",
+            "ev006",
+            "ev047"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev001",
+            "ev003",
+            "ev004",
+            "ev047"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev001",
+            "ev003",
+            "ev004",
+            "ev047"
+          ],
+          "baseline_recall_at_6": 0.5,
+          "candidate_recall_at_6": 0.5,
+          "baseline_ndcg_at_6": 0.6131471927654584,
+          "candidate_ndcg_at_6": 0.6131471927654584,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q004",
+          "query": "¿Qué modelo de panel solar elegí?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q005",
+          "query": "¿Cuánto costaba la instalación fotovoltaica?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q006",
+          "query": "¿Qué investigué?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q007",
+          "query": "¿Qué parque nacional de Tenerife vi?",
+          "expected_evidence_ids": [
+            "ev007",
+            "ev008"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev007",
+            "ev008"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev007",
+            "ev008"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q008",
+          "query": "¿Qué visité en Granada?",
+          "expected_evidence_ids": [
+            "ev009",
+            "ev010",
+            "ev011"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev010"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev010"
+          ],
+          "baseline_recall_at_6": 0.5,
+          "candidate_recall_at_6": 0.5,
+          "baseline_ndcg_at_6": 0.6131471927654584,
+          "candidate_ndcg_at_6": 0.6131471927654584,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q009",
+          "query": "¿Qué restaurante de Granada reservé?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q010",
+          "query": "¿Qué receta española abrí?",
+          "expected_evidence_ids": [
+            "ev012",
+            "ev013",
+            "ev014"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev012",
+            "ev013",
+            "ev014"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev012",
+            "ev013",
+            "ev014"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q011",
+          "query": "¿Prefería la tortilla con cebolla?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q012",
+          "query": "¿Qué planetas decidí visitar?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q013",
+          "query": "¿Qué página abrí sobre el sistema solar?",
+          "expected_evidence_ids": [
+            "ev015"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev001",
+            "ev004",
+            "ev015",
+            "ev048"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev001",
+            "ev004",
+            "ev015",
+            "ev048"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q014",
+          "query": "¿Qué trenes japoneses estaba comparando?",
+          "expected_evidence_ids": [
+            "ev016",
+            "ev017",
+            "ev018",
+            "ev019",
+            "ev020",
+            "ev021"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev016",
+            "ev019",
+            "ev021",
+            "ev022",
+            "ev024",
+            "ev029"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev016",
+            "ev019",
+            "ev021",
+            "ev022",
+            "ev024",
+            "ev029"
+          ],
+          "baseline_recall_at_6": 0.4,
+          "candidate_recall_at_6": 0.4,
+          "baseline_ndcg_at_6": 0.30078518014914984,
+          "candidate_ndcg_at_6": 0.30078518014914984,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q015",
+          "query": "What does E7 refer to in my Japanese rail research?",
+          "expected_evidence_ids": [
+            "ev018",
+            "ev023"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": 0.0,
+          "candidate_recall_at_6": 0.0,
+          "baseline_ndcg_at_6": -0.0,
+          "candidate_ndcg_at_6": -0.0,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q016",
+          "query": "新幹線の路線図について何を見ましたか？",
+          "expected_evidence_ids": [
+            "ev016",
+            "ev017",
+            "ev020",
+            "ev021",
+            "ev022"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev016",
+            "ev019",
+            "ev020",
+            "ev021",
+            "ev022",
+            "ev024",
+            "ev029"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev016",
+            "ev019",
+            "ev020",
+            "ev021",
+            "ev022",
+            "ev024",
+            "ev029"
+          ],
+          "baseline_recall_at_6": 0.75,
+          "candidate_recall_at_6": 0.75,
+          "baseline_ndcg_at_6": 0.8048099750039491,
+          "candidate_ndcg_at_6": 0.8048099750039491,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q017",
+          "query": "新幹線の切符を買いましたか？",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q018",
+          "query": "What exact departure time did I choose for the E7?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q019",
+          "query": "What did I search about E7-series trains?",
+          "expected_evidence_ids": [
+            "ev018",
+            "ev023"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": 0.0,
+          "candidate_recall_at_6": 0.0,
+          "baseline_ndcg_at_6": -0.0,
+          "candidate_ndcg_at_6": -0.0,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q020",
+          "query": "Which Japanese rail topic did I revisit?",
+          "expected_evidence_ids": [
+            "ev016",
+            "ev021",
+            "ev022",
+            "ev023"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev022"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev022"
+          ],
+          "baseline_recall_at_6": 0.3333333333333333,
+          "candidate_recall_at_6": 0.3333333333333333,
+          "baseline_ndcg_at_6": 0.46927872602275644,
+          "candidate_ndcg_at_6": 0.46927872602275644,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q021",
+          "query": "What did I research about Kyoto tourism?",
+          "expected_evidence_ids": [
+            "ev025",
+            "ev026",
+            "ev027",
+            "ev028"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev025",
+            "ev026",
+            "ev027",
+            "ev046"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev025",
+            "ev026",
+            "ev027",
+            "ev046"
+          ],
+          "baseline_recall_at_6": 0.6666666666666666,
+          "candidate_recall_at_6": 0.6666666666666666,
+          "baseline_ndcg_at_6": 0.7653606369886217,
+          "candidate_ndcg_at_6": 0.7653606369886217,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q022",
+          "query": "京都の紅葉について検索しましたか？",
+          "expected_evidence_ids": [
+            "ev028"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev027",
+            "ev028"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev027",
+            "ev028"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q023",
+          "query": "Did I make a Kyoto hotel reservation?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q024",
+          "query": "Where was the Japanese city guide I opened?",
+          "expected_evidence_ids": [
+            "ev025",
+            "ev026",
+            "ev046"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev025",
+            "ev026",
+            "ev046"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev025",
+            "ev026",
+            "ev046"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q025",
+          "query": "What was the exact Kyoto itinerary?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q026",
+          "query": "What did I search in Japanese about trains?",
+          "expected_evidence_ids": [
+            "ev022",
+            "ev023",
+            "ev029"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev022",
+            "ev029"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev022",
+            "ev029"
+          ],
+          "baseline_recall_at_6": 0.6666666666666666,
+          "candidate_recall_at_6": 0.6666666666666666,
+          "baseline_ndcg_at_6": 0.7653606369886217,
+          "candidate_ndcg_at_6": 0.7653606369886217,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q027",
+          "query": "京都について何を決めましたか？",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q028",
+          "query": "What did I research?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q029",
+          "query": "What was in my X feed?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q030",
+          "query": "What aircraft video title did I open?",
+          "expected_evidence_ids": [
+            "ev035"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev035"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev035"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q031",
+          "query": "What was the title of the airplane video?",
+          "expected_evidence_ids": [
+            "ev035"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev035"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev035"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q032",
+          "query": "What did I see on Reddit?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q033",
+          "query": "What is the latest weather where I live?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q034",
+          "query": "Which email did I receive?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q035",
+          "query": "Did I browse a generic home page?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q036",
+          "query": "What do I generally like?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q037",
+          "query": "What was the identifier I searched twice?",
+          "expected_evidence_ids": [
+            "ev040",
+            "ev041"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev040",
+            "ev041"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev040",
+            "ev041"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q038",
+          "query": "What measurement appeared in my search?",
+          "expected_evidence_ids": [
+            "ev042",
+            "ev043"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev042",
+            "ev043"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev042",
+            "ev043"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q039",
+          "query": "What product did J501 identify?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q040",
+          "query": "Which of these did I buy: a chair, train ticket, or solar panel?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q041",
+          "query": "What did I research about solar energy?",
+          "expected_evidence_ids": [
+            "ev001",
+            "ev002",
+            "ev004",
+            "ev005"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev001",
+            "ev002",
+            "ev004"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev001",
+            "ev002",
+            "ev004"
+          ],
+          "baseline_recall_at_6": 0.6666666666666666,
+          "candidate_recall_at_6": 0.6666666666666666,
+          "baseline_ndcg_at_6": 0.7653606369886217,
+          "candidate_ndcg_at_6": 0.7653606369886217,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q042",
+          "query": "¿Qué página repetí sobre la Alhambra?",
+          "expected_evidence_ids": [
+            "ev009",
+            "ev011"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev009",
+            "ev011"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev009",
+            "ev011"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q043",
+          "query": "¿Qué ciudad elegí para mis vacaciones?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q044",
+          "query": "新幹線の料金はいくらでしたか？",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q045",
+          "query": "京都の公式観光サイトを見ましたか？",
+          "expected_evidence_ids": [
+            "ev025",
+            "ev026"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev025",
+            "ev026",
+            "ev027",
+            "ev028",
+            "ev046"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev025",
+            "ev026",
+            "ev027",
+            "ev028",
+            "ev046"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q046",
+          "query": "What did I research about renewables?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q047",
+          "query": "¿Qué abrí después de buscar energía eólica?",
+          "expected_evidence_ids": [
+            "ev003",
+            "ev006",
+            "ev047"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev001",
+            "ev003",
+            "ev004",
+            "ev006",
+            "ev047"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev001",
+            "ev003",
+            "ev004",
+            "ev006",
+            "ev047"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q048",
+          "query": "Can you tell whether the short search meant strong interest?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        }
+      ]
+    },
+    "dev_relevance_noise": {
+      "baseline_report_sha256": "30711e4e5c7bc2bf993d64e0ae9bc2ed96f056c022970c1313c4bf0de2f0d7c3",
+      "candidate_report_sha256": "b2ceff412cecd62aa9d4508eb1dcaf3830f67fa4fc9a83a4031be886894113e9",
+      "baseline_aggregate": {
+        "evaluated_query_count": 40,
+        "expected_empty_false_positives": [],
+        "expected_empty_query_count": 15,
+        "expected_empty_specificity": 1.0,
+        "expected_empty_true_negatives": 15,
+        "latency_ms": {
+          "mean": 58.57226565000002,
+          "median": 57.32975,
+          "p95": 57.957041000000004
+        },
+        "mrr_macro_non_empty": 0.6366666666666666,
+        "ndcg_at_6_macro_non_empty": 0.5695550704018619,
+        "non_empty_query_count": 25,
+        "packet_bytes": {
+          "max": 2827,
+          "mean": 941.05
+        },
+        "precision_at_6_macro_non_empty": 0.1666666666666666,
+        "recall_at_6_macro_non_empty": 0.6086666666666666
+      },
+      "candidate_aggregate": {
+        "evaluated_query_count": 40,
+        "expected_empty_false_positives": [],
+        "expected_empty_query_count": 15,
+        "expected_empty_specificity": 1.0,
+        "expected_empty_true_negatives": 15,
+        "latency_ms": {
+          "mean": 68.75231875,
+          "median": 65.48516699999999,
+          "p95": 78.235709
+        },
+        "mrr_macro_non_empty": 0.6366666666666666,
+        "ndcg_at_6_macro_non_empty": 0.5710413963818793,
+        "non_empty_query_count": 25,
+        "packet_bytes": {
+          "max": 2827,
+          "mean": 952.05
+        },
+        "precision_at_6_macro_non_empty": 0.1666666666666666,
+        "recall_at_6_macro_non_empty": 0.6086666666666666
+      },
+      "candidate_configured_gate": {
+        "minimum_empty_specificity": 1.0,
+        "minimum_recall_at_6": 0.6,
+        "passed": true
+      },
+      "candidate_invariants": {
+        "checks_passed": {
+          "context_at_most_six_records": 40,
+          "observed_evidence_has_unknown_subject": 66,
+          "packet_within_requested_byte_limit": 40,
+          "request_id_preserved": 40
+        },
+        "context_limit_records": 6,
+        "failures": [],
+        "packet_limit_bytes": 4096
+      },
+      "pairs": [
+        {
+          "query_id": "q001",
+          "query": "Which ergonomic chair did I look at from Herman Miller?",
+          "expected_evidence_ids": [
+            "ev001",
+            "ev002",
+            "ev007"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev008",
+            "ev041"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev008",
+            "ev041"
+          ],
+          "baseline_recall_at_6": 0.0,
+          "candidate_recall_at_6": 0.0,
+          "baseline_ndcg_at_6": -0.0,
+          "candidate_ndcg_at_6": -0.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q002",
+          "query": "What was the Herman Miller chair called?",
+          "expected_evidence_ids": [
+            "ev001",
+            "ev002",
+            "ev007"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev041"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev041"
+          ],
+          "baseline_recall_at_6": 0.0,
+          "candidate_recall_at_6": 0.0,
+          "baseline_ndcg_at_6": -0.0,
+          "candidate_ndcg_at_6": -0.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q003",
+          "query": "What did I read about Aeron ergonomics?",
+          "expected_evidence_ids": [
+            "ev002",
+            "ev003"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev001",
+            "ev002",
+            "ev007"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev001",
+            "ev002",
+            "ev007",
+            "ev008"
+          ],
+          "baseline_recall_at_6": 0.5,
+          "candidate_recall_at_6": 0.5,
+          "baseline_ndcg_at_6": 0.38685280723454163,
+          "candidate_ndcg_at_6": 0.3065735963827292,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q004",
+          "query": "Compare the Aeron and Leap chairs I researched",
+          "expected_evidence_ids": [
+            "ev001",
+            "ev004",
+            "ev007",
+            "ev008"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev001",
+            "ev002",
+            "ev004",
+            "ev007",
+            "ev008",
+            "ev043"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev001",
+            "ev002",
+            "ev004",
+            "ev007",
+            "ev008",
+            "ev043"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q005",
+          "query": "Which chair did I revisit in another session?",
+          "expected_evidence_ids": [
+            "ev001",
+            "ev007"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev001",
+            "ev002",
+            "ev005",
+            "ev007",
+            "ev008",
+            "ev009",
+            "ev010"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev001",
+            "ev002",
+            "ev005",
+            "ev007",
+            "ev008",
+            "ev009",
+            "ev010"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 0.5,
+          "candidate_ndcg_at_6": 0.6309297535714575,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q006",
+          "query": "What chair might suit a short person?",
+          "expected_evidence_ids": [
+            "ev009"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev005",
+            "ev009"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev005",
+            "ev009"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q007",
+          "query": "What chair has lumbar support?",
+          "expected_evidence_ids": [
+            "ev010"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev005",
+            "ev010"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev005",
+            "ev010"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q008",
+          "query": "Did I research an ergonomic chair from IKEA?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q009",
+          "query": "What was the exact price of the Aeron chair?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q010",
+          "query": "What desk height did I decide on?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q011",
+          "query": "What was the water heater type I researched?",
+          "expected_evidence_ids": [
+            "ev011",
+            "ev012",
+            "ev013",
+            "ev014",
+            "ev015",
+            "ev017"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev011",
+            "ev012",
+            "ev013",
+            "ev015",
+            "ev016",
+            "ev018",
+            "ev042"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev011",
+            "ev012",
+            "ev013",
+            "ev015",
+            "ev016",
+            "ev018",
+            "ev042"
+          ],
+          "baseline_recall_at_6": 0.6,
+          "candidate_recall_at_6": 0.6,
+          "baseline_ndcg_at_6": 0.3980847300545424,
+          "candidate_ndcg_at_6": 0.3980847300545424,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q012",
+          "query": "Where did I read about heat pump water heaters?",
+          "expected_evidence_ids": [
+            "ev011",
+            "ev012",
+            "ev013",
+            "ev014",
+            "ev017"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev011",
+            "ev012",
+            "ev013",
+            "ev014",
+            "ev015",
+            "ev016",
+            "ev042"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev011",
+            "ev012",
+            "ev013",
+            "ev014",
+            "ev015",
+            "ev016",
+            "ev042"
+          ],
+          "baseline_recall_at_6": 0.75,
+          "candidate_recall_at_6": 0.75,
+          "baseline_ndcg_at_6": 0.6975637657739948,
+          "candidate_ndcg_at_6": 0.6975637657739948,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q013",
+          "query": "What did I look up about heat-pump water-heater noise?",
+          "expected_evidence_ids": [
+            "ev015"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev011",
+            "ev012",
+            "ev013",
+            "ev015",
+            "ev016",
+            "ev017",
+            "ev042"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev011",
+            "ev012",
+            "ev013",
+            "ev015",
+            "ev016",
+            "ev017",
+            "ev042"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q014",
+          "query": "Did I check ENERGY STAR guidance for this?",
+          "expected_evidence_ids": [
+            "ev011",
+            "ev013",
+            "ev017"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": 0.0,
+          "candidate_recall_at_6": 0.0,
+          "baseline_ndcg_at_6": -0.0,
+          "candidate_ndcg_at_6": -0.0,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q015",
+          "query": "What was the heat pump water heater tax credit page?",
+          "expected_evidence_ids": [
+            "ev017"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev011",
+            "ev012",
+            "ev013",
+            "ev015",
+            "ev016",
+            "ev017",
+            "ev042"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev011",
+            "ev012",
+            "ev013",
+            "ev015",
+            "ev016",
+            "ev017",
+            "ev042"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q016",
+          "query": "Which water heater model did I choose?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q017",
+          "query": "What was my home electricity rate?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q018",
+          "query": "Did I research a tankless gas heater?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q019",
+          "query": "How does Firefox handle extension background scripts?",
+          "expected_evidence_ids": [
+            "ev019",
+            "ev021"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev019",
+            "ev024",
+            "ev025",
+            "ev044"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev019",
+            "ev024",
+            "ev025",
+            "ev044"
+          ],
+          "baseline_recall_at_6": 0.5,
+          "candidate_recall_at_6": 0.5,
+          "baseline_ndcg_at_6": 0.6131471927654584,
+          "candidate_ndcg_at_6": 0.6131471927654584,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q020",
+          "query": "What did I read about native messaging in Firefox?",
+          "expected_evidence_ids": [
+            "ev022",
+            "ev023"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev022",
+            "ev023",
+            "ev024",
+            "ev025",
+            "ev044"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev022",
+            "ev023",
+            "ev024",
+            "ev025",
+            "ev044"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q021",
+          "query": "Which page covered extension messages?",
+          "expected_evidence_ids": [
+            "ev020"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": 0.0,
+          "candidate_recall_at_6": 0.0,
+          "baseline_ndcg_at_6": -0.0,
+          "candidate_ndcg_at_6": -0.0,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q022",
+          "query": "Was I looking into Firefox or Chrome extension behavior?",
+          "expected_evidence_ids": [
+            "ev019",
+            "ev020",
+            "ev021",
+            "ev022",
+            "ev023",
+            "ev024"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev024",
+            "ev025",
+            "ev044"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev024",
+            "ev025",
+            "ev044"
+          ],
+          "baseline_recall_at_6": 0.2,
+          "candidate_recall_at_6": 0.2,
+          "baseline_ndcg_at_6": 0.3391602052736161,
+          "candidate_ndcg_at_6": 0.21398626473452756,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q023",
+          "query": "What Firefox extension store did I visit?",
+          "expected_evidence_ids": [
+            "ev025"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev024",
+            "ev025",
+            "ev044"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev024",
+            "ev025",
+            "ev044"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 0.5,
+          "candidate_ndcg_at_6": 0.5,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q024",
+          "query": "Did I read about native messaging for a browser extension?",
+          "expected_evidence_ids": [
+            "ev022",
+            "ev023"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev022",
+            "ev023"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev022",
+            "ev023"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q025",
+          "query": "What did I decide about service worker architecture?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q026",
+          "query": "Which browser extension bug happened to me?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q027",
+          "query": "What did I watch on YouTube about airplane design?",
+          "expected_evidence_ids": [
+            "ev029"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev029"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev029"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q028",
+          "query": "What was the title of the airplane video?",
+          "expected_evidence_ids": [
+            "ev029"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev029"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev029"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q029",
+          "query": "What was in my X feed?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q030",
+          "query": "What did I see on X?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q031",
+          "query": "What did I research about travel credit cards?",
+          "expected_evidence_ids": [
+            "ev033"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": 0.0,
+          "candidate_recall_at_6": 0.0,
+          "baseline_ndcg_at_6": -0.0,
+          "candidate_ndcg_at_6": -0.0,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q032",
+          "query": "What mechanical keyboard switches did I compare?",
+          "expected_evidence_ids": [
+            "ev036",
+            "ev037"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev037"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev037"
+          ],
+          "baseline_recall_at_6": 0.5,
+          "candidate_recall_at_6": 0.5,
+          "baseline_ndcg_at_6": 0.6131471927654584,
+          "candidate_ndcg_at_6": 0.6131471927654584,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q033",
+          "query": "What soup recipe did I open?",
+          "expected_evidence_ids": [
+            "ev039"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev039"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev039"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q034",
+          "query": "What is the weather today?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q035",
+          "query": "Which work email did I read?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q036",
+          "query": "Did I browse a generic homepage or feed?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q037",
+          "query": "What did I research about office ergonomics?",
+          "expected_evidence_ids": [
+            "ev001",
+            "ev002",
+            "ev003",
+            "ev004",
+            "ev005",
+            "ev007",
+            "ev008"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "ev006",
+            "ev008",
+            "ev009"
+          ],
+          "candidate_returned_evidence_ids": [
+            "ev006",
+            "ev008",
+            "ev009"
+          ],
+          "baseline_recall_at_6": 0.16666666666666666,
+          "candidate_recall_at_6": 0.16666666666666666,
+          "baseline_ndcg_at_6": 0.19092086617893467,
+          "candidate_ndcg_at_6": 0.30260241349881345,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q038",
+          "query": "What was the exact chair model I chose for my office?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q039",
+          "query": "What topic did I repeatedly research over multiple sessions?",
+          "expected_evidence_ids": [
+            "ev001",
+            "ev007",
+            "ev011",
+            "ev013",
+            "ev022",
+            "ev023"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": 0.0,
+          "candidate_recall_at_6": 0.0,
+          "baseline_ndcg_at_6": -0.0,
+          "candidate_ndcg_at_6": -0.0,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q040",
+          "query": "What were my saved preferences?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        }
+      ]
+    },
+    "holdout_relevance_noise": {
+      "baseline_report_sha256": "23d75d4266a80c620852f6db125f5da6747ecf0aa795b72527c87a60c6024967",
+      "candidate_report_sha256": "0092ceb6048521b6ce763058e5f8945a51400106fa288d9605e57a6010a8fb76",
+      "baseline_aggregate": {
+        "evaluated_query_count": 35,
+        "expected_empty_false_positives": [
+          {
+            "query_id": "q04",
+            "returned_atom_ids": [
+              "04aad8d8-e7e8-48cc-9795-d5e7c1b7c8d5"
+            ],
+            "returned_evidence_ids": [
+              "o08"
+            ],
+            "unknown_atom_ids": []
+          },
+          {
+            "query_id": "q21",
+            "returned_atom_ids": [
+              "484a2648-4841-4520-8516-de4f2e67d82c",
+              "7f049819-6dd5-44e5-914b-e11193430d99"
+            ],
+            "returned_evidence_ids": [
+              "o01",
+              "o42"
+            ],
+            "unknown_atom_ids": []
+          },
+          {
+            "query_id": "q29",
+            "returned_atom_ids": [
+              "70ed5bd2-44bb-48fe-8f3d-2c972be3faf2"
+            ],
+            "returned_evidence_ids": [
+              "o09"
+            ],
+            "unknown_atom_ids": []
+          },
+          {
+            "query_id": "q32",
+            "returned_atom_ids": [
+              "04aad8d8-e7e8-48cc-9795-d5e7c1b7c8d5"
+            ],
+            "returned_evidence_ids": [
+              "o08"
+            ],
+            "unknown_atom_ids": []
+          }
+        ],
+        "expected_empty_query_count": 11,
+        "expected_empty_specificity": 0.6363636363636364,
+        "expected_empty_true_negatives": 7,
+        "latency_ms": {
+          "mean": 58.066302428571426,
+          "median": 57.58425,
+          "p95": 58.463209
+        },
+        "mrr_macro_non_empty": 0.875,
+        "ndcg_at_6_macro_non_empty": 0.7467470057727718,
+        "non_empty_query_count": 24,
+        "packet_bytes": {
+          "max": 2049,
+          "mean": 774.4
+        },
+        "precision_at_6_macro_non_empty": 0.20138888888888887,
+        "recall_at_6_macro_non_empty": 0.7347222222222222
+      },
+      "candidate_aggregate": {
+        "evaluated_query_count": 35,
+        "expected_empty_false_positives": [
+          {
+            "query_id": "q04",
+            "returned_atom_ids": [
+              "de47e02a-8f8e-41fc-af50-7c4aa4906abe"
+            ],
+            "returned_evidence_ids": [
+              "o08"
+            ],
+            "unknown_atom_ids": []
+          },
+          {
+            "query_id": "q21",
+            "returned_atom_ids": [
+              "abe995ee-bb11-407b-a9cb-ebc7202d82df",
+              "4c280032-b25a-49c8-a59d-143e5f28910e"
+            ],
+            "returned_evidence_ids": [
+              "o01",
+              "o42"
+            ],
+            "unknown_atom_ids": []
+          },
+          {
+            "query_id": "q29",
+            "returned_atom_ids": [
+              "c2c75dba-e265-4ac6-b7c2-4ef904aad387"
+            ],
+            "returned_evidence_ids": [
+              "o09"
+            ],
+            "unknown_atom_ids": []
+          },
+          {
+            "query_id": "q32",
+            "returned_atom_ids": [
+              "de47e02a-8f8e-41fc-af50-7c4aa4906abe"
+            ],
+            "returned_evidence_ids": [
+              "o08"
+            ],
+            "unknown_atom_ids": []
+          }
+        ],
+        "expected_empty_query_count": 11,
+        "expected_empty_specificity": 0.6363636363636364,
+        "expected_empty_true_negatives": 7,
+        "latency_ms": {
+          "mean": 64.6687298,
+          "median": 64.11479200000001,
+          "p95": 66.30525
+        },
+        "mrr_macro_non_empty": 0.8541666666666666,
+        "ndcg_at_6_macro_non_empty": 0.7204582660406277,
+        "non_empty_query_count": 24,
+        "packet_bytes": {
+          "max": 2178,
+          "mean": 756.9714285714285
+        },
+        "precision_at_6_macro_non_empty": 0.19444444444444442,
+        "recall_at_6_macro_non_empty": 0.6930555555555555
+      },
+      "candidate_configured_gate": null,
+      "candidate_invariants": {
+        "checks_passed": {
+          "context_at_most_six_records": 35,
+          "observed_evidence_has_unknown_subject": 38,
+          "packet_within_requested_byte_limit": 35,
+          "request_id_preserved": 35
+        },
+        "context_limit_records": 6,
+        "failures": [],
+        "packet_limit_bytes": 4096
+      },
+      "pairs": [
+        {
+          "query_id": "q01",
+          "query": "Which heat-pump water heater pages did I read about basement clearance and sizing?",
+          "expected_evidence_ids": [
+            "o01",
+            "o02",
+            "o42"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "o01",
+            "o02",
+            "o04",
+            "o42"
+          ],
+          "candidate_returned_evidence_ids": [
+            "o01",
+            "o02",
+            "o04",
+            "o42"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 0.9674679834891693,
+          "candidate_ndcg_at_6": 0.9674679834891693,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q02",
+          "query": "What was I comparing about heat-pump water heater cold-climate operation?",
+          "expected_evidence_ids": [
+            "o03",
+            "o04"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "o02",
+            "o03",
+            "o04",
+            "o42"
+          ],
+          "candidate_returned_evidence_ids": [
+            "o02",
+            "o03",
+            "o04",
+            "o42"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 0.9197207891481876,
+          "candidate_ndcg_at_6": 0.9197207891481876,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q03",
+          "query": "What office chair model had adjustable seat depth, and what were its dimensions?",
+          "expected_evidence_ids": [
+            "o06",
+            "o07"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "o06",
+            "o08",
+            "o39"
+          ],
+          "candidate_returned_evidence_ids": [
+            "o06",
+            "o08",
+            "o39"
+          ],
+          "baseline_recall_at_6": 0.5,
+          "candidate_recall_at_6": 0.5,
+          "baseline_ndcg_at_6": 0.38685280723454163,
+          "candidate_ndcg_at_6": 0.38685280723454163,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q04",
+          "query": "Did I research an Aeron chair, or was my chair research about something else?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [
+            "o08"
+          ],
+          "candidate_returned_evidence_ids": [
+            "o08"
+          ],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q05",
+          "query": "What were the two national parks I looked at for fall trips?",
+          "expected_evidence_ids": [
+            "o10",
+            "o11"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "o10"
+          ],
+          "candidate_returned_evidence_ids": [
+            "o10"
+          ],
+          "baseline_recall_at_6": 0.5,
+          "candidate_recall_at_6": 0.5,
+          "baseline_ndcg_at_6": 0.6131471927654584,
+          "candidate_ndcg_at_6": 0.6131471927654584,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q06",
+          "query": "Which park had a shuttle or parking question?",
+          "expected_evidence_ids": [
+            "o10"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "o10"
+          ],
+          "candidate_returned_evidence_ids": [
+            "o10"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q07",
+          "query": "What train route and discount rules did I check?",
+          "expected_evidence_ids": [
+            "o12",
+            "o13"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "o13"
+          ],
+          "candidate_returned_evidence_ids": [
+            "o13"
+          ],
+          "baseline_recall_at_6": 0.5,
+          "candidate_recall_at_6": 0.5,
+          "baseline_ndcg_at_6": 0.6131471927654584,
+          "candidate_ndcg_at_6": 0.6131471927654584,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q08",
+          "query": "What did I read about sleep and cognitive performance?",
+          "expected_evidence_ids": [
+            "o14"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "o14"
+          ],
+          "candidate_returned_evidence_ids": [
+            "o14"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q09",
+          "query": "What symptoms did I compare for migraine versus tension headache?",
+          "expected_evidence_ids": [
+            "o15"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "o15"
+          ],
+          "candidate_returned_evidence_ids": [
+            "o15"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q10",
+          "query": "What were the passkey and authenticator sources I consulted?",
+          "expected_evidence_ids": [
+            "o16",
+            "o17"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "o16"
+          ],
+          "candidate_returned_evidence_ids": [
+            "o16"
+          ],
+          "baseline_recall_at_6": 0.5,
+          "candidate_recall_at_6": 0.5,
+          "baseline_ndcg_at_6": 0.6131471927654584,
+          "candidate_ndcg_at_6": 0.6131471927654584,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q11",
+          "query": "What did I read about cancelling Python asyncio tasks?",
+          "expected_evidence_ids": [
+            "o18"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "o18"
+          ],
+          "candidate_returned_evidence_ids": [
+            "o18"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q12",
+          "query": "Was I researching JavaScript promises or Kotlin coroutines?",
+          "expected_evidence_ids": [
+            "o19",
+            "o20"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "o19"
+          ],
+          "candidate_returned_evidence_ids": [
+            "o19"
+          ],
+          "baseline_recall_at_6": 0.5,
+          "candidate_recall_at_6": 0.5,
+          "baseline_ndcg_at_6": 0.6131471927654584,
+          "candidate_ndcg_at_6": 0.6131471927654584,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q13",
+          "query": "What did I look up about laptop battery charging and lithium-ion batteries?",
+          "expected_evidence_ids": [
+            "o21"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "o21"
+          ],
+          "candidate_returned_evidence_ids": [
+            "o21"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q14",
+          "query": "Which accessibility standards or keyboard navigation page did I open?",
+          "expected_evidence_ids": [
+            "o22"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "o22"
+          ],
+          "candidate_returned_evidence_ids": [
+            "o22"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q15",
+          "query": "What are the Core Web Vitals and which thresholds did I check?",
+          "expected_evidence_ids": [
+            "o23"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "o23"
+          ],
+          "candidate_returned_evidence_ids": [
+            "o23"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q16",
+          "query": "Did I research SQLite write-ahead logging or FTS5 ranking?",
+          "expected_evidence_ids": [
+            "o26",
+            "o27"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "o27"
+          ],
+          "candidate_returned_evidence_ids": [
+            "o27"
+          ],
+          "baseline_recall_at_6": 0.5,
+          "candidate_recall_at_6": 0.5,
+          "baseline_ndcg_at_6": 0.6131471927654584,
+          "candidate_ndcg_at_6": 0.6131471927654584,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q17",
+          "query": "What did I check about Firefox extension native messaging after the connection issue?",
+          "expected_evidence_ids": [
+            "o28",
+            "o29"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "o28",
+            "o29"
+          ],
+          "candidate_returned_evidence_ids": [
+            "o28",
+            "o29"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q18",
+          "query": "What Rust topic and CI cache workflow did I read about?",
+          "expected_evidence_ids": [
+            "o31",
+            "o32"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "o32"
+          ],
+          "candidate_returned_evidence_ids": [
+            "o32"
+          ],
+          "baseline_recall_at_6": 0.5,
+          "candidate_recall_at_6": 0.5,
+          "baseline_ndcg_at_6": 0.6131471927654584,
+          "candidate_ndcg_at_6": 0.6131471927654584,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q19",
+          "query": "Which recipe did I save for a quick vegetarian dinner?",
+          "expected_evidence_ids": [
+            "o38"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "o38"
+          ],
+          "candidate_returned_evidence_ids": [
+            "o38"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q20",
+          "query": "What aircraft nose design video did I briefly see?",
+          "expected_evidence_ids": [
+            "o37"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": 0.0,
+          "candidate_recall_at_6": 0.0,
+          "baseline_ndcg_at_6": -0.0,
+          "candidate_ndcg_at_6": -0.0,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q21",
+          "query": "What was I researching about hydronic radiant floor heating?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [
+            "o01",
+            "o42"
+          ],
+          "candidate_returned_evidence_ids": [
+            "o01",
+            "o42"
+          ],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q22",
+          "query": "Which credit card had airport lounge access and travel credits?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q23",
+          "query": "What did I decide about buying a new phone?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q24",
+          "query": "Which laptop did I choose?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q25",
+          "query": "What was the price of the chair I bought?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q26",
+          "query": "Did I research heat-pump water heaters, or standard gas tankless heaters?",
+          "expected_evidence_ids": [
+            "o01",
+            "o02",
+            "o03",
+            "o04",
+            "o42"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "o01",
+            "o02",
+            "o04",
+            "o42"
+          ],
+          "candidate_returned_evidence_ids": [
+            "o01",
+            "o02",
+            "o04",
+            "o42"
+          ],
+          "baseline_recall_at_6": 0.8,
+          "candidate_recall_at_6": 0.8,
+          "baseline_ndcg_at_6": 0.8687949224876582,
+          "candidate_ndcg_at_6": 0.8687949224876582,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q27",
+          "query": "What does repeated browsing say about my personal preferences?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q28",
+          "query": "What home or social feed pages appeared in this evidence?",
+          "expected_evidence_ids": [
+            "o05",
+            "o33",
+            "o34",
+            "o35",
+            "o36",
+            "o40",
+            "o41"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": 0.0,
+          "candidate_recall_at_6": 0.0,
+          "baseline_ndcg_at_6": -0.0,
+          "candidate_ndcg_at_6": -0.0,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q29",
+          "query": "Which query did I type about low-cost standing desks?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [
+            "o09"
+          ],
+          "candidate_returned_evidence_ids": [
+            "o09"
+          ],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q30",
+          "query": "What was the name of the school math page about fractions?",
+          "expected_evidence_ids": [
+            "o24"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "o24"
+          ],
+          "candidate_returned_evidence_ids": [
+            "o24"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q31",
+          "query": "Did I look at an ergonomic chair for a short person?",
+          "expected_evidence_ids": [
+            "o06",
+            "o07",
+            "o08"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "o07"
+          ],
+          "candidate_returned_evidence_ids": [
+            "o07"
+          ],
+          "baseline_recall_at_6": 0.3333333333333333,
+          "candidate_recall_at_6": 0.3333333333333333,
+          "baseline_ndcg_at_6": 0.46927872602275644,
+          "candidate_ndcg_at_6": 0.46927872602275644,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q32",
+          "query": "What specific X post did I read about office chairs?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [
+            "o08"
+          ],
+          "candidate_returned_evidence_ids": [
+            "o08"
+          ],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q33",
+          "query": "What was my exact home address?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q34",
+          "query": "How many minutes did I spend on the Heat Pump Water Heater Decision Guidance page?",
+          "expected_evidence_ids": [
+            "o01"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "o01",
+            "o02",
+            "o04",
+            "o42"
+          ],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 0.0,
+          "baseline_ndcg_at_6": 0.6309297535714575,
+          "candidate_ndcg_at_6": -0.0,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q35",
+          "query": "What did I research about storing browser history in the cloud?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        }
+      ]
+    },
+    "holdout_v2_relevance": {
+      "baseline_report_sha256": "1444ef433e093432c0ecc1d2453a520059818a42939a8329e488715105c9d828",
+      "candidate_report_sha256": "b56b16b22cc3b71cee9b0538bbbc5d6bf223783f77893adedba807171631d7a1",
+      "baseline_aggregate": {
+        "evaluated_query_count": 35,
+        "expected_empty_false_positives": [],
+        "expected_empty_query_count": 12,
+        "expected_empty_specificity": 1.0,
+        "expected_empty_true_negatives": 12,
+        "latency_ms": {
+          "mean": 58.21588805714287,
+          "median": 57.744499999999995,
+          "p95": 61.886917
+        },
+        "mrr_macro_non_empty": 0.6739130434782609,
+        "ndcg_at_6_macro_non_empty": 0.6150441380295263,
+        "non_empty_query_count": 23,
+        "packet_bytes": {
+          "max": 2457,
+          "mean": 611.9714285714285
+        },
+        "precision_at_6_macro_non_empty": 0.12318840579710141,
+        "recall_at_6_macro_non_empty": 0.6086956521739131
+      },
+      "candidate_aggregate": {
+        "evaluated_query_count": 35,
+        "expected_empty_false_positives": [],
+        "expected_empty_query_count": 12,
+        "expected_empty_specificity": 1.0,
+        "expected_empty_true_negatives": 12,
+        "latency_ms": {
+          "mean": 65.61761671428573,
+          "median": 63.866333999999995,
+          "p95": 72.485541
+        },
+        "mrr_macro_non_empty": 0.6739130434782609,
+        "ndcg_at_6_macro_non_empty": 0.6150441380295263,
+        "non_empty_query_count": 23,
+        "packet_bytes": {
+          "max": 2457,
+          "mean": 611.9714285714285
+        },
+        "precision_at_6_macro_non_empty": 0.12318840579710141,
+        "recall_at_6_macro_non_empty": 0.6086956521739131
+      },
+      "candidate_configured_gate": null,
+      "candidate_invariants": {
+        "checks_passed": {
+          "context_at_most_six_records": 35,
+          "observed_evidence_has_unknown_subject": 29,
+          "packet_within_requested_byte_limit": 35,
+          "request_id_preserved": 35
+        },
+        "context_limit_records": 6,
+        "failures": [],
+        "packet_limit_bytes": 4096
+      },
+      "pairs": [
+        {
+          "query_id": "q_drought_es",
+          "query": "¿Dónde puedo consultar el seguimiento de la sequía y sus efectos en Estados Unidos?",
+          "expected_evidence_ids": [
+            "drought_gov_current",
+            "drought_gov_monitor"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": 0.0,
+          "candidate_recall_at_6": 0.0,
+          "baseline_ndcg_at_6": -0.0,
+          "candidate_ndcg_at_6": -0.0,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q_empty_10",
+          "query": "Where are public transit GTFS feed rules documented?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q_wetlands_3",
+          "query": "Which USGS page links wetlands with climate change?",
+          "expected_evidence_ids": [
+            "usgs_wetlands_climate"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "usgs_wetlands_climate"
+          ],
+          "candidate_returned_evidence_ids": [
+            "usgs_wetlands_climate"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q_empty_01",
+          "query": "Which source explains residential rooftop solar tax credits?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q_saf_ja",
+          "query": "持続可能な航空燃料の原料と製造経路を説明する資料はどれですか？",
+          "expected_evidence_ids": [
+            "doe_saf"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": 0.0,
+          "candidate_recall_at_6": 0.0,
+          "baseline_ndcg_at_6": -0.0,
+          "candidate_ndcg_at_6": -0.0,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q_drought_1",
+          "query": "Where can I see U.S. drought monitoring and current conditions?",
+          "expected_evidence_ids": [
+            "drought_gov_current",
+            "drought_gov_monitor"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "drought_gov_current",
+            "drought_gov_monitor",
+            "usdm_guide"
+          ],
+          "candidate_returned_evidence_ids": [
+            "drought_gov_current",
+            "drought_gov_monitor",
+            "usdm_guide"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 0.9197207891481876,
+          "candidate_ndcg_at_6": 0.9197207891481876,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q_stormwater_2",
+          "query": "Where did I read EPA’s definition of green infrastructure and its water benefits?",
+          "expected_evidence_ids": [
+            "epa_gi_research",
+            "epa_green_infrastructure"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "epa_green_infrastructure"
+          ],
+          "candidate_returned_evidence_ids": [
+            "epa_green_infrastructure"
+          ],
+          "baseline_recall_at_6": 0.5,
+          "candidate_recall_at_6": 0.5,
+          "baseline_ndcg_at_6": 0.6131471927654584,
+          "candidate_ndcg_at_6": 0.6131471927654584,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q_saf_2",
+          "query": "Which FAA page covers aviation alternative fuels and sustainable fuel approval?",
+          "expected_evidence_ids": [
+            "faa_saf"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "faa_saf"
+          ],
+          "candidate_returned_evidence_ids": [
+            "faa_saf"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q_empty_03",
+          "query": "Which page describes hydrothermal vents on the ocean floor?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q_empty_08",
+          "query": "What guide discusses fish passage at hydropower dams?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q_empty_05",
+          "query": "Which agency report compares lithium-ion battery recycling methods?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q_drought_2",
+          "query": "What NASA pages explain satellite observations of drought?",
+          "expected_evidence_ids": [
+            "nasa_drought",
+            "nasa_earthdata_drought"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": 0.0,
+          "candidate_recall_at_6": 0.0,
+          "baseline_ndcg_at_6": -0.0,
+          "candidate_ndcg_at_6": -0.0,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q_empty_07",
+          "query": "Which resource explains Antarctic ozone hole measurements?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q_drought_3",
+          "query": "Which USGS resource describes drought science and water conditions?",
+          "expected_evidence_ids": [
+            "usgs_drought"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": 0.0,
+          "candidate_recall_at_6": 0.0,
+          "baseline_ndcg_at_6": -0.0,
+          "candidate_ndcg_at_6": -0.0,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q_wetlands_zh",
+          "query": "哪个 EPA 资源介绍湿地的定义和保护计划？",
+          "expected_evidence_ids": [
+            "epa_wetlands"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "epa_wetlands"
+          ],
+          "candidate_returned_evidence_ids": [
+            "epa_wetlands"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q_permafrost_1",
+          "query": "Which guide defines permafrost and explains where permanently frozen ground occurs?",
+          "expected_evidence_ids": [
+            "nsidc_permafrost"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "frontiers_permafrost",
+            "nasa_permafrost",
+            "nps_alaska_permafrost",
+            "nsidc_permafrost",
+            "usgs_permafrost"
+          ],
+          "candidate_returned_evidence_ids": [
+            "frontiers_permafrost",
+            "nasa_permafrost",
+            "nps_alaska_permafrost",
+            "nsidc_permafrost",
+            "usgs_permafrost"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q_saf_4",
+          "query": "Which airline-industry overview explains sustainable aviation fuel adoption and emissions?",
+          "expected_evidence_ids": [
+            "eia_saf",
+            "iata_saf"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "afdc_saf",
+            "eia_saf",
+            "icao_saf",
+            "nrel_saf"
+          ],
+          "candidate_returned_evidence_ids": [
+            "afdc_saf",
+            "eia_saf",
+            "icao_saf",
+            "nrel_saf"
+          ],
+          "baseline_recall_at_6": 0.5,
+          "candidate_recall_at_6": 0.5,
+          "baseline_ndcg_at_6": 0.38685280723454163,
+          "candidate_ndcg_at_6": 0.38685280723454163,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q_empty_06",
+          "query": "Where can I find an overview of radio telescope arrays?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q_saf_1",
+          "query": "Which DOE resource outlines feedstocks and production pathways for sustainable aviation fuel?",
+          "expected_evidence_ids": [
+            "doe_saf"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": 0.0,
+          "candidate_recall_at_6": 0.0,
+          "baseline_ndcg_at_6": -0.0,
+          "candidate_ndcg_at_6": -0.0,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q_empty_04",
+          "query": "What guide covers parametrized tests in Python?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q_stormwater_4",
+          "query": "What source connects urban development to runoff and water quality?",
+          "expected_evidence_ids": [
+            "usgs_urban_water"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "usgs_urban_water"
+          ],
+          "candidate_returned_evidence_ids": [
+            "usgs_urban_water"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q_stormwater_1",
+          "query": "Which EPA page explains how rain gardens capture runoff from roofs and pavement?",
+          "expected_evidence_ids": [
+            "epa_rain_gardens"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "epa_rain_gardens"
+          ],
+          "candidate_returned_evidence_ids": [
+            "epa_rain_gardens"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q_empty_12",
+          "query": "What documentation explains Kubernetes pod autoscaling?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q_wetlands_2",
+          "query": "Where does NOAA explain coastal wetlands and their benefits?",
+          "expected_evidence_ids": [
+            "noaa_wetlands"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "noaa_wetlands"
+          ],
+          "candidate_returned_evidence_ids": [
+            "noaa_wetlands"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q_saf_3",
+          "query": "Where does ICAO describe its global framework for aviation alternative fuels?",
+          "expected_evidence_ids": [
+            "icao_saf"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "icao_saf"
+          ],
+          "candidate_returned_evidence_ids": [
+            "icao_saf"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q_permafrost_2",
+          "query": "Where are annual Arctic Report Card observations of permafrost summarized?",
+          "expected_evidence_ids": [
+            "noaa_arctic_permafrost"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "usgs_permafrost"
+          ],
+          "candidate_returned_evidence_ids": [
+            "usgs_permafrost"
+          ],
+          "baseline_recall_at_6": 0.0,
+          "candidate_recall_at_6": 0.0,
+          "baseline_ndcg_at_6": -0.0,
+          "candidate_ndcg_at_6": -0.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q_empty_11",
+          "query": "Which source compares wildfire smoke masks for children?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q_empty_02",
+          "query": "Where did I read about monarch butterfly migration routes?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q_stormwater_3",
+          "query": "Which design guide discusses stormwater management on city streets?",
+          "expected_evidence_ids": [
+            "nacto_stormwater"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "epa_gi_research",
+            "nacto_stormwater"
+          ],
+          "candidate_returned_evidence_ids": [
+            "epa_gi_research",
+            "nacto_stormwater"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q_wetlands_4",
+          "query": "Where are the Ramsar Convention’s wetland mission and goals summarized?",
+          "expected_evidence_ids": [
+            "ramsar_mission"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": 0.0,
+          "candidate_recall_at_6": 0.0,
+          "baseline_ndcg_at_6": -0.0,
+          "candidate_ndcg_at_6": -0.0,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q_drought_4",
+          "query": "Where is the U.S. Drought Monitor explained as a climate data product?",
+          "expected_evidence_ids": [
+            "usdm_guide",
+            "usdm_map"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "drought_gov_monitor",
+            "usdm_guide"
+          ],
+          "candidate_returned_evidence_ids": [
+            "drought_gov_monitor",
+            "usdm_guide"
+          ],
+          "baseline_recall_at_6": 0.5,
+          "candidate_recall_at_6": 0.5,
+          "baseline_ndcg_at_6": 0.6131471927654584,
+          "candidate_ndcg_at_6": 0.6131471927654584,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q_permafrost_4",
+          "query": "What source explains how thawing permafrost connects with climate change?",
+          "expected_evidence_ids": [
+            "frontiers_permafrost",
+            "nasa_siberia"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "frontiers_permafrost",
+            "nasa_permafrost"
+          ],
+          "candidate_returned_evidence_ids": [
+            "frontiers_permafrost",
+            "nasa_permafrost"
+          ],
+          "baseline_recall_at_6": 0.5,
+          "candidate_recall_at_6": 0.5,
+          "baseline_ndcg_at_6": 0.6131471927654584,
+          "candidate_ndcg_at_6": 0.6131471927654584,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q_empty_09",
+          "query": "Which paper describes detecting exoplanets with transit photometry?",
+          "expected_evidence_ids": [],
+          "expected_empty": true,
+          "baseline_returned_evidence_ids": [],
+          "candidate_returned_evidence_ids": [],
+          "baseline_recall_at_6": null,
+          "candidate_recall_at_6": null,
+          "baseline_ndcg_at_6": null,
+          "candidate_ndcg_at_6": null,
+          "candidate_status": "empty"
+        },
+        {
+          "query_id": "q_wetlands_1",
+          "query": "Which EPA resource defines wetlands and explains their protection programs?",
+          "expected_evidence_ids": [
+            "epa_wetlands"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "epa_wetlands"
+          ],
+          "candidate_returned_evidence_ids": [
+            "epa_wetlands"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        },
+        {
+          "query_id": "q_permafrost_3",
+          "query": "Which USGS page covers permafrost research and changing ground conditions?",
+          "expected_evidence_ids": [
+            "usgs_permafrost"
+          ],
+          "expected_empty": false,
+          "baseline_returned_evidence_ids": [
+            "usgs_permafrost"
+          ],
+          "candidate_returned_evidence_ids": [
+            "usgs_permafrost"
+          ],
+          "baseline_recall_at_6": 1.0,
+          "candidate_recall_at_6": 1.0,
+          "baseline_ndcg_at_6": 1.0,
+          "candidate_ndcg_at_6": 1.0,
+          "candidate_status": "ok"
+        }
+      ]
+    }
+  }
+}

@@ -1694,8 +1694,14 @@ COMMIT;")?;
             budget,
         )?;
         let compare_models = candidate_batch.compare_models;
+        let unsupported_exact_query = candidate_batch.unsupported_exact_query;
         let candidates = candidate_batch.candidates;
         let mut packet = json!({"protocol":1,"request_id":r.request_id,"status":"partial","as_of":now(),"generation":{"evidence":generation.0,"privacy":generation.1},"index":{"mode":if encoder.is_some(){"hybrid"}else{"lexical"},"pending_atoms":self.status(source)?["pending_atoms"]},"context":[],"alternatives":[],"warnings":if encoder.is_none(){vec!["Semantic model unavailable; lexical matching only."]}else{vec![]}});
+        if unsupported_exact_query {
+            packet["warnings"].as_array_mut().unwrap().push(json!(
+                "This query contains a numeric range or value Serein cannot interpret safely. Try a specific amount and unit."
+            ));
+        }
         // Preserve the rank position of each duplicate group while keeping
         // every feasible real representative in its original rank order.
         // Confirmed records intentionally have no payload key and remain
@@ -1803,7 +1809,7 @@ COMMIT;")?;
         }
         let empty = packet["context"].as_array().unwrap().is_empty();
         let deadline_reached = start.elapsed().as_millis() as u64 >= budget;
-        packet["status"] = json!(if deadline_reached {
+        packet["status"] = json!(if deadline_reached || unsupported_exact_query {
             "partial"
         } else if empty {
             "empty"

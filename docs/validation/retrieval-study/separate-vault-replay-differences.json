@@ -1,0 +1,1344 @@
+{
+  "evaluation_role": "seen_regression_after_performance_only_reordering",
+  "preserved_original_reports": {
+    "fresh": "fresh-paired-results.json",
+    "handoff30": "handoff30-paired-final.json"
+  },
+  "normalization": "UUID-shaped strings and ISO UTC timestamps only; doc IDs, record order, text, state, status, scope, warnings, limits and labels remain exact",
+  "fresh": {
+    "baseline_release_replay": {
+      "counts": {
+        "query_count": 15,
+        "packet_exact_after_uuid_timestamp_normalization": 14,
+        "document_sequence_exact": 14,
+        "document_set_exact": 15,
+        "text_sequence_exact": 14,
+        "state_sequence_exact": 15,
+        "native_status_exact": 15,
+        "relevant_doc_ids_exact": 15,
+        "hard_negative_doc_ids_exact": 15,
+        "ndcg_exact": 14,
+        "mrr_exact": 14
+      },
+      "mismatches": [
+        {
+          "query_id": "q-bcf8906694881dff",
+          "checks": {
+            "packet_exact_after_uuid_timestamp_normalization": false,
+            "document_sequence_exact": false,
+            "document_set_exact": true,
+            "text_sequence_exact": false,
+            "state_sequence_exact": true,
+            "native_status_exact": true,
+            "relevant_doc_ids_exact": true,
+            "hard_negative_doc_ids_exact": true,
+            "ndcg_exact": false,
+            "mrr_exact": false
+          },
+          "old_doc_order": [
+            "d-cb5e5738863305fd",
+            "d-8836982bd7217801"
+          ],
+          "new_doc_order": [
+            "d-8836982bd7217801",
+            "d-cb5e5738863305fd"
+          ],
+          "old_text_order": [
+            "Observed page title on bench.ember.example: Tessik R3 desktop soldering station overview",
+            "Observed page title on bench.harbor.example: Tessik R5 desktop soldering station overview"
+          ],
+          "new_text_order": [
+            "Observed page title on bench.harbor.example: Tessik R5 desktop soldering station overview",
+            "Observed page title on bench.ember.example: Tessik R3 desktop soldering station overview"
+          ],
+          "old_state_order": [
+            "observed",
+            "observed"
+          ],
+          "new_state_order": [
+            "observed",
+            "observed"
+          ],
+          "old_ndcg_at_6": 0.6309297535714574,
+          "new_ndcg_at_6": 1.0,
+          "old_mrr_at_6": 0.5,
+          "new_mrr_at_6": 1.0,
+          "old_relevant_doc_ids_returned": [
+            "d-8836982bd7217801"
+          ],
+          "new_relevant_doc_ids_returned": [
+            "d-8836982bd7217801"
+          ],
+          "old_hard_negative_doc_ids_returned": [
+            "d-cb5e5738863305fd"
+          ],
+          "new_hard_negative_doc_ids_returned": [
+            "d-cb5e5738863305fd"
+          ]
+        }
+      ]
+    },
+    "old_quality_vs_optimized_candidate": {
+      "counts": {
+        "query_count": 15,
+        "packet_exact_after_uuid_timestamp_normalization": 14,
+        "document_sequence_exact": 14,
+        "document_set_exact": 15,
+        "text_sequence_exact": 14,
+        "state_sequence_exact": 15,
+        "native_status_exact": 15,
+        "relevant_doc_ids_exact": 15,
+        "hard_negative_doc_ids_exact": 15,
+        "ndcg_exact": 14,
+        "mrr_exact": 14
+      },
+      "mismatches": [
+        {
+          "query_id": "q-c18dc57759b54475",
+          "checks": {
+            "packet_exact_after_uuid_timestamp_normalization": false,
+            "document_sequence_exact": false,
+            "document_set_exact": true,
+            "text_sequence_exact": false,
+            "state_sequence_exact": true,
+            "native_status_exact": true,
+            "relevant_doc_ids_exact": true,
+            "hard_negative_doc_ids_exact": true,
+            "ndcg_exact": false,
+            "mrr_exact": false
+          },
+          "old_doc_order": [
+            "d-10c2b359e7163917",
+            "d-c1cf97d32bd8ecd2"
+          ],
+          "new_doc_order": [
+            "d-c1cf97d32bd8ecd2",
+            "d-10c2b359e7163917"
+          ],
+          "old_text_order": [
+            "Observed page title on market.willow.example: Velnor N7 field tank price: €11.5",
+            "Observed page title on specs.cedar.example: Velnor N7 field tank capacity: 11.5 L"
+          ],
+          "new_text_order": [
+            "Observed page title on specs.cedar.example: Velnor N7 field tank capacity: 11.5 L",
+            "Observed page title on market.willow.example: Velnor N7 field tank price: €11.5"
+          ],
+          "old_state_order": [
+            "observed",
+            "observed"
+          ],
+          "new_state_order": [
+            "observed",
+            "observed"
+          ],
+          "old_ndcg_at_6": 0.6309297535714574,
+          "new_ndcg_at_6": 1.0,
+          "old_mrr_at_6": 0.5,
+          "new_mrr_at_6": 1.0,
+          "old_relevant_doc_ids_returned": [
+            "d-c1cf97d32bd8ecd2"
+          ],
+          "new_relevant_doc_ids_returned": [
+            "d-c1cf97d32bd8ecd2"
+          ],
+          "old_hard_negative_doc_ids_returned": [
+            "d-10c2b359e7163917"
+          ],
+          "new_hard_negative_doc_ids_returned": [
+            "d-10c2b359e7163917"
+          ]
+        }
+      ]
+    },
+    "candidate_feedback_sidecars": {
+      "scenario_count": 2,
+      "exact_scenario_count": 2,
+      "scenarios": [
+        {
+          "scenario_id": "b-c9111120952c15e9",
+          "exact_after_uuid_timestamp_normalization": true,
+          "old": {
+            "feedback_replay_order": [
+              {
+                "action": "wrong_topic",
+                "doc_id": "d-3a92338baa319640",
+                "sequence": 1
+              }
+            ],
+            "feedback_results": [
+              {
+                "action": "wrong_topic",
+                "doc_id": "d-3a92338baa319640",
+                "sequence": 1,
+                "status": "ok",
+                "text_sha256": "dc937b59892604f5a86ac96936cd7ff09e25f18ae6b758e8014a24c7fa039e91"
+              }
+            ],
+            "query_checks": [
+              {
+                "query_id": "q-1e4df037052b572d",
+                "request_scope": [
+                  "research"
+                ],
+                "scope_variant": "research_only",
+                "contract_status": "in_scope",
+                "expected_empty": true,
+                "suppression_target_absent_after": true,
+                "latest_confirmation_text_present_after": null,
+                "latest_confirmation_text_sha256": null,
+                "stale_confirmation_text_present_after": [],
+                "stale_confirmation_text_sha256": [],
+                "feedback_operation_failure_relevant_to_check": false,
+                "before": {
+                  "status": "empty",
+                  "index": {
+                    "mode": "hybrid",
+                    "pending_atoms": 0
+                  },
+                  "context": [],
+                  "alternatives": [],
+                  "warnings": [],
+                  "request": {
+                    "protocol": 1,
+                    "client": "generic",
+                    "vault": "default",
+                    "query": "Which Denaro workshop filter did I select?",
+                    "facets": [],
+                    "scope": [
+                      "research"
+                    ],
+                    "max_bytes": 4096,
+                    "budget_ms": 2000
+                  }
+                },
+                "after": {
+                  "status": "empty",
+                  "index": {
+                    "mode": "hybrid",
+                    "pending_atoms": 0
+                  },
+                  "context": [],
+                  "alternatives": [],
+                  "warnings": [],
+                  "request": {
+                    "protocol": 1,
+                    "client": "generic",
+                    "vault": "default",
+                    "query": "Which Denaro workshop filter did I select?",
+                    "facets": [],
+                    "scope": [
+                      "research"
+                    ],
+                    "max_bytes": 4096,
+                    "budget_ms": 2000
+                  }
+                }
+              },
+              {
+                "query_id": "q-1e4df037052b572d",
+                "request_scope": [
+                  "research",
+                  "confirmed_preferences"
+                ],
+                "scope_variant": "research_and_confirmed_preferences",
+                "contract_status": "in_scope",
+                "expected_empty": true,
+                "suppression_target_absent_after": true,
+                "latest_confirmation_text_present_after": null,
+                "latest_confirmation_text_sha256": null,
+                "stale_confirmation_text_present_after": [],
+                "stale_confirmation_text_sha256": [],
+                "feedback_operation_failure_relevant_to_check": false,
+                "before": {
+                  "status": "empty",
+                  "index": {
+                    "mode": "hybrid",
+                    "pending_atoms": 0
+                  },
+                  "context": [],
+                  "alternatives": [],
+                  "warnings": [],
+                  "request": {
+                    "protocol": 1,
+                    "client": "generic",
+                    "vault": "default",
+                    "query": "Which Denaro workshop filter did I select?",
+                    "facets": [],
+                    "scope": [
+                      "research",
+                      "confirmed_preferences"
+                    ],
+                    "max_bytes": 4096,
+                    "budget_ms": 2000
+                  }
+                },
+                "after": {
+                  "status": "empty",
+                  "index": {
+                    "mode": "hybrid",
+                    "pending_atoms": 0
+                  },
+                  "context": [],
+                  "alternatives": [],
+                  "warnings": [],
+                  "request": {
+                    "protocol": 1,
+                    "client": "generic",
+                    "vault": "default",
+                    "query": "Which Denaro workshop filter did I select?",
+                    "facets": [],
+                    "scope": [
+                      "research",
+                      "confirmed_preferences"
+                    ],
+                    "max_bytes": 4096,
+                    "budget_ms": 2000
+                  }
+                }
+              }
+            ],
+            "query_scope_variants": {
+              "research_and_confirmed_preferences": [
+                "research",
+                "confirmed_preferences"
+              ],
+              "research_only": [
+                "research"
+              ]
+            },
+            "scenario_vault_isolated": true,
+            "runner_errors": {
+              "feedback_sequences_not_ok": [],
+              "index": null,
+              "packet_queries": []
+            }
+          },
+          "new": {
+            "feedback_replay_order": [
+              {
+                "action": "wrong_topic",
+                "doc_id": "d-3a92338baa319640",
+                "sequence": 1
+              }
+            ],
+            "feedback_results": [
+              {
+                "action": "wrong_topic",
+                "doc_id": "d-3a92338baa319640",
+                "sequence": 1,
+                "status": "ok",
+                "text_sha256": "dc937b59892604f5a86ac96936cd7ff09e25f18ae6b758e8014a24c7fa039e91"
+              }
+            ],
+            "query_checks": [
+              {
+                "query_id": "q-1e4df037052b572d",
+                "request_scope": [
+                  "research"
+                ],
+                "scope_variant": "research_only",
+                "contract_status": "in_scope",
+                "expected_empty": true,
+                "suppression_target_absent_after": true,
+                "latest_confirmation_text_present_after": null,
+                "latest_confirmation_text_sha256": null,
+                "stale_confirmation_text_present_after": [],
+                "stale_confirmation_text_sha256": [],
+                "feedback_operation_failure_relevant_to_check": false,
+                "before": {
+                  "status": "empty",
+                  "index": {
+                    "mode": "hybrid",
+                    "pending_atoms": 0
+                  },
+                  "context": [],
+                  "alternatives": [],
+                  "warnings": [],
+                  "request": {
+                    "protocol": 1,
+                    "client": "generic",
+                    "vault": "default",
+                    "query": "Which Denaro workshop filter did I select?",
+                    "facets": [],
+                    "scope": [
+                      "research"
+                    ],
+                    "max_bytes": 4096,
+                    "budget_ms": 2000
+                  }
+                },
+                "after": {
+                  "status": "empty",
+                  "index": {
+                    "mode": "hybrid",
+                    "pending_atoms": 0
+                  },
+                  "context": [],
+                  "alternatives": [],
+                  "warnings": [],
+                  "request": {
+                    "protocol": 1,
+                    "client": "generic",
+                    "vault": "default",
+                    "query": "Which Denaro workshop filter did I select?",
+                    "facets": [],
+                    "scope": [
+                      "research"
+                    ],
+                    "max_bytes": 4096,
+                    "budget_ms": 2000
+                  }
+                }
+              },
+              {
+                "query_id": "q-1e4df037052b572d",
+                "request_scope": [
+                  "research",
+                  "confirmed_preferences"
+                ],
+                "scope_variant": "research_and_confirmed_preferences",
+                "contract_status": "in_scope",
+                "expected_empty": true,
+                "suppression_target_absent_after": true,
+                "latest_confirmation_text_present_after": null,
+                "latest_confirmation_text_sha256": null,
+                "stale_confirmation_text_present_after": [],
+                "stale_confirmation_text_sha256": [],
+                "feedback_operation_failure_relevant_to_check": false,
+                "before": {
+                  "status": "empty",
+                  "index": {
+                    "mode": "hybrid",
+                    "pending_atoms": 0
+                  },
+                  "context": [],
+                  "alternatives": [],
+                  "warnings": [],
+                  "request": {
+                    "protocol": 1,
+                    "client": "generic",
+                    "vault": "default",
+                    "query": "Which Denaro workshop filter did I select?",
+                    "facets": [],
+                    "scope": [
+                      "research",
+                      "confirmed_preferences"
+                    ],
+                    "max_bytes": 4096,
+                    "budget_ms": 2000
+                  }
+                },
+                "after": {
+                  "status": "empty",
+                  "index": {
+                    "mode": "hybrid",
+                    "pending_atoms": 0
+                  },
+                  "context": [],
+                  "alternatives": [],
+                  "warnings": [],
+                  "request": {
+                    "protocol": 1,
+                    "client": "generic",
+                    "vault": "default",
+                    "query": "Which Denaro workshop filter did I select?",
+                    "facets": [],
+                    "scope": [
+                      "research",
+                      "confirmed_preferences"
+                    ],
+                    "max_bytes": 4096,
+                    "budget_ms": 2000
+                  }
+                }
+              }
+            ],
+            "query_scope_variants": {
+              "research_and_confirmed_preferences": [
+                "research",
+                "confirmed_preferences"
+              ],
+              "research_only": [
+                "research"
+              ]
+            },
+            "scenario_vault_isolated": true,
+            "runner_errors": {
+              "feedback_sequences_not_ok": [],
+              "index": null,
+              "packet_queries": []
+            }
+          }
+        },
+        {
+          "scenario_id": "b-e29b4ae8524e0725",
+          "exact_after_uuid_timestamp_normalization": true,
+          "old": {
+            "feedback_replay_order": [
+              {
+                "action": "confirm_constraint",
+                "doc_id": "d-8836982bd7217801",
+                "sequence": 1
+              },
+              {
+                "action": "confirm_constraint",
+                "doc_id": "d-8836982bd7217801",
+                "sequence": 2
+              }
+            ],
+            "feedback_results": [
+              {
+                "action": "confirm_constraint",
+                "doc_id": "d-8836982bd7217801",
+                "sequence": 1,
+                "status": "ok",
+                "text_sha256": "e99859c3f7f2b0b1f712689d679293865213409525ad1ddf5a11bf725e4ef1b0"
+              },
+              {
+                "action": "confirm_constraint",
+                "doc_id": "d-8836982bd7217801",
+                "sequence": 2,
+                "status": "ok",
+                "text_sha256": "fed8d7d7fa9806d8974b79db8b75f2b8ebbb83869a83f2d3140c00d3a244c42b"
+              }
+            ],
+            "query_checks": [
+              {
+                "query_id": "q-bcf8906694881dff",
+                "request_scope": [
+                  "research"
+                ],
+                "scope_variant": "research_only",
+                "contract_status": "in_scope",
+                "expected_empty": false,
+                "suppression_target_absent_after": null,
+                "latest_confirmation_text_present_after": false,
+                "latest_confirmation_text_sha256": "fed8d7d7fa9806d8974b79db8b75f2b8ebbb83869a83f2d3140c00d3a244c42b",
+                "stale_confirmation_text_present_after": [
+                  false
+                ],
+                "stale_confirmation_text_sha256": [
+                  "e99859c3f7f2b0b1f712689d679293865213409525ad1ddf5a11bf725e4ef1b0"
+                ],
+                "feedback_operation_failure_relevant_to_check": false,
+                "before": {
+                  "status": "empty",
+                  "index": {
+                    "mode": "hybrid",
+                    "pending_atoms": 0
+                  },
+                  "context": [],
+                  "alternatives": [],
+                  "warnings": [],
+                  "request": {
+                    "protocol": 1,
+                    "client": "generic",
+                    "vault": "default",
+                    "query": "Which Tessik desktop soldering station did I select for bench repairs?",
+                    "facets": [],
+                    "scope": [
+                      "research"
+                    ],
+                    "max_bytes": 4096,
+                    "budget_ms": 2000
+                  }
+                },
+                "after": {
+                  "status": "empty",
+                  "index": {
+                    "mode": "hybrid",
+                    "pending_atoms": 0
+                  },
+                  "context": [],
+                  "alternatives": [],
+                  "warnings": [],
+                  "request": {
+                    "protocol": 1,
+                    "client": "generic",
+                    "vault": "default",
+                    "query": "Which Tessik desktop soldering station did I select for bench repairs?",
+                    "facets": [],
+                    "scope": [
+                      "research"
+                    ],
+                    "max_bytes": 4096,
+                    "budget_ms": 2000
+                  }
+                }
+              },
+              {
+                "query_id": "q-bcf8906694881dff",
+                "request_scope": [
+                  "research",
+                  "confirmed_preferences"
+                ],
+                "scope_variant": "research_and_confirmed_preferences",
+                "contract_status": "in_scope",
+                "expected_empty": false,
+                "suppression_target_absent_after": null,
+                "latest_confirmation_text_present_after": true,
+                "latest_confirmation_text_sha256": "fed8d7d7fa9806d8974b79db8b75f2b8ebbb83869a83f2d3140c00d3a244c42b",
+                "stale_confirmation_text_present_after": [
+                  false
+                ],
+                "stale_confirmation_text_sha256": [
+                  "e99859c3f7f2b0b1f712689d679293865213409525ad1ddf5a11bf725e4ef1b0"
+                ],
+                "feedback_operation_failure_relevant_to_check": false,
+                "before": {
+                  "status": "empty",
+                  "index": {
+                    "mode": "hybrid",
+                    "pending_atoms": 0
+                  },
+                  "context": [],
+                  "alternatives": [],
+                  "warnings": [],
+                  "request": {
+                    "protocol": 1,
+                    "client": "generic",
+                    "vault": "default",
+                    "query": "Which Tessik desktop soldering station did I select for bench repairs?",
+                    "facets": [],
+                    "scope": [
+                      "research",
+                      "confirmed_preferences"
+                    ],
+                    "max_bytes": 4096,
+                    "budget_ms": 2000
+                  }
+                },
+                "after": {
+                  "status": "ok",
+                  "index": {
+                    "mode": "hybrid",
+                    "pending_atoms": 0
+                  },
+                  "context": [
+                    {
+                      "evidence": {
+                        "sessions": 1,
+                        "sites": 1
+                      },
+                      "id": "<UUID>",
+                      "kind": "constraint",
+                      "last_seen": "<TIMESTAMP>",
+                      "limits": [
+                        "Browsing does not establish endorsement, ownership, or a settled preference.",
+                        "Activity counts use fixed 30-minute windows; they are not independent confirmations."
+                      ],
+                      "state": "confirmed",
+                      "subject": "self",
+                      "text": "I selected the Tessik R5 desktop soldering station for bench repairs."
+                    }
+                  ],
+                  "alternatives": [],
+                  "warnings": [],
+                  "request": {
+                    "protocol": 1,
+                    "client": "generic",
+                    "vault": "default",
+                    "query": "Which Tessik desktop soldering station did I select for bench repairs?",
+                    "facets": [],
+                    "scope": [
+                      "research",
+                      "confirmed_preferences"
+                    ],
+                    "max_bytes": 4096,
+                    "budget_ms": 2000
+                  }
+                }
+              }
+            ],
+            "query_scope_variants": {
+              "research_and_confirmed_preferences": [
+                "research",
+                "confirmed_preferences"
+              ],
+              "research_only": [
+                "research"
+              ]
+            },
+            "scenario_vault_isolated": true,
+            "runner_errors": {
+              "feedback_sequences_not_ok": [],
+              "index": null,
+              "packet_queries": []
+            }
+          },
+          "new": {
+            "feedback_replay_order": [
+              {
+                "action": "confirm_constraint",
+                "doc_id": "d-8836982bd7217801",
+                "sequence": 1
+              },
+              {
+                "action": "confirm_constraint",
+                "doc_id": "d-8836982bd7217801",
+                "sequence": 2
+              }
+            ],
+            "feedback_results": [
+              {
+                "action": "confirm_constraint",
+                "doc_id": "d-8836982bd7217801",
+                "sequence": 1,
+                "status": "ok",
+                "text_sha256": "e99859c3f7f2b0b1f712689d679293865213409525ad1ddf5a11bf725e4ef1b0"
+              },
+              {
+                "action": "confirm_constraint",
+                "doc_id": "d-8836982bd7217801",
+                "sequence": 2,
+                "status": "ok",
+                "text_sha256": "fed8d7d7fa9806d8974b79db8b75f2b8ebbb83869a83f2d3140c00d3a244c42b"
+              }
+            ],
+            "query_checks": [
+              {
+                "query_id": "q-bcf8906694881dff",
+                "request_scope": [
+                  "research"
+                ],
+                "scope_variant": "research_only",
+                "contract_status": "in_scope",
+                "expected_empty": false,
+                "suppression_target_absent_after": null,
+                "latest_confirmation_text_present_after": false,
+                "latest_confirmation_text_sha256": "fed8d7d7fa9806d8974b79db8b75f2b8ebbb83869a83f2d3140c00d3a244c42b",
+                "stale_confirmation_text_present_after": [
+                  false
+                ],
+                "stale_confirmation_text_sha256": [
+                  "e99859c3f7f2b0b1f712689d679293865213409525ad1ddf5a11bf725e4ef1b0"
+                ],
+                "feedback_operation_failure_relevant_to_check": false,
+                "before": {
+                  "status": "empty",
+                  "index": {
+                    "mode": "hybrid",
+                    "pending_atoms": 0
+                  },
+                  "context": [],
+                  "alternatives": [],
+                  "warnings": [],
+                  "request": {
+                    "protocol": 1,
+                    "client": "generic",
+                    "vault": "default",
+                    "query": "Which Tessik desktop soldering station did I select for bench repairs?",
+                    "facets": [],
+                    "scope": [
+                      "research"
+                    ],
+                    "max_bytes": 4096,
+                    "budget_ms": 2000
+                  }
+                },
+                "after": {
+                  "status": "empty",
+                  "index": {
+                    "mode": "hybrid",
+                    "pending_atoms": 0
+                  },
+                  "context": [],
+                  "alternatives": [],
+                  "warnings": [],
+                  "request": {
+                    "protocol": 1,
+                    "client": "generic",
+                    "vault": "default",
+                    "query": "Which Tessik desktop soldering station did I select for bench repairs?",
+                    "facets": [],
+                    "scope": [
+                      "research"
+                    ],
+                    "max_bytes": 4096,
+                    "budget_ms": 2000
+                  }
+                }
+              },
+              {
+                "query_id": "q-bcf8906694881dff",
+                "request_scope": [
+                  "research",
+                  "confirmed_preferences"
+                ],
+                "scope_variant": "research_and_confirmed_preferences",
+                "contract_status": "in_scope",
+                "expected_empty": false,
+                "suppression_target_absent_after": null,
+                "latest_confirmation_text_present_after": true,
+                "latest_confirmation_text_sha256": "fed8d7d7fa9806d8974b79db8b75f2b8ebbb83869a83f2d3140c00d3a244c42b",
+                "stale_confirmation_text_present_after": [
+                  false
+                ],
+                "stale_confirmation_text_sha256": [
+                  "e99859c3f7f2b0b1f712689d679293865213409525ad1ddf5a11bf725e4ef1b0"
+                ],
+                "feedback_operation_failure_relevant_to_check": false,
+                "before": {
+                  "status": "empty",
+                  "index": {
+                    "mode": "hybrid",
+                    "pending_atoms": 0
+                  },
+                  "context": [],
+                  "alternatives": [],
+                  "warnings": [],
+                  "request": {
+                    "protocol": 1,
+                    "client": "generic",
+                    "vault": "default",
+                    "query": "Which Tessik desktop soldering station did I select for bench repairs?",
+                    "facets": [],
+                    "scope": [
+                      "research",
+                      "confirmed_preferences"
+                    ],
+                    "max_bytes": 4096,
+                    "budget_ms": 2000
+                  }
+                },
+                "after": {
+                  "status": "ok",
+                  "index": {
+                    "mode": "hybrid",
+                    "pending_atoms": 0
+                  },
+                  "context": [
+                    {
+                      "evidence": {
+                        "sessions": 1,
+                        "sites": 1
+                      },
+                      "id": "<UUID>",
+                      "kind": "constraint",
+                      "last_seen": "<TIMESTAMP>",
+                      "limits": [
+                        "Browsing does not establish endorsement, ownership, or a settled preference.",
+                        "Activity counts use fixed 30-minute windows; they are not independent confirmations."
+                      ],
+                      "state": "confirmed",
+                      "subject": "self",
+                      "text": "I selected the Tessik R5 desktop soldering station for bench repairs."
+                    }
+                  ],
+                  "alternatives": [],
+                  "warnings": [],
+                  "request": {
+                    "protocol": 1,
+                    "client": "generic",
+                    "vault": "default",
+                    "query": "Which Tessik desktop soldering station did I select for bench repairs?",
+                    "facets": [],
+                    "scope": [
+                      "research",
+                      "confirmed_preferences"
+                    ],
+                    "max_bytes": 4096,
+                    "budget_ms": 2000
+                  }
+                }
+              }
+            ],
+            "query_scope_variants": {
+              "research_and_confirmed_preferences": [
+                "research",
+                "confirmed_preferences"
+              ],
+              "research_only": [
+                "research"
+              ]
+            },
+            "scenario_vault_isolated": true,
+            "runner_errors": {
+              "feedback_sequences_not_ok": [],
+              "index": null,
+              "packet_queries": []
+            }
+          }
+        }
+      ]
+    },
+    "acceptance_metrics_before": {
+      "acceptance_query_count_excluding_characterization": 14,
+      "attempted_query_count": 15,
+      "authored_expected_empty_count_in_scope": 2,
+      "characterization_query_count_excluded": 1,
+      "empty_specificity_denominator": 2,
+      "empty_specificity_numerator": 2,
+      "empty_specificity_unsupported": 1.0,
+      "expected_empty_denominator": 2,
+      "expected_empty_denominator_successfully_evaluated": 2,
+      "expected_empty_specificity": 1.0,
+      "expected_empty_true_negatives": 2,
+      "false_empty_count_positive": 1,
+      "false_empty_query_ids": [
+        "q-bcf8906694881dff"
+      ],
+      "false_empty_rate_positive": 0.08333333333333333,
+      "false_return_count_unsupported": 0,
+      "hard_negative_hits_in_packet": 6,
+      "hard_negative_judgment_count": 17,
+      "hard_negative_judgment_count_authored_in_scope": 17,
+      "hard_negative_leak_rate": 0.35294117647058826,
+      "hard_negative_queries_with_leak": [
+        "q-4154ecf3f219e618",
+        "q-bddbfb923458f5fb",
+        "q-c18dc57759b54475",
+        "q-05def4a6c2bce3f4",
+        "q-cf7f075c7a76482c"
+      ],
+      "macro_attainable_group_recall_at_6_positive": 0.875,
+      "macro_group_ndcg_at_6_positive": 0.8536730788614096,
+      "macro_group_recall_at_6_positive": 0.875,
+      "macro_mrr_at_6_positive": 0.875,
+      "macro_ndcg_at_6_positive": 0.8536730788614096,
+      "macro_raw_recall_at_6_positive": 0.875,
+      "micro_attainable_group_recall_at_6_positive": 0.875,
+      "micro_group_recall_at_6_positive": 0.875,
+      "micro_raw_recall_at_6_positive": 0.875,
+      "native_packet_status_counts_successful_in_scope": {
+        "empty": 3,
+        "ok": 11
+      },
+      "native_partial_query_ids_in_scope": [],
+      "packet_limit_violations": [],
+      "positive_query_count": 12,
+      "query_count": 14,
+      "runner_error_count": 0,
+      "runner_error_query_ids": [],
+      "successful_query_count": 15,
+      "unsupported_query_count": 2
+    },
+    "acceptance_metrics_after": {
+      "acceptance_query_count_excluding_characterization": 14,
+      "attempted_query_count": 15,
+      "authored_expected_empty_count_in_scope": 2,
+      "characterization_query_count_excluded": 1,
+      "empty_specificity_denominator": 2,
+      "empty_specificity_numerator": 2,
+      "empty_specificity_unsupported": 1.0,
+      "expected_empty_denominator": 2,
+      "expected_empty_denominator_successfully_evaluated": 2,
+      "expected_empty_specificity": 1.0,
+      "expected_empty_true_negatives": 2,
+      "false_empty_count_positive": 1,
+      "false_empty_query_ids": [
+        "q-bcf8906694881dff"
+      ],
+      "false_empty_rate_positive": 0.08333333333333333,
+      "false_return_count_unsupported": 0,
+      "hard_negative_hits_in_packet": 6,
+      "hard_negative_judgment_count": 17,
+      "hard_negative_judgment_count_authored_in_scope": 17,
+      "hard_negative_leak_rate": 0.35294117647058826,
+      "hard_negative_queries_with_leak": [
+        "q-4154ecf3f219e618",
+        "q-bddbfb923458f5fb",
+        "q-c18dc57759b54475",
+        "q-05def4a6c2bce3f4",
+        "q-cf7f075c7a76482c"
+      ],
+      "macro_attainable_group_recall_at_6_positive": 0.875,
+      "macro_group_ndcg_at_6_positive": 0.8844289327304549,
+      "macro_group_recall_at_6_positive": 0.875,
+      "macro_mrr_at_6_positive": 0.9166666666666666,
+      "macro_ndcg_at_6_positive": 0.8844289327304549,
+      "macro_raw_recall_at_6_positive": 0.875,
+      "micro_attainable_group_recall_at_6_positive": 0.875,
+      "micro_group_recall_at_6_positive": 0.875,
+      "micro_raw_recall_at_6_positive": 0.875,
+      "native_packet_status_counts_successful_in_scope": {
+        "empty": 3,
+        "ok": 11
+      },
+      "native_partial_query_ids_in_scope": [],
+      "packet_limit_violations": [],
+      "positive_query_count": 12,
+      "query_count": 14,
+      "runner_error_count": 0,
+      "runner_error_query_ids": [],
+      "successful_query_count": 15,
+      "unsupported_query_count": 2
+    }
+  },
+  "handoff30": {
+    "baseline_release_replay": {
+      "counts": {
+        "query_count": 30,
+        "packet_exact_after_uuid_timestamp_normalization": 27,
+        "document_sequence_exact": 27,
+        "document_set_exact": 28,
+        "text_sequence_exact": 27,
+        "state_sequence_exact": 30,
+        "native_status_exact": 30,
+        "relevant_doc_ids_exact": 30,
+        "hard_negative_doc_ids_exact": 30,
+        "ndcg_exact": 29,
+        "mrr_exact": 30
+      },
+      "mismatches": [
+        {
+          "query_id": "cuq01",
+          "checks": {
+            "packet_exact_after_uuid_timestamp_normalization": false,
+            "document_sequence_exact": false,
+            "document_set_exact": false,
+            "text_sequence_exact": false,
+            "state_sequence_exact": true,
+            "native_status_exact": true,
+            "relevant_doc_ids_exact": true,
+            "hard_negative_doc_ids_exact": true,
+            "ndcg_exact": true,
+            "mrr_exact": true
+          },
+          "old_doc_order": [
+            "cu03",
+            "cu01"
+          ],
+          "new_doc_order": [
+            "cu03",
+            "cu02"
+          ],
+          "old_text_order": [
+            "Observed page title on www.kingarthurbaking.com: Sourdough Pizza Crust Recipe | King Arthur Baking",
+            "Observed page title on www.kingarthurbaking.com: Sourdough Starter Recipe | King Arthur Baking"
+          ],
+          "new_text_order": [
+            "Observed page title on www.kingarthurbaking.com: Sourdough Pizza Crust Recipe | King Arthur Baking",
+            "Observed page title on www.kingarthurbaking.com: Rustic Sourdough Bread Recipe | King Arthur Baking"
+          ],
+          "old_state_order": [
+            "observed",
+            "observed"
+          ],
+          "new_state_order": [
+            "observed",
+            "observed"
+          ],
+          "old_ndcg_at_6": 1.0,
+          "new_ndcg_at_6": 1.0,
+          "old_mrr_at_6": 1.0,
+          "new_mrr_at_6": 1.0,
+          "old_relevant_doc_ids_returned": [
+            "cu03"
+          ],
+          "new_relevant_doc_ids_returned": [
+            "cu03"
+          ],
+          "old_hard_negative_doc_ids_returned": null,
+          "new_hard_negative_doc_ids_returned": null
+        },
+        {
+          "query_id": "cuq04",
+          "checks": {
+            "packet_exact_after_uuid_timestamp_normalization": false,
+            "document_sequence_exact": false,
+            "document_set_exact": false,
+            "text_sequence_exact": false,
+            "state_sequence_exact": true,
+            "native_status_exact": true,
+            "relevant_doc_ids_exact": true,
+            "hard_negative_doc_ids_exact": true,
+            "ndcg_exact": true,
+            "mrr_exact": true
+          },
+          "old_doc_order": [
+            "cu02",
+            "cu01"
+          ],
+          "new_doc_order": [
+            "cu02",
+            "cu03"
+          ],
+          "old_text_order": [
+            "Observed page title on www.kingarthurbaking.com: Rustic Sourdough Bread Recipe | King Arthur Baking",
+            "Observed page title on www.kingarthurbaking.com: Sourdough Starter Recipe | King Arthur Baking"
+          ],
+          "new_text_order": [
+            "Observed page title on www.kingarthurbaking.com: Rustic Sourdough Bread Recipe | King Arthur Baking",
+            "Observed page title on www.kingarthurbaking.com: Sourdough Pizza Crust Recipe | King Arthur Baking"
+          ],
+          "old_state_order": [
+            "observed",
+            "observed"
+          ],
+          "new_state_order": [
+            "observed",
+            "observed"
+          ],
+          "old_ndcg_at_6": 1.0,
+          "new_ndcg_at_6": 1.0,
+          "old_mrr_at_6": 1.0,
+          "new_mrr_at_6": 1.0,
+          "old_relevant_doc_ids_returned": [
+            "cu02"
+          ],
+          "new_relevant_doc_ids_returned": [
+            "cu02"
+          ],
+          "old_hard_negative_doc_ids_returned": null,
+          "new_hard_negative_doc_ids_returned": null
+        },
+        {
+          "query_id": "pyq03",
+          "checks": {
+            "packet_exact_after_uuid_timestamp_normalization": false,
+            "document_sequence_exact": false,
+            "document_set_exact": true,
+            "text_sequence_exact": false,
+            "state_sequence_exact": true,
+            "native_status_exact": true,
+            "relevant_doc_ids_exact": true,
+            "hard_negative_doc_ids_exact": true,
+            "ndcg_exact": false,
+            "mrr_exact": true
+          },
+          "old_doc_order": [
+            "py07",
+            "py08",
+            "py01",
+            "py04"
+          ],
+          "new_doc_order": [
+            "py07",
+            "py01",
+            "py08",
+            "py04"
+          ],
+          "old_text_order": [
+            "Observed page title on docs.python.org: venv --- 仮想環境の作成 — Python 3.14.8 ドキュメント",
+            "Observed page title on packaging.python.org: Packaging Python Projects - Python Packaging User Guide",
+            "Observed page title on docs.python.org: venv — Creation of virtual environments — Python 3.14.8 documentation",
+            "Observed page title on python-poetry.org: Managing environments | Documentation | Poetry - Python dependency management and packaging made easy"
+          ],
+          "new_text_order": [
+            "Observed page title on docs.python.org: venv --- 仮想環境の作成 — Python 3.14.8 ドキュメント",
+            "Observed page title on docs.python.org: venv — Creation of virtual environments — Python 3.14.8 documentation",
+            "Observed page title on packaging.python.org: Packaging Python Projects - Python Packaging User Guide",
+            "Observed page title on python-poetry.org: Managing environments | Documentation | Poetry - Python dependency management and packaging made easy"
+          ],
+          "old_state_order": [
+            "observed",
+            "observed",
+            "observed",
+            "observed"
+          ],
+          "new_state_order": [
+            "observed",
+            "observed",
+            "observed",
+            "observed"
+          ],
+          "old_ndcg_at_6": 0.9143091486983557,
+          "new_ndcg_at_6": 0.9871451602176229,
+          "old_mrr_at_6": 1.0,
+          "new_mrr_at_6": 1.0,
+          "old_relevant_doc_ids_returned": [
+            "py01",
+            "py04",
+            "py07"
+          ],
+          "new_relevant_doc_ids_returned": [
+            "py01",
+            "py04",
+            "py07"
+          ],
+          "old_hard_negative_doc_ids_returned": null,
+          "new_hard_negative_doc_ids_returned": null
+        }
+      ]
+    },
+    "old_quality_vs_optimized_candidate": {
+      "counts": {
+        "query_count": 30,
+        "packet_exact_after_uuid_timestamp_normalization": 27,
+        "document_sequence_exact": 27,
+        "document_set_exact": 28,
+        "text_sequence_exact": 27,
+        "state_sequence_exact": 30,
+        "native_status_exact": 30,
+        "relevant_doc_ids_exact": 30,
+        "hard_negative_doc_ids_exact": 30,
+        "ndcg_exact": 29,
+        "mrr_exact": 30
+      },
+      "mismatches": [
+        {
+          "query_id": "cuq01",
+          "checks": {
+            "packet_exact_after_uuid_timestamp_normalization": false,
+            "document_sequence_exact": false,
+            "document_set_exact": false,
+            "text_sequence_exact": false,
+            "state_sequence_exact": true,
+            "native_status_exact": true,
+            "relevant_doc_ids_exact": true,
+            "hard_negative_doc_ids_exact": true,
+            "ndcg_exact": true,
+            "mrr_exact": true
+          },
+          "old_doc_order": [
+            "cu03",
+            "cu01"
+          ],
+          "new_doc_order": [
+            "cu03",
+            "cu02"
+          ],
+          "old_text_order": [
+            "Observed page title on www.kingarthurbaking.com: Sourdough Pizza Crust Recipe | King Arthur Baking",
+            "Observed page title on www.kingarthurbaking.com: Sourdough Starter Recipe | King Arthur Baking"
+          ],
+          "new_text_order": [
+            "Observed page title on www.kingarthurbaking.com: Sourdough Pizza Crust Recipe | King Arthur Baking",
+            "Observed page title on www.kingarthurbaking.com: Rustic Sourdough Bread Recipe | King Arthur Baking"
+          ],
+          "old_state_order": [
+            "observed",
+            "observed"
+          ],
+          "new_state_order": [
+            "observed",
+            "observed"
+          ],
+          "old_ndcg_at_6": 1.0,
+          "new_ndcg_at_6": 1.0,
+          "old_mrr_at_6": 1.0,
+          "new_mrr_at_6": 1.0,
+          "old_relevant_doc_ids_returned": [
+            "cu03"
+          ],
+          "new_relevant_doc_ids_returned": [
+            "cu03"
+          ],
+          "old_hard_negative_doc_ids_returned": null,
+          "new_hard_negative_doc_ids_returned": null
+        },
+        {
+          "query_id": "cuq04",
+          "checks": {
+            "packet_exact_after_uuid_timestamp_normalization": false,
+            "document_sequence_exact": false,
+            "document_set_exact": false,
+            "text_sequence_exact": false,
+            "state_sequence_exact": true,
+            "native_status_exact": true,
+            "relevant_doc_ids_exact": true,
+            "hard_negative_doc_ids_exact": true,
+            "ndcg_exact": true,
+            "mrr_exact": true
+          },
+          "old_doc_order": [
+            "cu02",
+            "cu01"
+          ],
+          "new_doc_order": [
+            "cu02",
+            "cu03"
+          ],
+          "old_text_order": [
+            "Observed page title on www.kingarthurbaking.com: Rustic Sourdough Bread Recipe | King Arthur Baking",
+            "Observed page title on www.kingarthurbaking.com: Sourdough Starter Recipe | King Arthur Baking"
+          ],
+          "new_text_order": [
+            "Observed page title on www.kingarthurbaking.com: Rustic Sourdough Bread Recipe | King Arthur Baking",
+            "Observed page title on www.kingarthurbaking.com: Sourdough Pizza Crust Recipe | King Arthur Baking"
+          ],
+          "old_state_order": [
+            "observed",
+            "observed"
+          ],
+          "new_state_order": [
+            "observed",
+            "observed"
+          ],
+          "old_ndcg_at_6": 1.0,
+          "new_ndcg_at_6": 1.0,
+          "old_mrr_at_6": 1.0,
+          "new_mrr_at_6": 1.0,
+          "old_relevant_doc_ids_returned": [
+            "cu02"
+          ],
+          "new_relevant_doc_ids_returned": [
+            "cu02"
+          ],
+          "old_hard_negative_doc_ids_returned": null,
+          "new_hard_negative_doc_ids_returned": null
+        },
+        {
+          "query_id": "pyq03",
+          "checks": {
+            "packet_exact_after_uuid_timestamp_normalization": false,
+            "document_sequence_exact": false,
+            "document_set_exact": true,
+            "text_sequence_exact": false,
+            "state_sequence_exact": true,
+            "native_status_exact": true,
+            "relevant_doc_ids_exact": true,
+            "hard_negative_doc_ids_exact": true,
+            "ndcg_exact": false,
+            "mrr_exact": true
+          },
+          "old_doc_order": [
+            "py07",
+            "py08",
+            "py01",
+            "py04"
+          ],
+          "new_doc_order": [
+            "py07",
+            "py01",
+            "py08",
+            "py04"
+          ],
+          "old_text_order": [
+            "Observed page title on docs.python.org: venv --- 仮想環境の作成 — Python 3.14.8 ドキュメント",
+            "Observed page title on packaging.python.org: Packaging Python Projects - Python Packaging User Guide",
+            "Observed page title on docs.python.org: venv — Creation of virtual environments — Python 3.14.8 documentation",
+            "Observed page title on python-poetry.org: Managing environments | Documentation | Poetry - Python dependency management and packaging made easy"
+          ],
+          "new_text_order": [
+            "Observed page title on docs.python.org: venv --- 仮想環境の作成 — Python 3.14.8 ドキュメント",
+            "Observed page title on docs.python.org: venv — Creation of virtual environments — Python 3.14.8 documentation",
+            "Observed page title on packaging.python.org: Packaging Python Projects - Python Packaging User Guide",
+            "Observed page title on python-poetry.org: Managing environments | Documentation | Poetry - Python dependency management and packaging made easy"
+          ],
+          "old_state_order": [
+            "observed",
+            "observed",
+            "observed",
+            "observed"
+          ],
+          "new_state_order": [
+            "observed",
+            "observed",
+            "observed",
+            "observed"
+          ],
+          "old_ndcg_at_6": 0.9143091486983557,
+          "new_ndcg_at_6": 0.9871451602176229,
+          "old_mrr_at_6": 1.0,
+          "new_mrr_at_6": 1.0,
+          "old_relevant_doc_ids_returned": [
+            "py01",
+            "py04",
+            "py07"
+          ],
+          "new_relevant_doc_ids_returned": [
+            "py01",
+            "py04",
+            "py07"
+          ],
+          "old_hard_negative_doc_ids_returned": null,
+          "new_hard_negative_doc_ids_returned": null
+        }
+      ]
+    }
+  },
+  "original_local_report_sha256": "6ed0dc459659f35352d18a9a8faacf4ff148e53dbdf099f6764184006ac4e532",
+  "export_note": "Local filesystem paths omitted; measured results unchanged."
+}

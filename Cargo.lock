@@ -975,7 +975,7 @@ dependencies = [
 
 [[package]]
 name = "serein-cli"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "rusqlite",
  "serde_json",
@@ -984,7 +984,7 @@ dependencies = [
 
 [[package]]
 name = "serein-core"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "chrono",
  "fs2",
@@ -1003,7 +1003,7 @@ dependencies = [
 
 [[package]]
 name = "serein-host"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "serde_json",
  "serein-core",

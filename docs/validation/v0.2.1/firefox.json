@@ -1,0 +1,205 @@
+{
+  "browser": "157.0",
+  "nativeMessaging": "PASS",
+  "nativeManifestRegistration": "disposable process directory-service override",
+  "nativeRuntime": "[local path omitted]",
+  "nativeRuntimeCliSha256": "83a9eac02410d37cb6c602bd1dc18cc141a413ac08eef968adecc2b99a3da29a",
+  "nativeHostSha256": "80e1c8cefe19573d06acd472887a83b350013c2a7a119bc0dea388abcb30f5be",
+  "modalInitialSetup": {
+    "first": {
+      "initial": {
+        "at": 649,
+        "activeTag": "BUTTON",
+        "activeId": "",
+        "activeLabel": "Close",
+        "dialogPresent": true,
+        "dialogContainsActive": true,
+        "mainInert": true,
+        "dialogInert": false
+      },
+      "settled": {
+        "at": 649,
+        "activeTag": "BUTTON",
+        "activeId": "",
+        "activeLabel": "Close",
+        "dialogPresent": true,
+        "dialogContainsActive": true,
+        "mainInert": true,
+        "dialogInert": false
+      },
+      "delayMs": 0,
+      "timedOut": false
+    },
+    "zeroTab": {
+      "initial": {
+        "at": 767,
+        "activeTag": "BUTTON",
+        "activeId": "",
+        "activeLabel": "Close",
+        "dialogPresent": true,
+        "dialogContainsActive": true,
+        "mainInert": true,
+        "dialogInert": false
+      },
+      "settled": {
+        "at": 767,
+        "activeTag": "BUTTON",
+        "activeId": "",
+        "activeLabel": "Close",
+        "dialogPresent": true,
+        "dialogContainsActive": true,
+        "mainInert": true,
+        "dialogInert": false
+      },
+      "delayMs": 0,
+      "timedOut": false
+    },
+    "submitting": {
+      "initial": {
+        "at": 353,
+        "activeTag": "BUTTON",
+        "activeId": "",
+        "activeLabel": "Close",
+        "dialogPresent": true,
+        "dialogContainsActive": true,
+        "mainInert": true,
+        "dialogInert": false
+      },
+      "settled": {
+        "at": 353,
+        "activeTag": "BUTTON",
+        "activeId": "",
+        "activeLabel": "Close",
+        "dialogPresent": true,
+        "dialogContainsActive": true,
+        "mainInert": true,
+        "dialogInert": false
+      },
+      "delayMs": 0,
+      "timedOut": false
+    }
+  },
+  "checks": [
+    "copied Firefox.app only",
+    "fresh temporary profile and vault",
+    "temporary unsigned installation",
+    "consent off by default",
+    "actual hello pairing",
+    "ingest ACK",
+    "duplicate ACK",
+    "R18 Escape/Close/backdrop reset correction drafts",
+    "R18 exact selected atom ID and confirmed text over native messaging",
+    "R19 delayed response leaves different-card draft intact",
+    "R19 delayed response leaves reopened same-card draft intact",
+    "R19 current failure preserves draft",
+    "R20 empty and enabled candidate lists",
+    "R20 equal-positive tabindex controls preserve DOM order",
+    "R20 forward/reverse traversal and outside-focus recovery",
+    "R20 disabled fieldset, hidden and inert controls are excluded",
+    "R20 zero-tabbable fallback focuses dialog",
+    "R20 close and Escape restore usable focus or main fallback",
+    "R20 submitting disables action candidates and recomputes the last endpoint",
+    "five deliberate feedback requests only",
+    "synthetic fixtures live only in the isolated temporary vault removed during cleanup",
+    "Firefox app update checks and automatic installs disabled in fresh profile prefs",
+    "R22 real outbox event flushes on manual refresh without page reload",
+    "R22 independent extension view correction appears on refresh while local filter/state/route persist",
+    "R23 older dashboard generation retains the last safe view",
+    "R23 focus/visibility signals debounce, coalesce, defer while hidden, and schedule one trailing read",
+    "R23 stale dashboard response cannot restore forgotten context",
+    "R21 61 real observations drain in multiple native batches capped at 32 events and 64 KiB",
+    "R21 recent dashboard view stays capped at 60 while topic-bearing recall finds older retained evidence",
+    "R21 local filter remains local and shows the scope note",
+    "R24 filter and refresh controls are labeled in all six supported locales",
+    "R23 unmounted Firefox dashboard cancels delayed refresh",
+    "T09 rapid privacy control clicks serialize and disable pending controls",
+    "R23 failed Forget stays withheld after automatic and unrelated populated refresh"
+  ],
+  "T09": {
+    "checks": [
+      "R22 real outbox event flushes on manual refresh without page reload",
+      "R22 independent extension view correction appears on refresh while local filter/state/route persist",
+      "R23 older dashboard generation retains the last safe view",
+      "R23 focus/visibility signals debounce, coalesce, defer while hidden, and schedule one trailing read",
+      "R23 stale dashboard response cannot restore forgotten context",
+      "R21 61 real observations drain in multiple native batches capped at 32 events and 64 KiB",
+      "R21 recent dashboard view stays capped at 60 while topic-bearing recall finds older retained evidence",
+      "R21 local filter remains local and shows the scope note",
+      "R24 filter and refresh controls are labeled in all six supported locales",
+      "R23 unmounted Firefox dashboard cancels delayed refresh",
+      "T09 rapid privacy control clicks serialize and disable pending controls",
+      "R23 failed Forget stays withheld after automatic and unrelated populated refresh"
+    ],
+    "overlappingPrivacy": {
+      "mutationRequestsWhileHeld": 1,
+      "heldMutations": 1,
+      "recallControlDisabled": true,
+      "selectedSitesControlDisabled": true
+    },
+    "windowFixture": {
+      "outboxEvents": 61,
+      "nativeBatches": 2,
+      "maxBatchEvents": 32,
+      "maxBatchBytes": 10604,
+      "dashboardAtoms": 61,
+      "dashboardCards": 60
+    },
+    "failedForget": {
+      "target": "T09 display-window observation 59",
+      "realNativeResponseReturnedCard": true
+    }
+  },
+  "updatePolicyEvidence": {
+    "updatesAllowed": true,
+    "disabled": false,
+    "enabled": false,
+    "auto": false,
+    "staging": false
+  },
+  "feedbackRequests": [
+    {
+      "atom_id": "903b5efe-17be-45ea-ad84-ccce118ac306",
+      "action": "confirm_constraint",
+      "text": "T07 B confirmation text only"
+    },
+    {
+      "atom_id": "df523088-a437-497a-89cf-9ddb0a703c88",
+      "action": "confirm_constraint",
+      "text": "T07 delayed A first"
+    },
+    {
+      "atom_id": "df523088-a437-497a-89cf-9ddb0a703c88",
+      "action": "confirm_constraint",
+      "text": "T07 delayed A second"
+    },
+    {
+      "atom_id": "903b5efe-17be-45ea-ad84-ccce118ac306",
+      "action": "confirm_constraint",
+      "text": "T07 current instance failure draft"
+    },
+    {
+      "atom_id": "903b5efe-17be-45ea-ad84-ccce118ac306",
+      "action": "confirm_constraint",
+      "text": "T07 delayed A R20 submitting"
+    }
+  ],
+  "firefoxBinary": "[local path omitted]",
+  "temporaryProfileRemoved": true,
+  "temporaryNativeManifestRemoved": true,
+  "firefoxExitCode": 0,
+  "release_version": "0.2.1",
+  "raw_report_sha256": "b5395444c2959d27a4366995348c5a84a2ba5b82c71f21eeda132dfab162cca1",
+  "input_scope": "Invented metadata in a disposable vault; actual extension/native messaging and UI execution, not a real-user browsing history.",
+  "cleanup": {
+    "browser_exit_code": 0,
+    "temporary_profile_removed": true,
+    "temporary_native_registration_removed": true,
+    "owned_processes_remaining": false,
+    "live_user_vault_and_profile_untouched": true,
+    "user_home_native_manifest_absent": true
+  },
+  "runtime_binding": "Bundled v0.2.1 helper and the production extension output; archive member equality checked during packaging.",
+  "browser_binary_sha256": "729e0ae83fca74cf143bbef68836c195b340fcc09566461243a075be9e6b959a",
+  "browser_binary_unchanged_after_run": true,
+  "runner_note": "The older harness assumed an active enterprise-policy object. The Firefox 157 compatible harness checked disabled update preferences in its temporary profile instead; no enterprise policy was claimed. The original preflight failure was retained locally."
+}

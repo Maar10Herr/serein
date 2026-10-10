@@ -1,0 +1,112 @@
+{
+  "parent_commit": "6ab4722501813b71549627a04a847802f35f99fe",
+  "candidate_commit": null,
+  "state": "uncommitted source patch; frozen before fresh evaluation",
+  "frozen_at_utc": "2026-10-10T23:21:05.132391+00:00",
+  "production_source_files": [
+    {
+      "path": "Cargo.lock",
+      "sha256": "a1de8f8edf82703a65e02749a4f762f2645e6d59462afd1034b0b1a204e3426b"
+    },
+    {
+      "path": "Cargo.toml",
+      "sha256": "ec1c57c4e53d356ea05e9447f83a0eb4072bceb980cf1769abc0b7de819b33fb"
+    },
+    {
+      "path": "crates/serein-cli/Cargo.toml",
+      "sha256": "2b46ba4dbf6f60a76188ae36c54ffe82b7a968dbcd48560d5fa67f1cbe91dcb1"
+    },
+    {
+      "path": "crates/serein-cli/src/doctor.rs",
+      "sha256": "ee0683c59b9025c1a9a4f868b7cae8f567225d6a846bab12475036284dbabb6a"
+    },
+    {
+      "path": "crates/serein-cli/src/main.rs",
+      "sha256": "713509cd6748a54020fe7417318983fbe4774bab9b6e885ccd42033c8c6794e8"
+    },
+    {
+      "path": "crates/serein-core/Cargo.toml",
+      "sha256": "78f2abfed12c6cb2596477b726f227cc25bd2531c776ec047ab703dc30c8afa0"
+    },
+    {
+      "path": "crates/serein-core/build.rs",
+      "sha256": "8579a0179ce97f55bb554897631ed11410d818605eb4d1ca98da37062b91e39b"
+    },
+    {
+      "path": "crates/serein-core/src/algorithm.rs",
+      "sha256": "a3c023b170de40f11c4dfb14a90359b4cbe679752784b8804694315e3fec0616"
+    },
+    {
+      "path": "crates/serein-core/src/feedback.rs",
+      "sha256": "92192268f378917f80c64e8be99c8073427f5db7c90927fca2f00e9d0124b382"
+    },
+    {
+      "path": "crates/serein-core/src/importance.rs",
+      "sha256": "6ec424fd37ed262d8acec9f101367839d6e9bf595b37d4be4feb900b76a12cb8"
+    },
+    {
+      "path": "crates/serein-core/src/inference.rs",
+      "sha256": "1938b468e311dd53117f7d3027873e9a41784f56b9a9cdc3953598ba0cd4f2a9"
+    },
+    {
+      "path": "crates/serein-core/src/install.rs",
+      "sha256": "8b3ad7c4caaacbc5a1ad0827d56e8d929653a0021196ee75d0c968a32abe46a4"
+    },
+    {
+      "path": "crates/serein-core/src/lexical.rs",
+      "sha256": "ab01e5b2a9f3431c048eda133d987359e17c8f1bc0d15701d821e7246e179f42"
+    },
+    {
+      "path": "crates/serein-core/src/lib.rs",
+      "sha256": "1cf3b38321c9d5bd11e3e5e1577dd5af6eaf89d50c37057e71814ad4fe6098d4"
+    },
+    {
+      "path": "crates/serein-core/src/model.rs",
+      "sha256": "244fe286e20654a044508e8a7ab9840cb3130bc842b4dd961c530c95bfa5894a"
+    },
+    {
+      "path": "crates/serein-core/src/policy.rs",
+      "sha256": "b8faf269c7361d18cae523d2b3bd5df563e2c6fafd36c9890d20a84927871e74"
+    },
+    {
+      "path": "crates/serein-core/src/protocol.rs",
+      "sha256": "d5f6face5d327394b3ab12ff0d49e56020d4a4f06a34dac54ecbcff810b63ad6"
+    },
+    {
+      "path": "crates/serein-core/src/query_contract.rs",
+      "sha256": "9354cab42ac72e637b37c58ed52d5ce67a1f5130ed6f5fb07e0a640f1d3c4dd4"
+    },
+    {
+      "path": "crates/serein-core/src/retrieval.rs",
+      "sha256": "5b2891302a462751fcff9f65223512ed4c9dcf0ce4c7ac6c380fb4360744a8be"
+    },
+    {
+      "path": "crates/serein-core/src/storage.rs",
+      "sha256": "638d05127b4bbec3be0145bd5ada8f5df8211562448f365380660f9b107053f1"
+    },
+    {
+      "path": "crates/serein-host/Cargo.toml",
+      "sha256": "430506ac727a5685ebfba360f5992faeff233d14d86b3f0e2a14d517f496f0c3"
+    },
+    {
+      "path": "crates/serein-host/src/main.rs",
+      "sha256": "39a026105ee8b2bf96f39ba249e5aa687ddb1db852b4e60c61a7013645a73aec"
+    }
+  ],
+  "production_source_sha256": "0f27c6d52b2d26a989e108ed3d115e6af7979b3d607890f3d768c3749bfab670",
+  "binary_build": "cargo build --workspace --release --locked --offline; local macOS arm64; path remapping not applied; not release artifacts",
+  "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
+  "binaries": {
+    "serein": {
+      "sha256": "ca2aee02ccced237965235fd85232e86a7bc635ee7d62e5778d14e202e170647",
+      "bytes": 8151184
+    },
+    "serein-host": {
+      "sha256": "90231be6afc4d89f122a4e863c4a28ac56822b132ce6b4f5565276e1d6577db8",
+      "bytes": 7668624
+    }
+  },
+  "model_manifest_sha256": "8661322502cf2881aec0b935e92b802c0538cbb397bd8b5f36fa2253bdec9e16",
+  "original_local_report_sha256": "3bd14cf1712ad56040e6189fdd6ac76380193a3156510831c457c2209e2674fd",
+  "export_note": "Machine-local paths omitted; metrics, fixture IDs, packets and labels retained."
+}

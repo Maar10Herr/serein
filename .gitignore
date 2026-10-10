@@ -12,6 +12,7 @@ coverage/
 test-results/
 playwright-report/
 .test-data/
+/.implementation/
 
 # Local data, logs, caches, and editor/OS metadata.
 *.sqlite*

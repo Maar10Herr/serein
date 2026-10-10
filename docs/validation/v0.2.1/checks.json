@@ -1,0 +1,39 @@
+{
+  "version": "0.2.1",
+  "platform": "macOS Apple silicon",
+  "rust": {
+    "passed": 182,
+    "failed": 0,
+    "ignored": 1,
+    "format": "passed",
+    "locked_release_build": "passed",
+    "migration_reader_probes": "passed"
+  },
+  "extension": {
+    "typecheck": "passed",
+    "vitest_passed": 58,
+    "production_builds": [
+      "chrome",
+      "firefox"
+    ]
+  },
+  "contracts": {
+    "valid_examples": 15,
+    "unknown_field_mutations_rejected": 15
+  },
+  "native_bridge": "passed",
+  "install_uninstall_preservation": "passed",
+  "relocated_skill_with_spaces_and_lost_executable_bits": "passed",
+  "skill_with_os_network_denial": "passed",
+  "package_binding_tests": {
+    "passed": 8,
+    "failed": 0
+  },
+  "six_adapter_setup_paths": "covered by temporary installer and generic executor fixtures",
+  "actual_named_assistant_discovery_and_triggered_recall": "unverified for each client",
+  "notes": [
+    "The ignored diagnostic was executed separately during the retrieval study.",
+    "These local checks precede the main-branch CI run; GitHub records CI status for the release tag commit.",
+    "No live user vault or browser registration was migrated."
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "status": "paired_fresh_fixture_runner_failed",
+  "error": "Fresh document row does not match the documented fields.",
+  "runtime_cases_attempted": 0,
+  "original_report_sha256": "19ab8a9910989409d7713b55e33626313cb8c00064a8da6c44424477b8ea92e7",
+  "repair": "Evaluation-only provenance/provenance_type field alias. Fixture, production implementation and labels unchanged."
+}

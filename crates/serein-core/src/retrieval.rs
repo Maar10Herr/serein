@@ -1,72 +1,19 @@
 //! Bounded candidate generation and rank fusion for a local vault.
+#[cfg(test)]
+mod research_diagnostics;
+
 use crate::feedback::{self, FeedbackEntry, FeedbackResolution};
+use crate::query_contract::{
+    self, exact_constraints, exact_spans, AnswerRequirement, ExactConstraint, ExactKind,
+    ExactRequirement,
+};
 use crate::{algorithm, importance, model, policy, Recall, Result};
 use rusqlite::{params_from_iter, Connection};
 use serde_json::{json, Value};
 use std::{
-    collections::{BTreeSet, HashMap},
-    sync::LazyLock,
+    collections::{BTreeSet, HashMap, HashSet},
     time::Instant,
 };
-
-static EXACT_PATTERN: LazyLock<regex::Regex> = LazyLock::new(|| {
-    regex::Regex::new(
-    r"(?ix)
-    (?P<date>\b[0-9]{4}-[0-9]{2}-[0-9]{2}\b)
-    |(?P<version>\bv[0-9]+(?:\.[0-9]+)+\b)
-    |(?P<currency>[$€]\s*[0-9]+(?:[.,][0-9]+)?)
-    |(?P<measure>\b[0-9]+(?:[.,][0-9]+)?[\s-]*(?:(?:mm|cm|kg|mb|gb|tb|mhz|ghz|w|v|years?|inches|inch)\b|%))
-    |(?P<identifier>\b[a-z]+[0-9][a-z0-9-]*\b)
-    "
-).expect("fixed exact-constraint pattern")
-});
-
-#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
-enum ExactKind {
-    Date,
-    Version,
-    Currency,
-    Measurement,
-    Identifier,
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
-struct ExactConstraint {
-    kind: ExactKind,
-    normalized: String,
-}
-
-fn exact_constraints(text: &str) -> BTreeSet<ExactConstraint> {
-    EXACT_PATTERN
-        .captures_iter(text)
-        .filter_map(|capture| {
-            let (kind, found) = [
-                (ExactKind::Date, "date"),
-                (ExactKind::Version, "version"),
-                (ExactKind::Currency, "currency"),
-                (ExactKind::Measurement, "measure"),
-                (ExactKind::Identifier, "identifier"),
-            ]
-            .into_iter()
-            .find_map(|(kind, name)| capture.name(name).map(|m| (kind, m.as_str())))?;
-            Some(ExactConstraint {
-                kind,
-                normalized: found
-                    .to_lowercase()
-                    .chars()
-                    .filter(|c| !c.is_whitespace() && *c != '-')
-                    .collect(),
-            })
-        })
-        .collect()
-}
-
-#[derive(Clone, Debug)]
-struct IdentifierSpan {
-    start: usize,
-    end: usize,
-    raw: String,
-    normalized: String,
-}
 
 fn standalone_word_spans(text: &str) -> Vec<(String, usize, usize)> {
     let mut words = Vec::new();
@@ -112,58 +59,82 @@ fn comparison_arm_requests(request: &Recall) -> Option<[Recall; 2]> {
     }
     let and_word = and_words[0];
 
-    let mut identifiers: Vec<_> = EXACT_PATTERN
-        .captures_iter(query)
-        .filter_map(|capture| {
-            let matched = capture.name("identifier")?;
-            let normalized = exact_constraints(matched.as_str())
-                .into_iter()
-                .find(|constraint| constraint.kind == ExactKind::Identifier)?
-                .normalized;
-            Some(IdentifierSpan {
-                start: matched.start(),
-                end: matched.end(),
-                raw: matched.as_str().to_owned(),
-                normalized,
-            })
+    let mut identifiers: Vec<_> = exact_spans(query)
+        .into_iter()
+        .filter(|span| {
+            span.constraint.kind == ExactKind::Identifier
+                && span
+                    .constraint
+                    .normalized
+                    .chars()
+                    .any(|ch| ch.is_ascii_digit())
         })
         .collect();
     if identifiers.len() != 2 {
         return None;
     }
     identifiers.sort_by_key(|identifier| identifier.start);
-    if identifiers[0].normalized == identifiers[1].normalized
+    if identifiers[0].constraint.normalized == identifiers[1].constraint.normalized
         || identifiers[0].end >= and_word.1
         || identifiers[1].start <= and_word.2
     {
         return None;
     }
 
-    let mut removals = vec![
-        (first_word.1, first_word.2),
-        (and_word.1, and_word.2),
-        (identifiers[0].start, identifiers[0].end),
-        (identifiers[1].start, identifiers[1].end),
-    ];
-    removals.sort_by(|left, right| right.0.cmp(&left.0));
-    let mut shared = query.to_owned();
-    for (start, end) in removals {
-        shared.replace_range(start..end, " ");
-    }
-    let shared = shared.split_whitespace().collect::<Vec<_>>().join(" ");
-    identifiers.sort_by(|left, right| left.normalized.cmp(&right.normalized));
-
-    let arm_request = |identifier: &IdentifierSpan| {
-        let mut arm = request.clone();
-        arm.query = if shared.is_empty() {
-            identifier.raw.clone()
-        } else {
-            format!("{shared} {}", identifier.raw)
-        };
-        arm.facets.clear();
-        arm
+    let first_local = query[identifiers[0].end..and_word.1].trim();
+    let suffix = query[identifiers[1].end..].trim();
+    let prefix = query[first_word.2..identifiers[0].start].trim();
+    let (first_attributes, second_attributes, shared_suffix) = if first_local.is_empty() {
+        // With no qualifier on the first arm, retain the established shared-suffix form.
+        (String::new(), String::new(), suffix.to_owned())
+    } else {
+        // An explicit numeric qualifier before `and` starts the narrow arm-local form.
+        // Only leading typed values belong to the second arm; its remaining suffix is shared.
+        let (first, remainder) = leading_comparison_values(first_local)?;
+        if first.is_empty() || !remainder.is_empty() {
+            return None;
+        }
+        let (second, remainder) = leading_comparison_values(suffix)?;
+        (first, second, remainder.to_owned())
     };
-    Some([arm_request(&identifiers[0]), arm_request(&identifiers[1])])
+    let shared = format!("{prefix} {shared_suffix}")
+        .split_whitespace()
+        .collect::<Vec<_>>()
+        .join(" ");
+    let mut arms: Vec<_> = identifiers
+        .iter()
+        .zip([first_attributes, second_attributes])
+        .map(|(identifier, local)| {
+            let mut arm = request.clone();
+            arm.query = format!("{shared} {local} {}", identifier.raw)
+                .split_whitespace()
+                .collect::<Vec<_>>()
+                .join(" ");
+            arm.facets.clear();
+            (identifier.constraint.normalized.clone(), arm)
+        })
+        .collect();
+    arms.sort_by(|a, b| a.0.cmp(&b.0));
+    Some([arms.remove(0).1, arms.remove(0).1])
+}
+
+fn leading_comparison_values(text: &str) -> Option<(String, &str)> {
+    let mut rest = text.trim();
+    if rest
+        .get(..5)
+        .is_some_and(|prefix| prefix.eq_ignore_ascii_case("with "))
+    {
+        rest = rest[5..].trim_start();
+    }
+    let mut values = Vec::new();
+    while let Some(span) = exact_spans(rest).into_iter().next() {
+        if span.start != 0 || span.constraint.kind == ExactKind::Identifier {
+            break;
+        }
+        values.push(rest[..span.end].to_owned());
+        rest = rest[span.end..].trim_start();
+    }
+    Some((values.join(" "), rest))
 }
 
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -278,7 +249,14 @@ fn ordered_direction(text: &str) -> Option<OrderedDirection> {
     let to_positions: Vec<_> = words
         .iter()
         .enumerate()
-        .filter_map(|(index, (word, _, _))| word.eq_ignore_ascii_case("to").then_some(index))
+        .filter_map(|(index, (word, _, _))| {
+            // `How to migrate from X to Y` contains an infinitive marker as
+            // well as the direction separator. Other extra `to`s stay ambiguous.
+            let infinitive = index == 1
+                && words[0].0.eq_ignore_ascii_case("how")
+                && from_positions.first().is_some_and(|from| *from > 2);
+            (word.eq_ignore_ascii_case("to") && !infinitive).then_some(index)
+        })
         .collect();
     if from_positions.len() != 1 || to_positions.len() != 1 {
         return None;
@@ -318,8 +296,44 @@ fn direction_relation(request: &OrderedDirection, evidence_text: &str) -> Direct
     }
 }
 
-fn tokens(request: &Recall) -> Vec<String> {
+fn tokens(request: &Recall, tokenizer: &crate::lexical::Unicode61<'_>) -> Result<Vec<String>> {
     const STOP: &[&str] = &[
+        "is",
+        "it",
+        "to",
+        "be",
+        "of",
+        "in",
+        "on",
+        "at",
+        "as",
+        "by",
+        "or",
+        "my",
+        "we",
+        "an",
+        "do",
+        "so",
+        "if",
+        "de",
+        "la",
+        "el",
+        "en",
+        "es",
+        "un",
+        "le",
+        "du",
+        "au",
+        "je",
+        "il",
+        "et",
+        "ik",
+        "op",
+        "te",
+        "im",
+        "am",
+        "zu",
+        "um",
         "what",
         "about",
         "the",
@@ -450,23 +464,25 @@ fn tokens(request: &Recall) -> Vec<String> {
         "abrí",
         "página",
     ];
-    std::iter::once(request.query.as_str())
-        .chain(request.facets.iter().map(String::as_str))
-        .flat_map(|s| {
-            s.to_lowercase()
-                .split(|c: char| !c.is_alphanumeric())
-                .filter(|word| {
-                    !word.is_empty()
-                        && (word.chars().count() > 2
-                            || !word.is_ascii()
-                            || word.chars().all(|c| c.is_ascii_digit()))
-                })
-                .map(str::to_string)
-                .collect::<Vec<_>>()
-        })
-        .filter(|word| !STOP.contains(&word.as_str()))
-        .take(32)
-        .collect()
+    let stop: HashSet<_> = tokenizer.tokenize(&STOP.join(" "))?.into_iter().collect();
+    let mut words = Vec::new();
+    let mut seen = HashSet::new();
+    for text in
+        std::iter::once(request.query.as_str()).chain(request.facets.iter().map(String::as_str))
+    {
+        for word in tokenizer.tokenize(&canonical_lexical_identifiers(text))? {
+            if (word.chars().count() >= 2 || word.chars().all(|c| c.is_ascii_digit()))
+                && !stop.contains(&word)
+                && seen.insert(word.clone())
+            {
+                words.push(word);
+                if words.len() == 32 {
+                    return Ok(words);
+                }
+            }
+        }
+    }
+    Ok(words)
 }
 
 fn compact(text: &str) -> String {
@@ -480,10 +496,10 @@ fn observed_text(site: &str, title: &str, query: Option<&str>) -> String {
     compact(&format!("{site} {title} {}", query.unwrap_or("")))
 }
 
-fn main_terms(request: &Recall) -> Vec<String> {
+fn main_terms(request: &Recall, tokenizer: &crate::lexical::Unicode61<'_>) -> Result<Vec<String>> {
     let mut main = request.clone();
     main.facets.clear();
-    tokens(&main)
+    tokens(&main, tokenizer)
 }
 
 fn deadline_reached(start: Instant, budget: u64) -> bool {
@@ -546,121 +562,122 @@ fn admissible_exact_facets(
     admissible
 }
 
-fn lexical_coverage(terms: &[String], text: &str) -> (usize, f32) {
+fn cjk_phrase(term: &str) -> bool {
+    term.chars().count() >= 2
+        && term.chars().all(|ch| {
+            matches!(ch as u32,
+        0x3040..=0x30ff | 0x3400..=0x4dbf | 0x4e00..=0x9fff | 0xf900..=0xfaff | 0x20000..=0x3134f)
+        })
+}
+
+fn lexical_inflections(term: &str) -> Vec<String> {
+    let mut forms = vec![term.to_owned()];
+    if term.chars().all(|ch| ch.is_alphabetic()) {
+        if let Some(singular) = term
+            .strip_suffix('s')
+            .filter(|singular| singular.chars().count() >= 4)
+        {
+            forms.push(singular.to_owned());
+        }
+    }
+    forms
+}
+
+fn lexical_forms(term: &str) -> Vec<String> {
+    let mut forms = lexical_inflections(term);
+    match term {
+        "airplane" | "aircraft" => forms.push("plane".to_owned()),
+        "video" => forms.push("youtube".to_owned()),
+        _ => {}
+    }
+    forms
+}
+
+fn lexical_coverage(terms: &[String], content: &[String]) -> (usize, f32) {
     if terms.is_empty() {
         return (0, 0.0);
     }
+    let content_forms: HashSet<_> = content
+        .iter()
+        .flat_map(|term| lexical_inflections(term))
+        .collect();
     let matched = terms
         .iter()
         .filter(|term| {
-            let normalized = compact(term);
-            text.contains(&normalized)
-                || normalized
-                    .strip_suffix('s')
-                    .is_some_and(|singular| singular.len() >= 4 && text.contains(singular))
-                || match normalized.as_str() {
-                    "airplane" | "aircraft" => text.contains("plane"),
-                    "video" => text.contains("youtube"),
-                    _ => false,
-                }
+            lexical_forms(term).iter().any(|form| {
+                content_forms.contains(form)
+                    || cjk_phrase(form) && content.iter().any(|token| token.contains(form))
+            })
         })
         .count();
     (matched, matched as f32 / terms.len() as f32)
 }
 
+fn lexical_fts_query(terms: &[String]) -> String {
+    let mut forms: BTreeSet<_> = terms.iter().flat_map(|term| lexical_forms(term)).collect();
+    // The exact identifier gate decides equivalence; this phrase only discovers
+    // the alternate FTS spelling (e.g. RX-100 tokenizes as `rx 100`).
+    for term in terms {
+        if let Some(index) = term.find(|ch: char| ch.is_ascii_digit()) {
+            if index > 0 && term[..index].chars().all(|ch| ch.is_ascii_alphabetic()) {
+                forms.insert(format!("{} {}", &term[..index], &term[index..]));
+            }
+        }
+    }
+    forms
+        .iter()
+        .map(|form| format!("\"{}\"", form.replace('"', "\"\"")))
+        .collect::<Vec<_>>()
+        .join(" OR ")
+}
+
+fn evidence_tokens(tokenizer: &crate::lexical::Unicode61<'_>, text: &str) -> Result<Vec<String>> {
+    let mut tokens = tokenizer.tokenize(text)?;
+    tokens.extend(
+        exact_constraints(text)
+            .into_iter()
+            .filter(|constraint| constraint.kind == ExactKind::Identifier)
+            .map(|constraint| constraint.normalized),
+    );
+    Ok(tokens)
+}
+
+fn canonical_lexical_identifiers(text: &str) -> String {
+    let mut canonical = String::with_capacity(text.len());
+    let mut end = 0;
+    for span in exact_spans(text)
+        .into_iter()
+        .filter(|span| span.constraint.kind == ExactKind::Identifier)
+    {
+        canonical.push_str(&text[end..span.start]);
+        canonical.push_str(&span.constraint.normalized);
+        end = span.end;
+    }
+    canonical.push_str(&text[end..]);
+    canonical
+}
+
 fn required_acronyms(request: &Recall) -> Vec<String> {
-    request
-        .query
-        .split(|ch: char| !ch.is_alphanumeric())
-        .filter(|part| {
-            part.len() >= 3
+    let money = exact_spans(&request.query)
+        .into_iter()
+        .filter(|span| span.constraint.kind == ExactKind::Currency)
+        .collect::<Vec<_>>();
+    standalone_word_spans(&request.query)
+        .into_iter()
+        .filter(|(part, start, end)| {
+            !money
+                .iter()
+                .any(|span| *start >= span.start && *end <= span.end)
+                && part.len() >= 3
                 && part.is_ascii()
                 && part.chars().any(|ch| ch.is_ascii_alphabetic())
                 && part
                     .chars()
                     .all(|ch| !ch.is_ascii_alphabetic() || ch.is_ascii_uppercase())
         })
-        .map(compact)
+        .map(|(part, _, _)| compact(&part))
         .collect()
 }
-
-fn confirmed_answer_required(query: &str) -> bool {
-    let query = query.to_lowercase();
-    [
-        "did i choose",
-        "did i decide",
-        "did i buy",
-        "did i purchase",
-        "did i book",
-        "did i reserve",
-        "i chose",
-        "i decided",
-        "i bought",
-        "i purchased",
-        "i booked",
-        "i reserved",
-        "i selected",
-        "i picked",
-        "my preference",
-        "my preferences",
-        "generally like",
-        "strong interest",
-        "happened to me",
-        "did i prefer",
-        "which did i buy",
-        "elegí",
-        "reservé",
-        "prefería",
-        "decidí",
-        "compré",
-        "j'ai choisi",
-        "j'ai acheté",
-        "j'ai décidé",
-        "ik koos",
-        "ik heb gekocht",
-        "ich habe gekauft",
-        "ich entschied",
-        "買いました",
-        "買った",
-        "決めました",
-        "決めた",
-        "選びました",
-        "予約しました",
-        "买了",
-        "购买了",
-        "决定了",
-        "选择了",
-        "预订了",
-        "喜欢",
-        "偏好",
-    ]
-    .iter()
-    .any(|phrase| query.contains(phrase))
-        || query.contains("did i make") && query.contains("reservation")
-}
-
-fn numeric_answer_required(query: &str) -> bool {
-    let query = query.to_lowercase();
-    [
-        "exact price",
-        "how much",
-        "costaba",
-        "cuánto cost",
-        "precio exacto",
-        "electricity rate",
-        "料金はいくら",
-        "価格はいくら",
-        "多少钱",
-        "具体价格",
-    ]
-    .iter()
-    .any(|phrase| query.contains(phrase))
-}
-
-static MONEY_VALUE: LazyLock<regex::Regex> = LazyLock::new(|| {
-    regex::Regex::new(r"(?i)(?:[$€¥]\s*\d|\b\d+(?:[.,]\d+)?\s*(?:usd|eur|jpy|円|元|/\s*kwh))")
-        .expect("fixed monetary-value pattern")
-});
 
 fn bare_identifier_cannot_explain_itself(request: &Recall, raw: &str) -> bool {
     let question = request.query.to_lowercase();
@@ -688,7 +705,7 @@ fn relevance_admitted(
     lexical_rank: Option<usize>,
     semantic_main_score: Option<f32>,
     main_terms: &[String],
-    content: &str,
+    content: &[String],
     facets: &[String],
     raw: &str,
 ) -> bool {
@@ -793,11 +810,11 @@ impl CandidateEvidence {
     }
 
     fn observed_content(&self) -> String {
-        compact(&format!(
+        format!(
             "{} {}",
             self.original_title,
             self.original_query.as_deref().unwrap_or("")
-        ))
+        )
     }
 
     fn observed_raw(&self) -> &str {
@@ -888,6 +905,7 @@ pub(crate) struct RankedCandidate {
 pub(crate) struct CandidateBatch {
     pub(crate) candidates: Vec<RankedCandidate>,
     pub(crate) compare_models: bool,
+    pub(crate) unsupported_exact_query: bool,
 }
 
 impl std::ops::Deref for CandidateBatch {
@@ -908,6 +926,11 @@ fn format_ranked_candidate(
     let raw = evidence.effective_text.as_str();
     let text = if confirmed {
         raw.to_owned()
+    } else if evidence.original_query.is_some() && evidence.original_title != raw {
+        format!(
+            "Observed search on {}: {}; page title: {}",
+            evidence.site, raw, evidence.original_title
+        )
     } else {
         format!(
             "Observed {} on {}: {}",
@@ -985,6 +1008,7 @@ impl ResolvedEvidence {
 }
 
 struct EligibilityPlan<'a> {
+    tokenizer: crate::lexical::Unicode61<'a>,
     source: &'a str,
     policy: &'a crate::Policy,
     request: &'a Recall,
@@ -993,21 +1017,23 @@ struct EligibilityPlan<'a> {
     exact_facets: Vec<String>,
     acronyms: Vec<String>,
     needs_confirmation: bool,
-    needs_number: bool,
+    answer_requirement: AnswerRequirement,
     retention_cutoff: String,
     now: i64,
 }
 
 impl<'a> EligibilityPlan<'a> {
     fn new(
+        conn: &'a Connection,
         source: &'a str,
         policy: &'a crate::Policy,
         request: &'a Recall,
         encoder: Option<&model::Encoder>,
         start: Instant,
         budget: u64,
-    ) -> Self {
+    ) -> Result<Self> {
         Self::new_at(
+            conn,
             source,
             policy,
             request,
@@ -1019,6 +1045,7 @@ impl<'a> EligibilityPlan<'a> {
     }
 
     fn new_at(
+        conn: &'a Connection,
         source: &'a str,
         policy: &'a crate::Policy,
         request: &'a Recall,
@@ -1026,14 +1053,18 @@ impl<'a> EligibilityPlan<'a> {
         start: Instant,
         budget: u64,
         now: chrono::DateTime<chrono::Utc>,
-    ) -> Self {
+    ) -> Result<Self> {
         let retention_cutoff = (now.clone() - chrono::Duration::days(90))
             .to_rfc3339_opts(chrono::SecondsFormat::Secs, true);
-        Self {
+        let tokenizer = crate::lexical::Unicode61::new(conn)?;
+        let main_terms = main_terms(request, &tokenizer)?;
+        let contract = query_contract::analyze_query(&request.query);
+        Ok(Self {
             source,
             policy,
             request,
-            main_terms: main_terms(request),
+            main_terms,
+            tokenizer,
             exact: exact_constraints(
                 &std::iter::once(&request.query)
                     .chain(request.facets.iter())
@@ -1043,11 +1074,11 @@ impl<'a> EligibilityPlan<'a> {
             ),
             exact_facets: admissible_exact_facets(request, encoder, start, budget),
             acronyms: required_acronyms(request),
-            needs_confirmation: confirmed_answer_required(&request.query),
-            needs_number: numeric_answer_required(&request.query),
+            needs_confirmation: contract.requires_confirmation,
+            answer_requirement: contract.answer,
             retention_cutoff,
             now: now.timestamp(),
-        }
+        })
     }
 
     fn site_allowed(&self, site: &str) -> bool {
@@ -1080,6 +1111,9 @@ impl<'a> EligibilityPlan<'a> {
     }
 
     fn exact_supported(&self, text: &str) -> bool {
+        if self.exact.is_empty() {
+            return true;
+        }
         let available = exact_constraints(text);
         self.exact
             .iter()
@@ -1105,7 +1139,10 @@ impl<'a> EligibilityPlan<'a> {
                 !importance::groupable(&evidence.original_title, Some(search))
                     && exact_constraints(search).is_empty()
             })
-            || self.needs_number && !MONEY_VALUE.is_match(raw)
+            || !query_contract::answer_value_supported(
+                self.answer_requirement,
+                &evidence.observed_content(),
+            )
             || bare_identifier_cannot_explain_itself(self.request, raw)
         {
             return false;
@@ -1130,19 +1167,21 @@ impl<'a> EligibilityPlan<'a> {
         evidence: &CandidateEvidence,
         lexical_rank: Option<usize>,
         semantic_main_score: Option<f32>,
-    ) -> bool {
-        self.observed_hard_eligible(evidence)
-            && relevance_admitted(
-                lexical_rank,
-                semantic_main_score,
-                &self.main_terms,
-                &evidence.observed_content(),
-                &self.exact_facets,
-                evidence.observed_raw(),
-            )
+    ) -> Result<bool> {
+        if !self.observed_hard_eligible(evidence) {
+            return Ok(false);
+        }
+        Ok(relevance_admitted(
+            lexical_rank,
+            semantic_main_score,
+            &self.main_terms,
+            &evidence_tokens(&self.tokenizer, &evidence.observed_content())?,
+            &self.exact_facets,
+            evidence.observed_raw(),
+        ))
     }
 
-    fn confirmed_eligible(&self, evidence: &CandidateEvidence) -> Option<usize> {
+    fn confirmed_eligible(&self, evidence: &CandidateEvidence) -> Result<Option<usize>> {
         if evidence.state != EvidenceState::Confirmed
             || evidence.source_id != self.source
             || !evidence.retained
@@ -1152,10 +1191,12 @@ impl<'a> EligibilityPlan<'a> {
             || !self.in_scope(EvidenceState::Confirmed)
             || self.main_terms.is_empty()
         {
-            return None;
+            return Ok(None);
         }
-        let text = evidence.effective_text.as_deref()?;
-        if self.needs_number && !MONEY_VALUE.is_match(text)
+        let Some(text) = evidence.effective_text.as_deref() else {
+            return Ok(None);
+        };
+        if !query_contract::answer_value_supported(self.answer_requirement, text)
             || bare_identifier_cannot_explain_itself(self.request, text)
             || self
                 .acronyms
@@ -1163,10 +1204,11 @@ impl<'a> EligibilityPlan<'a> {
                 .any(|acronym| !compact(text).contains(acronym))
             || !self.exact_supported(text)
         {
-            return None;
+            return Ok(None);
         }
-        let (matched, coverage) = lexical_coverage(&self.main_terms, &compact(text));
-        (matched > 0 && coverage >= 0.50).then_some(matched)
+        let (matched, coverage) =
+            lexical_coverage(&self.main_terms, &evidence_tokens(&self.tokenizer, text)?);
+        Ok((matched > 0 && coverage >= 0.50).then_some(matched))
     }
 }
 
@@ -1265,11 +1307,7 @@ fn lexical_ranks(
     if terms.is_empty() || deadline_reached(start, budget) {
         return Ok(HashMap::new());
     }
-    let query = terms
-        .iter()
-        .map(|term| format!("\"{}\"", term.replace('"', "\"\"")))
-        .collect::<Vec<_>>()
-        .join(" OR ");
+    let query = lexical_fts_query(terms);
     let mut args = vec![
         query,
         plan.source.to_string(),
@@ -1320,11 +1358,91 @@ ORDER BY bm25(atom_fts),a.id LIMIT {RETRIEVAL_ATOM_SCAN_LIMIT}"
             last_seen,
             plan.site_allowed(&site),
         );
-        if plan.observed_supported(&evidence, Some(1), None) {
+        if plan.observed_supported(&evidence, Some(1), None)? {
             ranks.insert(id, ranks.len() + 1);
         }
     }
+    if ranks.len() < algorithm::RETRIEVAL_CANDIDATES_PER_CHANNEL && !deadline_reached(start, budget)
+    {
+        visit_cjk_candidates(conn, &[plan], start, budget, |evidence| {
+            if !ranks.contains_key(&evidence.atom_id)
+                && plan.observed_supported(&evidence, Some(1), None)?
+            {
+                ranks.insert(evidence.atom_id, ranks.len() + 1);
+            }
+            Ok(ranks.len() < algorithm::RETRIEVAL_CANDIDATES_PER_CHANNEL)
+        })?;
+    }
     Ok(ranks)
+}
+
+/// Supplemental literal CJK discovery within the same retained, permitted source.
+/// Unicode61 deliberately keeps CJK runs intact; this bounded lane handles shorter
+/// character phrases without treating Latin substrings as word matches or adding an index.
+fn visit_cjk_candidates(
+    conn: &Connection,
+    plans: &[&EligibilityPlan<'_>],
+    start: Instant,
+    budget: u64,
+    mut visit: impl FnMut(CandidateEvidence) -> Result<bool>,
+) -> Result<()> {
+    let Some(plan) = plans.first() else {
+        return Ok(());
+    };
+    let phrases: BTreeSet<_> = plans
+        .iter()
+        .flat_map(|plan| plan.main_terms.iter())
+        .filter(|term| cjk_phrase(term))
+        .cloned()
+        .collect();
+    if phrases.is_empty() || deadline_reached(start, budget) {
+        return Ok(());
+    }
+    let mut args = vec![plan.source.to_owned(), plan.retention_cutoff.clone()];
+    let filter = site_filter_sql(plan.policy, &mut args);
+    // Match characters while streaming the existing recency index, not with an
+    // unindexed SQL predicate/sort that must finish before we can check time.
+    // Public ingest caps the whole vault at 10,000 atoms; the SQL limit retains
+    // that bound here as well. Admission happens before the caller's rank cap.
+    let sql = format!("SELECT a.id,a.site,a.kind,a.title,a.query,a.last_seen FROM atoms a
+WHERE a.source=? AND a.last_seen>=? {filter}
+AND NOT EXISTS(SELECT 1 FROM feedback f WHERE f.atom=a.id AND f.action IN ('do_not_use','wrong_topic','confirm_constraint'))
+ORDER BY a.last_seen DESC,a.id LIMIT {RETRIEVAL_ATOM_SCAN_LIMIT}");
+    let mut stmt = conn.prepare(&sql)?;
+    let rows = stmt.query_map(params_from_iter(args.iter()), |row| {
+        Ok((
+            row.get::<_, String>(0)?,
+            row.get::<_, String>(1)?,
+            row.get::<_, String>(2)?,
+            row.get::<_, String>(3)?,
+            row.get::<_, Option<String>>(4)?,
+            row.get::<_, String>(5)?,
+        ))
+    })?;
+    for row in rows {
+        if deadline_reached(start, budget) {
+            break;
+        }
+        let (id, site, kind, title, query, last_seen) = row?;
+        if !phrases.iter().any(|phrase| {
+            title.contains(phrase) || query.as_deref().is_some_and(|query| query.contains(phrase))
+        }) {
+            continue;
+        }
+        if !visit(CandidateEvidence::observed(
+            id,
+            plan.source,
+            site.clone(),
+            kind,
+            title,
+            query,
+            last_seen,
+            plan.site_allowed(&site),
+        ))? {
+            break;
+        }
+    }
+    Ok(())
 }
 
 #[derive(Default)]
@@ -1436,7 +1554,8 @@ ORDER BY a.last_seen DESC,a.id LIMIT {RETRIEVAL_ATOM_SCAN_LIMIT}"
         // The main question is the semantic admission signal. Facets can add a
         // small positive ordering bonus, but a generic or cross-language facet
         // cannot suppress a candidate that fits the question itself.
-        if semantic_candidate_admitted(main) && plan.observed_supported(&evidence, None, Some(main))
+        if semantic_candidate_admitted(main)
+            && plan.observed_supported(&evidence, None, Some(main))?
         {
             scored.push((id, semantic_rank_score(main, facet), main));
         }
@@ -1547,7 +1666,7 @@ ORDER BY f.seq DESC,a.id LIMIT 1000"
             confirmation.text.clone(),
             plan.site_allowed(&site),
         );
-        if let Some(matched) = plan.confirmed_eligible(&evidence) {
+        if let Some(matched) = plan.confirmed_eligible(&evidence)? {
             matches.push((id, matched));
         }
     }
@@ -1630,11 +1749,7 @@ fn comparison_lexical_ranks(
     if terms.is_empty() {
         return Ok(ranks);
     }
-    let query = terms
-        .iter()
-        .map(|term| format!("\"{}\"", term.replace('"', "\"\"")))
-        .collect::<Vec<_>>()
-        .join(" OR ");
+    let query = lexical_fts_query(&terms.into_iter().collect::<Vec<_>>());
     let mut args = vec![
         query,
         plans[0].source.to_string(),
@@ -1690,11 +1805,30 @@ ORDER BY bm25(atom_fts),a.id LIMIT {RETRIEVAL_ATOM_SCAN_LIMIT}"
             if ranks[arm].len() >= COMPARISON_LEXICAL_CANDIDATES_PER_ARM {
                 continue;
             }
-            if plans[arm].observed_supported(&evidence, Some(1), None) {
+            if plans[arm].observed_supported(&evidence, Some(1), None)? {
                 let next_rank = ranks[arm].len() + 1;
                 ranks[arm].insert(id.clone(), next_rank);
             }
         }
+    }
+    if ranks
+        .iter()
+        .any(|arm| arm.len() < COMPARISON_LEXICAL_CANDIDATES_PER_ARM)
+        && !deadline_reached(start, budget)
+    {
+        visit_cjk_candidates(conn, &[&plans[0], &plans[1]], start, budget, |evidence| {
+            for arm in 0..2 {
+                if ranks[arm].len() < COMPARISON_LEXICAL_CANDIDATES_PER_ARM
+                    && !ranks[arm].contains_key(&evidence.atom_id)
+                    && plans[arm].observed_supported(&evidence, Some(1), None)?
+                {
+                    ranks[arm].insert(evidence.atom_id.clone(), ranks[arm].len() + 1);
+                }
+            }
+            Ok(ranks
+                .iter()
+                .any(|arm| arm.len() < COMPARISON_LEXICAL_CANDIDATES_PER_ARM))
+        })?;
     }
     Ok(ranks)
 }
@@ -1791,7 +1925,7 @@ ORDER BY a.last_seen DESC,a.id LIMIT {RETRIEVAL_ATOM_SCAN_LIMIT}"
         for arm in 0..2 {
             let main = model::cosine(&query_vectors[arm], &vector);
             if semantic_candidate_admitted(main)
-                && plans[arm].observed_supported(&evidence, None, Some(main))
+                && plans[arm].observed_supported(&evidence, None, Some(main))?
             {
                 scored[arm].push((id.clone(), main));
             }
@@ -1880,7 +2014,7 @@ ORDER BY f.seq DESC,a.id LIMIT 1000"
             plans[0].site_allowed(&site),
         );
         for arm in 0..2 {
-            if let Some(matched) = plans[arm].confirmed_eligible(&evidence) {
+            if let Some(matched) = plans[arm].confirmed_eligible(&evidence)? {
                 ranked[arm].push((id.clone(), matched, seq));
             }
         }
@@ -1918,6 +2052,7 @@ fn comparison_candidates(
     let now = chrono::Utc::now();
     let plans = [
         EligibilityPlan::new_at(
+            conn,
             source,
             policy,
             &arm_requests[0],
@@ -1925,8 +2060,9 @@ fn comparison_candidates(
             start,
             budget,
             now.clone(),
-        ),
+        )?,
         EligibilityPlan::new_at(
+            conn,
             source,
             policy,
             &arm_requests[1],
@@ -1934,7 +2070,7 @@ fn comparison_candidates(
             start,
             budget,
             now,
-        ),
+        )?,
     ];
     if deadline_reached(start, budget) {
         return Ok(Vec::new());
@@ -2117,10 +2253,10 @@ WHERE source=? AND id IN ({placeholders})
                     &candidate,
                     lexical_by_arm[arm].get(&id).copied(),
                     semantic_by_arm.main_scores[arm].get(&id).copied(),
-                ),
+                )?,
                 EvidenceState::Confirmed => {
                     confirmed_by_arm.ranks[arm].contains_key(&id)
-                        && plans[arm].confirmed_eligible(&candidate).is_some()
+                        && plans[arm].confirmed_eligible(&candidate)?.is_some()
                 }
             };
             if eligible {
@@ -2150,6 +2286,21 @@ pub(crate) fn candidates(
     start: Instant,
     budget: u64,
 ) -> Result<CandidateBatch> {
+    // Unsupported numeric semantics must not degrade into a broader search.
+    if std::iter::once(&request.query)
+        .chain(request.facets.iter())
+        .any(|text| {
+            query_contract::exact_requirements(text)
+                .iter()
+                .any(|requirement| !matches!(requirement, ExactRequirement::Equality(_)))
+        })
+    {
+        return Ok(CandidateBatch {
+            candidates: Vec::new(),
+            compare_models: false,
+            unsupported_exact_query: true,
+        });
+    }
     if let Some(arms) = comparison_arm_requests(request) {
         return Ok(CandidateBatch {
             candidates: comparison_candidates(
@@ -2163,6 +2314,7 @@ pub(crate) fn candidates(
                 configured_variant(),
             )?,
             compare_models: true,
+            unsupported_exact_query: false,
         });
     }
     Ok(CandidateBatch {
@@ -2177,6 +2329,7 @@ pub(crate) fn candidates(
             configured_variant(),
         )?,
         compare_models: false,
+        unsupported_exact_query: false,
     })
 }
 
@@ -2207,11 +2360,11 @@ fn candidates_with_variant(
     if deadline_reached(start, budget) {
         return Ok(vec![]);
     }
-    let terms = tokens(request);
+    let plan = EligibilityPlan::new(conn, source, policy, request, encoder, start, budget)?;
+    let terms = tokens(request, &plan.tokenizer)?;
     if deadline_reached(start, budget) {
         return Ok(vec![]);
     }
-    let plan = EligibilityPlan::new(source, policy, request, encoder, start, budget);
     if deadline_reached(start, budget) {
         return Ok(vec![]);
     }
@@ -2365,8 +2518,8 @@ WHERE source=? AND id IN ({placeholders})
                 &candidate,
                 lexical.get(&id).copied(),
                 semantic.main_scores.get(&id).copied(),
-            ),
-            EvidenceState::Confirmed => plan.confirmed_eligible(&candidate).is_some(),
+            )?,
+            EvidenceState::Confirmed => plan.confirmed_eligible(&candidate)?.is_some(),
         };
         let resolved_sequence_matches =
             evidence.latest_confirmation_seq == candidate.latest_confirmation_seq;
@@ -2408,6 +2561,26 @@ WHERE source=? AND id IN ({placeholders})
 
 #[cfg(test)]
 mod tests {
+    fn test_relevance_admitted(
+        lexical_rank: Option<usize>,
+        semantic: Option<f32>,
+        terms: &[String],
+        content: &str,
+        facets: &[String],
+        raw: &str,
+    ) -> bool {
+        let conn = Connection::open_in_memory().unwrap();
+        let tokenizer = crate::lexical::Unicode61::new(&conn).unwrap();
+        relevance_admitted(
+            lexical_rank,
+            semantic,
+            terms,
+            &evidence_tokens(&tokenizer, content).unwrap(),
+            facets,
+            raw,
+        )
+    }
+
     use super::*;
     use crate::Policy;
     use rusqlite::params;
@@ -2424,6 +2597,25 @@ mod tests {
             max_bytes: 4096,
             budget_ms: 1500,
         }
+    }
+
+    #[test]
+    fn lexical_query_terms_are_unique_and_bounded_after_normalization() {
+        let conn = Connection::open_in_memory().unwrap();
+        let tokenizer = crate::lexical::Unicode61::new(&conn).unwrap();
+        let words = (0..40)
+            .map(|n| format!("item{n}"))
+            .collect::<Vec<_>>()
+            .join(" ");
+        let terms = tokens(
+            &recall(&format!("cafe café cafe\u{301} {words}"), &["extra topic"]),
+            &tokenizer,
+        )
+        .unwrap();
+        assert_eq!(terms.len(), 32);
+        assert_eq!(terms[0], "cafe");
+        assert_eq!(terms.last().unwrap(), "item30");
+        assert_eq!(terms.iter().collect::<HashSet<_>>().len(), 32);
     }
 
     #[test]
@@ -2444,8 +2636,12 @@ mod tests {
                     normalized: "rx100".into(),
                 },
                 ExactConstraint {
+                    kind: ExactKind::Identifier,
+                    normalized: "usb-c".into()
+                },
+                ExactConstraint {
                     kind: ExactKind::Measurement,
-                    normalized: "16gb".into(),
+                    normalized: "16:gb".into(),
                 },
             ])
         );
@@ -2499,6 +2695,7 @@ mod tests {
             "travel from Berlin to New York",
             "travel from north to south from east to west",
             "travel from north to south to east",
+            "travel to south from north to east",
             "travel from north to North",
             "travel from A to B/C",
             "travel from A to B_C",
@@ -2658,7 +2855,7 @@ CREATE TABLE atom_days(atom TEXT,session TEXT);",
     #[test]
     fn semantic_answerability_requires_main_terms_and_supported_evidence() {
         let main_terms = vec!["quiet".to_string(), "grinder".to_string()];
-        assert!(relevance_admitted(
+        assert!(test_relevance_admitted(
             None,
             Some(algorithm::SEMANTIC_RECALL_ADMISSION),
             &main_terms,
@@ -2666,7 +2863,7 @@ CREATE TABLE atom_days(atom TEXT,session TEXT);",
             &[],
             "manual coffee mill",
         ));
-        assert!(!relevance_admitted(
+        assert!(!test_relevance_admitted(
             None,
             Some(algorithm::SEMANTIC_RECALL_ADMISSION - 0.001),
             &main_terms,
@@ -2674,7 +2871,7 @@ CREATE TABLE atom_days(atom TEXT,session TEXT);",
             &[],
             "manual coffee mill",
         ));
-        assert!(!relevance_admitted(
+        assert!(!test_relevance_admitted(
             None,
             Some(1.0),
             &[],
@@ -2682,7 +2879,7 @@ CREATE TABLE atom_days(atom TEXT,session TEXT);",
             &["manual coffee mill".to_string()],
             "manual coffee mill",
         ));
-        assert!(relevance_admitted(
+        assert!(test_relevance_admitted(
             Some(1),
             None,
             &["grinder".to_string()],
@@ -2696,7 +2893,7 @@ CREATE TABLE atom_days(atom TEXT,session TEXT);",
     fn exact_facet_support_requires_the_saved_text_to_contain_the_facet() {
         let main_terms = vec!["train".to_string(), "schedule".to_string()];
         let exact_facet = vec!["ThinkPad X1 Carbon".to_string()];
-        assert!(relevance_admitted(
+        assert!(test_relevance_admitted(
             None,
             Some(0.1),
             &main_terms,
@@ -2704,7 +2901,7 @@ CREATE TABLE atom_days(atom TEXT,session TEXT);",
             &exact_facet,
             "ThinkPad X1 Carbon",
         ));
-        assert!(!relevance_admitted(
+        assert!(!test_relevance_admitted(
             None,
             Some(0.1),
             &main_terms,
@@ -3062,7 +3259,8 @@ CREATE TABLE feedback(seq INTEGER PRIMARY KEY AUTOINCREMENT,id TEXT NOT NULL UNI
         };
         let request = recall("keyboard", &[]);
         let start = Instant::now();
-        let plan = EligibilityPlan::new("source", &policy, &request, None, start, 1500);
+        let plan =
+            EligibilityPlan::new(&conn, "source", &policy, &request, None, start, 1500).unwrap();
         let ranks = lexical_ranks(&conn, &plan, &["keyboard".into()], start, 1500).unwrap();
         assert_eq!(ranks.get("allowed"), Some(&1));
         assert_eq!(ranks.len(), 1);
@@ -3160,7 +3358,16 @@ CREATE TABLE feedback(seq INTEGER PRIMARY KEY AUTOINCREMENT,id TEXT NOT NULL UNI
         let request = recall("Desk lamp installation", &[]);
         let policy = Policy::default();
         let start = Instant::now();
-        let plan = EligibilityPlan::new("source", &policy, &request, Some(&encoder), start, 1500);
+        let plan = EligibilityPlan::new(
+            &conn,
+            "source",
+            &policy,
+            &request,
+            Some(&encoder),
+            start,
+            1500,
+        )
+        .unwrap();
         let matches = semantic_ranks(&conn, &plan, Some(&encoder), &request, start, 1500).unwrap();
         assert_eq!(matches.ranks.get("eligible-guide"), Some(&1));
         assert_eq!(matches.ranks.len(), 1);
@@ -3214,7 +3421,8 @@ CREATE TABLE feedback(seq INTEGER PRIMARY KEY AUTOINCREMENT,id TEXT NOT NULL UNI
         request.scope = vec!["confirmed_preferences".to_owned()];
         let policy = Policy::default();
         let start = Instant::now();
-        let plan = EligibilityPlan::new("source", &policy, &request, None, start, 1500);
+        let plan =
+            EligibilityPlan::new(&conn, "source", &policy, &request, None, start, 1500).unwrap();
         let ranks = confirmed_ranks(&conn, &plan, start, 1500).unwrap();
         assert!(!ranks.contains_key("latest-null"));
         assert_eq!(ranks.get("latest-valid"), Some(&1));

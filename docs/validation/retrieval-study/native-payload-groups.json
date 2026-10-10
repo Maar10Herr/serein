@@ -1,0 +1,320 @@
+{
+  "method": "Supplemental post-run scoring only: frozen labels and packets unchanged; no native query rerun. Native observed payload identity for this metadata-only fixture is whitespace-normalized title (single source, visit kind, no search query/corrections). Hostname is deliberately absent from runtime packet dedup. Capacity ceiling uses maximum assignment of distinct positive payload groups to two slots per site and six total slots. It does not model query admission/deadlines/byte selection, and group credit does not prove independent-source coverage. Raw source-specific recall remains primary.",
+  "source_report_sha256": "9c6ecc69e3adc7b071ffc54e9b54d7fe2d4d8c7de70d3b1b88045e11b4e6c3a3",
+  "arms": {
+    "baseline": {
+      "primary_positive_queries": 12,
+      "macro_native_payload_group_recall_at_6": 0.9166666666666666,
+      "macro_slot_site_attainable_group_recall_at_6": 0.9166666666666666,
+      "queries": [
+        {
+          "query_id": "q-83e605c67afc5033",
+          "included_in_primary": true,
+          "positive_documents": 1,
+          "native_positive_payload_groups": 1,
+          "slot_site_capacity_ceiling": 1,
+          "returned_positive_groups": 1,
+          "native_payload_group_recall_at_6": 1.0,
+          "slot_site_attainable_group_recall_at_6": 1.0
+        },
+        {
+          "query_id": "q-f4f86c8c03aad608",
+          "included_in_primary": true,
+          "positive_documents": 2,
+          "native_positive_payload_groups": 2,
+          "slot_site_capacity_ceiling": 2,
+          "returned_positive_groups": 2,
+          "native_payload_group_recall_at_6": 1.0,
+          "slot_site_attainable_group_recall_at_6": 1.0
+        },
+        {
+          "query_id": "q-4154ecf3f219e618",
+          "included_in_primary": true,
+          "positive_documents": 1,
+          "native_positive_payload_groups": 1,
+          "slot_site_capacity_ceiling": 1,
+          "returned_positive_groups": 1,
+          "native_payload_group_recall_at_6": 1.0,
+          "slot_site_attainable_group_recall_at_6": 1.0
+        },
+        {
+          "query_id": "q-bddbfb923458f5fb",
+          "included_in_primary": true,
+          "positive_documents": 1,
+          "native_positive_payload_groups": 1,
+          "slot_site_capacity_ceiling": 1,
+          "returned_positive_groups": 1,
+          "native_payload_group_recall_at_6": 1.0,
+          "slot_site_attainable_group_recall_at_6": 1.0
+        },
+        {
+          "query_id": "q-c18dc57759b54475",
+          "included_in_primary": true,
+          "positive_documents": 1,
+          "native_positive_payload_groups": 1,
+          "slot_site_capacity_ceiling": 1,
+          "returned_positive_groups": 0,
+          "native_payload_group_recall_at_6": 0.0,
+          "slot_site_attainable_group_recall_at_6": 0.0
+        },
+        {
+          "query_id": "q-f7346ae921a1addd",
+          "included_in_primary": true,
+          "positive_documents": 1,
+          "native_positive_payload_groups": 1,
+          "slot_site_capacity_ceiling": 1,
+          "returned_positive_groups": 1,
+          "native_payload_group_recall_at_6": 1.0,
+          "slot_site_attainable_group_recall_at_6": 1.0
+        },
+        {
+          "query_id": "q-09516b41e9bb3632",
+          "included_in_primary": true,
+          "positive_documents": 1,
+          "native_positive_payload_groups": 1,
+          "slot_site_capacity_ceiling": 1,
+          "returned_positive_groups": 1,
+          "native_payload_group_recall_at_6": 1.0,
+          "slot_site_attainable_group_recall_at_6": 1.0
+        },
+        {
+          "query_id": "q-45be9e8a0171e5bd",
+          "included_in_primary": true,
+          "positive_documents": 1,
+          "native_positive_payload_groups": 1,
+          "slot_site_capacity_ceiling": 1,
+          "returned_positive_groups": 1,
+          "native_payload_group_recall_at_6": 1.0,
+          "slot_site_attainable_group_recall_at_6": 1.0
+        },
+        {
+          "query_id": "q-05def4a6c2bce3f4",
+          "included_in_primary": true,
+          "positive_documents": 2,
+          "native_positive_payload_groups": 2,
+          "slot_site_capacity_ceiling": 2,
+          "returned_positive_groups": 2,
+          "native_payload_group_recall_at_6": 1.0,
+          "slot_site_attainable_group_recall_at_6": 1.0
+        },
+        {
+          "query_id": "q-13e8afdeaad0522d",
+          "included_in_primary": false,
+          "positive_documents": 2,
+          "native_positive_payload_groups": 2,
+          "slot_site_capacity_ceiling": 2,
+          "returned_positive_groups": 0,
+          "native_payload_group_recall_at_6": 0.0,
+          "slot_site_attainable_group_recall_at_6": 0.0
+        },
+        {
+          "query_id": "q-5ef23557c45cd49f",
+          "included_in_primary": true,
+          "positive_documents": 0,
+          "native_positive_payload_groups": 0,
+          "slot_site_capacity_ceiling": 0,
+          "returned_positive_groups": 0,
+          "native_payload_group_recall_at_6": null,
+          "slot_site_attainable_group_recall_at_6": null
+        },
+        {
+          "query_id": "q-bcf8906694881dff",
+          "included_in_primary": true,
+          "positive_documents": 1,
+          "native_positive_payload_groups": 1,
+          "slot_site_capacity_ceiling": 1,
+          "returned_positive_groups": 1,
+          "native_payload_group_recall_at_6": 1.0,
+          "slot_site_attainable_group_recall_at_6": 1.0
+        },
+        {
+          "query_id": "q-1e4df037052b572d",
+          "included_in_primary": true,
+          "positive_documents": 0,
+          "native_positive_payload_groups": 0,
+          "slot_site_capacity_ceiling": 0,
+          "returned_positive_groups": 0,
+          "native_payload_group_recall_at_6": null,
+          "slot_site_attainable_group_recall_at_6": null
+        },
+        {
+          "query_id": "q-cf7f075c7a76482c",
+          "included_in_primary": true,
+          "positive_documents": 2,
+          "native_positive_payload_groups": 2,
+          "slot_site_capacity_ceiling": 2,
+          "returned_positive_groups": 2,
+          "native_payload_group_recall_at_6": 1.0,
+          "slot_site_attainable_group_recall_at_6": 1.0
+        },
+        {
+          "query_id": "q-6c2737fa9e90b5d4",
+          "included_in_primary": true,
+          "positive_documents": 2,
+          "native_positive_payload_groups": 1,
+          "slot_site_capacity_ceiling": 1,
+          "returned_positive_groups": 1,
+          "native_payload_group_recall_at_6": 1.0,
+          "slot_site_attainable_group_recall_at_6": 1.0
+        }
+      ]
+    },
+    "candidate": {
+      "primary_positive_queries": 12,
+      "macro_native_payload_group_recall_at_6": 0.9166666666666666,
+      "macro_slot_site_attainable_group_recall_at_6": 0.9166666666666666,
+      "queries": [
+        {
+          "query_id": "q-83e605c67afc5033",
+          "included_in_primary": true,
+          "positive_documents": 1,
+          "native_positive_payload_groups": 1,
+          "slot_site_capacity_ceiling": 1,
+          "returned_positive_groups": 1,
+          "native_payload_group_recall_at_6": 1.0,
+          "slot_site_attainable_group_recall_at_6": 1.0
+        },
+        {
+          "query_id": "q-f4f86c8c03aad608",
+          "included_in_primary": true,
+          "positive_documents": 2,
+          "native_positive_payload_groups": 2,
+          "slot_site_capacity_ceiling": 2,
+          "returned_positive_groups": 2,
+          "native_payload_group_recall_at_6": 1.0,
+          "slot_site_attainable_group_recall_at_6": 1.0
+        },
+        {
+          "query_id": "q-4154ecf3f219e618",
+          "included_in_primary": true,
+          "positive_documents": 1,
+          "native_positive_payload_groups": 1,
+          "slot_site_capacity_ceiling": 1,
+          "returned_positive_groups": 1,
+          "native_payload_group_recall_at_6": 1.0,
+          "slot_site_attainable_group_recall_at_6": 1.0
+        },
+        {
+          "query_id": "q-bddbfb923458f5fb",
+          "included_in_primary": true,
+          "positive_documents": 1,
+          "native_positive_payload_groups": 1,
+          "slot_site_capacity_ceiling": 1,
+          "returned_positive_groups": 1,
+          "native_payload_group_recall_at_6": 1.0,
+          "slot_site_attainable_group_recall_at_6": 1.0
+        },
+        {
+          "query_id": "q-c18dc57759b54475",
+          "included_in_primary": true,
+          "positive_documents": 1,
+          "native_positive_payload_groups": 1,
+          "slot_site_capacity_ceiling": 1,
+          "returned_positive_groups": 1,
+          "native_payload_group_recall_at_6": 1.0,
+          "slot_site_attainable_group_recall_at_6": 1.0
+        },
+        {
+          "query_id": "q-f7346ae921a1addd",
+          "included_in_primary": true,
+          "positive_documents": 1,
+          "native_positive_payload_groups": 1,
+          "slot_site_capacity_ceiling": 1,
+          "returned_positive_groups": 1,
+          "native_payload_group_recall_at_6": 1.0,
+          "slot_site_attainable_group_recall_at_6": 1.0
+        },
+        {
+          "query_id": "q-09516b41e9bb3632",
+          "included_in_primary": true,
+          "positive_documents": 1,
+          "native_positive_payload_groups": 1,
+          "slot_site_capacity_ceiling": 1,
+          "returned_positive_groups": 1,
+          "native_payload_group_recall_at_6": 1.0,
+          "slot_site_attainable_group_recall_at_6": 1.0
+        },
+        {
+          "query_id": "q-45be9e8a0171e5bd",
+          "included_in_primary": true,
+          "positive_documents": 1,
+          "native_positive_payload_groups": 1,
+          "slot_site_capacity_ceiling": 1,
+          "returned_positive_groups": 1,
+          "native_payload_group_recall_at_6": 1.0,
+          "slot_site_attainable_group_recall_at_6": 1.0
+        },
+        {
+          "query_id": "q-05def4a6c2bce3f4",
+          "included_in_primary": true,
+          "positive_documents": 2,
+          "native_positive_payload_groups": 2,
+          "slot_site_capacity_ceiling": 2,
+          "returned_positive_groups": 2,
+          "native_payload_group_recall_at_6": 1.0,
+          "slot_site_attainable_group_recall_at_6": 1.0
+        },
+        {
+          "query_id": "q-13e8afdeaad0522d",
+          "included_in_primary": false,
+          "positive_documents": 2,
+          "native_positive_payload_groups": 2,
+          "slot_site_capacity_ceiling": 2,
+          "returned_positive_groups": 2,
+          "native_payload_group_recall_at_6": 1.0,
+          "slot_site_attainable_group_recall_at_6": 1.0
+        },
+        {
+          "query_id": "q-5ef23557c45cd49f",
+          "included_in_primary": true,
+          "positive_documents": 0,
+          "native_positive_payload_groups": 0,
+          "slot_site_capacity_ceiling": 0,
+          "returned_positive_groups": 0,
+          "native_payload_group_recall_at_6": null,
+          "slot_site_attainable_group_recall_at_6": null
+        },
+        {
+          "query_id": "q-bcf8906694881dff",
+          "included_in_primary": true,
+          "positive_documents": 1,
+          "native_positive_payload_groups": 1,
+          "slot_site_capacity_ceiling": 1,
+          "returned_positive_groups": 0,
+          "native_payload_group_recall_at_6": 0.0,
+          "slot_site_attainable_group_recall_at_6": 0.0
+        },
+        {
+          "query_id": "q-1e4df037052b572d",
+          "included_in_primary": true,
+          "positive_documents": 0,
+          "native_positive_payload_groups": 0,
+          "slot_site_capacity_ceiling": 0,
+          "returned_positive_groups": 0,
+          "native_payload_group_recall_at_6": null,
+          "slot_site_attainable_group_recall_at_6": null
+        },
+        {
+          "query_id": "q-cf7f075c7a76482c",
+          "included_in_primary": true,
+          "positive_documents": 2,
+          "native_positive_payload_groups": 2,
+          "slot_site_capacity_ceiling": 2,
+          "returned_positive_groups": 2,
+          "native_payload_group_recall_at_6": 1.0,
+          "slot_site_attainable_group_recall_at_6": 1.0
+        },
+        {
+          "query_id": "q-6c2737fa9e90b5d4",
+          "included_in_primary": true,
+          "positive_documents": 2,
+          "native_positive_payload_groups": 1,
+          "slot_site_capacity_ceiling": 1,
+          "returned_positive_groups": 1,
+          "native_payload_group_recall_at_6": 1.0,
+          "slot_site_attainable_group_recall_at_6": 1.0
+        }
+      ]
+    }
+  }
+}

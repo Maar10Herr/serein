@@ -6,7 +6,7 @@ Bring useful browser research back into a conversation with your local AI assist
 
 Serein does not read page bodies or import browser history. Collection can be paused or limited to selected sites, and saved observations can be corrected or forgotten. The browser extension and helper run locally; an assistant may send the returned context to its model provider when answering. See [Privacy](docs/PRIVACY.md) and [Security](docs/SECURITY.md).
 
-[Install Serein v0.2.0](docs/INSTALL.md) · [Release v0.2.0](https://github.com/Maar10Herr/serein/releases/tag/v0.2.0) · [Release notes](.github/RELEASE_NOTES.md) · [How it works](#how-it-works) · [Privacy](docs/PRIVACY.md)
+[Install Serein v0.2.1](docs/INSTALL.md) · [Release v0.2.1](https://github.com/Maar10Herr/serein/releases/tag/v0.2.1) · [Release notes](.github/RELEASE_NOTES.md) · [How it works](#how-it-works) · [Privacy](docs/PRIVACY.md)
 
 ![Serein v0.2.0 dashboard showing a constructed public-site research replay](docs/screenshots/research-preview-light.png)
 
@@ -20,17 +20,17 @@ This v0.2.0 preview replays invented visits using public-site titles and hosts o
 
 ## Install
 
-Version **0.2.0** targets **macOS with Apple silicon**, using Chrome or Firefox.
+Version **0.2.1** targets **macOS with Apple silicon**, using Chrome or Firefox.
 
-1. Download the [Chrome ZIP](https://github.com/Maar10Herr/serein/releases/download/v0.2.0/serein-chrome-0.2.0-unsigned.zip) or [Firefox ZIP](https://github.com/Maar10Herr/serein/releases/download/v0.2.0/serein-firefox-0.2.0-unsigned.zip) and load the extracted extension in your browser.
-2. Install the `serein-context` skill from [the Serein repository](https://github.com/Maar10Herr/serein) with your local assistant's skill installer. The [skill ZIP](https://github.com/Maar10Herr/serein/releases/download/v0.2.0/serein-skills-0.2.0.zip) is available for inspection or archive-based installers.
-3. Open **Connections** in the extension, review the capture and recall choices, then select **Copy link instruction**. Paste it into the assistant where you installed the skill. Serein checks the connection automatically.
+1. Download the [Chrome ZIP](https://github.com/Maar10Herr/serein/releases/download/v0.2.1/serein-chrome-0.2.1-unsigned.zip) or [Firefox ZIP](https://github.com/Maar10Herr/serein/releases/download/v0.2.1/serein-firefox-0.2.1-unsigned.zip) and load the extracted extension in your browser.
+2. Install the `serein-context` skill from [the Serein GitHub repository](https://github.com/Maar10Herr/serein) with your assistant's skill installer. For Codex, the Skills CLI command is `npx --yes skills add Maar10Herr/serein --skill serein-context --agent codex --global --yes --copy`. The [skill ZIP](https://github.com/Maar10Herr/serein/releases/download/v0.2.1/serein-skills-0.2.1.zip) is available for archive-based installers.
+3. Open **Connections** in the extension, review the capture and assistant-recall choices, then select **Copy link instruction**. Paste it into the assistant where you installed the skill. Serein checks the connection automatically.
 
 There is no separate runtime download or database path to enter. The [installation guide](docs/INSTALL.md) has browser-specific steps and the Codex Skills CLI command. The extension packages are unsigned; Firefox loads them as temporary add-ons that must be reloaded after a restart.
 
 ## Assistant integrations
 
-The required integration targets are Claude Code, Codex, OpenCode, Hermes, OpenClaw, and a generic local executor. The shared skill package and setup path are documented in the [test report](docs/TEST_REPORT.md), which distinguishes installation evidence from execution inside each assistant.
+The six integration targets are Claude Code, Codex, OpenCode, Hermes, OpenClaw, and a generic local executor. Temporary installer fixtures cover the five named adapters; an earlier Codex GitHub-installer download and setup check passed, and the relocated package passed its bundled-helper setup and reader check. The generic executor passed harness checks. Discovery and skill-triggered recall inside any of the five named assistants remain unverified; see the [test report](docs/TEST_REPORT.md).
 
 ## Retrieval
 
@@ -40,7 +40,7 @@ Two-model `Compare` questions and narrow `from X to Y` questions receive dedicat
 
 ## Evaluation
 
-Retrieval is checked with synthetic research episodes and fixed relevance labels. Existing fixtures are regression checks; the new 24-question set is authored separately before either build runs. These checks do not establish accuracy on real browsing histories. See the [test report](docs/TEST_REPORT.md) for methodology, scores, and remaining validation.
+Retrieval is checked with constructed titles and hostnames and fixed relevance labels. The v0.2.1 study separates 30 handoff regression questions from a sealed primary synthetic set of 14 questions, 12 with expected evidence. These small datasets do not establish accuracy on real browsing histories. See the [retrieval study](docs/validation/retrieval-study/README.md) and [test report](docs/TEST_REPORT.md) for results and remaining validation.
 
 ## Development
 

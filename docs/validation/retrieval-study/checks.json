@@ -1,0 +1,56 @@
+{
+  "baseline_commit": "6ab4722501813b71549627a04a847802f35f99fe",
+  "candidate_source_sha256": "4e5dbb2552985ae920df23d85de221b56d4a26353132980e244e0f9cc38df853",
+  "workspace": {
+    "command": "cargo test --workspace --release --locked --offline -- --test-threads=1",
+    "passed": 182,
+    "failed": 0,
+    "ignored": 1
+  },
+  "format": {
+    "command": "cargo fmt --all -- --check",
+    "status": "passed"
+  },
+  "build": {
+    "command": "cargo build --workspace --release --locked --offline",
+    "status": "passed",
+    "release_artifact": false
+  },
+  "native_stage_diagnostic": {
+    "command": "cargo test -p serein-core --lib --release --locked --offline native_handoff_stage_loss_diagnostic -- --ignored --nocapture",
+    "status": "passed",
+    "passed": 1
+  },
+  "previously_seen_158_queries": {
+    "status": "all four configured gates and packet invariants passed on quality freeze",
+    "labels_unchanged": true,
+    "final_binary_repeated": false,
+    "documented_recall_regression": "duration question without duration or confirmation evidence; holdout noise .7347222222 to .6930555556"
+  },
+  "current_browser_installation_and_named_assistant_validation": "not rerun; all six integrations retain v0.2.0 installed-versus-tested distinctions",
+  "ci": "not run for this uncommitted patch",
+  "log_hashes": {
+    "accepted-workspace.log": "2f16dd80c7686f522bf6edcf12111b3c6b528f4cf12c317ee7280a784a63fa4c",
+    "accepted-build.log": "ea75cf12ce1d74d3a5b9939e3284b0239fd15dd8a3c3839a8a569f37c455adee",
+    "stage-loss-accepted.log": "f5f733681ba6b335c16b5f1f7dfed644c1895cfd6ea7049680afdcc3f5eefc86",
+    "query-contract-duration-baseline-unit.log": "828016a632203ea254dd596d55f21245f345d6427e5d5d2daab2bff504e1fac5",
+    "query-contract-duration-baseline-native.log": "b460b31eff6c5d12b209d45a76142f2136b572ee0fa4b5aef92e6993151d07fd",
+    "check-status-frozen.log": "b65d8d37b69cc3d0c8f02b16b59c03ca8ce099f0da9dde1a9f38b2d798a03ed4"
+  },
+  "logs": "Retained locally under Git-ignored .implementation/research-validation; local paths are not distributed.",
+  "final_same_indexed_vault_regression": {
+    "status": "passed",
+    "queries": 45,
+    "binary_pairs": 3,
+    "same_document_order_text_state": true,
+    "normalized_packets_equal": true,
+    "normalization": "UUIDs and timestamps; comparison includes status, index, context, alternatives and warnings",
+    "fresh_acceptance": false,
+    "report": "same-vault-parity.json"
+  },
+  "temporary_build_cleanup": {
+    "removed_bytes": 2009034752,
+    "project_bytes_after_cleanup": 1840254976,
+    "preserved": "Source, reports, handoffs, frozen test binaries, model, toolchain, migration readers and indexed synthetic seeds"
+  }
+}

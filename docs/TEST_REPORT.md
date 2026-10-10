@@ -1,5 +1,59 @@
 # Serein test report
 
+## v0.2.1 · 2026-10-11
+
+This release targets macOS Apple silicon. The release checks use the rebuilt v0.2.1 helper and extensions. Research snapshots remain separately attributed in the [October retrieval study](validation/retrieval-study/README.md).
+
+### Release checks
+
+| Area | Result |
+| --- | --- |
+| Rust | 182 release-mode workspace tests passed; one optional diagnostic is ignored by default and passed separately in the study. Formatting and the locked offline release build passed. |
+| Migration | Schema 5 is unchanged. Migration, rollback and pinned older-reader rejection tests passed on disposable vaults. |
+| Extension | TypeScript, 58 Vitest tests, and both Chrome/Firefox production builds passed. |
+| Contracts | 15 valid examples and 15 unknown-field mutations passed the contract checker. |
+| Native and installation | Framing, pairing, idempotent ingestion, privacy epochs, forgetting, process exit and install/uninstall preservation passed. |
+| Installed skill | The relocated skill connected, ingested and recalled with spaces in its path and restored executable bits. The same check passed under OS-level network denial. |
+| Artifact binding | Eight tests passed. The bundled executables, model and license files match the current build inputs. |
+| Chrome | Chrome for Testing 148.0.7778.96 passed native pairing, real queued delivery and alarms, recall/forget, corrections, keyboard focus and privacy refresh checks with the bundled helper. [Results](validation/v0.2.1/chrome.json). |
+| Firefox | Copied Firefox 157.0 passed temporary add-on pairing, native delivery, recall/forget, corrections, keyboard focus and privacy refresh checks. The test profile and native manifest were removed. [Results](validation/v0.2.1/firefox.json). |
+
+[Check summary](validation/v0.2.1/checks.json) · [Executable hashes and extension manifests](validation/v0.2.1/build-identity.json)
+
+The [release page](https://github.com/Maar10Herr/serein/releases/tag/v0.2.1) links the GitHub CI run for the tagged commit. The [publication audit](publication-audit.json) records the package scan; archive checksums accompany the release.
+
+### Retrieval assessment
+
+The final bundled pair reproduces all 45 previously seen queries from the accepted research snapshot on byte-identical indexed vaults, including result order, text, evidence state, status and warnings. UUIDs and timestamps are normalized. This is a package regression check, not a new holdout. [Paired replay](validation/v0.2.1/seen-replay.json).
+
+The original research evaluation found a narrow improvement: handoff macro Recall@6 rose from 0.7639 to 0.8056 across 24 positive questions, with all six expected-empty questions staying empty. In the separately sealed primary synthetic set, positive recall stayed at 0.8750, labeled hard-negative returns fell from 10/17 to 6/17, and expected-empty results improved from 1/2 to 2/2. One positive selection question now returns nothing without confirmation; its original label remains a counted miss. The [study](validation/retrieval-study/README.md) preserves every query, label, slice and failure.
+
+These small synthetic sets do not establish real-user accuracy. The bounded literal CJK path can recover unsegmented title matches, but broader cross-language support, general negation, attribute interpretation and independent-source deduplication remain limited. Main-query-only facet admission was attempted again and remains deferred after failing the unchanged multilingual floor. No model, ranking weights, quality floors or labels were tuned to erase those failures.
+
+### Final-package capacity check
+
+The exact v0.2.1 bundle and released v0.2.0 pair were tested on identical pre-index snapshots of 10,000 invented Japanese titles. All records were accepted, and both arms completed indexing in 40 bounded refresh calls. Each warm query has ten process-launch-inclusive samples on macOS 15.7.3 arm64, with sequential arms and warm file caches. [Raw samples and executable hashes](validation/v0.2.1/capacity-10000.json).
+
+| Measurement | v0.2.0 | v0.2.1 |
+| --- | ---: | ---: |
+| Common two-character `東京`, median | 227.2 ms | 275.5 ms |
+| Rare two-character `青磁`, median | 177.0 ms | 158.4 ms |
+| Rare target returned in top six | No | Yes |
+| First recall with an unbuilt index | 138.9 ms | 155.5 ms |
+| Full indexing | 5.639 s | 5.587 s |
+| Indexed database | 25.62 MB | 25.62 MB |
+| Peak measured process RSS | 83.38 MB | 84.93 MB |
+
+The common query costs about 21% more while the rare literal target is recovered. Both common-query packets contain six matching titles; that is top-six precision, not recall over all 10,000 positives. Both first reads remain partial with 9,744 atoms pending. The seed import took 17.47 seconds through the baseline host only; candidate write cost was not independently measured. No OS cold-cache test, peak transient WAL measurement or real-user performance claim is made.
+
+### Integration coverage and distribution
+
+All six setup paths remain represented: Claude Code, Codex, OpenCode, Hermes, OpenClaw, and generic local execution. Temporary fixtures exercise the five named adapters; the relocated skill and generic executor exercise the bundled setup and reader. Discovery and triggered recall inside each named assistant client remain unverified. Harness execution is not an assistant-client run.
+
+The extension and helper are unsigned; Firefox installation is temporary. Windows/Linux helpers, notarization, permanent Firefox installation, managed-browser and clean-machine coverage remain unverified. No live user vault, browser profile or native registration was used. The previews below still depict the constructed v0.2.0 dashboard replay.
+
+---
+
 ## v0.2.0 · 2026-10-02
 
 This release targets macOS Apple silicon. The checks below use the rebuilt v0.2.0 helper and extension, except where a paired experiment names its earlier frozen build. Browser acceptance, synthetic retrieval quality, and assistant-client execution are separate results.

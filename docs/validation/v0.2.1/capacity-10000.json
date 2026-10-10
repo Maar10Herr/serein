@@ -1,0 +1,750 @@
+{
+  "schema_version": 1,
+  "evaluation_role": "synthetic_capacity_performance_probe",
+  "fresh_fixture_claim": false,
+  "natural_language_quality_claim": false,
+  "measurement_utc_date": "2026-10-10",
+  "raw_report_sha256": "c268b389c95fc1e08693a5b843fd0fc23f74ee3d48e8717f75847b74452cd0a4",
+  "environment": {
+    "platform": "macOS-15.7.3-arm64-arm-64bit-Mach-O",
+    "python": "3.14.7",
+    "workspace_commit": "6ab4722501813b71549627a04a847802f35f99fe"
+  },
+  "runtime_bindings": {
+    "released_v0.2.0": {
+      "cli_sha256": "de7aeed2370ab49a97195c485787d2dce9671f3a1666e1083d1d5bc88e105040",
+      "host_sha256": "9fe827b4fca4d571582dfbbe32e547b7f581b1192349a5276f9d4a2617e7f678"
+    },
+    "packaged_v0.2.1": {
+      "cli_sha256": "83a9eac02410d37cb6c602bd1dc18cc141a413ac08eef968adecc2b99a3da29a",
+      "host_sha256": "80e1c8cefe19573d06acd472887a83b350013c2a7a119bc0dea388abcb30f5be",
+      "bundle_sha256sums_sha256": "dd587e6a3841e79024fce81fc7da3961cfc207cd247dc4c2bc0d0c4755124cfb",
+      "source_relation": "per release record, version bump only from accepted research snapshot"
+    }
+  },
+  "model_binding": {
+    "files": {
+      "manifest.json": {
+        "sha256": "8661322502cf2881aec0b935e92b802c0538cbb397bd8b5f36fa2253bdec9e16",
+        "bytes": 481
+      },
+      "scales.f32": {
+        "sha256": "2b42e8dedf1b2b5e45a5cac326ea17d3d9b1e07e12d571f6a09181d73d72c1ee",
+        "bytes": 423516
+      },
+      "tokenizer.json": {
+        "sha256": "11aaf894a4ccf3d95e8830e27c0f8152791fbbff2b988e29a265580b86edd216",
+        "bytes": 2563370
+      },
+      "weights.i8": {
+        "sha256": "ea6daccc4c4fdf27eecfcd2716f5408142947622b5e3dcc356231ea8ddade15e",
+        "bytes": 27105024
+      }
+    },
+    "same_model_payloads_across_arms": true
+  },
+  "fixture": {
+    "atoms": 10000,
+    "unique_event_ids": 10000,
+    "event_fixture_sha256": "5e575a66516a85ea5b682153da422e084cb2c80c4380ca7b1fbb000888c35e72",
+    "pre_index_database_sha256": "da3a1ea25c0301e49a0cb1db5063ff92e5040f94f51cac2d3cacbed4a82e68d3",
+    "same_pre_index_database_and_install_snapshot_for_arms": true,
+    "fields": [
+      "title",
+      "hostname"
+    ],
+    "kind": "visit",
+    "search_query": null,
+    "common_term": "東京",
+    "common_term_matches": 10000,
+    "rare_term": "青磁",
+    "rare_term_matches": 1,
+    "synthetic_observed_at": "2026-10-01T12:00:00Z",
+    "synthetic_foreground_seconds": 5,
+    "synthetic_foreground_seconds_is_not_observed_dwell": true,
+    "accepted_atoms": 10000,
+    "policy_rejections": 0,
+    "privacy_filters_bypassed": false
+  },
+  "samples_and_limits": {
+    "ingest_batch_size": 16,
+    "ingest_batch_count": 625,
+    "completed_index_no_op_refresh_samples_per_arm": 5,
+    "fresh_process_warm_recall_samples_per_query_per_arm": 10,
+    "bounded_index_refresh_batch_size": 256,
+    "index_refresh_calls_per_arm": 40,
+    "first_read_with_pending_index_samples_per_arm": 1,
+    "output_packet_cap": 6,
+    "cold_os_cache_test": false,
+    "candidate_admission_or_ranking_stage_attribution": false
+  },
+  "single_seed_write_cost": {
+    "measured_through_arm": "released_v0.2.0",
+    "attempted_events": 10000,
+    "accepted_events": 10000,
+    "policy_rejections": 0,
+    "ingest_batch_count": 625,
+    "batch_process_wall_ms_including_loop": 17466.992,
+    "sum_native_batch_process_wall_ms": 17350.126,
+    "mean_native_batch_process_wall_ms": 27.76,
+    "process_wall_ms_per_event": 1.7467,
+    "scope": "The seed is ingested once through the baseline native host. Baseline and candidate are then evaluated from byte-identical clones of that ingested pre-index snapshot; candidate ingestion cost is not independently measured."
+  },
+  "arms": {
+    "released_v0.2.0": {
+      "cli_sha256": "de7aeed2370ab49a97195c485787d2dce9671f3a1666e1083d1d5bc88e105040",
+      "host_sha256": "9fe827b4fca4d571582dfbbe32e547b7f581b1192349a5276f9d4a2617e7f678",
+      "index": {
+        "mode": "hybrid",
+        "refresh_calls": 40,
+        "pending_atoms_after": 0,
+        "total_wall_ms": 5639.145
+      },
+      "storage_bytes": {
+        "before_index": 8667136,
+        "after_index": 25620480,
+        "after_eval": 25628672,
+        "index_growth": 16953344,
+        "eval_growth": 8192
+      },
+      "completed_index_no_op_refresh": {
+        "samples": 5,
+        "median_ms": 106.997,
+        "p95_ms_nearest_rank": 114.065,
+        "min_ms": 105.425,
+        "max_ms": 114.065
+      },
+      "common_two_character": {
+        "query": "東京",
+        "synthetic_matching_atoms": 10000,
+        "output_cap": 6,
+        "target_hit_at_k6": true,
+        "target_rows_in_top6": 6,
+        "top6_target_precision": 1.0,
+        "fresh_process_warm_samples": 10,
+        "fresh_process_warm_latency_ms": {
+          "samples": 10,
+          "median_ms": 227.218,
+          "p95_ms_nearest_rank": 230.99,
+          "min_ms": 222.767,
+          "max_ms": 230.99
+        },
+        "peak_child_rss_bytes_median": 69591040,
+        "peak_child_rss_bytes_max": 83066880,
+        "stdout_bytes_median": 2924,
+        "sample_outcomes": [
+          {
+            "status": "ok",
+            "context_count": 6,
+            "target_token_rows": 6,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "ok",
+            "context_count": 6,
+            "target_token_rows": 6,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "ok",
+            "context_count": 6,
+            "target_token_rows": 6,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "ok",
+            "context_count": 6,
+            "target_token_rows": 6,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "ok",
+            "context_count": 6,
+            "target_token_rows": 6,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "ok",
+            "context_count": 6,
+            "target_token_rows": 6,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "ok",
+            "context_count": 6,
+            "target_token_rows": 6,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "ok",
+            "context_count": 6,
+            "target_token_rows": 6,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "ok",
+            "context_count": 6,
+            "target_token_rows": 6,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "ok",
+            "context_count": 6,
+            "target_token_rows": 6,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          }
+        ],
+        "sample_status_counts": {
+          "ok": 10
+        },
+        "all_samples_warning_free": true,
+        "all_samples_same_context_count": true
+      },
+      "rare_two_character": {
+        "query": "青磁",
+        "synthetic_matching_atoms": 1,
+        "output_cap": 6,
+        "target_hit_at_k6": false,
+        "target_rows_in_top6": 0,
+        "top6_target_precision": 0.0,
+        "fresh_process_warm_samples": 10,
+        "fresh_process_warm_latency_ms": {
+          "samples": 10,
+          "median_ms": 177.044,
+          "p95_ms_nearest_rank": 180.365,
+          "min_ms": 175.712,
+          "max_ms": 180.365
+        },
+        "peak_child_rss_bytes_median": 69058560,
+        "peak_child_rss_bytes_max": 83378176,
+        "stdout_bytes_median": 246,
+        "sample_outcomes": [
+          {
+            "status": "empty",
+            "context_count": 0,
+            "target_token_rows": 0,
+            "target_token_hit": false,
+            "all_returned_rows_match_target": false,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "empty",
+            "context_count": 0,
+            "target_token_rows": 0,
+            "target_token_hit": false,
+            "all_returned_rows_match_target": false,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "empty",
+            "context_count": 0,
+            "target_token_rows": 0,
+            "target_token_hit": false,
+            "all_returned_rows_match_target": false,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "empty",
+            "context_count": 0,
+            "target_token_rows": 0,
+            "target_token_hit": false,
+            "all_returned_rows_match_target": false,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "empty",
+            "context_count": 0,
+            "target_token_rows": 0,
+            "target_token_hit": false,
+            "all_returned_rows_match_target": false,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "empty",
+            "context_count": 0,
+            "target_token_rows": 0,
+            "target_token_hit": false,
+            "all_returned_rows_match_target": false,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "empty",
+            "context_count": 0,
+            "target_token_rows": 0,
+            "target_token_hit": false,
+            "all_returned_rows_match_target": false,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "empty",
+            "context_count": 0,
+            "target_token_rows": 0,
+            "target_token_hit": false,
+            "all_returned_rows_match_target": false,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "empty",
+            "context_count": 0,
+            "target_token_rows": 0,
+            "target_token_hit": false,
+            "all_returned_rows_match_target": false,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "empty",
+            "context_count": 0,
+            "target_token_rows": 0,
+            "target_token_hit": false,
+            "all_returned_rows_match_target": false,
+            "warning_count": 0,
+            "warnings": []
+          }
+        ],
+        "sample_status_counts": {
+          "empty": 10
+        },
+        "all_samples_warning_free": true,
+        "all_samples_same_context_count": true
+      },
+      "first_read_with_pending_index": {
+        "pending_before": 10000,
+        "pending_after": 9744,
+        "elapsed_ms": 138.872,
+        "peak_child_rss_bytes": 68337664,
+        "stdout_bytes": 2932,
+        "os_cache_eviction_forced": false,
+        "packet_status": "partial",
+        "index_mode": "hybrid",
+        "context_count": 6,
+        "target_token_rows": 6,
+        "target_hit": true,
+        "all_returned_rows_match_target": true,
+        "warning_count": 0,
+        "warnings": []
+      }
+    },
+    "packaged_v0.2.1": {
+      "cli_sha256": "83a9eac02410d37cb6c602bd1dc18cc141a413ac08eef968adecc2b99a3da29a",
+      "host_sha256": "80e1c8cefe19573d06acd472887a83b350013c2a7a119bc0dea388abcb30f5be",
+      "index": {
+        "mode": "hybrid",
+        "refresh_calls": 40,
+        "pending_atoms_after": 0,
+        "total_wall_ms": 5587.213
+      },
+      "storage_bytes": {
+        "before_index": 8667136,
+        "after_index": 25620480,
+        "after_eval": 25628672,
+        "index_growth": 16953344,
+        "eval_growth": 8192
+      },
+      "completed_index_no_op_refresh": {
+        "samples": 5,
+        "median_ms": 107.398,
+        "p95_ms_nearest_rank": 108.46,
+        "min_ms": 105.796,
+        "max_ms": 108.46
+      },
+      "common_two_character": {
+        "query": "東京",
+        "synthetic_matching_atoms": 10000,
+        "output_cap": 6,
+        "target_hit_at_k6": true,
+        "target_rows_in_top6": 6,
+        "top6_target_precision": 1.0,
+        "fresh_process_warm_samples": 10,
+        "fresh_process_warm_latency_ms": {
+          "samples": 10,
+          "median_ms": 275.537,
+          "p95_ms_nearest_rank": 288.242,
+          "min_ms": 271.21,
+          "max_ms": 288.242
+        },
+        "peak_child_rss_bytes_median": 70074368,
+        "peak_child_rss_bytes_max": 84934656,
+        "stdout_bytes_median": 2924,
+        "sample_outcomes": [
+          {
+            "status": "ok",
+            "context_count": 6,
+            "target_token_rows": 6,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "ok",
+            "context_count": 6,
+            "target_token_rows": 6,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "ok",
+            "context_count": 6,
+            "target_token_rows": 6,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "ok",
+            "context_count": 6,
+            "target_token_rows": 6,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "ok",
+            "context_count": 6,
+            "target_token_rows": 6,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "ok",
+            "context_count": 6,
+            "target_token_rows": 6,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "ok",
+            "context_count": 6,
+            "target_token_rows": 6,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "ok",
+            "context_count": 6,
+            "target_token_rows": 6,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "ok",
+            "context_count": 6,
+            "target_token_rows": 6,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "ok",
+            "context_count": 6,
+            "target_token_rows": 6,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          }
+        ],
+        "sample_status_counts": {
+          "ok": 10
+        },
+        "all_samples_warning_free": true,
+        "all_samples_same_context_count": true
+      },
+      "rare_two_character": {
+        "query": "青磁",
+        "synthetic_matching_atoms": 1,
+        "output_cap": 6,
+        "target_hit_at_k6": true,
+        "target_rows_in_top6": 1,
+        "top6_target_precision": 1.0,
+        "fresh_process_warm_samples": 10,
+        "fresh_process_warm_latency_ms": {
+          "samples": 10,
+          "median_ms": 158.353,
+          "p95_ms_nearest_rank": 162.996,
+          "min_ms": 156.211,
+          "max_ms": 162.996
+        },
+        "peak_child_rss_bytes_median": 69656576,
+        "peak_child_rss_bytes_max": 84033536,
+        "stdout_bytes_median": 710,
+        "sample_outcomes": [
+          {
+            "status": "ok",
+            "context_count": 1,
+            "target_token_rows": 1,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "ok",
+            "context_count": 1,
+            "target_token_rows": 1,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "ok",
+            "context_count": 1,
+            "target_token_rows": 1,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "ok",
+            "context_count": 1,
+            "target_token_rows": 1,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "ok",
+            "context_count": 1,
+            "target_token_rows": 1,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "ok",
+            "context_count": 1,
+            "target_token_rows": 1,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "ok",
+            "context_count": 1,
+            "target_token_rows": 1,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "ok",
+            "context_count": 1,
+            "target_token_rows": 1,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "ok",
+            "context_count": 1,
+            "target_token_rows": 1,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          },
+          {
+            "status": "ok",
+            "context_count": 1,
+            "target_token_rows": 1,
+            "target_token_hit": true,
+            "all_returned_rows_match_target": true,
+            "warning_count": 0,
+            "warnings": []
+          }
+        ],
+        "sample_status_counts": {
+          "ok": 10
+        },
+        "all_samples_warning_free": true,
+        "all_samples_same_context_count": true
+      },
+      "first_read_with_pending_index": {
+        "pending_before": 10000,
+        "pending_after": 9744,
+        "elapsed_ms": 155.467,
+        "peak_child_rss_bytes": 81117184,
+        "stdout_bytes": 2932,
+        "os_cache_eviction_forced": false,
+        "packet_status": "partial",
+        "index_mode": "hybrid",
+        "context_count": 6,
+        "target_token_rows": 6,
+        "target_hit": true,
+        "all_returned_rows_match_target": true,
+        "warning_count": 0,
+        "warnings": []
+      }
+    }
+  },
+  "paired_comparison": {
+    "common_target_hit_at_k6": {
+      "baseline": true,
+      "candidate": true
+    },
+    "rare_target_hit_at_k6": {
+      "baseline": false,
+      "candidate": true
+    },
+    "index_build_ms": {
+      "released_v0.2.0": 5639.145,
+      "packaged_v0.2.1": 5587.213,
+      "candidate_vs_baseline_percent": -0.92
+    },
+    "after_index_storage_bytes": {
+      "baseline": 25620480,
+      "candidate": 25620480
+    },
+    "warm_median_ms": {
+      "baseline": {
+        "common_two_character": 227.218,
+        "rare_two_character": 177.044
+      },
+      "candidate": {
+        "common_two_character": 275.537,
+        "rare_two_character": 158.353
+      }
+    },
+    "warm_common_candidate_vs_baseline_percent": 21.27,
+    "warm_rare_candidate_vs_baseline_percent": -10.56,
+    "peak_child_rss_bytes_max": {
+      "baseline": 83378176,
+      "candidate": 84934656
+    },
+    "peak_rss_candidate_vs_baseline_percent": 1.87,
+    "completed_index_no_op_refresh_median_ms": {
+      "released_v0.2.0": 106.997,
+      "packaged_v0.2.1": 107.398,
+      "candidate_vs_baseline_percent": 0.37
+    },
+    "first_read_with_pending_index_ms": {
+      "released_v0.2.0": 138.872,
+      "packaged_v0.2.1": 155.467,
+      "candidate_vs_baseline_percent": 11.95
+    },
+    "first_read_with_pending_index_pending_atoms_after": {
+      "released_v0.2.0": 9744,
+      "packaged_v0.2.1": 9744
+    },
+    "performance_change_is_not_attributed_to_a_specific_retrieval_stage": true,
+    "first_read_status": {
+      "released_v0.2.0": "partial",
+      "packaged_v0.2.1": "partial"
+    },
+    "first_read_warning_counts": {
+      "released_v0.2.0": 0,
+      "packaged_v0.2.1": 0
+    }
+  },
+  "limitations": [
+    "The seed is imported once through the released v0.2.0 native host; v0.2.1 write throughput is not separately measured.",
+    "First pending-index recall is not a cold OS-cache measurement because cache eviction was not forced.",
+    "東京 has 10,000 generated matches and six output slots, so this records top-six token precision rather than full-corpus recall.",
+    "青磁 has one generated positive, making target hit@6 directly observable only for this synthetic fixture.",
+    "Only end-to-end CLI/native-host outputs and process costs are observed; no retrieval-stage attribution is possible.",
+    "This synthetic capacity probe is not a natural-language quality, browser-integration, or reference-device acceptance result."
+  ],
+  "size_invariants": {
+    "same_byte_identical_pre_index_database_and_install_snapshot_for_arms": true,
+    "pre_index_database_sha256_equal": true,
+    "after_index_storage_equal": true,
+    "after_eval_storage_equal": true,
+    "per_arm": {
+      "released_v0.2.0": {
+        "pre_index_database_sha256": "da3a1ea25c0301e49a0cb1db5063ff92e5040f94f51cac2d3cacbed4a82e68d3",
+        "pre_index_database_bytes": 8667136,
+        "after_index": {
+          "database": 25620480,
+          "wal": 0,
+          "shm": 0,
+          "total": 25620480
+        },
+        "after_eval": {
+          "database": 25628672,
+          "wal": 0,
+          "shm": 0,
+          "total": 25628672
+        },
+        "index_growth_bytes": 16953344,
+        "eval_growth_bytes": 8192
+      },
+      "packaged_v0.2.1": {
+        "pre_index_database_sha256": "da3a1ea25c0301e49a0cb1db5063ff92e5040f94f51cac2d3cacbed4a82e68d3",
+        "pre_index_database_bytes": 8667136,
+        "after_index": {
+          "database": 25620480,
+          "wal": 0,
+          "shm": 0,
+          "total": 25620480
+        },
+        "after_eval": {
+          "database": 25628672,
+          "wal": 0,
+          "shm": 0,
+          "total": 25628672
+        },
+        "index_growth_bytes": 16953344,
+        "eval_growth_bytes": 8192
+      }
+    }
+  }
+}
